@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+<!-- Left Side -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="7"
+        android:weightSum="70">
+    <!-- First Layer-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="5">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="L1-1"
+				android:id="@+id/result"/>
+        </LinearLayout>
+    <!-- Second Layer-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="30"
+            android:weightSum="65">
+        <!--TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="L2-3-1"
+                android:layout_weight="30" /-->
+            <FrameLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:background="#ff949494"
+                android:id="@+id/upperLeft">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="L2-3-1" />
+            </FrameLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="L2-1-2"
+                android:layout_weight="5" />
+        <!--TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="L2-3-3"
+                android:layout_weight="30" /-->
+            <FrameLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:background="#ff949494"
+                android:id="@+id/upperRight">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="L2-3-3" />
+            </FrameLayout>
+        </LinearLayout>
+    <!-- Third Layer-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="5">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="L3-1" />
+        </LinearLayout>
+    <!-- Fourth Layer-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="30"
+            android:weightSum="65">
+        <!--TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="L2-3-1"
+                android:layout_weight="30" /-->
+            <FrameLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:background="#ff949494"
+                android:id="@+id/lowerLeft">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="L4-3-1" />
+            </FrameLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="L4-1-2"
+                android:layout_weight="5" />
+        <!--TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="L2-3-3"
+                android:layout_weight="30" /-->
+            <FrameLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:background="#ff949494"
+                android:id="@+id/lowerRight">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="L4-3-3" />
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+<!-- Right Side -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:weightSum="70">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="20">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="R1-1" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="R2-1" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="30">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Buttons" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Button 1"
+                android:id="@+id/button1" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="R3-4" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
