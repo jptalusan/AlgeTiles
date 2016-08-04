@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Android.Util;
 
 //https://developer.xamarin.com/recipes/android/other_ux/gestures/detect_a_touch/
 //Set tag
@@ -20,145 +21,158 @@ using Android.Widget;
 //http://stackoverflow.com/questions/25613225/get-current-activity-from-application-context-monoandroid
 //Deprecated
 //http://stackoverflow.com/questions/29041027/android-getresources-getdrawable-deprecated-api-22
+//Sample drag and drop
+//http://pumpingco.de/adding-drag-and-drop-to-your-android-application-with-xamarin/
+//Problem, restricting in own layout parent only
+//http://stackoverflow.com/questions/17111135/android-constrain-drag-and-drop-to-a-bounding-box
+//http://stackoverflow.com/questions/20491071/how-can-i-restrict-the-dragzone-for-a-view-in-android
+//BUGs
+//On dragging original button, it is still labeled as such (onDrop)
 namespace AlgeTiles
 {
-	[Activity(Label = "AlgeTiles", MainLauncher = true, Icon = "@drawable/icon")]
+	[Activity(Label = "AlgeTiles", MainLauncher = true, Icon = "@drawable/icon", ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape)]
 	public class MainActivity : Activity//, View.IOnTouchListener, View.IOnDragListener
 	{
+		private static string TAG = "AlgeTiles";
 		public static Context context { get; }
+		private static string BUTTON_TYPE = "BUTTON_TYPE";
+		private static string CLONED_BUTTON = "CLONE_BUTTON";
+		private static string ORIGINAL_BUTTON = "ORIGINAL_BUTTON";
+		private TextView result;
+		private Boolean hasButtonBeenDroppedInCorrectzone = false;
+		private string currentButtonType = "";
+		private ViewGroup currentOwner;
+		private int numberOfCloneButtons = 1;
+		
+		private Switch deleteSwitch;
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
-			SetContentView(Resource.Layout.Main);
+			SetContentView(Resource.Layout.Factory);
 			// Create your application here
-			FindViewById(Resource.Id.myimage1).Touch += ImageView_Touch;
-			FindViewById(Resource.Id.myimage2).Touch += ImageView_Touch;
-			FindViewById(Resource.Id.myimage3).Touch += ImageView_Touch;
-			FindViewById(Resource.Id.myimage4).Touch += ImageView_Touch;
+			result = (TextView) FindViewById(Resource.Id.result);
 
-			//FindViewById(Resource.Id.myimage1).SetOnTouchListener(this);
-			//FindViewById(Resource.Id.myimage2).SetOnTouchListener(this);
-			//FindViewById(Resource.Id.myimage3).SetOnTouchListener(this);
-			//FindViewById(Resource.Id.myimage4).SetOnTouchListener(this);
+			FindViewById(Resource.Id.button1).LongClick += ImageView_Touch;
 
-			FindViewById(Resource.Id.topleft).Drag += GridLayout_Drag;
-			FindViewById(Resource.Id.topright).Drag += GridLayout_Drag;
-			FindViewById(Resource.Id.bottomleft).Drag += GridLayout_Drag;
-			FindViewById(Resource.Id.bottomright).Drag += GridLayout_Drag;
+			FindViewById(Resource.Id.upperLeft).Drag += GridLayout_Drag;
+			FindViewById(Resource.Id.upperRight).Drag += GridLayout_Drag;
+			FindViewById(Resource.Id.lowerLeft).Drag += GridLayout_Drag;
+			FindViewById(Resource.Id.lowerRight).Drag += GridLayout_Drag;
 
-			//FindViewById(Resource.Id.topleft).SetOnDragListener(this);
-			//FindViewById(Resource.Id.topright).SetOnDragListener(this);
-			//FindViewById(Resource.Id.bottomleft).SetOnDragListener(this);
-			//FindViewById(Resource.Id.bottomright).SetOnDragListener(this);
-
-			//shape = GetDrawable(Resource.Drawable.shape);
-			//normalShape = GetDrawable(Resource.Drawable.shape_droptarget);
+			deleteSwitch = (Switch)FindViewById(Resource.Id.deleteSwitch);
 		}
-
-		//public bool OnTouch(View view, MotionEvent e)
-		//{
-		//	if (e.Action == MotionEventActions.Down)
-		//	{
-		//		ClipData data = ClipData.NewPlainText("", "");
-		//		View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-		//		view.StartDrag(data, shadowBuilder, view, 0);
-		//		view.Visibility = ViewStates.Invisible;
-		//		return true;
-		//	}
-		//	else
-		//	{
-		//		return false;
-		//	}
-		//}
-
-		//public bool OnDrag(View v, DragEvent e)
-		//{
-		//	//int shape = (int)typeof(Resource.Drawable).GetField("shape").GetValue(null);
-		//	//int normalShape = (int)typeof(Resource.Drawable).GetField("normalShape").GetValue(null);
-		//	var action = e.Action;
-		//	switch (action)
-		//	{
-		//		case DragAction.Started:
-		//			break;
-		//		case DragAction.Entered:
-		//			v.SetBackgroundDrawable(shape);
-		//			//v.SetBackgroundResource(shape);
-		//			break;
-		//		case DragAction.Exited:
-		//			v.SetBackgroundDrawable(normalShape);
-		//			//v.SetBackgroundResource(normalShape);
-		//			break;
-		//		case DragAction.Drop:
-		//			//Current view (i.e. item dropped into this)
-		//			View view = (View)e.LocalState;
-		//			////Get layout owning the view
-		//			//ViewGroup owner = (ViewGroup)view.Parent;
-		//			////Remove the view from the owner
-		//			//owner.RemoveView(view);
-
-		//			//Cloning imageView
-		//			//ImageView Setup
-
-		//			ImageView imageView = new ImageView(this);
-		//			imageView.SetBackgroundDrawable(GetDrawable(Resource.Drawable.Icon));
-		//			//setting image position
-		//			LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WrapContent,
-		//					ViewGroup.LayoutParams.WrapContent);
-		//			imageView.LayoutParameters = linearLayoutParams;
-		//			imageView.Touch += ImageView_Touch;
-		//			//imageView.SetOnTouchListener(this);
-		//			//Pick neww view (currently on drag)
-		//			GridLayout container = (GridLayout)v;
-		//			//Add new view
-		//			//container.AddView(view);
-		//			container.AddView(imageView);
-		//			view.Visibility = ViewStates.Visible;
-		//			break;
-		//		case DragAction.Ended:
-		//			v.SetBackgroundDrawable(normalShape);
-		//			//v.SetBackgroundResource(normalShape);
-		//			break;
-		//		default:
-		//			break;
-		//	}
-		//	return true;
-		//}
 		
 		//Add case where the image did not exit
+		//Probably check if the parent GridLayout - sender, is equal to the receiver (at ondrop) if not then do nothing.
 		private void GridLayout_Drag(object sender, Android.Views.View.DragEventArgs e)
 		{
-			//var shape = context.Resources.GetDrawable(Resource.Drawable.shape, null);
-			//var normalShape = context.Resources.GetDrawable(Resource.Drawable.shape_droptarget, null);
 			var v = (GridLayout)sender;
+			View view = (View)e.Event.LocalState;
+			var button_type = result.Text;
+			var drag_data = e.Event.ClipData;
+
 			switch (e.Event.Action)
 			{
 				case DragAction.Started:
+					hasButtonBeenDroppedInCorrectzone = false;
+					if (null != drag_data)
+					{
+						currentButtonType = drag_data.GetItemAt(0).Text;
+						result.Text = currentButtonType;
+					}
+					Log.Debug(TAG, "DragAction.Started");
 					break;
 				case DragAction.Entered:
+					Log.Debug(TAG, "DragAction.Entered");
 					v.SetBackgroundResource(Resource.Drawable.shape);
 					break;
 				case DragAction.Exited:
+					Log.Debug(TAG, "DragAction.Exited");
+					currentOwner = (ViewGroup)view.Parent;
+					hasButtonBeenDroppedInCorrectzone = false;
 					v.SetBackgroundResource(Resource.Drawable.shape_droptarget);
 					break;
 				case DragAction.Drop:
-					View view = (View)e.Event.LocalState;
+					Log.Debug(TAG, "DragAction.Drop");
+					// Gets the item containing the dragged data
+					if (null != drag_data)
+					{
+						currentButtonType = drag_data.GetItemAt(0).Text;
+						result.Text = currentButtonType + ": " + numberOfCloneButtons;
+					}
 
 					ImageView imageView = new ImageView(this);
 					imageView.SetBackgroundResource(Resource.Drawable.Icon);
 
-					LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WrapContent,
-							ViewGroup.LayoutParams.WrapContent);
+					LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(
+						ViewGroup.LayoutParams.WrapContent,
+						ViewGroup.LayoutParams.WrapContent);
 					imageView.LayoutParameters = linearLayoutParams;
 
-					imageView.Touch += ImageView_Touch;
+					imageView.LongClick += clonedImageView_Touch;
+					++numberOfCloneButtons;
 
 					GridLayout container = (GridLayout)v;
 					container.AddView(imageView);
 					view.Visibility = ViewStates.Visible;
+
+					hasButtonBeenDroppedInCorrectzone = true;
+
+					//TODO: Fix the logic between this and the one in onEnded
+					//check if the current Owner and new owner are the same as well as check the button type
+					//if (currentOwner == v &&
+					//	currentButtonType.Equals(CLONED_BUTTON))
+					//{
+					//	ImageView imageView = new ImageView(this);
+					//	imageView.SetBackgroundResource(Resource.Drawable.Icon);
+
+					//	LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(
+					//		ViewGroup.LayoutParams.WrapContent,
+					//		ViewGroup.LayoutParams.WrapContent);
+					//	imageView.LayoutParameters = linearLayoutParams;
+
+					//	imageView.LongClick += clonedImageView_Touch;
+
+					//	GridLayout container = (GridLayout)v;
+					//	container.AddView(imageView);
+					//	view.Visibility = ViewStates.Visible;					
+					//	hasButtonBeenDroppedInCorrectzone = false;
+					//} else if (currentOwner != v && 
+					//	currentButtonType.Equals(ORIGINAL_BUTTON))
+					//{
+					//	ImageView imageView = new ImageView(this);
+					//	imageView.SetBackgroundResource(Resource.Drawable.Icon);
+
+					//	LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(
+					//		ViewGroup.LayoutParams.WrapContent,
+					//		ViewGroup.LayoutParams.WrapContent);
+					//	imageView.LayoutParameters = linearLayoutParams;
+
+					//	imageView.LongClick += clonedImageView_Touch;
+
+					//	GridLayout container = (GridLayout)v;
+					//	container.AddView(imageView);
+					//	view.Visibility = ViewStates.Visible;
+
+					//	hasButtonBeenDroppedInCorrectzone = true;
+					//} else
+					//{
+					//	view.Visibility = ViewStates.Visible;
+					//	hasButtonBeenDroppedInCorrectzone = false;
+					//}			
 					break;
 				case DragAction.Ended:
+					Log.Debug(TAG, "DragAction.Ended");
 					v.SetBackgroundResource(Resource.Drawable.shape_droptarget);
+					if (!hasButtonBeenDroppedInCorrectzone && 
+						currentButtonType.Equals(CLONED_BUTTON))
+					{
+						currentOwner.RemoveView(view);
+					} else
+					{
+						view.Visibility = ViewStates.Visible;
+					}
 					break;
 				default:
 					break;
@@ -166,13 +180,34 @@ namespace AlgeTiles
 		}
 
 		//http://stackoverflow.com/questions/18836432/how-to-find-the-view-of-a-button-in-its-click-eventhandler
-		private void ImageView_Touch(object sender, Android.Views.View.TouchEventArgs e)
+		private void ImageView_Touch(object sender, View.LongClickEventArgs e)
 		{
-			var imageViewTouch = (ImageView)sender;
-			ClipData data = ClipData.NewPlainText("", "");
+			Log.Debug(TAG, "ImageView_Touch");
+			var imageViewTouch = (sender) as ImageView;
+			ClipData data = ClipData.NewPlainText(BUTTON_TYPE, ORIGINAL_BUTTON);
 			View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(imageViewTouch);
 			imageViewTouch.StartDrag(data, shadowBuilder, imageViewTouch, 0);
-			imageViewTouch.Visibility = ViewStates.Invisible;
+			//imageViewTouch.Visibility = ViewStates.Invisible;
+		}
+
+		private void clonedImageView_Touch(object sender, View.LongClickEventArgs e)
+		{
+			Log.Debug(TAG, "Switch: " + deleteSwitch.Checked);
+			if(deleteSwitch.Checked)
+			{
+				var imageViewTouch = (sender) as ImageView;
+				ViewGroup vg = (ViewGroup)imageViewTouch.Parent;
+				vg.RemoveView(imageViewTouch);
+				imageViewTouch.Visibility = ViewStates.Gone;
+			} else
+			{
+				Log.Debug(TAG, "clonedImageView_Touch");
+				var imageViewTouch = (sender) as ImageView;
+				ClipData data = ClipData.NewPlainText(BUTTON_TYPE, CLONED_BUTTON);
+				View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(imageViewTouch);
+				imageViewTouch.StartDrag(data, shadowBuilder, imageViewTouch, 0);
+				imageViewTouch.Visibility = ViewStates.Invisible;
+			}
 		}
 	}
 }

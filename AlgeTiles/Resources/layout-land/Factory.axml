@@ -30,43 +30,40 @@
             android:layout_height="0px"
             android:layout_weight="30"
             android:weightSum="65">
-        <!--TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="L2-3-1"
-                android:layout_weight="30" /-->
-            <FrameLayout
+        <!-- Upper Left -->
+            <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="30"
-                android:background="#ff949494"
-                android:id="@+id/upperLeft">
+                android:background="@drawable/shape"
+                android:id="@+id/upperLeft"
+                android:rowCount="6"
+                android:columnCount="4">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="L2-3-1" />
-            </FrameLayout>
+                    android:text="L2-3-1"
+                    android:id="@+id/textView2" />
+            </GridLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="L2-1-2"
                 android:layout_weight="5" />
-        <!--TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="L2-3-3"
-                android:layout_weight="30" /-->
-            <FrameLayout
+        <!-- Upper Right -->
+            <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="30"
-                android:background="#ff949494"
-                android:id="@+id/upperRight">
+                android:background="@drawable/shape"
+                android:id="@+id/upperRight"
+                android:rowCount="6"
+                android:columnCount="4">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="L2-3-3" />
-            </FrameLayout>
+            </GridLayout>
         </LinearLayout>
     <!-- Third Layer-->
         <LinearLayout
@@ -86,43 +83,39 @@
             android:layout_height="0px"
             android:layout_weight="30"
             android:weightSum="65">
-        <!--TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="L2-3-1"
-                android:layout_weight="30" /-->
-            <FrameLayout
+        <!-- Lower Left -->
+            <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="30"
-                android:background="#ff949494"
-                android:id="@+id/lowerLeft">
+                android:background="@drawable/shape"
+                android:id="@+id/lowerLeft"
+                android:rowCount="6"
+                android:columnCount="4">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="L4-3-1" />
-            </FrameLayout>
+            </GridLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="L4-1-2"
                 android:layout_weight="5" />
-        <!--TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="L2-3-3"
-                android:layout_weight="30" /-->
-            <FrameLayout
+        <!-- Lower Right -->
+            <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="30"
-                android:background="#ff949494"
-                android:id="@+id/lowerRight">
+                android:background="@drawable/shape"
+                android:id="@+id/lowerRight"
+                android:rowCount="6"
+                android:columnCount="4">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="L4-3-3" />
-            </FrameLayout>
+            </GridLayout>
         </LinearLayout>
     </LinearLayout>
 <!-- Right Side -->
@@ -132,8 +125,9 @@
         android:layout_height="match_parent"
         android:layout_weight="3"
         android:weightSum="70">
+    <!-- First (2) -->
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="20">
@@ -141,7 +135,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="R1-1" />
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="Delete" />
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/deleteSwitch" />
         </LinearLayout>
+    <!-- Second (1) -->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -152,6 +155,7 @@
                 android:layout_height="wrap_content"
                 android:text="R2-1" />
         </LinearLayout>
+    <!-- Third (4) Draggable Blocks Area -->
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -161,12 +165,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Buttons" />
-            <Button
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button 1"
+                android:src="@drawable/Icon"
                 android:id="@+id/button1" />
         </LinearLayout>
+    <!-- Fourth (1) -->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
