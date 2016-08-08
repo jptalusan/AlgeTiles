@@ -3,7 +3,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="#CFE2F3">
 <!-- Left Side -->
     <LinearLayout
         android:orientation="vertical"
@@ -12,18 +13,52 @@
         android:layout_weight="7"
         android:weightSum="70">
     <!-- First Layer-->
-        <LinearLayout
+    <!-- Second Layer-->
+        <GridLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="5">
+            android:layout_weight="5"
+            android:columnCount="15"
+            android:id="@+id/gridLayout2">
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="L1-1"
-                android:id="@+id/result" />
-        </LinearLayout>
-    <!-- Second Layer-->
+                android:id="@+id/result"
+                android:background="#ffffff"
+                android:textColor="#000000"
+                android:layout_columnSpan="5"
+                android:layout_gravity="fill_horizontal" />
+            <Space
+                android:layout_width="170dp"
+                android:id="@+id/space1" />
+            <EditText
+                android:text="x^2"
+                android:background="#ffffff"
+                android:textColor="#000000"
+                android:layout_columnSpan="2"
+                android:layout_gravity="fill_horizontal"
+                android:id="@+id/editText1" />
+            <Space
+                android:layout_width="20dp"
+                android:id="@+id/space2" />
+            <EditText
+                android:text="+x"
+                android:background="#ffffff"
+                android:textColor="#000000"
+                android:layout_columnSpan="2"
+                android:layout_gravity="fill_horizontal"
+                android:id="@+id/editText2" />
+            <Space
+                android:layout_width="20dp"
+                android:id="@+id/space3" />
+            <EditText
+                android:text="+c"
+                android:background="#ffffff"
+                android:textColor="#000000"
+                android:layout_columnSpan="2"
+                android:layout_gravity="fill_horizontal"
+                android:id="@+id/editText3" />
+        </GridLayout>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -123,27 +158,42 @@
         android:orientation="vertical"
         android:layout_width="0px"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="2"
         android:weightSum="70">
     <!-- First (2) -->
-        <LinearLayout
+        <GridLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="20">
-            <TextView
+            android:layout_weight="20"
+            android:rowCount="3"
+            android:columnCount="2">
+        <!--TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="R1-1" />
-			<TextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:text="Delete" />
-            <Switch
+                android:text="R1-1" /-->
+            <ToggleButton
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/deleteSwitch" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:background="@drawable/drag"
+                android:textOff="@null"
+                android:textOn="@null"
+                android:id="@+id/drag" />
+            <ToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/remove"
+                android:textOff="@null"
+                android:textOn="@null"
+                android:id="@+id/remove" />
+            <ToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rotate"
+                android:textOff="@null"
+                android:textOn="@null"
+                android:id="@+id/rotate" />
+        </GridLayout>
     <!-- Second (1) -->
         <LinearLayout
             android:orientation="horizontal"
@@ -156,21 +206,31 @@
                 android:text="R2-1" />
         </LinearLayout>
     <!-- Third (4) Draggable Blocks Area -->
-        <LinearLayout
+        <GridLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="30">
-            <TextView
+        <!--TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Buttons" />
+                android:text="Buttons" /-->
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/Icon"
-                android:id="@+id/button1" />
-        </LinearLayout>
+                android:src="@drawable/tile_1"
+                android:id="@+id/tile_1" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/x_tile"
+                android:id="@+id/x_tile" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/x2_tile"
+                android:id="@+id/x2_tile" />
+        </GridLayout>
     <!-- Fourth (1) -->
         <LinearLayout
             android:orientation="horizontal"

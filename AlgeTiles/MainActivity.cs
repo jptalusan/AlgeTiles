@@ -44,23 +44,26 @@ namespace AlgeTiles
 		private ViewGroup currentOwner;
 		private int numberOfCloneButtons = 1;
 		
-		private Switch deleteSwitch;
+		private ToggleButton deleteSwitch;
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
+			ActionBar.Hide();
 			SetContentView(Resource.Layout.Factory);
 			// Create your application here
 			result = (TextView) FindViewById(Resource.Id.result);
 
-			FindViewById(Resource.Id.button1).LongClick += ImageView_Touch;
+			FindViewById(Resource.Id.tile_1).LongClick += ImageView_Touch;
+			FindViewById(Resource.Id.x_tile).LongClick += ImageView_Touch;
+			FindViewById(Resource.Id.x2_tile).LongClick += ImageView_Touch;
 
 			FindViewById(Resource.Id.upperLeft).Drag += GridLayout_Drag;
 			FindViewById(Resource.Id.upperRight).Drag += GridLayout_Drag;
 			FindViewById(Resource.Id.lowerLeft).Drag += GridLayout_Drag;
 			FindViewById(Resource.Id.lowerRight).Drag += GridLayout_Drag;
 
-			deleteSwitch = (Switch)FindViewById(Resource.Id.deleteSwitch);
+			deleteSwitch = (ToggleButton)FindViewById(Resource.Id.remove);
 		}
 		
 		//Add case where the image did not exit

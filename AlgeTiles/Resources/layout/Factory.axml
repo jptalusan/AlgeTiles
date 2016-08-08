@@ -3,7 +3,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="#CFE2F3">
 <!-- Left Side -->
     <LinearLayout
         android:orientation="vertical"
@@ -12,17 +13,44 @@
         android:layout_weight="7"
         android:weightSum="70">
     <!-- First Layer-->
-        <LinearLayout
+        <GridLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="5">
+            android:layout_weight="5"
+            android:columnCount="16">
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="L1-1"
-                android:id="@+id/result" />
-        </LinearLayout>
+                android:id="@+id/result"
+                android:background="#ffffff"
+                android:textColor="#000000"
+                android:layout_columnSpan="5"
+                android:layout_gravity="fill_horizontal" />
+            <Space
+                android:layout_width="190dp" />
+            <EditText
+                android:text="x^2"
+                android:background="#ffffff"
+                android:textColor="#000000"
+                android:layout_columnSpan="2"
+                android:layout_gravity="fill_horizontal" />
+            <Space
+                android:layout_width="20dp" />
+            <EditText
+                android:text="+x"
+                android:background="#ffffff"
+                android:textColor="#000000"
+                android:layout_columnSpan="2"
+                android:layout_gravity="fill_horizontal" />
+            <Space
+                android:layout_width="20dp" />
+            <EditText
+                android:text="+c"
+                android:background="#ffffff"
+                android:textColor="#000000"
+                android:layout_columnSpan="2"
+                android:layout_gravity="fill_horizontal" />
+        </GridLayout>
     <!-- Second Layer-->
         <LinearLayout
             android:orientation="horizontal"
@@ -123,7 +151,7 @@
         android:orientation="vertical"
         android:layout_width="0px"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="2"
         android:weightSum="70">
     <!-- First (2) -->
         <LinearLayout
@@ -135,14 +163,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="R1-1" />
-			<TextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:text="Delete" />
-            <Switch
+            <ImageButton
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/deleteSwitch" />
+                android:layout_height="wrap_content"
+                android:src="@drawable/drag"
+                android:background="@null" />
         </LinearLayout>
     <!-- Second (1) -->
         <LinearLayout
