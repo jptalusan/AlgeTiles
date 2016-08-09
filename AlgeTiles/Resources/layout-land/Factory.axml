@@ -13,7 +13,6 @@
         android:layout_weight="7"
         android:weightSum="70">
     <!-- First Layer-->
-    <!-- Second Layer-->
         <GridLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -65,7 +64,8 @@
             android:layout_height="0px"
             android:layout_weight="30"
             android:weightSum="65">
-        <!-- Upper Left -->
+	<!-- Second Layer-->
+		<!-- Upper Left -->
             <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
@@ -74,17 +74,26 @@
                 android:id="@+id/upperLeft"
                 android:rowCount="6"
                 android:columnCount="4">
-                <TextView
+            <!--TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="L2-3-1"
-                    android:id="@+id/textView2" />
+                    android:id="@+id/textView2" /-->
             </GridLayout>
-            <TextView
+		<!-- Upper Middle -->
+            <GridLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:background="@drawable/shape"
+                android:id="@+id/upperMiddle"
+                android:rowCount="8"
+                android:columnCount="1" />
+        <!--TextView Changed to gridlayout above
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="L2-1-2"
-                android:layout_weight="5" />
+                android:layout_weight="5" /-->
         <!-- Upper Right -->
             <GridLayout
                 android:layout_width="0px"
@@ -94,10 +103,10 @@
                 android:id="@+id/upperRight"
                 android:rowCount="6"
                 android:columnCount="4">
-                <TextView
+				<!--TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="L2-3-3" />
+                    android:text="L2-3-3" / -->
             </GridLayout>
         </LinearLayout>
     <!-- Third Layer-->
@@ -105,11 +114,42 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="5">
-            <TextView
+            android:layout_weight="5"
+			android:weightSum="65">
+		<!-- Middle Left -->
+			<GridLayout
+				android:layout_width="0px"
+				android:layout_height="match_parent"
+				android:layout_weight="30"
+				android:background="@drawable/shape"
+				android:id="@+id/middleLeft"
+				android:rowCount="1"
+				android:columnCount="8">
+			</GridLayout>
+		<!-- Middle Middle -->
+			<GridLayout
+				android:layout_width="0px"
+				android:layout_height="match_parent"
+				android:layout_weight="5"
+				android:background="@drawable/shape"
+				android:id="@+id/middleMiddle"
+				android:rowCount="1"
+				android:columnCount="1">
+			</GridLayout>
+		<!-- Middle Right -->
+			<GridLayout
+				android:layout_width="0px"
+				android:layout_height="match_parent"
+				android:layout_weight="30"
+				android:background="@drawable/shape"
+				android:id="@+id/middleRight"
+				android:rowCount="1"
+				android:columnCount="8">
+			</GridLayout>
+			<!-- TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="L3-1" />
+                android:text="L3-1" /-->
         </LinearLayout>
     <!-- Fourth Layer-->
         <LinearLayout
@@ -127,16 +167,26 @@
                 android:id="@+id/lowerLeft"
                 android:rowCount="6"
                 android:columnCount="4">
-                <TextView
+				<!--TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="L4-3-1" />
+                    android:text="L4-3-1" / -->
             </GridLayout>
-            <TextView
+		<!-- Lower Middle -->
+			<GridLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:background="@drawable/shape"
+                android:id="@+id/lowerMiddle"
+                android:rowCount="8"
+                android:columnCount="1">
+			</GridLayout>
+			<!-- TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="L4-1-2"
-                android:layout_weight="5" />
+                android:layout_weight="5" / -->
         <!-- Lower Right -->
             <GridLayout
                 android:layout_width="0px"
@@ -146,10 +196,10 @@
                 android:id="@+id/lowerRight"
                 android:rowCount="6"
                 android:columnCount="4">
-                <TextView
+				<!--TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="L4-3-3" />
+                    android:text="L4-3-3" /-->
             </GridLayout>
         </LinearLayout>
     </LinearLayout>
@@ -166,29 +216,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="20"
-            android:rowCount="3"
-            android:columnCount="2">
+            android:rowCount="2"
+            android:columnCount="3"
+            android:useDefaultMargins="true">
         <!--TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="R1-1" /-->
             <ToggleButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="28dp"
                 android:background="@drawable/drag"
                 android:textOff="@null"
                 android:textOn="@null"
                 android:id="@+id/drag" />
             <ToggleButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="28dp"
                 android:background="@drawable/remove"
                 android:textOff="@null"
                 android:textOn="@null"
                 android:id="@+id/remove" />
             <ToggleButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="28dp"
                 android:background="@drawable/rotate"
                 android:textOff="@null"
                 android:textOn="@null"
@@ -207,10 +258,13 @@
         </LinearLayout>
     <!-- Third (4) Draggable Blocks Area -->
         <GridLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="30">
+            android:layout_weight="30"
+            android:layout_marginTop="0.0dp"
+            android:rowCount="2"
+            android:columnCount="2">
         <!--TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

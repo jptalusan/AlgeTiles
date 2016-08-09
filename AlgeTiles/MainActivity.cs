@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Util;
+using Android.Graphics;
 
 //https://developer.xamarin.com/recipes/android/other_ux/gestures/detect_a_touch/
 //Set tag
@@ -28,6 +29,9 @@ using Android.Util;
 //http://stackoverflow.com/questions/20491071/how-can-i-restrict-the-dragzone-for-a-view-in-android
 //BUGs
 //On dragging original button, it is still labeled as such (onDrop)
+
+//TODO: Gridlayout stretches depending on imageview inside but still retains the same row/col count
+//http://stackoverflow.com/questions/21950937/how-to-prevent-cells-in-gridlayout-from-stretching
 namespace AlgeTiles
 {
 	[Activity(Label = "AlgeTiles", MainLauncher = true, Icon = "@drawable/icon", ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape)]
@@ -44,7 +48,17 @@ namespace AlgeTiles
 		private ViewGroup currentOwner;
 		private int numberOfCloneButtons = 1;
 		
-		private ToggleButton deleteSwitch;
+		private ToggleButton removeToggle;
+		private ToggleButton dragToggle;
+		private ToggleButton rotateToggle;
+
+		private ImageView tile_1;
+		private ImageView x_tile;
+		private ImageView x2_tile;
+
+		private int numberOfTile_1s = 0;
+		private int numberOfX_tiles = 0;
+		private int numberOfX2_tiles = 0;
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
@@ -54,18 +68,72 @@ namespace AlgeTiles
 			// Create your application here
 			result = (TextView) FindViewById(Resource.Id.result);
 
-			FindViewById(Resource.Id.tile_1).LongClick += ImageView_Touch;
-			FindViewById(Resource.Id.x_tile).LongClick += ImageView_Touch;
-			FindViewById(Resource.Id.x2_tile).LongClick += ImageView_Touch;
+			tile_1 = (ImageView)FindViewById(Resource.Id.tile_1);
+			x_tile = (ImageView)FindViewById(Resource.Id.x_tile);
+			x2_tile = (ImageView)FindViewById(Resource.Id.x2_tile);
+
+			tile_1.LongClick += tile_LongClick;
+			x_tile.LongClick += tile_LongClick;
+			x2_tile.LongClick += tile_LongClick;
 
 			FindViewById(Resource.Id.upperLeft).Drag += GridLayout_Drag;
+			FindViewById(Resource.Id.upperMiddle).Drag += GridLayout_Drag;
 			FindViewById(Resource.Id.upperRight).Drag += GridLayout_Drag;
+
+			//Restrict x^2 from being dragged here.
+			FindViewById(Resource.Id.middleLeft).Drag += GridLayout_Drag;
+			//FindViewById(Resource.Id.middleMiddle).Drag += GridLayout_Drag;
+			FindViewById(Resource.Id.middleRight).Drag += GridLayout_Drag;
+
 			FindViewById(Resource.Id.lowerLeft).Drag += GridLayout_Drag;
+			FindViewById(Resource.Id.lowerMiddle).Drag += GridLayout_Drag;
 			FindViewById(Resource.Id.lowerRight).Drag += GridLayout_Drag;
 
-			deleteSwitch = (ToggleButton)FindViewById(Resource.Id.remove);
+
+			removeToggle = (ToggleButton)FindViewById(Resource.Id.remove);
+			dragToggle = (ToggleButton)FindViewById(Resource.Id.drag);
+			rotateToggle = (ToggleButton)FindViewById(Resource.Id.rotate);
+
+			removeToggle.CheckedChange += toggle_click;
+			dragToggle.CheckedChange += toggle_click;
+			rotateToggle.CheckedChange += toggle_click;
+
+			result.Text = "tile_1: " + numberOfTile_1s + ", x_tile: " + numberOfX_tiles + ", x2_tile: " + numberOfX2_tiles;
 		}
-		
+
+		private void toggle_click(object sender, EventArgs e)
+		{
+			ToggleButton clicked_toggle = (sender) as ToggleButton;
+			int buttonText = clicked_toggle.Id;
+			switch(buttonText)
+			{
+				case Resource.Id.remove:
+					if (dragToggle.Checked)
+						dragToggle.Checked = false;
+					if (rotateToggle.Checked)
+						rotateToggle.Checked = false;
+					break;
+				case Resource.Id.drag:
+					if (removeToggle.Checked)
+						removeToggle.Checked = false;
+					if (rotateToggle.Checked)
+						rotateToggle.Checked = false;
+					break;
+				case Resource.Id.rotate:
+					//Also rotate original tiles
+					tile_1.Rotation = tile_1.Rotation - 90;
+					x_tile.Rotation = x_tile.Rotation - 90;
+					x2_tile.Rotation = x2_tile.Rotation - 90;
+
+					if (removeToggle.Checked)
+						removeToggle.Checked = false;
+					if (dragToggle.Checked)
+						dragToggle.Checked = false;
+					break;
+			}
+		}
+
+		//TODO: when original tile is rotated, cloned image is not rotated
 		//Add case where the image did not exit
 		//Probably check if the parent GridLayout - sender, is equal to the receiver (at ondrop) if not then do nothing.
 		private void GridLayout_Drag(object sender, Android.Views.View.DragEventArgs e)
@@ -98,72 +166,52 @@ namespace AlgeTiles
 					break;
 				case DragAction.Drop:
 					Log.Debug(TAG, "DragAction.Drop");
-					// Gets the item containing the dragged data
 					if (null != drag_data)
 					{
 						currentButtonType = drag_data.GetItemAt(0).Text;
 						result.Text = currentButtonType + ": " + numberOfCloneButtons;
 					}
 
-					ImageView imageView = new ImageView(this);
-					imageView.SetBackgroundResource(Resource.Drawable.Icon);
+					//Check if x_tile is rotated before fitting or rotate before dropping automatically
+					if ((v.Id == Resource.Id.upperMiddle ||
+						v.Id == Resource.Id.middleLeft ||
+						v.Id == Resource.Id.middleRight ||
+						v.Id == Resource.Id.lowerMiddle) &&
+						currentButtonType.Equals("x2_tile"))
+					{
+						//Do nothing
+					} else
+					{
+						// Gets the item containing the dragged data
+						ImageView imageView = new ImageView(this);
+						int resID = Resources.GetIdentifier(currentButtonType, "drawable", PackageName);
+						imageView.SetBackgroundResource(resID);
+						imageView.Tag = currentButtonType;
 
-					LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(
-						ViewGroup.LayoutParams.WrapContent,
-						ViewGroup.LayoutParams.WrapContent);
-					imageView.LayoutParameters = linearLayoutParams;
+						//Probably should put weight or alignment here
+						LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(
+							ViewGroup.LayoutParams.WrapContent,
+							ViewGroup.LayoutParams.WrapContent);
+						imageView.LayoutParameters = linearLayoutParams;
+						//imageView.SetTag(0, currentButtonType);
+						imageView.LongClick += clonedImageView_Touch;
 
-					imageView.LongClick += clonedImageView_Touch;
-					++numberOfCloneButtons;
+						if (currentButtonType.Equals("tile_1"))
+							++numberOfTile_1s;
+						if (currentButtonType.Equals("x_tile"))
+							++numberOfX_tiles;
+						if (currentButtonType.Equals("x2_tile"))
+							++numberOfX2_tiles;
 
-					GridLayout container = (GridLayout)v;
-					container.AddView(imageView);
-					view.Visibility = ViewStates.Visible;
+						result.Text = "tile_1: " + numberOfTile_1s + ", x_tile: " + numberOfX_tiles + ", x2_tile: " + numberOfX2_tiles;
 
-					hasButtonBeenDroppedInCorrectzone = true;
+						GridLayout container = (GridLayout)v;
+						container.AddView(imageView);
+						view.Visibility = ViewStates.Visible;
 
-					//TODO: Fix the logic between this and the one in onEnded
-					//check if the current Owner and new owner are the same as well as check the button type
-					//if (currentOwner == v &&
-					//	currentButtonType.Equals(CLONED_BUTTON))
-					//{
-					//	ImageView imageView = new ImageView(this);
-					//	imageView.SetBackgroundResource(Resource.Drawable.Icon);
+						hasButtonBeenDroppedInCorrectzone = true;
+					}
 
-					//	LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(
-					//		ViewGroup.LayoutParams.WrapContent,
-					//		ViewGroup.LayoutParams.WrapContent);
-					//	imageView.LayoutParameters = linearLayoutParams;
-
-					//	imageView.LongClick += clonedImageView_Touch;
-
-					//	GridLayout container = (GridLayout)v;
-					//	container.AddView(imageView);
-					//	view.Visibility = ViewStates.Visible;					
-					//	hasButtonBeenDroppedInCorrectzone = false;
-					//} else if (currentOwner != v && 
-					//	currentButtonType.Equals(ORIGINAL_BUTTON))
-					//{
-					//	ImageView imageView = new ImageView(this);
-					//	imageView.SetBackgroundResource(Resource.Drawable.Icon);
-
-					//	LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(
-					//		ViewGroup.LayoutParams.WrapContent,
-					//		ViewGroup.LayoutParams.WrapContent);
-					//	imageView.LayoutParameters = linearLayoutParams;
-
-					//	imageView.LongClick += clonedImageView_Touch;
-
-					//	GridLayout container = (GridLayout)v;
-					//	container.AddView(imageView);
-					//	view.Visibility = ViewStates.Visible;
-
-					//	hasButtonBeenDroppedInCorrectzone = true;
-					//} else
-					//{
-					//	view.Visibility = ViewStates.Visible;
-					//	hasButtonBeenDroppedInCorrectzone = false;
-					//}			
 					break;
 				case DragAction.Ended:
 					Log.Debug(TAG, "DragAction.Ended");
@@ -182,35 +230,72 @@ namespace AlgeTiles
 			}
 		}
 
-		//http://stackoverflow.com/questions/18836432/how-to-find-the-view-of-a-button-in-its-click-eventhandler
-		private void ImageView_Touch(object sender, View.LongClickEventArgs e)
+		private void tile_LongClick(object sender, View.LongClickEventArgs e)
 		{
-			Log.Debug(TAG, "ImageView_Touch");
 			var imageViewTouch = (sender) as ImageView;
 			ClipData data = ClipData.NewPlainText(BUTTON_TYPE, ORIGINAL_BUTTON);
+			switch (imageViewTouch.Id)
+			{
+				case Resource.Id.tile_1:
+					data = ClipData.NewPlainText(BUTTON_TYPE, "tile_1");
+					break;
+				case Resource.Id.x_tile:
+					data = ClipData.NewPlainText(BUTTON_TYPE, "x_tile");
+					break;
+				case Resource.Id.x2_tile:
+					data = ClipData.NewPlainText(BUTTON_TYPE, "x2_tile");
+					break;
+			}
 			View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(imageViewTouch);
 			imageViewTouch.StartDrag(data, shadowBuilder, imageViewTouch, 0);
-			//imageViewTouch.Visibility = ViewStates.Invisible;
 		}
+		//http://stackoverflow.com/questions/18836432/how-to-find-the-view-of-a-button-in-its-click-eventhandler
 
+		//TODO: When top most layer textview increases in length, the edit text gets pushed
 		private void clonedImageView_Touch(object sender, View.LongClickEventArgs e)
 		{
-			Log.Debug(TAG, "Switch: " + deleteSwitch.Checked);
-			if(deleteSwitch.Checked)
+			var touchedImageView = (sender) as ImageView;
+			ViewGroup vg = (ViewGroup)touchedImageView.Parent;
+			if(removeToggle.Checked)
 			{
-				var imageViewTouch = (sender) as ImageView;
-				ViewGroup vg = (ViewGroup)imageViewTouch.Parent;
-				vg.RemoveView(imageViewTouch);
-				imageViewTouch.Visibility = ViewStates.Gone;
-			} else
-			{
-				Log.Debug(TAG, "clonedImageView_Touch");
-				var imageViewTouch = (sender) as ImageView;
-				ClipData data = ClipData.NewPlainText(BUTTON_TYPE, CLONED_BUTTON);
-				View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(imageViewTouch);
-				imageViewTouch.StartDrag(data, shadowBuilder, imageViewTouch, 0);
-				imageViewTouch.Visibility = ViewStates.Invisible;
+				Log.Debug(TAG, "Switch: Remove");
+				vg.RemoveView(touchedImageView);
+				touchedImageView.Visibility = ViewStates.Gone;
+				Vibrator vibrator = (Vibrator)GetSystemService(Context.VibratorService);
+				vibrator.Vibrate(30);
+
+				//var touchedImageViewTag = touchedImageView.GetTag(0).ToString();
+				int id = touchedImageView.Id;
+				Log.Debug(TAG, "Remove");
+				Log.Debug(TAG, id + "");
+				Log.Debug(TAG, Resource.Id.tile_1 + "");
+				Log.Debug(TAG, Resource.Id.x_tile + "");
+				Log.Debug(TAG, Resource.Id.x2_tile + "");
+
+				if (touchedImageView.Tag.ToString() == "tile_1")
+					--numberOfTile_1s;
+				if (touchedImageView.Tag.ToString() == "x_tile")
+					--numberOfX_tiles;
+				if (touchedImageView.Tag.ToString() == "x2_tile")
+					--numberOfX2_tiles;
+				result.Text = "tile_1: " + numberOfTile_1s + ", x_tile: " + numberOfX_tiles + ", x2_tile: " + numberOfX2_tiles;
 			}
+
+			if (dragToggle.Checked)
+			{
+				Log.Debug(TAG, "Switch: Drag");
+			}
+
+			if (rotateToggle.Checked)
+			{
+				Log.Debug(TAG, "Switch: Rotate");
+				touchedImageView.Rotation = touchedImageView.Rotation - 90;
+			}
+		}
+
+		private void updateResults(string text)
+		{
+			result.Text = text;
 		}
 	}
 }
