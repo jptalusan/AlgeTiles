@@ -90,13 +90,22 @@ namespace AlgeTiles
 			public const int x_tile = 2130837518;
 			
 			// aapt resource value: 0x7f02000f
-			public const int xy_tile = 2130837519;
+			public const int x_tile_rot = 2130837519;
 			
 			// aapt resource value: 0x7f020010
-			public const int y2_tile = 2130837520;
+			public const int xy_tile = 2130837520;
 			
 			// aapt resource value: 0x7f020011
-			public const int y_tile = 2130837521;
+			public const int xy_tile_rot = 2130837521;
+			
+			// aapt resource value: 0x7f020012
+			public const int y2_tile = 2130837522;
+			
+			// aapt resource value: 0x7f020013
+			public const int y_tile = 2130837523;
+			
+			// aapt resource value: 0x7f020014
+			public const int y_tile_rot = 2130837524;
 			
 			static Drawable()
 			{
@@ -182,6 +191,9 @@ namespace AlgeTiles
 			
 			// aapt resource value: 0x7f050011
 			public const int x_tile = 2131034129;
+			
+			// aapt resource value: 0x7f050018
+			public const int x_tile_rot = 2131034136;
 			
 			static Id()
 			{

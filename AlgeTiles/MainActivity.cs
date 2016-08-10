@@ -54,6 +54,7 @@ namespace AlgeTiles
 
 		private ImageView tile_1;
 		private ImageView x_tile;
+		private ImageView x_tile_rot;
 		private ImageView x2_tile;
 
 		private int numberOfTile_1s = 0;
@@ -70,10 +71,12 @@ namespace AlgeTiles
 
 			tile_1 = (ImageView)FindViewById(Resource.Id.tile_1);
 			x_tile = (ImageView)FindViewById(Resource.Id.x_tile);
+			x_tile_rot = (ImageView)FindViewById(Resource.Id.x_tile_rot);
 			x2_tile = (ImageView)FindViewById(Resource.Id.x2_tile);
 
 			tile_1.LongClick += tile_LongClick;
 			x_tile.LongClick += tile_LongClick;
+			x_tile_rot.LongClick += tile_LongClick;
 			x2_tile.LongClick += tile_LongClick;
 
 			FindViewById(Resource.Id.upperLeft).Drag += GridLayout_Drag;
@@ -121,9 +124,15 @@ namespace AlgeTiles
 					break;
 				case Resource.Id.rotate:
 					//Also rotate original tiles
-					tile_1.Rotation = tile_1.Rotation - 90;
-					x_tile.Rotation = x_tile.Rotation - 90;
-					x2_tile.Rotation = x2_tile.Rotation - 90;
+					if (rotateToggle.Checked)
+					{
+						x_tile.Visibility = ViewStates.Gone;
+						x_tile_rot.Visibility = ViewStates.Visible;
+					} else
+					{
+						x_tile.Visibility = ViewStates.Visible;
+						x_tile_rot.Visibility = ViewStates.Gone;
+					}
 
 					if (removeToggle.Checked)
 						removeToggle.Checked = false;
@@ -156,13 +165,13 @@ namespace AlgeTiles
 					break;
 				case DragAction.Entered:
 					Log.Debug(TAG, "DragAction.Entered");
-					v.SetBackgroundResource(Resource.Drawable.shape);
+					v.SetBackgroundResource(Resource.Drawable.shape_droptarget);
 					break;
 				case DragAction.Exited:
 					Log.Debug(TAG, "DragAction.Exited");
 					currentOwner = (ViewGroup)view.Parent;
 					hasButtonBeenDroppedInCorrectzone = false;
-					v.SetBackgroundResource(Resource.Drawable.shape_droptarget);
+					v.SetBackgroundResource(Resource.Drawable.shape);
 					break;
 				case DragAction.Drop:
 					Log.Debug(TAG, "DragAction.Drop");
@@ -184,8 +193,26 @@ namespace AlgeTiles
 					{
 						// Gets the item containing the dragged data
 						ImageView imageView = new ImageView(this);
-						int resID = Resources.GetIdentifier(currentButtonType, "drawable", PackageName);
-						imageView.SetBackgroundResource(resID);
+						if (currentButtonType.Equals("x_tile") && 
+							!rotateToggle.Checked && 
+							(v.Id == Resource.Id.middleLeft ||
+							v.Id == Resource.Id.middleRight))
+						{
+							imageView.SetBackgroundResource(Resource.Drawable.x_tile_rot);
+						}
+						else if (currentButtonType.Equals("x_tile_rot") &&
+							rotateToggle.Checked &&
+							(v.Id == Resource.Id.upperMiddle ||
+							v.Id == Resource.Id.lowerMiddle))
+						{
+							imageView.SetBackgroundResource(Resource.Drawable.x_tile);
+						}
+						else
+						{
+							int resID = Resources.GetIdentifier(currentButtonType, "drawable", PackageName);
+							imageView.SetBackgroundResource(resID);
+						}
+
 						imageView.Tag = currentButtonType;
 
 						//Probably should put weight or alignment here
@@ -193,29 +220,28 @@ namespace AlgeTiles
 							ViewGroup.LayoutParams.WrapContent,
 							ViewGroup.LayoutParams.WrapContent);
 						imageView.LayoutParameters = linearLayoutParams;
-						//imageView.SetTag(0, currentButtonType);
 						imageView.LongClick += clonedImageView_Touch;
 
 						if (currentButtonType.Equals("tile_1"))
 							++numberOfTile_1s;
-						if (currentButtonType.Equals("x_tile"))
+						if (currentButtonType.Equals("x_tile") || currentButtonType.Equals("x_tile_rot"))
 							++numberOfX_tiles;
 						if (currentButtonType.Equals("x2_tile"))
 							++numberOfX2_tiles;
 
-						result.Text = "tile_1: " + numberOfTile_1s + ", x_tile: " + numberOfX_tiles + ", x2_tile: " + numberOfX2_tiles;
 
 						GridLayout container = (GridLayout)v;
 						container.AddView(imageView);
 						view.Visibility = ViewStates.Visible;
-
+						v.SetBackgroundResource(Resource.Drawable.shape);
 						hasButtonBeenDroppedInCorrectzone = true;
 					}
+					result.Text = "tile_1: " + numberOfTile_1s + ", x_tile: " + numberOfX_tiles + ", x2_tile: " + numberOfX2_tiles;
 
 					break;
 				case DragAction.Ended:
 					Log.Debug(TAG, "DragAction.Ended");
-					v.SetBackgroundResource(Resource.Drawable.shape_droptarget);
+					v.SetBackgroundResource(Resource.Drawable.shape);
 					if (!hasButtonBeenDroppedInCorrectzone && 
 						currentButtonType.Equals(CLONED_BUTTON))
 					{
@@ -241,6 +267,9 @@ namespace AlgeTiles
 					break;
 				case Resource.Id.x_tile:
 					data = ClipData.NewPlainText(BUTTON_TYPE, "x_tile");
+					break;
+				case Resource.Id.x_tile_rot:
+					data = ClipData.NewPlainText(BUTTON_TYPE, "x_tile_rot");
 					break;
 				case Resource.Id.x2_tile:
 					data = ClipData.NewPlainText(BUTTON_TYPE, "x2_tile");
