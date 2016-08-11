@@ -58,14 +58,14 @@
                 android:layout_gravity="fill_horizontal"
                 android:id="@+id/editText3" />
         </GridLayout>
+    <!-- Second Layer-->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0px"
             android:layout_weight="30"
             android:weightSum="65">
-	<!-- Second Layer-->
-		<!-- Upper Left -->
+	<!-- Upper Left -->
             <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
@@ -80,7 +80,7 @@
                     android:text="L2-3-1"
                     android:id="@+id/textView2" /-->
             </GridLayout>
-		<!-- Upper Middle -->
+	<!-- Upper Middle -->
             <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
@@ -113,39 +113,39 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0px"
             android:layout_weight="5"
 			android:weightSum="65">
-		<!-- Middle Left -->
-			<GridLayout
-				android:layout_width="0px"
-				android:layout_height="match_parent"
-				android:layout_weight="30"
-				android:background="@drawable/shape"
-				android:id="@+id/middleLeft"
-				android:rowCount="1"
-				android:columnCount="12">
+	<!-- Middle Left -->
+		<GridLayout
+			android:layout_width="0px"
+			android:layout_height="match_parent"
+			android:layout_weight="30"
+			android:background="@drawable/shape"
+			android:id="@+id/middleLeft"
+			android:rowCount="1"
+			android:columnCount="12">
 			</GridLayout>
-		<!-- Middle Middle -->
-			<GridLayout
-				android:layout_width="0px"
-				android:layout_height="match_parent"
-				android:layout_weight="5"
-				android:background="@drawable/shape"
-				android:id="@+id/middleMiddle"
-				android:rowCount="1"
-				android:columnCount="1">
-			</GridLayout>
-		<!-- Middle Right -->
-			<GridLayout
-				android:layout_width="0px"
-				android:layout_height="match_parent"
-				android:layout_weight="30"
-				android:background="@drawable/shape"
-				android:id="@+id/middleRight"
-				android:rowCount="1"
-				android:columnCount="12">
-			</GridLayout>
+	<!-- Middle Middle -->
+		<GridLayout
+			android:layout_width="0px"
+			android:layout_height="match_parent"
+			android:layout_weight="5"
+			android:background="@drawable/shape"
+			android:id="@+id/middleMiddle"
+			android:rowCount="1"
+			android:columnCount="1">
+		</GridLayout>
+	<!-- Middle Right -->
+		<GridLayout
+			android:layout_width="0px"
+			android:layout_height="match_parent"
+			android:layout_weight="30"
+			android:background="@drawable/shape"
+			android:id="@+id/middleRight"
+			android:rowCount="1"
+			android:columnCount="12">
+		</GridLayout>
 			<!-- TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -171,9 +171,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="L4-3-1" / -->
+	<!-- Lower Middle -->
             </GridLayout>
-		<!-- Lower Middle -->
-			<GridLayout
+		<GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
