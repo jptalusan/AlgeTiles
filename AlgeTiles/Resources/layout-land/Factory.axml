@@ -11,7 +11,7 @@
         android:layout_width="0px"
         android:layout_height="match_parent"
         android:layout_weight="7"
-        android:weightSum="70">
+        android:weightSum="204">
     <!-- First Layer-->
         <GridLayout
             android:orientation="horizontal"
@@ -63,13 +63,13 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:layout_weight="30"
-            android:weightSum="65">
+            android:layout_weight="92"
+            android:weightSum="200">
 	<!-- Upper Left -->
             <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
-                android:layout_weight="30"
+                android:layout_weight="92"
                 android:background="@drawable/shape"
                 android:id="@+id/upperLeft"
                 android:rowCount="6"
@@ -84,7 +84,7 @@
             <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
-                android:layout_weight="5"
+                android:layout_weight="16"
                 android:background="@drawable/shape"
                 android:id="@+id/upperMiddle"
                 android:rowCount="8"
@@ -98,7 +98,7 @@
             <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
-                android:layout_weight="30"
+                android:layout_weight="92"
                 android:background="@drawable/shape"
                 android:id="@+id/upperRight"
                 android:rowCount="6"
@@ -114,13 +114,13 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:layout_weight="5"
-			android:weightSum="65">
+            android:layout_weight="15"
+			android:weightSum="200">
 	<!-- Middle Left -->
 		<GridLayout
 			android:layout_width="0px"
 			android:layout_height="match_parent"
-			android:layout_weight="30"
+			android:layout_weight="92"
 			android:background="@drawable/shape"
 			android:id="@+id/middleLeft"
 			android:rowCount="1"
@@ -130,7 +130,7 @@
 		<GridLayout
 			android:layout_width="0px"
 			android:layout_height="match_parent"
-			android:layout_weight="5"
+			android:layout_weight="16"
 			android:background="@drawable/shape"
 			android:id="@+id/middleMiddle"
 			android:rowCount="1"
@@ -140,7 +140,7 @@
 		<GridLayout
 			android:layout_width="0px"
 			android:layout_height="match_parent"
-			android:layout_weight="30"
+			android:layout_weight="92"
 			android:background="@drawable/shape"
 			android:id="@+id/middleRight"
 			android:rowCount="1"
@@ -156,13 +156,13 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:layout_weight="30"
-            android:weightSum="65">
+            android:layout_weight="92"
+            android:weightSum="200">
         <!-- Lower Left -->
             <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
-                android:layout_weight="30"
+                android:layout_weight="92"
                 android:background="@drawable/shape"
                 android:id="@+id/lowerLeft"
                 android:rowCount="6"
@@ -176,7 +176,7 @@
 		<GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
-                android:layout_weight="5"
+                android:layout_weight="16"
                 android:background="@drawable/shape"
                 android:id="@+id/lowerMiddle"
                 android:rowCount="8"
@@ -191,7 +191,7 @@
             <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
-                android:layout_weight="30"
+                android:layout_weight="92"
                 android:background="@drawable/shape"
                 android:id="@+id/lowerRight"
                 android:rowCount="6"
