@@ -31,6 +31,7 @@ namespace AlgeTiles
 			Log.Debug(TAG, activityType + "," + numberOfVariables);
 			if (Constants.MULTIPLY == activityType)
 			{
+				//(ax + b)(cx + d)
 				if (Constants.ONE_VAR == numberOfVariables)
 				{
 					int[] vars = new int[4];
@@ -43,44 +44,55 @@ namespace AlgeTiles
 					vars[2] = c;
 					vars[3] = d;
 					return vars;
-				} else if (Constants.TWO_VAR == numberOfVariables)
+				}
+				//(ax + by + e)(cx + dy + f)
+				else if (Constants.TWO_VAR == numberOfVariables)
 				{
 					int[] vars = new int[6];
 					a = PickRandom(multipyTwoVarChoices);
 					c = PickRandom(multipyTwoVarChoices);
 					b = a < 0 ? PickRandom(-2 - (2 * a), 2) : PickRandom(-2, 2 - (2 * a));
 					d = c < 0 ? PickRandom(-2 - (2 * c), 2) : PickRandom(-2, 2 - (2 * c));
+					
+					//e
+					if (a >= 0 && b >= 0)
+						e = PickRandom(-8, 8 - (3 * a) - (3 * b));
+					if (a >= 0 && b < 0)
+						e = PickRandom(-8-(3 * b), 8 - (3 * a));
+					if (a < 0 && b >= 0)
+						e = PickRandom(-8 - (3 * a), 8 - (3 * b));
+					if (a < 0 && b < 0)
+						e = PickRandom(-8 - (3 * a) - (3 * b), 8);
+
+					//f
+					if (c >= 0 && d >= 0)
+						f = PickRandom(-8, 8 - (3 * c) - (3 * d));
+					if (c >= 0 && d < 0)
+						f = PickRandom(-8 - (3 * d), 8 - (3 * c));
+					if (c < 0 && d >= 0)
+						f = PickRandom(-8 - (3 * c), 8 - (3 * d));
+					if (c < 0 && d < 0)
+						f = PickRandom(-8 - (3 * c) - (3 * d), 8);
+
 					//TODO: Add more values for e and f generation
 					vars[0] = a;
 					vars[1] = b;
 					vars[2] = c;
 					vars[3] = d;
+					vars[4] = e;
+					vars[5] = f;
 					return vars;
 				}
 			} else if (Constants.FACTOR == activityType)
 			{
-				//TODO: Not working just copied from multiply. multiply is working
+				//(ax + b)(cx + d)
 				if (Constants.ONE_VAR == numberOfVariables)
 				{
 					int[] vars = new int[4];
-					a = PickRandom(multipyOneVarChoices);
-					c = PickRandom(multipyOneVarChoices);
+					a = PickRandom(-3, 3);
+					c = PickRandom(-3, 3);
 					b = a >= 0 ? PickRandom(-9, 9 - (3 * a)) : PickRandom(-9 - (3 * a), 9);
 					d = c >= 0 ? PickRandom(-9, 9 - (3 * c)) : PickRandom(-9 - (3 * c), 9);
-					vars[0] = a;
-					vars[1] = b;
-					vars[2] = c;
-					vars[3] = d;
-					return vars;
-				}
-				else if (Constants.TWO_VAR == numberOfVariables)
-				{
-					int[] vars = new int[6];
-					a = PickRandom(multipyTwoVarChoices);
-					c = PickRandom(multipyTwoVarChoices);
-					b = a >= 0 ? PickRandom(-2, 2 - (2 * a)) : PickRandom(-2 - (2 * a), 2);
-					d = c >= 0 ? PickRandom(-2, 2 - (2 * c)) : PickRandom(-2 - (2 * c), 2);
-					//TODO: Add more values for e and f generation
 					vars[0] = a;
 					vars[1] = b;
 					vars[2] = c;

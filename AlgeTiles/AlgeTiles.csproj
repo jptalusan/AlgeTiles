@@ -61,6 +61,7 @@
     <Compile Include="HomeScreenActivity.cs" />
     <Compile Include="FactorActivity.cs" />
     <Compile Include="MultiplyActivity.cs" />
+    <Compile Include="Number.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

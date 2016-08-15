@@ -19,6 +19,13 @@ namespace AlgeTiles
 		public static int ONE_VAR = 1;
 		public static int TWO_VAR = 2;
 		public static string NEW_Q = "new Q";
+		public static string CHK = "chk";
+		public static string REFR = "refr";
 		public static string VARIABLE_COUNT = "variable_count";
+
+		public static string ONE_TILE = "tile_1";
+		public static string X_TILE = "x_tile";
+		public static string X_TILE_ROT = "x_tile_rot";
+		public static string X2_TILE = "x2_tile";
 	}
 }
