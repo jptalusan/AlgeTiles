@@ -32,10 +32,11 @@ using Android.Graphics;
 
 //TODO: Gridlayout stretches depending on imageview inside but still retains the same row/col count
 //http://stackoverflow.com/questions/21950937/how-to-prevent-cells-in-gridlayout-from-stretching
+//TODO: not yet working, able to get activity name?
 namespace AlgeTiles
 {
-	[Activity(Label = "AlgeTiles", MainLauncher = true, Icon = "@drawable/icon", ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape)]
-	public class MainActivity : Activity//, View.IOnTouchListener, View.IOnDragListener
+	[Activity(Label = "MultiplyActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape)]
+	public class MultiplyActivity : Activity//, View.IOnTouchListener, View.IOnDragListener
 	{
 		private static string TAG = "AlgeTiles";
 		public static Context context { get; }
@@ -52,10 +53,10 @@ namespace AlgeTiles
 		private ToggleButton dragToggle;
 		private ToggleButton rotateToggle;
 
-		private ImageView tile_1;
-		private ImageView x_tile;
-		private ImageView x_tile_rot;
-		private ImageView x2_tile;
+		private ImageButton tile_1;
+		private ImageButton x_tile;
+		private ImageButton x_tile_rot;
+		private ImageButton x2_tile;
 
 		private int numberOfTile_1s = 0;
 		private int numberOfX_tiles = 0;
@@ -64,15 +65,17 @@ namespace AlgeTiles
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
+			Window.AddFlags(WindowManagerFlags.Fullscreen);
+			Window.ClearFlags(WindowManagerFlags.ForceNotFullscreen);
 			ActionBar.Hide();
 			SetContentView(Resource.Layout.Factory);
 			// Create your application here
 			result = (TextView) FindViewById(Resource.Id.result);
 
-			tile_1 = (ImageView)FindViewById(Resource.Id.tile_1);
-			x_tile = (ImageView)FindViewById(Resource.Id.x_tile);
-			x_tile_rot = (ImageView)FindViewById(Resource.Id.x_tile_rot);
-			x2_tile = (ImageView)FindViewById(Resource.Id.x2_tile);
+			tile_1 = (ImageButton)FindViewById(Resource.Id.tile_1);
+			x_tile = (ImageButton)FindViewById(Resource.Id.x_tile);
+			x_tile_rot = (ImageButton)FindViewById(Resource.Id.x_tile_rot);
+			x2_tile = (ImageButton)FindViewById(Resource.Id.x2_tile);
 
 			tile_1.LongClick += tile_LongClick;
 			x_tile.LongClick += tile_LongClick;
@@ -258,7 +261,7 @@ namespace AlgeTiles
 
 		private void tile_LongClick(object sender, View.LongClickEventArgs e)
 		{
-			var imageViewTouch = (sender) as ImageView;
+			var imageViewTouch = (sender) as ImageButton;
 			ClipData data = ClipData.NewPlainText(BUTTON_TYPE, ORIGINAL_BUTTON);
 			switch (imageViewTouch.Id)
 			{

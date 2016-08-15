@@ -120,6 +120,9 @@ namespace AlgeTiles
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f050018
+			public const int check_button = 2131034136;
+			
 			// aapt resource value: 0x7f05000d
 			public const int drag = 2131034125;
 			
@@ -132,8 +135,14 @@ namespace AlgeTiles
 			// aapt resource value: 0x7f050007
 			public const int editText3 = 2131034119;
 			
+			// aapt resource value: 0x7f05001d
+			public const int factor_button = 2131034141;
+			
 			// aapt resource value: 0x7f050000
 			public const int gridLayout2 = 2131034112;
+			
+			// aapt resource value: 0x7f05001c
+			public const int linearLayout1 = 2131034140;
 			
 			// aapt resource value: 0x7f05000b
 			public const int lowerLeft = 2131034123;
@@ -152,6 +161,18 @@ namespace AlgeTiles
 			
 			// aapt resource value: 0x7f050016
 			public const int middleRight = 2131034134;
+			
+			// aapt resource value: 0x7f05001e
+			public const int multiply_button = 2131034142;
+			
+			// aapt resource value: 0x7f05001b
+			public const int new_question_button = 2131034139;
+			
+			// aapt resource value: 0x7f05001f
+			public const int one_variable_button = 2131034143;
+			
+			// aapt resource value: 0x7f050019
+			public const int refresh_button = 2131034137;
 			
 			// aapt resource value: 0x7f05000e
 			public const int remove = 2131034126;
@@ -177,6 +198,9 @@ namespace AlgeTiles
 			// aapt resource value: 0x7f050010
 			public const int tile_1 = 2131034128;
 			
+			// aapt resource value: 0x7f050020
+			public const int two_variable_button = 2131034144;
+			
 			// aapt resource value: 0x7f050008
 			public const int upperLeft = 2131034120;
 			
@@ -192,8 +216,8 @@ namespace AlgeTiles
 			// aapt resource value: 0x7f050011
 			public const int x_tile = 2131034129;
 			
-			// aapt resource value: 0x7f050018
-			public const int x_tile_rot = 2131034136;
+			// aapt resource value: 0x7f05001a
+			public const int x_tile_rot = 2131034138;
 			
 			static Id()
 			{
@@ -211,6 +235,9 @@ namespace AlgeTiles
 			// aapt resource value: 0x7f030000
 			public const int Factory = 2130903040;
 			
+			// aapt resource value: 0x7f030001
+			public const int HomeScreen = 2130903041;
+			
 			static Layout()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -227,8 +254,29 @@ namespace AlgeTiles
 			// aapt resource value: 0x7f040001
 			public const int ApplicationName = 2130968577;
 			
+			// aapt resource value: 0x7f040003
+			public const int Factor = 2130968579;
+			
 			// aapt resource value: 0x7f040000
 			public const int Hello = 2130968576;
+			
+			// aapt resource value: 0x7f040002
+			public const int Multiply = 2130968578;
+			
+			// aapt resource value: 0x7f040007
+			public const int check = 2130968583;
+			
+			// aapt resource value: 0x7f040006
+			public const int newQ = 2130968582;
+			
+			// aapt resource value: 0x7f040004
+			public const int oneVar = 2130968580;
+			
+			// aapt resource value: 0x7f040008
+			public const int refresh = 2130968584;
+			
+			// aapt resource value: 0x7f040005
+			public const int twoVar = 2130968581;
 			
 			static String()
 			{
