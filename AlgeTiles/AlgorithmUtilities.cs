@@ -39,6 +39,7 @@ namespace AlgeTiles
 					c = PickRandom(multipyOneVarChoices);
 					b = a < 0 ? PickRandom(-9 - (3 * a), 9) : PickRandom(-9, 9 - (3 * a));
 					d = c < 0 ? PickRandom(-9 - (3 * c), 9) : PickRandom(-9, 9 - (3 * c));
+
 					vars[0] = a;
 					vars[1] = b;
 					vars[2] = c;
@@ -113,6 +114,128 @@ namespace AlgeTiles
 		{
 			var rnd = new Random();
 			return rnd.Next(a, b);
+		}
+
+		public static bool isFirstAnswerCorrect(int[] vars, GridValue[] gvArr, int numberOfVariables)
+		{
+			//For 1 variable
+			int a = 0;
+			int b = 0;
+			int c = 0;
+			int d = 0;
+			//For 2 variables
+			int e = 0;
+			int f = 0;
+
+			//Should expand/change when checking for outer grids
+			GridValue midUp = gvArr[0];
+			GridValue midLo = gvArr[1];
+			GridValue midLeft = gvArr[2];
+			GridValue midRight = gvArr[3];
+
+			if (Constants.ONE_VAR == numberOfVariables)
+			{
+				a = vars[0];
+				b = vars[1];
+				c = vars[2];
+				d = vars[3];
+			}
+
+			if (Constants.TWO_VAR == numberOfVariables)
+			{
+				e = vars[4];
+				f = vars[5];
+			}
+
+			if ((a == (midUp - midLo).xVal && b == (midUp - midLo).oneVal) &&
+				(c == (midRight - midLeft).xVal && d == (midRight - midLeft).oneVal))
+			{
+				return true;
+			}
+			else if ((a == (midRight - midLeft).xVal && b == (midRight - midLeft).oneVal) &&
+					 (c == (midUp - midLo).xVal && d == (midUp - midLo).oneVal))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		public static bool isSecondAnswerCorrect(List<int> vars, GridValue[] gvArr, int numberOfVariables)
+		{
+			foreach (int i in vars)
+			{
+				Log.Debug(TAG, i + "");
+			}
+			for (int i = 0; i < gvArr.Length; ++i)
+				Log.Debug(TAG, "GvArr:" + gvArr[i].ToString());
+			//For 1 variable
+			int a = 0;
+			int b = 0;
+			int c = 0;
+			int d = 0;
+			//For 2 variables
+			int e = 0;
+			int f = 0;
+
+			//Should expand/change when checking for outer grids
+			GridValue upLeft = gvArr[0];
+			GridValue upRight = gvArr[1];
+			GridValue downLeft = gvArr[2];
+			GridValue downRight = gvArr[3];
+
+			if (Constants.ONE_VAR == numberOfVariables)
+			{
+				a = vars[0];
+				b = vars[1];
+				c = vars[2];
+				//d = vars[3];
+			}
+
+			if (Constants.TWO_VAR == numberOfVariables)
+			{
+				e = vars[4];
+				f = vars[5];
+			}
+
+			if (a == (upRight + downLeft - (upLeft + downRight)).x2Val &&
+				b == (upRight + downLeft - (upLeft + downRight)).xVal &&
+				c == (upRight + downLeft - (upLeft + downRight)).oneVal)
+				return true;
+			else
+			{
+				return false;
+			}
+		}
+
+		public static List<int> expandingVars(int[] vars)
+		{
+			List<int> output = new List<int>();
+			//For 1 variable
+			int a = 0;
+			int b = 0;
+			int c = 0;
+			int d = 0;
+			//For 2 variables
+			int e = 0;
+			int f = 0;
+			if (vars.Length <= 4)
+			{
+				a = vars[0];
+				b = vars[1];
+				c = vars[2];
+				d = vars[3];
+
+				output.Add(a * c);
+				output.Add((a * d) + (b * c));
+				output.Add(b * d);
+			} else //two variables
+			{
+
+			}
+			return output;
 		}
 	}
 }

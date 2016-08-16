@@ -27,5 +27,9 @@ namespace AlgeTiles
 		public static string X_TILE = "x_tile";
 		public static string X_TILE_ROT = "x_tile_rot";
 		public static string X2_TILE = "x2_tile";
+		//TODO: Add for y, xy, x2 and rotated versions (probably just for y and xy)
+
+		public static int REMOVE = 0;
+		public static int ADD = 1;
 	}
 }

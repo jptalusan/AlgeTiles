@@ -11,7 +11,9 @@ using Android.Views;
 using Android.Widget;
 using Android.Util;
 using Android.Graphics;
-
+//FACTOR IS middle first
+//http://www.wikihow.com/Factor-Second-Degree-Polynomials-(Quadratic-Equations)
+//How to factor
 //https://developer.xamarin.com/recipes/android/other_ux/gestures/detect_a_touch/
 //Set tag
 //http://stackoverflow.com/questions/5291726/what-is-the-main-purpose-of-settag-gettag-methods-of-view
