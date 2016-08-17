@@ -9,4 +9,7 @@
 	<string name="newQ">new Q</string>
 	<string name="check">chk</string>
 	<string name="refresh">refr</string>
+	<string name="drag">drag</string>
+	<string name="remove">remove</string>
+	<string name="rotate">rotate</string>
 </resources>

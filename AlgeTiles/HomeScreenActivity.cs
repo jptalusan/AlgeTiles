@@ -18,7 +18,6 @@ namespace AlgeTiles
 		private Button multiplyActivityButton;
 		private Button factorActivityButton;
 		private String activityType = "";
-		private int variableCount= -1;
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{

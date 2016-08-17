@@ -73,7 +73,7 @@ namespace AlgeTiles
 			Window.AddFlags(WindowManagerFlags.Fullscreen);
 			Window.ClearFlags(WindowManagerFlags.ForceNotFullscreen);
 			ActionBar.Hide();
-			SetContentView(Resource.Layout.Factory);
+			SetContentView(Resource.Layout.Multiply);
 			// Create your application here
 			result = (TextView) FindViewById(Resource.Id.result);
 
@@ -122,7 +122,7 @@ namespace AlgeTiles
 			Log.Debug(TAG, button.Text);
 			if (Constants.NEW_Q == button.Text)
 			{
-				int[] questionArray = AlgorithmUtilities.RNG(Constants.FACTOR, numberOfVariables);
+				List<int> questionArray = AlgorithmUtilities.RNG(Constants.FACTOR, numberOfVariables);
 				foreach (int i in questionArray)
 				{
 					Log.Debug(TAG, i + "");

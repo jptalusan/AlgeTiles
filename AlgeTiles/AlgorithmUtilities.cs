@@ -10,13 +10,14 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Util;
+using System.Text.RegularExpressions;
 
 namespace AlgeTiles
 {
 	static class AlgorithmUtilities
 	{
 		private static string TAG = "AlgorithmUtilities";
-		public static int[] RNG(string activityType, int numberOfVariables)
+		public static List<int> RNG(string activityType, int numberOfVariables)
 		{
 			int[] multipyOneVarChoices = { -3, -1, 0, 1, 3 };
 			int[] multipyTwoVarChoices = { -2, -1, 0, 1, 2 };
@@ -27,6 +28,7 @@ namespace AlgeTiles
 			int e = 0;
 			int f = 0;
 			var rnd = new Random();
+			List<int> vars = new List<int>();
 
 			Log.Debug(TAG, activityType + "," + numberOfVariables);
 			if (Constants.MULTIPLY == activityType)
@@ -34,74 +36,96 @@ namespace AlgeTiles
 				//(ax + b)(cx + d)
 				if (Constants.ONE_VAR == numberOfVariables)
 				{
-					int[] vars = new int[4];
-					a = PickRandom(multipyOneVarChoices);
-					c = PickRandom(multipyOneVarChoices);
-					b = a < 0 ? PickRandom(-9 - (3 * a), 9) : PickRandom(-9, 9 - (3 * a));
-					d = c < 0 ? PickRandom(-9 - (3 * c), 9) : PickRandom(-9, 9 - (3 * c));
+					while (a == 0 && b == 0)
+					{
+						a = PickRandom(multipyOneVarChoices);
+						b = a >= 0 ? PickRandom(-9, 9 - (3 * a)) : PickRandom(-9 - (3 * a), 9);
+					}
+					while (c == 0 && d == 0)
+					{
+						c = PickRandom(multipyOneVarChoices);
+						d = c >= 0 ? PickRandom(-9, 9 - (3 * c)) : PickRandom(-9 - (3 * c), 9);
+					}
 
-					vars[0] = a;
-					vars[1] = b;
-					vars[2] = c;
-					vars[3] = d;
-					return vars;
+					vars.Add(a);
+					vars.Add(b);
+					vars.Add(c);
+					vars.Add(d);
 				}
 				//(ax + by + e)(cx + dy + f)
 				else if (Constants.TWO_VAR == numberOfVariables)
 				{
-					int[] vars = new int[6];
-					a = PickRandom(multipyTwoVarChoices);
-					c = PickRandom(multipyTwoVarChoices);
-					b = a < 0 ? PickRandom(-2 - (2 * a), 2) : PickRandom(-2, 2 - (2 * a));
-					d = c < 0 ? PickRandom(-2 - (2 * c), 2) : PickRandom(-2, 2 - (2 * c));
-					
-					//e
-					if (a >= 0 && b >= 0)
-						e = PickRandom(-8, 8 - (3 * a) - (3 * b));
-					if (a >= 0 && b < 0)
-						e = PickRandom(-8-(3 * b), 8 - (3 * a));
-					if (a < 0 && b >= 0)
-						e = PickRandom(-8 - (3 * a), 8 - (3 * b));
-					if (a < 0 && b < 0)
-						e = PickRandom(-8 - (3 * a) - (3 * b), 8);
+					//while (a + b + e == 0)
+					//{
+						a = PickRandom(multipyTwoVarChoices);
+						b = a > 0 ? PickRandom(-2, 2 - a) : PickRandom(-2 - (2 * a), 2);
+						//e
+						if (a >= 0 && b >= 0)
+							e = PickRandom(-8, 8 - (3 * a) - (3 * b));
+						if (a >= 0 && b < 0)
+							e = PickRandom(-8 - (3 * b), 8 - (3 * a));
+						if (a < 0 && b >= 0)
+							e = PickRandom(-8 - (3 * a), 8 - (3 * b));
+						if (a < 0 && b < 0)
+							e = PickRandom(-8 - (3 * a) - (3 * b), 8);
+					//}
 
-					//f
-					if (c >= 0 && d >= 0)
-						f = PickRandom(-8, 8 - (3 * c) - (3 * d));
-					if (c >= 0 && d < 0)
-						f = PickRandom(-8 - (3 * d), 8 - (3 * c));
-					if (c < 0 && d >= 0)
-						f = PickRandom(-8 - (3 * c), 8 - (3 * d));
-					if (c < 0 && d < 0)
-						f = PickRandom(-8 - (3 * c) - (3 * d), 8);
+					//while (c + d + f == 0)
+					//{
+						c = PickRandom(multipyTwoVarChoices);
+						d = c > 0 ? PickRandom(-2, 2 - c) : PickRandom(-2 - (2 * c), 2);
+						//f
+						if (c >= 0 && d >= 0)
+							f = PickRandom(-8, 8 - (3 * c) - (3 * d));
+						if (c >= 0 && d < 0)
+							f = PickRandom(-8 - (3 * d), 8 - (3 * c));
+						if (c < 0 && d >= 0)
+							f = PickRandom(-8 - (3 * c), 8 - (3 * d));
+						if (c < 0 && d < 0)
+							f = PickRandom(-8 - (3 * c) - (3 * d), 8);
+					//}
 
 					//TODO: Add more values for e and f generation
-					vars[0] = a;
-					vars[1] = b;
-					vars[2] = c;
-					vars[3] = d;
-					vars[4] = e;
-					vars[5] = f;
-					return vars;
+					vars.Add(a);
+					vars.Add(b);
+					vars.Add(c);
+					vars.Add(d);
+					vars.Add(e);
+					vars.Add(f);
 				}
 			} else if (Constants.FACTOR == activityType)
 			{
 				//(ax + b)(cx + d)
 				if (Constants.ONE_VAR == numberOfVariables)
 				{
-					int[] vars = new int[4];
-					a = PickRandom(-3, 3);
-					c = PickRandom(-3, 3);
-					b = a >= 0 ? PickRandom(-9, 9 - (3 * a)) : PickRandom(-9 - (3 * a), 9);
-					d = c >= 0 ? PickRandom(-9, 9 - (3 * c)) : PickRandom(-9 - (3 * c), 9);
-					vars[0] = a;
-					vars[1] = b;
-					vars[2] = c;
-					vars[3] = d;
-					return vars;
+					while (a == 0 && b == 0)
+					{
+						a = PickRandom(-3, 3);
+						b = a >= 0 ? PickRandom(-9, 9 - (3 * a)) : PickRandom(-9 - (3 * a), 9);
+					}
+
+					while (c == 0 && d == 0)
+					{
+						c = PickRandom(-3, 3);
+						d = c >= 0 ? PickRandom(-9, 9 - (3 * c)) : PickRandom(-9 - (3 * c), 9);
+					}
+
+					vars.Add(a);
+					vars.Add(b);
+					vars.Add(c);
+					vars.Add(d);
 				}
 			}
-			return null;
+
+			foreach (int i in vars)
+				Log.Debug(TAG, i + "");
+			//TODO: Fix for 2 variables
+			int total = 0;
+			foreach (int i in vars)
+				total += i;
+			if (0 == total)
+				vars = RNG(activityType, numberOfVariables);
+			return vars;
 		}
 
 		public static int PickRandom(params int[] Selection)
@@ -116,7 +140,7 @@ namespace AlgeTiles
 			return rnd.Next(a, b);
 		}
 
-		public static bool isFirstAnswerCorrect(int[] vars, GridValue[] gvArr, int numberOfVariables)
+		public static bool isFirstAnswerCorrect(List<int> vars, GridValue[] gvArr, int numberOfVariables)
 		{
 			//For 1 variable
 			int a = 0;
@@ -210,7 +234,7 @@ namespace AlgeTiles
 			}
 		}
 
-		public static List<int> expandingVars(int[] vars)
+		public static List<int> expandingVars(List<int> vars)
 		{
 			List<int> output = new List<int>();
 			//For 1 variable
@@ -221,7 +245,7 @@ namespace AlgeTiles
 			//For 2 variables
 			int e = 0;
 			int f = 0;
-			if (vars.Length <= 4)
+			if (vars.Count <= 4)
 			{
 				a = vars[0];
 				b = vars[1];
@@ -236,6 +260,18 @@ namespace AlgeTiles
 
 			}
 			return output;
+		}
+
+		private static string removeSpacesFromString(string input)
+		{
+			return Regex.Replace(input, @"\s+", "");
+		}
+
+		public static bool isThirdAnswerCorrect(List<int> vars, string answer)
+		{
+			answer = removeSpacesFromString(answer);
+
+			return false;
 		}
 	}
 }
