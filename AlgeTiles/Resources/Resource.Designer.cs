@@ -129,8 +129,8 @@ namespace AlgeTiles
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f06001d
-			public const int check_button = 2131099677;
+			// aapt resource value: 0x7f060022
+			public const int check_button = 2131099682;
 			
 			// aapt resource value: 0x7f060012
 			public const int drag = 2131099666;
@@ -156,35 +156,38 @@ namespace AlgeTiles
 			// aapt resource value: 0x7f060010
 			public const int lowerLeft = 2131099664;
 			
-			// aapt resource value: 0x7f06001c
-			public const int lowerMiddle = 2131099676;
+			// aapt resource value: 0x7f060021
+			public const int lowerMiddle = 2131099681;
 			
 			// aapt resource value: 0x7f060011
 			public const int lowerRight = 2131099665;
 			
-			// aapt resource value: 0x7f060019
-			public const int middleLeft = 2131099673;
+			// aapt resource value: 0x7f06001e
+			public const int middleLeft = 2131099678;
 			
-			// aapt resource value: 0x7f06001a
-			public const int middleMiddle = 2131099674;
+			// aapt resource value: 0x7f06001f
+			public const int middleMiddle = 2131099679;
 			
-			// aapt resource value: 0x7f06001b
-			public const int middleRight = 2131099675;
+			// aapt resource value: 0x7f060020
+			public const int middleRight = 2131099680;
 			
 			// aapt resource value: 0x7f060003
 			public const int multiply_button = 2131099651;
 			
-			// aapt resource value: 0x7f060024
-			public const int new_question_button = 2131099684;
+			// aapt resource value: 0x7f060029
+			public const int new_question_button = 2131099689;
 			
-			// aapt resource value: 0x7f06001f
-			public const int notRotatedButtonLayout = 2131099679;
+			// aapt resource value: 0x7f060024
+			public const int notRotatedButtonLayout = 2131099684;
+			
+			// aapt resource value: 0x7f06001c
+			public const int one_value = 2131099676;
 			
 			// aapt resource value: 0x7f060002
 			public const int one_variable_button = 2131099650;
 			
-			// aapt resource value: 0x7f06001e
-			public const int refresh_button = 2131099678;
+			// aapt resource value: 0x7f060023
+			public const int refresh_button = 2131099683;
 			
 			// aapt resource value: 0x7f060013
 			public const int remove = 2131099667;
@@ -195,8 +198,8 @@ namespace AlgeTiles
 			// aapt resource value: 0x7f060014
 			public const int rotate = 2131099668;
 			
-			// aapt resource value: 0x7f060020
-			public const int rotatedButtonLayout = 2131099680;
+			// aapt resource value: 0x7f060025
+			public const int rotatedButtonLayout = 2131099685;
 			
 			// aapt resource value: 0x7f060007
 			public const int space1 = 2131099655;
@@ -213,8 +216,8 @@ namespace AlgeTiles
 			// aapt resource value: 0x7f060015
 			public const int tile_1 = 2131099669;
 			
-			// aapt resource value: 0x7f060021
-			public const int tile_1_rot = 2131099681;
+			// aapt resource value: 0x7f060026
+			public const int tile_1_rot = 2131099686;
 			
 			// aapt resource value: 0x7f060004
 			public const int two_variable_button = 2131099652;
@@ -222,23 +225,35 @@ namespace AlgeTiles
 			// aapt resource value: 0x7f06000d
 			public const int upperLeft = 2131099661;
 			
-			// aapt resource value: 0x7f060018
-			public const int upperMiddle = 2131099672;
+			// aapt resource value: 0x7f06001d
+			public const int upperMiddle = 2131099677;
 			
 			// aapt resource value: 0x7f06000f
 			public const int upperRight = 2131099663;
 			
+			// aapt resource value: 0x7f060019
+			public const int x2TV = 2131099673;
+			
 			// aapt resource value: 0x7f060017
 			public const int x2_tile = 2131099671;
 			
-			// aapt resource value: 0x7f060023
-			public const int x2_tile_rot = 2131099683;
+			// aapt resource value: 0x7f060028
+			public const int x2_tile_rot = 2131099688;
+			
+			// aapt resource value: 0x7f060018
+			public const int x2_value = 2131099672;
+			
+			// aapt resource value: 0x7f06001b
+			public const int xTV = 2131099675;
 			
 			// aapt resource value: 0x7f060016
 			public const int x_tile = 2131099670;
 			
-			// aapt resource value: 0x7f060022
-			public const int x_tile_rot = 2131099682;
+			// aapt resource value: 0x7f060027
+			public const int x_tile_rot = 2131099687;
+			
+			// aapt resource value: 0x7f06001a
+			public const int x_value = 2131099674;
 			
 			static Id()
 			{

@@ -69,6 +69,8 @@ namespace AlgeTiles
 		private int numberOfVariables = 0;
 
 		private Boolean isFirstAnswerCorrect = false;
+		private Boolean isSecondAnswerCorrect = false;
+		private Boolean isThirdAnswerCorrect = true;
 
 		private GridLayout upperLeftGrid;
 		private GridLayout upperMiddleGrid;
@@ -99,6 +101,10 @@ namespace AlgeTiles
 
 		private MediaPlayer correct;
 		private MediaPlayer incorrect;
+
+		private EditText x2ET;
+		private EditText xET;
+		private EditText oneET;
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
@@ -207,6 +213,14 @@ namespace AlgeTiles
 
 			correct = MediaPlayer.Create(this, Resource.Raw.correct);
 			incorrect = MediaPlayer.Create(this, Resource.Raw.wrong);
+
+			x2ET = FindViewById<EditText>(Resource.Id.x2_value);
+			xET = FindViewById<EditText>(Resource.Id.x_value);
+			oneET = FindViewById<EditText>(Resource.Id.one_value);
+
+			x2ET.Enabled = false;
+			xET.Enabled = false;
+			oneET.Enabled = false;
 		}
 
 		private void toggle_click(object sender, EventArgs e)
@@ -318,7 +332,7 @@ namespace AlgeTiles
 					Toast.MakeText(Application.Context, "1:incorrect", ToastLength.Short).Show();
 				}
 			}
-			else
+			else if(!isSecondAnswerCorrect)
 			{
 				GridValue[] gvArr = { upperLeftGV, upperRightGV, lowerLeftGV, lowerRightGV };
 
@@ -327,17 +341,54 @@ namespace AlgeTiles
 					Log.Debug(TAG, gvArr[i].ToString());
 				if (AlgorithmUtilities.isSecondAnswerCorrect(expandedVars, gvArr, numberOfVariables))
 				{
-					for (int i = 0; i < outerGridLayoutList.Count; ++i)
-						outerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.ok);
 					Toast.MakeText(Application.Context, "2:correct", ToastLength.Short).Show();
 					correct.Start();
-					//TODO:Ask user to then fill up the edit text boxes with the expanded equation
+					//TODO:accomodate for 2 variables (right now just for one)
+					x2ET.Enabled = true;
+					xET.Enabled = true;
+					oneET.Enabled = true;
+					isSecondAnswerCorrect = true;
+
+					//Loop through inner and prevent deletions by removing: clonedImageView_Touch
+					for (int i = 0; i < outerGridLayoutList.Count; ++i)
+					{
+						outerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.ok);
+						outerGridLayoutList[i].Drag -= GridLayout_Drag;
+						for (int j = 0; j < outerGridLayoutList[i].ChildCount; ++j)
+						{
+							var iv = outerGridLayoutList[i].GetChildAt(j) as ImageView;
+							iv.LongClick -= clonedImageView_Touch;
+						}
+					}
 				}
 				else
 				{
 
 					Toast.MakeText(Application.Context, "2:incorrect", ToastLength.Short).Show();
 					incorrectPrompt(outerGridLayoutList);
+				}
+			} else
+			{
+				//TODO: Accomodate for two variables
+				int[] answer = new int[3];
+				int temp = 0;
+				answer[0] = int.TryParse(x2ET.Text, out temp) ? temp : 0;
+				answer[1] = int.TryParse(xET.Text, out temp) ? temp : 0;
+				answer[2] = int.TryParse(oneET.Text, out temp) ? temp : 0; ;
+				for (int i = 0; i < expandedVars.Count; ++i)
+				{
+					if (expandedVars[i] != answer[i])
+						isThirdAnswerCorrect = false;
+				}
+				if(isThirdAnswerCorrect)
+				{
+					Toast.MakeText(Application.Context, "3:correct", ToastLength.Short).Show();
+					correct.Start();
+					//TODO: Refresh then new question?
+				} else
+				{
+					Toast.MakeText(Application.Context, "3:incorrect", ToastLength.Short).Show();
+					incorrect.Start();
 				}
 			}
 		}
@@ -416,7 +467,7 @@ namespace AlgeTiles
 
 				string plus2 = !cx.Equals("") && !d.Equals("") ? "+" : "";
 
-				output = "(" + ax + plus1 + b + ")(" + cx + plus2 + d + ")";
+				output = "(" + ax + " " +  plus1 + " " + b + ")(" + cx + " " + plus2 + " " + d + ")";
 			}
 
 			result.Text = output;
