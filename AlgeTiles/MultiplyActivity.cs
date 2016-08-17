@@ -40,7 +40,7 @@ namespace AlgeTiles
 	[Activity(Label = "MultiplyActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape)]
 	public class MultiplyActivity : Activity//, View.IOnTouchListener, View.IOnDragListener
 	{
-		private static string TAG = "AlgeTiles";
+		private static string TAG = "AlgeTiles:Multiply";
 		public static Context context { get; }
 		private static string BUTTON_TYPE = "BUTTON_TYPE";
 		private static string CLONED_BUTTON = "CLONE_BUTTON";
@@ -332,7 +332,7 @@ namespace AlgeTiles
 					Toast.MakeText(Application.Context, "1:incorrect", ToastLength.Short).Show();
 				}
 			}
-			else if(!isSecondAnswerCorrect)
+			else if (!isSecondAnswerCorrect)
 			{
 				GridValue[] gvArr = { upperLeftGV, upperRightGV, lowerLeftGV, lowerRightGV };
 
@@ -367,7 +367,8 @@ namespace AlgeTiles
 					Toast.MakeText(Application.Context, "2:incorrect", ToastLength.Short).Show();
 					incorrectPrompt(outerGridLayoutList);
 				}
-			} else
+			}
+			else
 			{
 				//TODO: Accomodate for two variables
 				int[] answer = new int[3];
@@ -380,12 +381,13 @@ namespace AlgeTiles
 					if (expandedVars[i] != answer[i])
 						isThirdAnswerCorrect = false;
 				}
-				if(isThirdAnswerCorrect)
+				if (isThirdAnswerCorrect)
 				{
 					Toast.MakeText(Application.Context, "3:correct", ToastLength.Short).Show();
 					correct.Start();
 					//TODO: Refresh then new question?
-				} else
+				}
+				else
 				{
 					Toast.MakeText(Application.Context, "3:incorrect", ToastLength.Short).Show();
 					incorrect.Start();
@@ -467,7 +469,7 @@ namespace AlgeTiles
 
 				string plus2 = !cx.Equals("") && !d.Equals("") ? "+" : "";
 
-				output = "(" + ax + " " +  plus1 + " " + b + ")(" + cx + " " + plus2 + " " + d + ")";
+				output = "(" + ax + " " + plus1 + " " + b + ")(" + cx + " " + plus2 + " " + d + ")";
 			}
 
 			result.Text = output;
@@ -538,7 +540,7 @@ namespace AlgeTiles
 					{
 						int resID = Resources.GetIdentifier(currentButtonType, "drawable", PackageName);
 						imageView.SetBackgroundResource(resID);
-						wasImageDropped = true;							
+						wasImageDropped = true;
 					}
 					//Handle auto rotate for x_tile (middle)
 					//First group x
@@ -546,6 +548,8 @@ namespace AlgeTiles
 							(v.Id == Resource.Id.middleLeft ||
 							 v.Id == Resource.Id.middleRight))
 					{
+						if (v.Id == Resource.Id.middleLeft)
+							imageView.RotationY = 180;
 						if ((currentButtonType.Equals(Constants.X_TILE) && !rotateToggle.Checked) ||
 								(currentButtonType.Equals(Constants.X_TILE_ROT) && rotateToggle.Checked))
 						{
@@ -562,12 +566,15 @@ namespace AlgeTiles
 					else if (!isFirstAnswerCorrect &&
 							(v.Id == Resource.Id.upperMiddle ||
 							v.Id == Resource.Id.lowerMiddle))
-					{					
+					{
+						if (v.Id == Resource.Id.upperMiddle)
+							imageView.RotationX = 180;
 						if ((currentButtonType.Equals(Constants.X_TILE_ROT) && rotateToggle.Checked) ||
 								(currentButtonType.Equals(Constants.X_TILE) && !rotateToggle.Checked))
 						{
 							imageView.SetBackgroundResource(Resource.Drawable.x_tile);
-						} else if (currentButtonType.Equals(Constants.ONE_TILE))
+						}
+						else if (currentButtonType.Equals(Constants.ONE_TILE))
 						{
 							int resID = Resources.GetIdentifier(currentButtonType, "drawable", PackageName);
 							imageView.SetBackgroundResource(resID);
@@ -679,7 +686,7 @@ namespace AlgeTiles
 		{
 			if (Constants.ADD == process)
 			{
-				if(Resource.Id.upperLeft == id)
+				if (Resource.Id.upperLeft == id)
 				{
 					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
 						++upperLeftGV.x2Val;

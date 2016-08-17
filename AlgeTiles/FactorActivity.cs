@@ -11,36 +11,15 @@ using Android.Views;
 using Android.Widget;
 using Android.Util;
 using Android.Graphics;
-//FACTOR IS middle first
-//http://www.wikihow.com/Factor-Second-Degree-Polynomials-(Quadratic-Equations)
-//How to factor
-//https://developer.xamarin.com/recipes/android/other_ux/gestures/detect_a_touch/
-//Set tag
-//http://stackoverflow.com/questions/5291726/what-is-the-main-purpose-of-settag-gettag-methods-of-view
-//Multiple buttons 1 handler
-//http://stackoverflow.com/questions/3814234/how-can-i-subscribe-multiple-buttons-to-the-same-event-handler-and-act-according
-//use switch case
-//Context current activity
-//http://stackoverflow.com/questions/25613225/get-current-activity-from-application-context-monoandroid
-//Deprecated
-//http://stackoverflow.com/questions/29041027/android-getresources-getdrawable-deprecated-api-22
-//Sample drag and drop
-//http://pumpingco.de/adding-drag-and-drop-to-your-android-application-with-xamarin/
-//Problem, restricting in own layout parent only
-//http://stackoverflow.com/questions/17111135/android-constrain-drag-and-drop-to-a-bounding-box
-//http://stackoverflow.com/questions/20491071/how-can-i-restrict-the-dragzone-for-a-view-in-android
-//BUGs
-//On dragging original button, it is still labeled as such (onDrop)
+using Android.Media;
+using System.Threading.Tasks;
 
-//TODO: Gridlayout stretches depending on imageview inside but still retains the same row/col count
-//http://stackoverflow.com/questions/21950937/how-to-prevent-cells-in-gridlayout-from-stretching
-//TODO: Working, multiply not yet
 namespace AlgeTiles
 {
 	[Activity(Label = "FactorActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape)]
 	public class FactorActivity : Activity//, View.IOnTouchListener, View.IOnDragListener
 	{
-		private static string TAG = "AlgeTiles";
+		private static string TAG = "AlgeTiles:Factor";
 		public static Context context { get; }
 		private static string BUTTON_TYPE = "BUTTON_TYPE";
 		private static string CLONED_BUTTON = "CLONE_BUTTON";
@@ -49,23 +28,63 @@ namespace AlgeTiles
 		private Boolean hasButtonBeenDroppedInCorrectzone = false;
 		private string currentButtonType = "";
 		private ViewGroup currentOwner;
-		private int numberOfCloneButtons = 1;
-		
+
 		private ToggleButton removeToggle;
 		private ToggleButton dragToggle;
 		private ToggleButton rotateToggle;
 
 		private ImageButton tile_1;
 		private ImageButton x_tile;
-		private ImageButton x_tile_rot;
 		private ImageButton x2_tile;
 
-		private int numberOfTile_1s = 0;
-		private int numberOfX_tiles = 0;
-		private int numberOfX2_tiles = 0;
+		private ImageButton tile_1_rot;
+		private ImageButton x_tile_rot;
+		private ImageButton x2_tile_rot;
 
 		private Button newQuestionButton;
+		private Button refreshButton;
+		private Button checkButton;
+
 		private int numberOfVariables = 0;
+
+		private Boolean isFirstAnswerCorrect = false;
+		private Boolean isSecondAnswerCorrect = false;
+		private Boolean isThirdAnswerCorrect = false;
+
+		private GridLayout upperLeftGrid;
+		private GridLayout upperMiddleGrid;
+		private GridLayout upperRightGrid;
+		private GridLayout middleLeftGrid;
+		private GridLayout middleRightGrid;
+		private GridLayout lowerLeftGrid;
+		private GridLayout lowerMiddleGrid;
+		private GridLayout lowerRightGrid;
+
+		//Four outer grids
+		private GridValue upperLeftGV;
+		private GridValue upperRightGV;
+		private GridValue lowerLeftGV;
+		private GridValue lowerRightGV;
+
+		//Four center grids
+		private GridValue midUpGV;
+		private GridValue midLowGV;
+		private GridValue midLeftGV;
+		private GridValue midRightGV;
+
+		private List<int> vars = new List<int>();
+		private List<int> expandedVars = new List<int>();
+		private List<GridLayout> innerGridLayoutList = new List<GridLayout>();
+		private List<GridLayout> outerGridLayoutList = new List<GridLayout>();
+		private List<GridValue> gridValueList = new List<GridValue>();
+
+		private MediaPlayer correct;
+		private MediaPlayer incorrect;
+
+		private EditText x_value_1;
+		private EditText one_value_1;
+		private EditText x_value_2;
+		private EditText one_value_2;
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
@@ -73,47 +92,160 @@ namespace AlgeTiles
 			Window.AddFlags(WindowManagerFlags.Fullscreen);
 			Window.ClearFlags(WindowManagerFlags.ForceNotFullscreen);
 			ActionBar.Hide();
-			SetContentView(Resource.Layout.Multiply);
+			SetContentView(Resource.Layout.Factor);
+			Log.Debug(TAG, "Enter FACTOR");
 			// Create your application here
-			result = (TextView) FindViewById(Resource.Id.result);
+			result = (TextView)FindViewById(Resource.Id.result);
 
 			tile_1 = (ImageButton)FindViewById(Resource.Id.tile_1);
 			x_tile = (ImageButton)FindViewById(Resource.Id.x_tile);
-			x_tile_rot = (ImageButton)FindViewById(Resource.Id.x_tile_rot);
 			x2_tile = (ImageButton)FindViewById(Resource.Id.x2_tile);
+
+			tile_1_rot = (ImageButton)FindViewById(Resource.Id.tile_1_rot);
+			x_tile_rot = (ImageButton)FindViewById(Resource.Id.x_tile_rot);
+			x2_tile_rot = (ImageButton)FindViewById(Resource.Id.x2_tile_rot);
 
 			tile_1.LongClick += tile_LongClick;
 			x_tile.LongClick += tile_LongClick;
-			x_tile_rot.LongClick += tile_LongClick;
 			x2_tile.LongClick += tile_LongClick;
 
-			FindViewById(Resource.Id.upperLeft).Drag += GridLayout_Drag;
-			FindViewById(Resource.Id.upperMiddle).Drag += GridLayout_Drag;
-			FindViewById(Resource.Id.upperRight).Drag += GridLayout_Drag;
+			tile_1_rot.LongClick += tile_LongClick;
+			x_tile_rot.LongClick += tile_LongClick;
+			x2_tile_rot.LongClick += tile_LongClick;
+
+			upperLeftGrid = FindViewById<GridLayout>(Resource.Id.upperLeft);
+			upperMiddleGrid = FindViewById<GridLayout>(Resource.Id.upperMiddle);
+			upperRightGrid = FindViewById<GridLayout>(Resource.Id.upperRight);
 
 			//Restrict x^2 from being dragged here.
-			FindViewById(Resource.Id.middleLeft).Drag += GridLayout_Drag;
+			middleLeftGrid = FindViewById<GridLayout>(Resource.Id.middleLeft);
 			//FindViewById(Resource.Id.middleMiddle).Drag += GridLayout_Drag;
-			FindViewById(Resource.Id.middleRight).Drag += GridLayout_Drag;
+			middleRightGrid = FindViewById<GridLayout>(Resource.Id.middleRight);
 
-			FindViewById(Resource.Id.lowerLeft).Drag += GridLayout_Drag;
-			FindViewById(Resource.Id.lowerMiddle).Drag += GridLayout_Drag;
-			FindViewById(Resource.Id.lowerRight).Drag += GridLayout_Drag;
+			lowerLeftGrid = FindViewById<GridLayout>(Resource.Id.lowerLeft);
+			lowerMiddleGrid = FindViewById<GridLayout>(Resource.Id.lowerMiddle);
+			lowerRightGrid = FindViewById<GridLayout>(Resource.Id.lowerRight);
 
+			outerGridLayoutList.Add(upperLeftGrid);
+			outerGridLayoutList.Add(upperRightGrid);
+			outerGridLayoutList.Add(lowerLeftGrid);
+			outerGridLayoutList.Add(lowerRightGrid);
+
+			innerGridLayoutList.Add(upperMiddleGrid);
+			innerGridLayoutList.Add(middleLeftGrid);
+			innerGridLayoutList.Add(middleRightGrid);
+			innerGridLayoutList.Add(lowerMiddleGrid);
+
+			//For multiply this is the initial grid available
+			//Together form one Part of the formula
+			upperLeftGrid.Drag += GridLayout_Drag;
+			upperRightGrid.Drag += GridLayout_Drag;
+
+			//Together form one Part of the formula
+			lowerLeftGrid.Drag += GridLayout_Drag;
+			lowerRightGrid.Drag += GridLayout_Drag;
+
+			//Shade red the other grids
+			for (int i = 0; i < outerGridLayoutList.Count; ++i)
+				innerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.unavailable);
 
 			removeToggle = (ToggleButton)FindViewById(Resource.Id.remove);
 			dragToggle = (ToggleButton)FindViewById(Resource.Id.drag);
 			rotateToggle = (ToggleButton)FindViewById(Resource.Id.rotate);
 
-			removeToggle.CheckedChange += toggle_click;
-			dragToggle.CheckedChange += toggle_click;
-			rotateToggle.CheckedChange += toggle_click;
-
-			result.Text = "tile_1: " + numberOfTile_1s + ", x_tile: " + numberOfX_tiles + ", x2_tile: " + numberOfX2_tiles;
+			removeToggle.Click += toggle_click;
+			dragToggle.Click += toggle_click;
+			rotateToggle.Click += toggle_click;
 
 			numberOfVariables = Intent.GetIntExtra(Constants.VARIABLE_COUNT, 0);
+
 			newQuestionButton = (Button)FindViewById<Button>(Resource.Id.new_question_button);
+			refreshButton = (Button)FindViewById<Button>(Resource.Id.refresh_button);
+			checkButton = (Button)FindViewById<Button>(Resource.Id.check_button);
+
 			newQuestionButton.Click += button_click;
+			refreshButton.Click += button_click;
+			checkButton.Click += button_click;
+
+			upperLeftGV = new GridValue();
+			upperRightGV = new GridValue();
+			lowerLeftGV = new GridValue();
+			lowerRightGV = new GridValue();
+
+			midUpGV = new GridValue();
+			midLowGV = new GridValue();
+			midLeftGV = new GridValue();
+			midRightGV = new GridValue();
+
+			gridValueList.Add(upperLeftGV);
+			gridValueList.Add(upperRightGV);
+			gridValueList.Add(lowerLeftGV);
+			gridValueList.Add(lowerRightGV);
+
+			gridValueList.Add(midUpGV);
+			gridValueList.Add(midLowGV);
+			gridValueList.Add(midLeftGV);
+			gridValueList.Add(midRightGV);
+
+			vars = AlgorithmUtilities.RNG(Constants.FACTOR, numberOfVariables);
+			expandedVars = AlgorithmUtilities.expandingVars(vars);
+			setupQuestionString(expandedVars);
+
+			correct = MediaPlayer.Create(this, Resource.Raw.correct);
+			incorrect = MediaPlayer.Create(this, Resource.Raw.wrong);
+
+			x_value_1 = FindViewById<EditText>(Resource.Id.x_value_1);
+			one_value_1 = FindViewById<EditText>(Resource.Id.one_value_1);
+
+			x_value_2 = FindViewById<EditText>(Resource.Id.x_value_2);
+			one_value_2 = FindViewById<EditText>(Resource.Id.one_value_2);
+
+			x_value_1.Enabled = false;
+			one_value_1.Enabled = false;
+			x_value_2.Enabled = false;
+			one_value_2.Enabled = false;
+		}
+
+		private void toggle_click(object sender, EventArgs e)
+		{
+			ToggleButton clicked_toggle = (sender) as ToggleButton;
+			int buttonText = clicked_toggle.Id;
+			switch (buttonText)
+			{
+				case Resource.Id.remove:
+					dragToggle.Checked = dragToggle.Checked ? false : false;
+					if (rotateToggle.Checked)
+					{
+						FindViewById<LinearLayout>(Resource.Id.notRotatedButtonLayout).Visibility = ViewStates.Visible;
+						FindViewById<LinearLayout>(Resource.Id.rotatedButtonLayout).Visibility = ViewStates.Gone;
+					}
+					rotateToggle.Checked = rotateToggle.Checked ? false : false;
+					break;
+				case Resource.Id.drag:
+					removeToggle.Checked = removeToggle.Checked ? false : false;
+					if (rotateToggle.Checked)
+					{
+						FindViewById<LinearLayout>(Resource.Id.notRotatedButtonLayout).Visibility = ViewStates.Visible;
+						FindViewById<LinearLayout>(Resource.Id.rotatedButtonLayout).Visibility = ViewStates.Gone;
+					}
+					rotateToggle.Checked = rotateToggle.Checked ? false : false;
+					break;
+				case Resource.Id.rotate:
+					//Also rotate original tiles
+					if (rotateToggle.Checked)
+					{
+						FindViewById<LinearLayout>(Resource.Id.notRotatedButtonLayout).Visibility = ViewStates.Gone;
+						FindViewById<LinearLayout>(Resource.Id.rotatedButtonLayout).Visibility = ViewStates.Visible;
+					}
+					else
+					{
+						FindViewById<LinearLayout>(Resource.Id.notRotatedButtonLayout).Visibility = ViewStates.Visible;
+						FindViewById<LinearLayout>(Resource.Id.rotatedButtonLayout).Visibility = ViewStates.Gone;
+					}
+					removeToggle.Checked = removeToggle.Checked ? false : false;
+					dragToggle.Checked = dragToggle.Checked ? false : false;
+					break;
+			}
 		}
 
 		private void button_click(object sender, EventArgs e)
@@ -122,53 +254,228 @@ namespace AlgeTiles
 			Log.Debug(TAG, button.Text);
 			if (Constants.NEW_Q == button.Text)
 			{
-				List<int> questionArray = AlgorithmUtilities.RNG(Constants.FACTOR, numberOfVariables);
-				foreach (int i in questionArray)
+				setupNewQuestion();
+			}
+			else if (Constants.REFR == button.Text)
+			{
+				refreshScreen();
+			}
+			else if (Constants.CHK == button.Text)
+			{
+				checkAnswers();
+			}
+		}
+
+		private void checkAnswers()
+		{
+			if (!isSecondAnswerCorrect)
+			{
+				GridValue[] gvArr = { upperLeftGV, upperRightGV, lowerLeftGV, lowerRightGV };
+
+				for (int i = 0; i < gvArr.Length; ++i)
+					Log.Debug(TAG, gvArr[i].ToString());
+
+				if (AlgorithmUtilities.isSecondAnswerCorrect(expandedVars, gvArr, numberOfVariables))
 				{
-					Log.Debug(TAG, i + "");
+					Toast.MakeText(Application.Context, "2:correct", ToastLength.Short).Show();
+					correct.Start();
+					isSecondAnswerCorrect = true;
+
+					//Loop through inner and prevent deletions by removing: clonedImageView_Touch
+					for (int i = 0; i < outerGridLayoutList.Count; ++i)
+					{
+						outerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.ok);
+						outerGridLayoutList[i].Drag -= GridLayout_Drag;
+						for (int j = 0; j < outerGridLayoutList[i].ChildCount; ++j)
+						{
+							var iv = outerGridLayoutList[i].GetChildAt(j) as ImageView;
+							iv.LongClick -= clonedImageView_Touch;
+						}
+					}
+
+					//Shade red the other grids
+					for (int i = 0; i < innerGridLayoutList.Count; ++i)
+					{
+						innerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.shape);
+						innerGridLayoutList[i].Drag += GridLayout_Drag;
+					}
+				}
+				else
+				{
+					Toast.MakeText(Application.Context, "2:incorrect", ToastLength.Short).Show();
+					incorrectPrompt(outerGridLayoutList);
+				}
+			}
+			else if (!isFirstAnswerCorrect)
+			{
+				GridValue[] gvArr = { midUpGV, midLowGV, midLeftGV, midRightGV };
+				if (AlgorithmUtilities.isFirstAnswerCorrect(vars, gvArr, numberOfVariables))
+				{
+					isFirstAnswerCorrect = true;
+
+					//Change color of draggable areas to signify "Done/Correct"
+					//upperLeftGrid.Drag += GridLayout_Drag;
+					//upperRightGrid.Drag += GridLayout_Drag;
+
+					//lowerLeftGrid.Drag += GridLayout_Drag;
+					//lowerRightGrid.Drag += GridLayout_Drag;
+
+					for (int i = 0; i < outerGridLayoutList.Count; ++i)
+						outerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.ok);
+
+					//Loop through inner and prevent deletions by removing: clonedImageView_Touch
+					for (int i = 0; i < innerGridLayoutList.Count; ++i)
+					{
+						innerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.ok);
+						innerGridLayoutList[i].Drag -= GridLayout_Drag;
+						for (int j = 0; j < innerGridLayoutList[i].ChildCount; ++j)
+						{
+							var iv = innerGridLayoutList[i].GetChildAt(j) as ImageView;
+							iv.LongClick -= clonedImageView_Touch;
+						}
+					}
+
+					expandedVars = AlgorithmUtilities.expandingVars(vars);
+					foreach (var i in expandedVars)
+						Log.Debug(TAG, i + "");
+					Toast.MakeText(Application.Context, "1:correct", ToastLength.Short).Show();
+
+					correct.Start();
+
+					//TODO:accomodate for 2 variables (right now just for one)
+					x_value_1.Enabled = true;
+					one_value_1.Enabled = true;
+					x_value_2.Enabled = true;
+					one_value_2.Enabled = true;
+				}
+				else
+				{
+					for (int i = 0; i < outerGridLayoutList.Count; ++i)
+						outerGridLayoutList[i].Drag -= GridLayout_Drag;
+
+					incorrectPrompt(innerGridLayoutList);
+
+					Toast.MakeText(Application.Context, "1:incorrect", ToastLength.Short).Show();
+				}
+			}
+
+			else
+			{
+				//TODO: Accomodate for two variables
+				int[] answer = new int[4];
+				int temp = 0;
+				answer[0] = int.TryParse(x_value_1.Text, out temp) ? temp : 0;
+				answer[1] = int.TryParse(one_value_1.Text, out temp) ? temp : 0;
+				answer[2] = int.TryParse(x_value_2.Text, out temp) ? temp : 0; ;
+				answer[3] = int.TryParse(one_value_2.Text, out temp) ? temp : 0;
+
+				if ((vars[0] == answer[0] && vars[1] == answer[1]) &&
+					(vars[2] == answer[2] && vars[3] == answer[3]) ||
+					(vars[0] == answer[2] && vars[1] == answer[3]) &&
+					(vars[2] == answer[0] && vars[3] == answer[1]))
+					isThirdAnswerCorrect = true;
+
+				if (isThirdAnswerCorrect)
+				{
+					Toast.MakeText(Application.Context, "3:correct", ToastLength.Short).Show();
+					correct.Start();
+					//TODO: Refresh then new question?
+				}
+				else
+				{
+					Toast.MakeText(Application.Context, "3:incorrect", ToastLength.Short).Show();
+					incorrect.Start();
 				}
 			}
 		}
 
-		private void toggle_click(object sender, EventArgs e)
+		public async void incorrectPrompt(List<GridLayout> gvList)
 		{
-			ToggleButton clicked_toggle = (sender) as ToggleButton;
-			int buttonText = clicked_toggle.Id;
-			switch(buttonText)
-			{
-				case Resource.Id.remove:
-					if (dragToggle.Checked)
-						dragToggle.Checked = false;
-					if (rotateToggle.Checked)
-						rotateToggle.Checked = false;
-					break;
-				case Resource.Id.drag:
-					if (removeToggle.Checked)
-						removeToggle.Checked = false;
-					if (rotateToggle.Checked)
-						rotateToggle.Checked = false;
-					break;
-				case Resource.Id.rotate:
-					//Also rotate original tiles
-					if (rotateToggle.Checked)
-					{
-						x_tile.Visibility = ViewStates.Gone;
-						x_tile_rot.Visibility = ViewStates.Visible;
-					} else
-					{
-						x_tile.Visibility = ViewStates.Visible;
-						x_tile_rot.Visibility = ViewStates.Gone;
-					}
+			incorrect.Start();
+			for (int i = 0; i < gvList.Count; ++i)
+				gvList[i].SetBackgroundResource(Resource.Drawable.notok);
+			await Task.Delay(Constants.DELAY);
+			for (int i = 0; i < gvList.Count; ++i)
+				gvList[i].SetBackgroundResource(Resource.Drawable.shape);
+		}
 
-					if (removeToggle.Checked)
-						removeToggle.Checked = false;
-					if (dragToggle.Checked)
-						dragToggle.Checked = false;
-					break;
+		private void refreshScreen()
+		{
+			for (int i = 0; i < gridValueList.Count; ++i)
+			{
+				gridValueList[i].init();
+			}
+
+			for (int i = 0; i < innerGridLayoutList.Count; ++i)
+			{
+				for (int j = 0; j < innerGridLayoutList[i].ChildCount; ++j)
+				{
+					View v = innerGridLayoutList[i].GetChildAt(j);
+					innerGridLayoutList[i].RemoveAllViews();
+				}
+			}
+
+			for (int i = 0; i < outerGridLayoutList.Count; ++i)
+			{
+				for (int j = 0; j < outerGridLayoutList[i].ChildCount; ++j)
+				{
+					View v = outerGridLayoutList[i].GetChildAt(j);
+					outerGridLayoutList[i].RemoveAllViews();
+				}
 			}
 		}
 
-		//TODO: when original tile is rotated, cloned image is not rotated
+		private void setupNewQuestion()
+		{
+			isFirstAnswerCorrect = false;
+			vars = AlgorithmUtilities.RNG(Constants.FACTOR, numberOfVariables);
+			expandedVars = AlgorithmUtilities.expandingVars(vars);
+			
+
+			//(ax + b)(cx + d)
+			if (Constants.ONE_VAR == numberOfVariables)
+			{
+				for (int i = 0; i < gridValueList.Count; ++i)
+				{
+					gridValueList[i].init();
+				}
+
+				setupQuestionString(expandedVars);
+			}
+
+			foreach (int i in vars)
+			{
+				Log.Debug(TAG, i + "");
+			}
+		}
+
+		private void setupQuestionString(List<int> vars)
+		{
+			string output = "";
+
+			if (Constants.ONE_VAR == numberOfVariables)
+			{
+				if (vars[0] == 0)
+					output += "";
+				else
+					output += vars[0] + " x^2 ";
+
+				if (vars[1] > 0 && vars[0] != 0)
+					output += " + " + vars[1] + "x ";
+				else if (vars[1] < 0)
+					output += " - " + vars[1] + "x ";
+				else if (vars[1] == 0)
+					output += "";
+
+				if (vars[2] > 0 && vars[1] != 0)
+					output += " + " + vars[2];
+				else if (vars[2] < 0)
+					output += " - " + vars[2];
+			}
+
+			result.Text = output;
+		}
+
 		//Add case where the image did not exit
 		//Probably check if the parent GridLayout - sender, is equal to the receiver (at ondrop) if not then do nothing.
 		private void GridLayout_Drag(object sender, Android.Views.View.DragEventArgs e)
@@ -185,75 +492,104 @@ namespace AlgeTiles
 					if (null != drag_data)
 					{
 						currentButtonType = drag_data.GetItemAt(0).Text;
-						result.Text = currentButtonType;
 					}
-					Log.Debug(TAG, "DragAction.Started");
 					break;
 				case DragAction.Entered:
-					Log.Debug(TAG, "DragAction.Entered");
 					v.SetBackgroundResource(Resource.Drawable.shape_droptarget);
 					break;
 				case DragAction.Exited:
-					Log.Debug(TAG, "DragAction.Exited");
 					currentOwner = (ViewGroup)view.Parent;
 					hasButtonBeenDroppedInCorrectzone = false;
 					v.SetBackgroundResource(Resource.Drawable.shape);
 					break;
 				case DragAction.Drop:
-					Log.Debug(TAG, "DragAction.Drop");
 					if (null != drag_data)
 					{
 						currentButtonType = drag_data.GetItemAt(0).Text;
-						result.Text = currentButtonType + ": " + numberOfCloneButtons;
 					}
+
+					ImageView imageView = new ImageView(this);
+					Boolean wasImageDropped = false;
 
 					//Check if x_tile is rotated before fitting or rotate before dropping automatically
 					if ((v.Id == Resource.Id.upperMiddle ||
-						v.Id == Resource.Id.middleLeft ||
-						v.Id == Resource.Id.middleRight ||
-						v.Id == Resource.Id.lowerMiddle) &&
-						currentButtonType.Equals("x2_tile"))
+						 v.Id == Resource.Id.middleLeft ||
+						 v.Id == Resource.Id.middleRight ||
+						 v.Id == Resource.Id.lowerMiddle) &&
+						currentButtonType.Equals(Constants.X2_TILE))
 					{
 						//Do nothing
-					} else
+					}
+					else if (isSecondAnswerCorrect &&
+							(v.Id == Resource.Id.upperLeft ||
+							 v.Id == Resource.Id.upperRight ||
+							 v.Id == Resource.Id.lowerLeft ||
+							 v.Id == Resource.Id.lowerRight))
 					{
-						// Gets the item containing the dragged data
-						ImageView imageView = new ImageView(this);
-						if (currentButtonType.Equals("x_tile") && 
-							!rotateToggle.Checked && 
+						//Do nothing
+					}
+					//Handle drops for second part of problem (expanded form)
+					else if (!isSecondAnswerCorrect &&
+							(v.Id == Resource.Id.upperLeft ||
+							 v.Id == Resource.Id.upperRight ||
+							 v.Id == Resource.Id.lowerLeft ||
+							 v.Id == Resource.Id.lowerRight))
+					{
+						int resID = Resources.GetIdentifier(currentButtonType, "drawable", PackageName);
+						imageView.SetBackgroundResource(resID);
+						wasImageDropped = true;
+					}
+					//Handle auto rotate for x_tile (middle)
+					//First group x
+					else if (!isFirstAnswerCorrect &&
 							(v.Id == Resource.Id.middleLeft ||
-							v.Id == Resource.Id.middleRight))
+							 v.Id == Resource.Id.middleRight))
+					{
+						if (v.Id == Resource.Id.middleLeft)
+							imageView.RotationY = 180;
+						if ((currentButtonType.Equals(Constants.X_TILE) && !rotateToggle.Checked) ||
+								(currentButtonType.Equals(Constants.X_TILE_ROT) && rotateToggle.Checked))
 						{
 							imageView.SetBackgroundResource(Resource.Drawable.x_tile_rot);
 						}
-						else if (currentButtonType.Equals("x_tile_rot") &&
-							rotateToggle.Checked &&
-							(v.Id == Resource.Id.upperMiddle ||
-							v.Id == Resource.Id.lowerMiddle))
-						{
-							imageView.SetBackgroundResource(Resource.Drawable.x_tile);
-						}
-						else
+						else if (currentButtonType.Equals(Constants.ONE_TILE))
 						{
 							int resID = Resources.GetIdentifier(currentButtonType, "drawable", PackageName);
 							imageView.SetBackgroundResource(resID);
 						}
+						wasImageDropped = true;
+					}
+					//Second group x
+					else if (!isFirstAnswerCorrect &&
+							(v.Id == Resource.Id.upperMiddle ||
+							v.Id == Resource.Id.lowerMiddle))
+					{
+						if (v.Id == Resource.Id.upperMiddle)
+							imageView.RotationX = 180;
+						if ((currentButtonType.Equals(Constants.X_TILE_ROT) && rotateToggle.Checked) ||
+								(currentButtonType.Equals(Constants.X_TILE) && !rotateToggle.Checked))
+						{
+							imageView.SetBackgroundResource(Resource.Drawable.x_tile);
+						}
+						else if (currentButtonType.Equals(Constants.ONE_TILE))
+						{
+							int resID = Resources.GetIdentifier(currentButtonType, "drawable", PackageName);
+							imageView.SetBackgroundResource(resID);
+						}
+						wasImageDropped = true;
+					}
 
+					if (wasImageDropped)
+					{
 						imageView.Tag = currentButtonType;
-
+						Log.Debug(TAG, "Check: " + currentButtonType);
+						checkWhichParentAndUpdate(v.Id, currentButtonType, Constants.ADD);
 						//Probably should put weight or alignment here
 						LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(
 							ViewGroup.LayoutParams.WrapContent,
 							ViewGroup.LayoutParams.WrapContent);
 						imageView.LayoutParameters = linearLayoutParams;
 						imageView.LongClick += clonedImageView_Touch;
-
-						if (currentButtonType.Equals("tile_1"))
-							++numberOfTile_1s;
-						if (currentButtonType.Equals("x_tile") || currentButtonType.Equals("x_tile_rot"))
-							++numberOfX_tiles;
-						if (currentButtonType.Equals("x2_tile"))
-							++numberOfX2_tiles;
 
 
 						GridLayout container = (GridLayout)v;
@@ -262,17 +598,15 @@ namespace AlgeTiles
 						v.SetBackgroundResource(Resource.Drawable.shape);
 						hasButtonBeenDroppedInCorrectzone = true;
 					}
-					result.Text = "tile_1: " + numberOfTile_1s + ", x_tile: " + numberOfX_tiles + ", x2_tile: " + numberOfX2_tiles;
-
 					break;
 				case DragAction.Ended:
-					Log.Debug(TAG, "DragAction.Ended");
 					v.SetBackgroundResource(Resource.Drawable.shape);
-					if (!hasButtonBeenDroppedInCorrectzone && 
+					if (!hasButtonBeenDroppedInCorrectzone &&
 						currentButtonType.Equals(CLONED_BUTTON))
 					{
 						currentOwner.RemoveView(view);
-					} else
+					}
+					else
 					{
 						view.Visibility = ViewStates.Visible;
 					}
@@ -289,16 +623,18 @@ namespace AlgeTiles
 			switch (imageViewTouch.Id)
 			{
 				case Resource.Id.tile_1:
-					data = ClipData.NewPlainText(BUTTON_TYPE, "tile_1");
+				case Resource.Id.tile_1_rot:
+					data = ClipData.NewPlainText(BUTTON_TYPE, Constants.ONE_TILE);
 					break;
 				case Resource.Id.x_tile:
-					data = ClipData.NewPlainText(BUTTON_TYPE, "x_tile");
+					data = ClipData.NewPlainText(BUTTON_TYPE, Constants.X_TILE);
 					break;
 				case Resource.Id.x_tile_rot:
-					data = ClipData.NewPlainText(BUTTON_TYPE, "x_tile_rot");
+					data = ClipData.NewPlainText(BUTTON_TYPE, Constants.X_TILE_ROT);
 					break;
 				case Resource.Id.x2_tile:
-					data = ClipData.NewPlainText(BUTTON_TYPE, "x2_tile");
+				case Resource.Id.x2_tile_rot:
+					data = ClipData.NewPlainText(BUTTON_TYPE, Constants.X2_TILE);
 					break;
 			}
 			View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(imageViewTouch);
@@ -311,7 +647,7 @@ namespace AlgeTiles
 		{
 			var touchedImageView = (sender) as ImageView;
 			ViewGroup vg = (ViewGroup)touchedImageView.Parent;
-			if(removeToggle.Checked)
+			if (removeToggle.Checked)
 			{
 				Log.Debug(TAG, "Switch: Remove");
 				vg.RemoveView(touchedImageView);
@@ -319,21 +655,9 @@ namespace AlgeTiles
 				Vibrator vibrator = (Vibrator)GetSystemService(Context.VibratorService);
 				vibrator.Vibrate(30);
 
-				//var touchedImageViewTag = touchedImageView.GetTag(0).ToString();
 				int id = touchedImageView.Id;
-				Log.Debug(TAG, "Remove");
-				Log.Debug(TAG, id + "");
-				Log.Debug(TAG, Resource.Id.tile_1 + "");
-				Log.Debug(TAG, Resource.Id.x_tile + "");
-				Log.Debug(TAG, Resource.Id.x2_tile + "");
 
-				if (touchedImageView.Tag.ToString() == "tile_1")
-					--numberOfTile_1s;
-				if (touchedImageView.Tag.ToString() == "x_tile")
-					--numberOfX_tiles;
-				if (touchedImageView.Tag.ToString() == "x2_tile")
-					--numberOfX2_tiles;
-				result.Text = "tile_1: " + numberOfTile_1s + ", x_tile: " + numberOfX_tiles + ", x2_tile: " + numberOfX2_tiles;
+				checkWhichParentAndUpdate(vg.Id, touchedImageView.Tag.ToString(), Constants.SUBTRACT);
 			}
 
 			if (dragToggle.Checked)
@@ -341,6 +665,7 @@ namespace AlgeTiles
 				Log.Debug(TAG, "Switch: Drag");
 			}
 
+			//TODO: Not working
 			if (rotateToggle.Checked)
 			{
 				Log.Debug(TAG, "Switch: Rotate");
@@ -351,6 +676,167 @@ namespace AlgeTiles
 		private void updateResults(string text)
 		{
 			result.Text = text;
+		}
+
+		private void checkWhichParentAndUpdate(int id, string tile, int process)
+		{
+			if (Constants.ADD == process)
+			{
+				if (Resource.Id.upperLeft == id)
+				{
+					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+						++upperLeftGV.x2Val;
+					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+						++upperLeftGV.xVal;
+					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+						++upperLeftGV.oneVal;
+				}
+				if (Resource.Id.upperRight == id)
+				{
+					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+						++upperRightGV.x2Val;
+					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+						++upperRightGV.xVal;
+					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+						++upperRightGV.oneVal;
+				}
+				if (Resource.Id.lowerLeft == id)
+				{
+					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+						++lowerLeftGV.x2Val;
+					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+						++lowerLeftGV.xVal;
+					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+						++lowerLeftGV.oneVal;
+				}
+				if (Resource.Id.lowerRight == id)
+				{
+					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+						++lowerRightGV.x2Val;
+					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+						++lowerRightGV.xVal;
+					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+						++lowerRightGV.oneVal;
+				}
+
+				//CENTER
+				if (Resource.Id.upperMiddle == id)
+				{
+					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+						++midUpGV.x2Val;
+					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+						++midUpGV.xVal;
+					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+						++midUpGV.oneVal;
+				}
+				if (Resource.Id.lowerMiddle == id)
+				{
+					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+						++midLowGV.x2Val;
+					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+						++midLowGV.xVal;
+					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+						++midLowGV.oneVal;
+				}
+				if (Resource.Id.middleLeft == id)
+				{
+					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+						++midLeftGV.x2Val;
+					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+						++midLeftGV.xVal;
+					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+						++midLeftGV.oneVal;
+				}
+				if (Resource.Id.middleRight == id)
+				{
+					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+						++midRightGV.x2Val;
+					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+						++midRightGV.xVal;
+					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+						++midRightGV.oneVal;
+				}
+
+			}
+			//REMOVE
+			else if (Constants.SUBTRACT == process)
+			{
+				if (Resource.Id.upperLeft == id)
+				{
+					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+						--upperLeftGV.x2Val;
+					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+						--upperLeftGV.xVal;
+					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+						--upperLeftGV.oneVal;
+				}
+				if (Resource.Id.upperRight == id)
+				{
+					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+						--upperRightGV.x2Val;
+					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+						--upperRightGV.xVal;
+					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+						--upperRightGV.oneVal;
+				}
+				if (Resource.Id.lowerLeft == id)
+				{
+					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+						--lowerLeftGV.x2Val;
+					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+						--lowerLeftGV.xVal;
+					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+						--lowerLeftGV.oneVal;
+				}
+				if (Resource.Id.lowerRight == id)
+				{
+					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+						--lowerRightGV.x2Val;
+					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+						--lowerRightGV.xVal;
+					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+						--lowerRightGV.oneVal;
+				}
+
+				//CENTER
+				if (Resource.Id.upperMiddle == id)
+				{
+					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+						--midUpGV.x2Val;
+					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+						--midUpGV.xVal;
+					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+						--midUpGV.oneVal;
+				}
+				if (Resource.Id.lowerMiddle == id)
+				{
+					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+						--midLowGV.x2Val;
+					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+						--midLowGV.xVal;
+					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+						--midLowGV.oneVal;
+				}
+				if (Resource.Id.middleLeft == id)
+				{
+					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+						--midLeftGV.x2Val;
+					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+						--midLeftGV.xVal;
+					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+						--midLeftGV.oneVal;
+				}
+				if (Resource.Id.middleRight == id)
+				{
+					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+						--midRightGV.x2Val;
+					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+						--midRightGV.xVal;
+					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+						--midRightGV.oneVal;
+				}
+
+			}
 		}
 	}
 }

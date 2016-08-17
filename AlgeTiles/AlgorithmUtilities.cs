@@ -118,7 +118,7 @@ namespace AlgeTiles
 			}
 
 			foreach (int i in vars)
-				Log.Debug(TAG, i + "");
+				Log.Debug(TAG, "Generated: " + i);
 			//TODO: Fix for 2 variables
 			int total = 0;
 			foreach (int i in vars)
@@ -142,6 +142,13 @@ namespace AlgeTiles
 
 		public static bool isFirstAnswerCorrect(List<int> vars, GridValue[] gvArr, int numberOfVariables)
 		{
+			Log.Debug(TAG, "isFirstAnswerCorrect");
+			foreach (int i in vars)
+			{
+				Log.Debug(TAG, i + "");
+			}
+			for (int i = 0; i < gvArr.Length; ++i)
+				Log.Debug(TAG, "GvArr:" + gvArr[i].ToString());
 			//For 1 variable
 			int a = 0;
 			int b = 0;
@@ -189,6 +196,7 @@ namespace AlgeTiles
 
 		public static bool isSecondAnswerCorrect(List<int> vars, GridValue[] gvArr, int numberOfVariables)
 		{
+			Log.Debug(TAG, "isSecondAnswerCorrect");
 			foreach (int i in vars)
 			{
 				Log.Debug(TAG, i + "");
@@ -236,6 +244,8 @@ namespace AlgeTiles
 
 		public static List<int> expandingVars(List<int> vars)
 		{
+			foreach (int i in vars)
+				Log.Debug(TAG, "Expanding: " + i);
 			List<int> output = new List<int>();
 			//For 1 variable
 			int a = 0;
@@ -259,6 +269,9 @@ namespace AlgeTiles
 			{
 
 			}
+
+			foreach (int i in output)
+				Log.Debug(TAG, "Expanded: " + i);
 			return output;
 		}
 
