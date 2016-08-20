@@ -14,31 +14,10 @@ using Android.Graphics;
 using Android.Media;
 using System.Threading.Tasks;
 
-//https://developer.xamarin.com/recipes/android/other_ux/gestures/detect_a_touch/
-//Set tag
-//http://stackoverflow.com/questions/5291726/what-is-the-main-purpose-of-settag-gettag-methods-of-view
-//Multiple buttons 1 handler
-//http://stackoverflow.com/questions/3814234/how-can-i-subscribe-multiple-buttons-to-the-same-event-handler-and-act-according
-//use switch case
-//Context current activity
-//http://stackoverflow.com/questions/25613225/get-current-activity-from-application-context-monoandroid
-//Deprecated
-//http://stackoverflow.com/questions/29041027/android-getresources-getdrawable-deprecated-api-22
-//Sample drag and drop
-//http://pumpingco.de/adding-drag-and-drop-to-your-android-application-with-xamarin/
-//Problem, restricting in own layout parent only
-//http://stackoverflow.com/questions/17111135/android-constrain-drag-and-drop-to-a-bounding-box
-//http://stackoverflow.com/questions/20491071/how-can-i-restrict-the-dragzone-for-a-view-in-android
-//BUGs
-//On dragging original button, it is still labeled as such (onDrop)
-
-//TODO: Gridlayout stretches depending on imageview inside but still retains the same row/col count
-//http://stackoverflow.com/questions/21950937/how-to-prevent-cells-in-gridlayout-from-stretching
-//TODO: Working, multiply not yet
 namespace AlgeTiles
 {
 	[Activity(Label = "MultiplyActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape)]
-	public class MultiplyActivity : Activity//, View.IOnTouchListener, View.IOnDragListener
+	public class MultiplyActivity : Activity
 	{
 		private static string TAG = "AlgeTiles:Multiply";
 		public static Context context { get; }
@@ -218,9 +197,7 @@ namespace AlgeTiles
 			xET = FindViewById<EditText>(Resource.Id.x_value);
 			oneET = FindViewById<EditText>(Resource.Id.one_value);
 
-			x2ET.Enabled = false;
-			xET.Enabled = false;
-			oneET.Enabled = false;
+			refreshScreen(Constants.MULTIPLY, gridValueList, innerGridLayoutList, outerGridLayoutList);
 		}
 
 		private void toggle_click(object sender, EventArgs e)
@@ -268,18 +245,93 @@ namespace AlgeTiles
 		private void button_click(object sender, EventArgs e)
 		{
 			var button = sender as Button;
-			Log.Debug(TAG, button.Text);
-			if (Constants.NEW_Q == button.Text)
+			switch(button.Text)
 			{
-				setupNewQuestion();
+				case Constants.NEW_Q:
+					setupNewQuestion();
+					refreshScreen(Constants.MULTIPLY, gridValueList, innerGridLayoutList, outerGridLayoutList);
+					break;
+				case Constants.REFR:
+					refreshScreen(Constants.MULTIPLY, gridValueList, innerGridLayoutList, outerGridLayoutList);
+					break;
+				case Constants.CHK:
+					checkAnswers();
+					break;
 			}
-			else if (Constants.REFR == button.Text)
+		}
+
+		private void refreshScreen(string ActivityType, List<GridValue> gvList, List<GridLayout> inGLList, List<GridLayout> outGLList)
+		{
+			x2ET.Enabled = false;
+			xET.Enabled = false;
+			oneET.Enabled = false;
+
+			isFirstAnswerCorrect = false;
+			isSecondAnswerCorrect = false;
+			isThirdAnswerCorrect = true;
+
+			for (int i = 0; i < inGLList.Count; ++i)
 			{
-				refreshScreen();
+				inGLList[i].SetBackgroundResource(Resource.Drawable.shape);
+				inGLList[i].Drag -= GridLayout_Drag;
 			}
-			else if (Constants.CHK == button.Text)
+
+			for (int i = 0; i < outGLList.Count; ++i)
 			{
-				checkAnswers();
+				outGLList[i].SetBackgroundResource(Resource.Drawable.shape);
+				outGLList[i].Drag -= GridLayout_Drag;
+			}
+
+			for (int i = 0; i < gvList.Count; ++i)
+			{
+				gvList[i].init();
+			}
+
+			for (int i = 0; i < inGLList.Count; ++i)
+			{
+				for (int j = 0; j < inGLList[i].ChildCount; ++j)
+				{
+					View v = inGLList[i].GetChildAt(j);
+					inGLList[i].RemoveAllViews();
+				}
+			}
+
+			for (int i = 0; i < outGLList.Count; ++i)
+			{
+				for (int j = 0; j < outGLList[i].ChildCount; ++j)
+				{
+					View v = outGLList[i].GetChildAt(j);
+					outGLList[i].RemoveAllViews();
+				}
+			}
+
+			if (Constants.FACTOR == ActivityType)
+			{
+				for (int i = 0; i < inGLList.Count; ++i)
+				{
+					inGLList[i].SetBackgroundResource(Resource.Drawable.unavailable);
+					inGLList[i].Drag -= GridLayout_Drag;
+				}
+
+				for (int i = 0; i < outGLList.Count; ++i)
+				{
+					outGLList[i].SetBackgroundResource(Resource.Drawable.shape);
+					outGLList[i].Drag += GridLayout_Drag;
+				}
+			}
+			else
+			{
+				for (int i = 0; i < inGLList.Count; ++i)
+				{
+					inGLList[i].SetBackgroundResource(Resource.Drawable.shape);
+					inGLList[i].Drag += GridLayout_Drag;
+				}
+
+				for (int i = 0; i < outGLList.Count; ++i)
+				{
+					outGLList[i].SetBackgroundResource(Resource.Drawable.unavailable);
+					outGLList[i].Drag -= GridLayout_Drag;
+				}
 			}
 		}
 
@@ -320,6 +372,12 @@ namespace AlgeTiles
 						Log.Debug(TAG, i + "");
 					Toast.MakeText(Application.Context, "1:correct", ToastLength.Short).Show();
 
+					//TODO:accomodate for 2 variables (right now just for one)
+					x2ET.Enabled = true;
+					xET.Enabled = true;
+					oneET.Enabled = true;
+					isSecondAnswerCorrect = true;
+
 					correct.Start();
 				}
 				else
@@ -343,11 +401,6 @@ namespace AlgeTiles
 				{
 					Toast.MakeText(Application.Context, "2:correct", ToastLength.Short).Show();
 					correct.Start();
-					//TODO:accomodate for 2 variables (right now just for one)
-					x2ET.Enabled = true;
-					xET.Enabled = true;
-					oneET.Enabled = true;
-					isSecondAnswerCorrect = true;
 
 					//Loop through inner and prevent deletions by removing: clonedImageView_Touch
 					for (int i = 0; i < outerGridLayoutList.Count; ++i)
@@ -403,32 +456,6 @@ namespace AlgeTiles
 			await Task.Delay(Constants.DELAY);
 			for (int i = 0; i < gvList.Count; ++i)
 				gvList[i].SetBackgroundResource(Resource.Drawable.shape);
-		}
-
-		private void refreshScreen()
-		{
-			for (int i = 0; i < gridValueList.Count; ++i)
-			{
-				gridValueList[i].init();
-			}
-
-			for (int i = 0; i < innerGridLayoutList.Count; ++i)
-			{
-				for (int j = 0; j < innerGridLayoutList[i].ChildCount; ++j)
-				{
-					View v = innerGridLayoutList[i].GetChildAt(j);
-					innerGridLayoutList[i].RemoveAllViews();
-				}
-			}
-
-			for (int i = 0; i < outerGridLayoutList.Count; ++i)
-			{
-				for (int j = 0; j < outerGridLayoutList[i].ChildCount; ++j)
-				{
-					View v = outerGridLayoutList[i].GetChildAt(j);
-					outerGridLayoutList[i].RemoveAllViews();
-				}
-			}
 		}
 
 		private void setupNewQuestion()
@@ -641,6 +668,10 @@ namespace AlgeTiles
 					data = ClipData.NewPlainText(BUTTON_TYPE, Constants.X2_TILE);
 					break;
 			}
+
+			dragToggle.Checked = false;
+			removeToggle.Checked = false;
+
 			View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(imageViewTouch);
 			imageViewTouch.StartDrag(data, shadowBuilder, imageViewTouch, 0);
 		}

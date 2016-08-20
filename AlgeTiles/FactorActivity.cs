@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 namespace AlgeTiles
 {
 	[Activity(Label = "FactorActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape)]
-	public class FactorActivity : Activity//, View.IOnTouchListener, View.IOnDragListener
+	public class FactorActivity : Activity
 	{
 		private static string TAG = "AlgeTiles:Factor";
 		public static Context context { get; }
@@ -200,10 +200,7 @@ namespace AlgeTiles
 			x_value_2 = FindViewById<EditText>(Resource.Id.x_value_2);
 			one_value_2 = FindViewById<EditText>(Resource.Id.one_value_2);
 
-			x_value_1.Enabled = false;
-			one_value_1.Enabled = false;
-			x_value_2.Enabled = false;
-			one_value_2.Enabled = false;
+			refreshScreen(Constants.FACTOR, gridValueList, innerGridLayoutList, outerGridLayoutList);
 		}
 
 		private void toggle_click(object sender, EventArgs e)
@@ -251,18 +248,94 @@ namespace AlgeTiles
 		private void button_click(object sender, EventArgs e)
 		{
 			var button = sender as Button;
-			Log.Debug(TAG, button.Text);
-			if (Constants.NEW_Q == button.Text)
+			switch (button.Text)
 			{
-				setupNewQuestion();
+				case Constants.NEW_Q:
+					setupNewQuestion();
+					refreshScreen(Constants.FACTOR, gridValueList, innerGridLayoutList, outerGridLayoutList);
+					break;
+				case Constants.REFR:
+					refreshScreen(Constants.FACTOR, gridValueList, innerGridLayoutList, outerGridLayoutList);
+					break;
+				case Constants.CHK:
+					checkAnswers();
+					break;
 			}
-			else if (Constants.REFR == button.Text)
+		}
+
+		private void refreshScreen(string ActivityType, List<GridValue> gvList, List<GridLayout> inGLList, List<GridLayout> outGLList)
+		{
+			x_value_1.Enabled = false;
+			one_value_1.Enabled = false;
+			x_value_2.Enabled = false;
+			one_value_2.Enabled = false;
+
+			isFirstAnswerCorrect = false;
+			isSecondAnswerCorrect = false;
+			isThirdAnswerCorrect = false;
+
+			for (int i = 0; i < inGLList.Count; ++i)
 			{
-				refreshScreen();
+				inGLList[i].SetBackgroundResource(Resource.Drawable.shape);
+				inGLList[i].Drag -= GridLayout_Drag;
 			}
-			else if (Constants.CHK == button.Text)
+
+			for (int i = 0; i < outGLList.Count; ++i)
 			{
-				checkAnswers();
+				outGLList[i].SetBackgroundResource(Resource.Drawable.shape);
+				outGLList[i].Drag -= GridLayout_Drag;
+			}
+
+			for (int i = 0; i < gvList.Count; ++i)
+			{
+				gvList[i].init();
+			}
+
+			for (int i = 0; i < inGLList.Count; ++i)
+			{
+				for (int j = 0; j < inGLList[i].ChildCount; ++j)
+				{
+					View v = inGLList[i].GetChildAt(j);
+					inGLList[i].RemoveAllViews();
+				}
+			}
+
+			for (int i = 0; i < outGLList.Count; ++i)
+			{
+				for (int j = 0; j < outGLList[i].ChildCount; ++j)
+				{
+					View v = outGLList[i].GetChildAt(j);
+					outGLList[i].RemoveAllViews();
+				}
+			}
+
+			if (Constants.FACTOR == ActivityType)
+			{
+				for (int i = 0; i < inGLList.Count; ++i)
+				{
+					inGLList[i].SetBackgroundResource(Resource.Drawable.unavailable);
+					inGLList[i].Drag -= GridLayout_Drag;
+				}
+
+				for (int i = 0; i < outGLList.Count; ++i)
+				{
+					outGLList[i].SetBackgroundResource(Resource.Drawable.shape);
+					outGLList[i].Drag += GridLayout_Drag;
+				}
+			}
+			else
+			{
+				for (int i = 0; i < inGLList.Count; ++i)
+				{
+					inGLList[i].SetBackgroundResource(Resource.Drawable.shape);
+					inGLList[i].Drag += GridLayout_Drag;
+				}
+
+				for (int i = 0; i < outGLList.Count; ++i)
+				{
+					outGLList[i].SetBackgroundResource(Resource.Drawable.unavailable);
+					outGLList[i].Drag -= GridLayout_Drag;
+				}
 			}
 		}
 
@@ -299,6 +372,12 @@ namespace AlgeTiles
 						innerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.shape);
 						innerGridLayoutList[i].Drag += GridLayout_Drag;
 					}
+
+					//TODO:accomodate for 2 variables (right now just for one)
+					x_value_1.Enabled = true;
+					one_value_1.Enabled = true;
+					x_value_2.Enabled = true;
+					one_value_2.Enabled = true;
 				}
 				else
 				{
@@ -341,12 +420,6 @@ namespace AlgeTiles
 					Toast.MakeText(Application.Context, "1:correct", ToastLength.Short).Show();
 
 					correct.Start();
-
-					//TODO:accomodate for 2 variables (right now just for one)
-					x_value_1.Enabled = true;
-					one_value_1.Enabled = true;
-					x_value_2.Enabled = true;
-					one_value_2.Enabled = true;
 				}
 				else
 				{
@@ -397,32 +470,6 @@ namespace AlgeTiles
 			await Task.Delay(Constants.DELAY);
 			for (int i = 0; i < gvList.Count; ++i)
 				gvList[i].SetBackgroundResource(Resource.Drawable.shape);
-		}
-
-		private void refreshScreen()
-		{
-			for (int i = 0; i < gridValueList.Count; ++i)
-			{
-				gridValueList[i].init();
-			}
-
-			for (int i = 0; i < innerGridLayoutList.Count; ++i)
-			{
-				for (int j = 0; j < innerGridLayoutList[i].ChildCount; ++j)
-				{
-					View v = innerGridLayoutList[i].GetChildAt(j);
-					innerGridLayoutList[i].RemoveAllViews();
-				}
-			}
-
-			for (int i = 0; i < outerGridLayoutList.Count; ++i)
-			{
-				for (int j = 0; j < outerGridLayoutList[i].ChildCount; ++j)
-				{
-					View v = outerGridLayoutList[i].GetChildAt(j);
-					outerGridLayoutList[i].RemoveAllViews();
-				}
-			}
 		}
 
 		private void setupNewQuestion()
@@ -476,9 +523,7 @@ namespace AlgeTiles
 			result.Text = output;
 		}
 
-		//Add case where the image did not exit
-		//Probably check if the parent GridLayout - sender, is equal to the receiver (at ondrop) if not then do nothing.
-		private void GridLayout_Drag(object sender, Android.Views.View.DragEventArgs e)
+		private void GridLayout_Drag(object sender, View.DragEventArgs e)
 		{
 			var v = (GridLayout)sender;
 			View view = (View)e.Event.LocalState;
@@ -637,11 +682,15 @@ namespace AlgeTiles
 					data = ClipData.NewPlainText(BUTTON_TYPE, Constants.X2_TILE);
 					break;
 			}
+
+			dragToggle.Checked = false;
+			removeToggle.Checked = false;
+
 			View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(imageViewTouch);
 			imageViewTouch.StartDrag(data, shadowBuilder, imageViewTouch, 0);
 		}
-		//http://stackoverflow.com/questions/18836432/how-to-find-the-view-of-a-button-in-its-click-eventhandler
 
+		//http://stackoverflow.com/questions/18836432/how-to-find-the-view-of-a-button-in-its-click-eventhandler
 		//TODO: When top most layer textview increases in length, the edit text gets pushed
 		private void clonedImageView_Touch(object sender, View.LongClickEventArgs e)
 		{

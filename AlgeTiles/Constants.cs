@@ -14,31 +14,31 @@ namespace AlgeTiles
 {
 	class Constants
 	{
-		public static string FACTOR = "Factor";
-		public static string MULTIPLY = "Multiply";
-		public static int ONE_VAR = 1;
-		public static int TWO_VAR = 2;
-		public static string NEW_Q = "new Q";
-		public static string CHK = "chk";
-		public static string REFR = "refr";
+		public const string FACTOR = "Factor";
+		public const string MULTIPLY = "Multiply";
+		public const int ONE_VAR = 1;
+		public const int TWO_VAR = 2;
+		public const string NEW_Q = "new Q";
+		public const string CHK = "chk";
+		public const string REFR = "refr";
 
-		public static string DRAG = "drag";
-		public static string REMOVE = "remove";
-		public static string ROTATE = "rotate";
+		public const string DRAG = "drag";
+		public const string REMOVE = "remove";
+		public const string ROTATE = "rotate";
 
-		public static string VARIABLE_COUNT = "variable_count";
+		public const string VARIABLE_COUNT = "variable_count";
 
-		public static string ONE_TILE = "tile_1";
-		public static string X_TILE = "x_tile";
-		public static string X2_TILE = "x2_tile";
+		public const string ONE_TILE = "tile_1";
+		public const string X_TILE = "x_tile";
+		public const string X2_TILE = "x2_tile";
 
-		public static string ONE_TILE_ROT = "tile_1_rot";
-		public static string X_TILE_ROT = "x_tile_rot";
-		public static string X2_TILE_ROT = "x2_tile_rot";
-		//TODO: Add for y, xy, x2 and rotated versions (probably just for y and xy)
+		public const string ONE_TILE_ROT = "tile_1_rot";
+		public const string X_TILE_ROT = "x_tile_rot";
+		public const string X2_TILE_ROT = "x2_tile_rot";
+		//TODO:const  Add for y, xy, x2 and rotated versions (probably just for y and xy)
 
-		public static int SUBTRACT = 0;
-		public static int ADD = 1;
-		public static int DELAY = 1500;
+		public const int SUBTRACT = 0;
+		public const int ADD = 1;
+		public const int DELAY = 1500;
 	}
 }

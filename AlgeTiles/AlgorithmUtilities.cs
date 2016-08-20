@@ -120,12 +120,30 @@ namespace AlgeTiles
 			foreach (int i in vars)
 				Log.Debug(TAG, "Generated: " + i);
 			//TODO: Fix for 2 variables
-			int total = 0;
-			foreach (int i in vars)
-				total += i;
-			if (0 == total)
-				vars = RNG(activityType, numberOfVariables);
+			if (areConstantsOnlyOneWwithValues(vars, numberOfVariables))
+				return RNG(activityType, numberOfVariables);
+			
 			return vars;
+		}
+
+		private static bool areConstantsOnlyOneWwithValues(List<int> vars, int numberOfVariables)
+		{
+			if (numberOfVariables == 2)
+			{
+				int total = 0;
+				for (int i = 0; i < 4; ++i)
+				{
+					total += vars[i];
+				}
+				if (total == 0)
+					return true;
+				return false;
+			} else
+			{
+				if (vars[0] == 0 && vars[2] == 0)
+					return true;
+			}
+			return false;
 		}
 
 		public static int PickRandom(params int[] Selection)

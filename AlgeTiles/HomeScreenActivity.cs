@@ -58,13 +58,17 @@ namespace AlgeTiles
 		{
 			var button = (sender) as Button;
 
-			if ("Factor" == activityType)
+			if (Constants.FACTOR == activityType)
 			{
 				var intent = new Intent(this, typeof(FactorActivity));
-				intent.PutExtra(Constants.VARIABLE_COUNT, (int)Char.GetNumericValue(button.Text[0]));
+				if ((int)Char.GetNumericValue(button.Text[0]) == 1)
+					intent.PutExtra(Constants.VARIABLE_COUNT, (int)Char.GetNumericValue(button.Text[0]));
+				else
+					Toast.MakeText(Application.Context, "Not implemented.", ToastLength.Short).Show();
+
 				StartActivity(intent);
 			}
-			else if ("Multiply" == activityType)
+			else if (Constants.MULTIPLY == activityType)
 			{
 				var intent = new Intent(this, typeof(MultiplyActivity));
 				intent.PutExtra(Constants.VARIABLE_COUNT, (int)Char.GetNumericValue(button.Text[0]));
