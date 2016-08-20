@@ -18,6 +18,8 @@ namespace AlgeTiles
 		private Button multiplyActivityButton;
 		private Button factorActivityButton;
 		private String activityType = "";
+		private Button oneVarBtn;
+		private Button twoVarBtn;
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
@@ -32,6 +34,9 @@ namespace AlgeTiles
 
 			factorActivityButton = FindViewById<Button>(Resource.Id.factor_button);
 			factorActivityButton.Click += button_click;
+		
+			oneVarBtn = FindViewById<Button>(Resource.Id.one_variable_button);
+			twoVarBtn = FindViewById<Button>(Resource.Id.two_variable_button);
 		}
 
 		private void button_click(object sender, EventArgs e)
@@ -39,16 +44,14 @@ namespace AlgeTiles
 			var button = (sender) as Button;
 			activityType = button.Text;
 
-			Button oneVarBtn = FindViewById<Button>(Resource.Id.one_variable_button);
-			Button twoVarBtn = FindViewById<Button>(Resource.Id.two_variable_button);
-
 			multiplyActivityButton.Visibility = ViewStates.Gone;
 			factorActivityButton.Visibility = ViewStates.Gone;
 
 			oneVarBtn.Visibility = ViewStates.Visible;
 			if (Constants.FACTOR == button.Text) //Since Factor only uses 1 variable
 				twoVarBtn.Visibility = ViewStates.Invisible;
-			twoVarBtn.Visibility = ViewStates.Visible;
+			else
+				twoVarBtn.Visibility = ViewStates.Visible;
 
 			oneVarBtn.Click += var_click;
 			twoVarBtn.Click += var_click;
@@ -74,6 +77,20 @@ namespace AlgeTiles
 				intent.PutExtra(Constants.VARIABLE_COUNT, (int)Char.GetNumericValue(button.Text[0]));
 				StartActivity(intent);
 			}
+		}
+
+		public override void OnBackPressed()
+		{
+			if (multiplyActivityButton.Visibility == ViewStates.Gone)
+			{
+				multiplyActivityButton.Visibility = ViewStates.Visible;
+				factorActivityButton.Visibility = ViewStates.Visible;
+
+				oneVarBtn.Visibility = ViewStates.Gone;
+				twoVarBtn.Visibility = ViewStates.Gone;
+			}
+			else
+				Finish();
 		}
 	}
 }

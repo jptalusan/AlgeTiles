@@ -165,6 +165,8 @@ namespace AlgeTiles
 			{
 				Log.Debug(TAG, i + "");
 			}
+
+			Log.Debug(TAG, "Mult: GvArr: midUpGV, midLowGV, midLeftGV, midRightGV");
 			for (int i = 0; i < gvArr.Length; ++i)
 				Log.Debug(TAG, "GvArr:" + gvArr[i].ToString());
 			//For 1 variable
@@ -219,6 +221,7 @@ namespace AlgeTiles
 			{
 				Log.Debug(TAG, i + "");
 			}
+			Log.Debug(TAG, "Mult: GvArr:  upperLeftGV, upperRightGV, lowerLeftGV, lowerRightGV ");
 			for (int i = 0; i < gvArr.Length; ++i)
 				Log.Debug(TAG, "GvArr:" + gvArr[i].ToString());
 			//For 1 variable

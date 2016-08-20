@@ -376,7 +376,6 @@ namespace AlgeTiles
 					x2ET.Enabled = true;
 					xET.Enabled = true;
 					oneET.Enabled = true;
-					isSecondAnswerCorrect = true;
 
 					correct.Start();
 				}
@@ -390,8 +389,9 @@ namespace AlgeTiles
 					Toast.MakeText(Application.Context, "1:incorrect", ToastLength.Short).Show();
 				}
 			}
-			else if (!isSecondAnswerCorrect)
+			else if (isFirstAnswerCorrect)
 			{
+				Log.Debug(TAG, "isSecondAnswerCorrect branch");
 				GridValue[] gvArr = { upperLeftGV, upperRightGV, lowerLeftGV, lowerRightGV };
 
 

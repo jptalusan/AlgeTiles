@@ -341,6 +341,7 @@ namespace AlgeTiles
 
 		private void checkAnswers()
 		{
+			//TODO: rename, for factor activity, second answer is first answer
 			if (!isSecondAnswerCorrect)
 			{
 				GridValue[] gvArr = { upperLeftGV, upperRightGV, lowerLeftGV, lowerRightGV };
@@ -385,11 +386,12 @@ namespace AlgeTiles
 					incorrectPrompt(outerGridLayoutList);
 				}
 			}
-			else if (!isFirstAnswerCorrect)
+			else if (isSecondAnswerCorrect)
 			{
 				GridValue[] gvArr = { midUpGV, midLowGV, midLeftGV, midRightGV };
 				if (AlgorithmUtilities.isFirstAnswerCorrect(vars, gvArr, numberOfVariables))
 				{
+					//TODO: First answer is second in factor
 					isFirstAnswerCorrect = true;
 
 					//Change color of draggable areas to signify "Done/Correct"
@@ -431,7 +433,7 @@ namespace AlgeTiles
 					Toast.MakeText(Application.Context, "1:incorrect", ToastLength.Short).Show();
 				}
 			}
-
+			//TODO: Add checking if both answers are true?
 			else
 			{
 				//TODO: Accomodate for two variables
@@ -510,14 +512,14 @@ namespace AlgeTiles
 				if (vars[1] > 0 && vars[0] != 0)
 					output += " + " + vars[1] + "x ";
 				else if (vars[1] < 0)
-					output += " - " + vars[1] + "x ";
+					output += vars[1] + "x ";
 				else if (vars[1] == 0)
 					output += "";
 
 				if (vars[2] > 0 && vars[1] != 0)
 					output += " + " + vars[2];
 				else if (vars[2] < 0)
-					output += " - " + vars[2];
+					output += vars[2];
 			}
 
 			result.Text = output;
