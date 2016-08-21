@@ -52,46 +52,42 @@ namespace AlgeTiles
 					vars.Add(c);
 					vars.Add(d);
 				}
-				//(ax + by + e)(cx + dy + f)
+				//(ax + by + c)(dx + ey + f)
 				else if (Constants.TWO_VAR == numberOfVariables)
 				{
-					//while (a + b + e == 0)
-					//{
-						a = PickRandom(multipyTwoVarChoices);
-						b = a > 0 ? PickRandom(-2, 2 - a) : PickRandom(-2 - (2 * a), 2);
-						//e
-						if (a >= 0 && b >= 0)
-							e = PickRandom(-8, 8 - (3 * a) - (3 * b));
-						if (a >= 0 && b < 0)
-							e = PickRandom(-8 - (3 * b), 8 - (3 * a));
-						if (a < 0 && b >= 0)
-							e = PickRandom(-8 - (3 * a), 8 - (3 * b));
-						if (a < 0 && b < 0)
-							e = PickRandom(-8 - (3 * a) - (3 * b), 8);
-					//}
 
-					//while (c + d + f == 0)
-					//{
-						c = PickRandom(multipyTwoVarChoices);
-						d = c > 0 ? PickRandom(-2, 2 - c) : PickRandom(-2 - (2 * c), 2);
-						//f
-						if (c >= 0 && d >= 0)
-							f = PickRandom(-8, 8 - (3 * c) - (3 * d));
-						if (c >= 0 && d < 0)
-							f = PickRandom(-8 - (3 * d), 8 - (3 * c));
-						if (c < 0 && d >= 0)
-							f = PickRandom(-8 - (3 * c), 8 - (3 * d));
-						if (c < 0 && d < 0)
-							f = PickRandom(-8 - (3 * c) - (3 * d), 8);
-					//}
+					a = PickRandom(multipyTwoVarChoices);
+					b = a > 0 ? PickRandom(-2, 2 - a) : PickRandom(-2 - (2 * a), 2);
+					//e
+					if (a >= 0 && b >= 0)
+						c = PickRandom(-8, 8 - (3 * a) - (3 * b));
+					if (a >= 0 && b < 0)
+						c = PickRandom(-8 - (3 * b), 8 - (3 * a));
+					if (a < 0 && b >= 0)
+						c = PickRandom(-8 - (3 * a), 8 - (3 * b));
+					if (a < 0 && b < 0)
+						c = PickRandom(-8 - (3 * a) - (3 * b), 8);
+
+					d = PickRandom(multipyTwoVarChoices);
+					e = d > 0 ? PickRandom(-2, 2 - d) : PickRandom(-2 - (2 * d), 2);
+					//f
+					if (d >= 0 && e >= 0)
+						f = PickRandom(-8, 8 - (3 * d) - (3 * e));
+					if (d >= 0 && e < 0)
+						f = PickRandom(-8 - (3 * e), 8 - (3 * d));
+					if (d < 0 && e >= 0)
+						f = PickRandom(-8 - (3 * d), 8 - (3 * e));
+					if (d < 0 && e < 0)
+						f = PickRandom(-8 - (3 * d) - (3 * e), 8);
 
 					//TODO: Add more values for e and f generation
-					vars.Add(a);
-					vars.Add(b);
-					vars.Add(c);
-					vars.Add(d);
-					vars.Add(e);
-					vars.Add(f);
+					vars.Add(a); //ax
+					vars.Add(b); //by
+					vars.Add(c); //c
+
+					vars.Add(d); //ax
+					vars.Add(e); //by
+					vars.Add(f); //c
 				}
 			} else if (Constants.FACTOR == activityType)
 			{
@@ -131,7 +127,7 @@ namespace AlgeTiles
 			if (numberOfVariables == 2)
 			{
 				int total = 0;
-				for (int i = 0; i < 4; ++i)
+				for (int i = 0; i <= 5; ++i)
 				{
 					total += vars[i];
 				}
@@ -174,9 +170,6 @@ namespace AlgeTiles
 			int b = 0;
 			int c = 0;
 			int d = 0;
-			//For 2 variables
-			int e = 0;
-			int f = 0;
 
 			//Should expand/change when checking for outer grids
 			GridValue midUp = gvArr[0];
@@ -192,12 +185,6 @@ namespace AlgeTiles
 				d = vars[3];
 			}
 
-			if (Constants.TWO_VAR == numberOfVariables)
-			{
-				e = vars[4];
-				f = vars[5];
-			}
-
 			if ((a == (midUp - midLo).xVal && b == (midUp - midLo).oneVal) &&
 				(c == (midRight - midLeft).xVal && d == (midRight - midLeft).oneVal))
 			{
@@ -205,6 +192,56 @@ namespace AlgeTiles
 			}
 			else if ((a == (midRight - midLeft).xVal && b == (midRight - midLeft).oneVal) &&
 					 (c == (midUp - midLo).xVal && d == (midUp - midLo).oneVal))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		//For 2 var
+		public static bool isFirstAnswerCorrect(List<int> vars, GridValue2Var[] gvArr)
+		{
+			Log.Debug(TAG, "isFirstAnswerCorrect");
+			foreach (int i in vars)
+			{
+				Log.Debug(TAG, i + "");
+			}
+
+			Log.Debug(TAG, "Mult: GvArr: midUpGV, midLowGV, midLeftGV, midRightGV");
+			for (int i = 0; i < gvArr.Length; ++i)
+				Log.Debug(TAG, "GvArr:" + gvArr[i].ToString());
+			//For 1 variable
+			int a = 0;
+			int b = 0;
+			int c = 0;
+			int d = 0;
+			int e = 0;
+			int f = 0;
+
+			//Should expand/change when checking for outer grids
+			GridValue2Var midUp = gvArr[0];
+			GridValue2Var midLo = gvArr[1];
+			GridValue2Var midLeft = gvArr[2];
+			GridValue2Var midRight = gvArr[3];
+
+			a = vars[0]; //x
+			b = vars[1]; //y
+			c = vars[2]; //one
+
+			d = vars[3]; //x
+			e = vars[4]; //y
+			f = vars[5]; //one
+
+			if ((a == (midUp - midLo).xVal && b == (midUp - midLo).yVal && c == (midUp - midLo).oneVal) &&
+				(d == (midRight - midLeft).xVal && e == (midRight - midLeft).yVal && f == (midRight - midLeft).oneVal))
+			{
+				return true;
+			}
+			else if ((a == (midRight - midLeft).xVal && b == (midRight - midLeft).yVal && c == (midRight - midLeft).oneVal) &&
+					 (d == (midUp - midLo).xVal && e == (midUp - midLo).yVal && f == (midUp - midLo).oneVal))
 			{
 				return true;
 			}
@@ -228,10 +265,6 @@ namespace AlgeTiles
 			int a = 0;
 			int b = 0;
 			int c = 0;
-			int d = 0;
-			//For 2 variables
-			int e = 0;
-			int f = 0;
 
 			//Should expand/change when checking for outer grids
 			GridValue upLeft = gvArr[0];
@@ -239,23 +272,58 @@ namespace AlgeTiles
 			GridValue downLeft = gvArr[2];
 			GridValue downRight = gvArr[3];
 
-			if (Constants.ONE_VAR == numberOfVariables)
-			{
-				a = vars[0];
-				b = vars[1];
-				c = vars[2];
-				//d = vars[3];
-			}
-
-			if (Constants.TWO_VAR == numberOfVariables)
-			{
-				e = vars[4];
-				f = vars[5];
-			}
+			a = vars[0];
+			b = vars[1];
+			c = vars[2];
 
 			if (a == (upRight + downLeft - (upLeft + downRight)).x2Val &&
 				b == (upRight + downLeft - (upLeft + downRight)).xVal &&
 				c == (upRight + downLeft - (upLeft + downRight)).oneVal)
+				return true;
+			else
+			{
+				return false;
+			}
+		}
+
+		//For 2 var
+		public static bool isSecondAnswerCorrect(List<int> vars, GridValue2Var[] gvArr, int numberOfVariables)
+		{
+			Log.Debug(TAG, "isSecondAnswerCorrect");
+			foreach (int i in vars)
+			{
+				Log.Debug(TAG, i + "");
+			}
+			Log.Debug(TAG, "Mult: GvArr:  upperLeftGV, upperRightGV, lowerLeftGV, lowerRightGV ");
+			for (int i = 0; i < gvArr.Length; ++i)
+				Log.Debug(TAG, "GvArr:" + gvArr[i].ToString());
+
+			int a = 0;
+			int b = 0;
+			int c = 0;
+			int d = 0;
+			int e = 0;
+			int f = 0;
+
+			//Should expand/change when checking for outer grids
+			GridValue2Var upLeft = gvArr[0];
+			GridValue2Var upRight = gvArr[1];
+			GridValue2Var downLeft = gvArr[2];
+			GridValue2Var downRight = gvArr[3];
+
+			a = vars[0]; //x2
+			b = vars[1]; //y2
+			c = vars[2]; //xy
+			d = vars[3]; //x
+			e = vars[4]; //y
+			f = vars[5]; //one
+
+			if (a == (upRight + downLeft - (upLeft + downRight)).x2Val &&
+				b == (upRight + downLeft - (upLeft + downRight)).y2Val &&
+				c == (upRight + downLeft - (upLeft + downRight)).xyVal &&
+				d == (upRight + downLeft - (upLeft + downRight)).xVal &&
+				e == (upRight + downLeft - (upLeft + downRight)).yVal &&
+				f == (upRight + downLeft - (upLeft + downRight)).oneVal)
 				return true;
 			else
 			{
@@ -288,9 +356,25 @@ namespace AlgeTiles
 				output.Add(b * d);
 			} else //two variables
 			{
+				a = vars[0]; //ax
+				b = vars[1]; //by
+				c = vars[2]; //c
 
+				d = vars[3]; //dx
+				e = vars[4]; //ey
+				f = vars[5]; //f
+
+				output.Add(a * d); //x2
+				output.Add(b * e); //y2
+				output.Add((a * e) + (b * d)); //xy
+				output.Add((a * f) + (c * d)); //x
+				output.Add((b * f) + (c * e)); //y
+				output.Add(c * f); //one
 			}
-
+			if (vars.Count <= 4)
+				Log.Debug(TAG, "x2, x, 1");
+			else
+				Log.Debug(TAG, "x2, y2, xy, x, y, 1");
 			foreach (int i in output)
 				Log.Debug(TAG, "Expanded: " + i);
 			return output;

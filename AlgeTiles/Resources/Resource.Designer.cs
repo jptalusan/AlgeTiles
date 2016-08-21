@@ -90,31 +90,34 @@ namespace AlgeTiles
 			public const int tile_1 = 2130837518;
 			
 			// aapt resource value: 0x7f02000f
-			public const int unavailable = 2130837519;
+			public const int tvBackground = 2130837519;
 			
 			// aapt resource value: 0x7f020010
-			public const int x2_tile = 2130837520;
+			public const int unavailable = 2130837520;
 			
 			// aapt resource value: 0x7f020011
-			public const int x_tile = 2130837521;
+			public const int x2_tile = 2130837521;
 			
 			// aapt resource value: 0x7f020012
-			public const int x_tile_rot = 2130837522;
+			public const int x_tile = 2130837522;
 			
 			// aapt resource value: 0x7f020013
-			public const int xy_tile = 2130837523;
+			public const int x_tile_rot = 2130837523;
 			
 			// aapt resource value: 0x7f020014
-			public const int xy_tile_rot = 2130837524;
+			public const int xy_tile = 2130837524;
 			
 			// aapt resource value: 0x7f020015
-			public const int y2_tile = 2130837525;
+			public const int xy_tile_rot = 2130837525;
 			
 			// aapt resource value: 0x7f020016
-			public const int y_tile = 2130837526;
+			public const int y2_tile = 2130837526;
 			
 			// aapt resource value: 0x7f020017
-			public const int y_tile_rot = 2130837527;
+			public const int y_tile = 2130837527;
+			
+			// aapt resource value: 0x7f020018
+			public const int y_tile_rot = 2130837528;
 			
 			static Drawable()
 			{
@@ -177,6 +180,9 @@ namespace AlgeTiles
 			// aapt resource value: 0x7f06001d
 			public const int new_question_button = 2131099677;
 			
+			// aapt resource value: 0x7f060036
+			public const int nonRotatingTiles = 2131099702;
+			
 			// aapt resource value: 0x7f060015
 			public const int notRotatedButtonLayout = 2131099669;
 			
@@ -215,6 +221,9 @@ namespace AlgeTiles
 			
 			// aapt resource value: 0x7f06002b
 			public const int space3 = 2131099691;
+			
+			// aapt resource value: 0x7f06002e
+			public const int sv = 2131099694;
 			
 			// aapt resource value: 0x7f06002d
 			public const int textView2 = 2131099693;
@@ -267,6 +276,30 @@ namespace AlgeTiles
 			// aapt resource value: 0x7f060020
 			public const int x_value_2 = 2131099680;
 			
+			// aapt resource value: 0x7f060033
+			public const int xy_tile = 2131099699;
+			
+			// aapt resource value: 0x7f060035
+			public const int xy_tile_rot = 2131099701;
+			
+			// aapt resource value: 0x7f060030
+			public const int xy_value = 2131099696;
+			
+			// aapt resource value: 0x7f060037
+			public const int y2_tile = 2131099703;
+			
+			// aapt resource value: 0x7f06002f
+			public const int y2_value = 2131099695;
+			
+			// aapt resource value: 0x7f060032
+			public const int y_tile = 2131099698;
+			
+			// aapt resource value: 0x7f060034
+			public const int y_tile_rot = 2131099700;
+			
+			// aapt resource value: 0x7f060031
+			public const int y_value = 2131099697;
+			
 			static Id()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -288,6 +321,9 @@ namespace AlgeTiles
 			
 			// aapt resource value: 0x7f030002
 			public const int Multiply = 2130903042;
+			
+			// aapt resource value: 0x7f030003
+			public const int MultiplyTwoVar = 2130903043;
 			
 			static Layout()
 			{

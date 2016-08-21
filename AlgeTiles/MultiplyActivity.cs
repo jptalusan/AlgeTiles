@@ -91,7 +91,11 @@ namespace AlgeTiles
 			Window.AddFlags(WindowManagerFlags.Fullscreen);
 			Window.ClearFlags(WindowManagerFlags.ForceNotFullscreen);
 			ActionBar.Hide();
+
+			numberOfVariables = Intent.GetIntExtra(Constants.VARIABLE_COUNT, 0);
+
 			SetContentView(Resource.Layout.Multiply);
+
 			// Create your application here
 			result = (TextView)FindViewById(Resource.Id.result);
 
@@ -154,11 +158,7 @@ namespace AlgeTiles
 			removeToggle.Click += toggle_click;
 			dragToggle.Click += toggle_click;
 			rotateToggle.Click += toggle_click;
-
-			//result.Text = "tile_1: " + numberOfTile_1s + ", x_tile: " + numberOfX_tiles + ", x2_tile: " + numberOfX2_tiles;
-
-			numberOfVariables = Intent.GetIntExtra(Constants.VARIABLE_COUNT, 0);
-
+			
 			newQuestionButton = (Button)FindViewById<Button>(Resource.Id.new_question_button);
 			refreshButton = (Button)FindViewById<Button>(Resource.Id.refresh_button);
 			checkButton = (Button)FindViewById<Button>(Resource.Id.check_button);
@@ -211,7 +211,7 @@ namespace AlgeTiles
 					if (rotateToggle.Checked)
 					{
 						FindViewById<LinearLayout>(Resource.Id.notRotatedButtonLayout).Visibility = ViewStates.Visible;
-						FindViewById<LinearLayout>(Resource.Id.rotatedButtonLayout).Visibility = ViewStates.Gone;
+						FindViewById<LinearLayout>(Resource.Id.rotatedButtonLayout).Visibility = ViewStates.Gone;					
 					}
 					rotateToggle.Checked = rotateToggle.Checked ? false : false;
 					break;
@@ -265,6 +265,10 @@ namespace AlgeTiles
 			x2ET.Enabled = false;
 			xET.Enabled = false;
 			oneET.Enabled = false;
+
+			x2ET.Text = "";
+			xET.Text = "";
+			oneET.Text = "";
 
 			isFirstAnswerCorrect = false;
 			isSecondAnswerCorrect = false;
@@ -461,7 +465,7 @@ namespace AlgeTiles
 		private void setupNewQuestion()
 		{
 			isFirstAnswerCorrect = false;
-			vars = AlgorithmUtilities.RNG(Constants.FACTOR, numberOfVariables);
+			vars = AlgorithmUtilities.RNG(Constants.MULTIPLY, numberOfVariables);
 
 			//(ax + b)(cx + d)
 			if (Constants.ONE_VAR == numberOfVariables)
@@ -483,21 +487,22 @@ namespace AlgeTiles
 		private void setupQuestionString(List<int> vars)
 		{
 			string output = "";
+			output += "(";
+			//vars = (ax + b)(cx + d)
+			if (vars[0] != 0)
+				output += vars[0] + "x";
 
-			if (Constants.ONE_VAR == numberOfVariables)
-			{
-				string ax = vars[0] != 0 ? vars[0] + "x" : "";
-				string b = vars[1] != 0 ? vars[1] + "" : "";
+			if (vars[1] > 0 && vars[1] != 0)
+				output += " + " + vars[1] + "y";
+			else if (vars[1] < 0 && vars[1] != 0)
+				output += vars[1] + "y";
 
-				string plus1 = !ax.Equals("") && !b.Equals("") ? "+" : "";
+			if (vars[2] > 0 && vars[2] != 0)
+				output += " + " + vars[2];
+			else if (vars[2] < 0 && vars[2] != 0)
+				output += vars[2];
 
-				string cx = vars[2] != 0 ? vars[2] + "x" : "";
-				string d = vars[3] != 0 ? vars[3] + "" : "";
-
-				string plus2 = !cx.Equals("") && !d.Equals("") ? "+" : "";
-
-				output = "(" + ax + " " + plus1 + " " + b + ")(" + cx + " " + plus2 + " " + d + ")";
-			}
+			output += ")";
 
 			result.Text = output;
 		}

@@ -65,16 +65,26 @@ namespace AlgeTiles
 			{
 				var intent = new Intent(this, typeof(FactorActivity));
 				if ((int)Char.GetNumericValue(button.Text[0]) == 1)
+				{
 					intent.PutExtra(Constants.VARIABLE_COUNT, (int)Char.GetNumericValue(button.Text[0]));
+					intent.AddFlags(ActivityFlags.ClearTop);
+				}
 				else
 					Toast.MakeText(Application.Context, "Not implemented.", ToastLength.Short).Show();
-
 				StartActivity(intent);
 			}
-			else if (Constants.MULTIPLY == activityType)
+			else if (Constants.MULTIPLY == activityType && Constants.ONE_VAR == (int)Char.GetNumericValue(button.Text[0]))
 			{
 				var intent = new Intent(this, typeof(MultiplyActivity));
 				intent.PutExtra(Constants.VARIABLE_COUNT, (int)Char.GetNumericValue(button.Text[0]));
+				intent.AddFlags(ActivityFlags.ClearTop);
+				StartActivity(intent);
+			}
+			else if (Constants.MULTIPLY == activityType && Constants.TWO_VAR == (int)Char.GetNumericValue(button.Text[0]))
+			{
+				var intent = new Intent(this, typeof(MultiplyTwoVarActivity));
+				intent.PutExtra(Constants.VARIABLE_COUNT, (int)Char.GetNumericValue(button.Text[0]));
+				intent.AddFlags(ActivityFlags.ClearTop);
 				StartActivity(intent);
 			}
 		}

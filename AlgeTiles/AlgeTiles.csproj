@@ -58,8 +58,10 @@
   <ItemGroup>
     <Compile Include="AlgorithmUtilities.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="GridValue2Var.cs" />
     <Compile Include="HomeScreenActivity.cs" />
     <Compile Include="FactorActivity.cs" />
+    <Compile Include="MultiplyTwoVarActivity.cs" />
     <Compile Include="MultiplyActivity.cs" />
     <Compile Include="GridValue.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -86,6 +88,15 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\Factor.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout-land\MultiplyTwoVar.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\MultiplyTwoVar.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\tvBackground.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

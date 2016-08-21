@@ -30,11 +30,17 @@ namespace AlgeTiles
 
 		public const string ONE_TILE = "tile_1";
 		public const string X_TILE = "x_tile";
+		public const string Y_TILE = "y_tile";
 		public const string X2_TILE = "x2_tile";
+		public const string Y2_TILE = "y2_tile";
+		public const string XY_TILE = "xy_tile";
 
 		public const string ONE_TILE_ROT = "tile_1_rot";
 		public const string X_TILE_ROT = "x_tile_rot";
+		public const string Y_TILE_ROT = "y_tile_rot";
 		public const string X2_TILE_ROT = "x2_tile_rot";
+		public const string Y2_TILE_ROT = "y2_tile_rot";
+		public const string XY_TILE_ROT = "xy_tile_rot";
 		//TODO:const  Add for y, xy, x2 and rotated versions (probably just for y and xy)
 
 		public const int SUBTRACT = 0;
