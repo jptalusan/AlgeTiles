@@ -517,41 +517,38 @@ namespace AlgeTiles
 			string output = "";
 			output += "(";
 			//vars = (ax + by + c)(dx + ey + f)
-			if (vars[0] != 0)
-				output += vars[0] + "x";
+			int ax = vars[0];
+			int by = vars[1];
+			int c = vars[2];
 
-			if (vars[1] > 0 && vars[1] != 0)
-				output += vars[1] + "y";
-			else if (vars[1] < 0 && vars[1] != 0)
-				output += vars[1] + "y";
+			int dx = vars[3];
+			int ey = vars[4];
+			int f = vars[5];
 
-			if (vars[2] > 0 && vars[2] != 0)
-				output += " + " + vars[2];
-			else if (vars[2] < 0 && vars[2] != 0)
-				output += vars[2];
+			if (ax != 0)
+				output += ax + "x+";
+			if (by != 0)
+				output += by + "y+";
+			if (c != 0)
+				output += c;
 
 			output += ")(";
 
-			if (vars[3] != 0)
-				output += vars[3] + "x";
-
-			if (vars[4] > 0 && vars[4] != 0)
-				output += " + " + vars[4] + "y";
-			else if (vars[4] < 0 && vars[4] != 0)
-				output += vars[4] + "y";
-
-			if (vars[5] > 0 && vars[5] != 0)
-				output += " + " + vars[5];
-			else if (vars[5] < 0 && vars[5] != 0)
-				output += vars[5];
+			if (dx != 0)
+				output += dx + "x+";
+			if (ey != 0)
+				output += ey + "y+";
+			if (f != 0)
+				output += f;
 
 			output += ")";
-
+			output = output.Replace(" ", "");
+			output = output.Replace("+-", "-");
+			output = output.Replace("+", " + ");
+			output = output.Replace("-", " - ");
 			result.Text = output;
 		}
 
-		//Add case where the image did not exit
-		//Probably check if the parent GridLayout - sender, is equal to the receiver (at ondrop) if not then do nothing.
 		private void GridLayout_Drag(object sender, Android.Views.View.DragEventArgs e)
 		{
 			var v = (GridLayout)sender;

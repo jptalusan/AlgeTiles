@@ -344,6 +344,7 @@ namespace AlgeTiles
 			}
 		}
 
+		//TODO: URGENT: must compute the right tiles in the correct quadrant in the form of (ax + b) (cx + d)
 		private void checkAnswers()
 		{
 			//TODO: rename, for factor activity, second answer is first answer
@@ -515,18 +516,20 @@ namespace AlgeTiles
 					output += vars[0] + " x^2 ";
 
 				if (vars[1] > 0 && vars[0] != 0)
-					output += " + " + vars[1] + "x ";
-				else if (vars[1] < 0)
+					output += "+" + vars[1] + "x ";
+				else if (vars[1] < 0 || vars[0] == 0)
 					output += vars[1] + "x ";
 				else if (vars[1] == 0)
 					output += "";
 
 				if (vars[2] > 0 && vars[1] != 0)
 					output += " + " + vars[2];
-				else if (vars[2] < 0)
+				else if (vars[2] < 0 || vars[1] == 0)
 					output += vars[2];
 			}
-
+			output = output.Replace(" ", "");
+			output = output.Replace("+", " + ");
+			output = output.Replace("-", " - ");
 			result.Text = output;
 		}
 

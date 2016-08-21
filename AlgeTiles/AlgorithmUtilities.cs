@@ -27,10 +27,14 @@ namespace AlgeTiles
 			int d = 0;
 			int e = 0;
 			int f = 0;
-			var rnd = new Random();
+
+			long seed = Java.Lang.JavaSystem.CurrentTimeMillis();
+			var rnd = new Random((int)seed);
+			
 			List<int> vars = new List<int>();
 
 			Log.Debug(TAG, activityType + "," + numberOfVariables);
+
 			if (Constants.MULTIPLY == activityType)
 			{
 				//(ax + b)(cx + d)
@@ -38,13 +42,14 @@ namespace AlgeTiles
 				{
 					while (a == 0 && b == 0)
 					{
-						a = PickRandom(multipyOneVarChoices);
-						b = a >= 0 ? PickRandom(-9, 9 - (3 * a)) : PickRandom(-9 - (3 * a), 9);
+						//a = multipyOneVarChoices[rnd.Next(multipyOneVarChoices.Length)];
+						a = PickRandom(rnd, multipyOneVarChoices);
+						b = a >= 0 ? PickRandom(rnd, -9, 9 - (3 * a)) : PickRandom(rnd, -9 - (3 * a), 9);
 					}
 					while (c == 0 && d == 0)
 					{
-						c = PickRandom(multipyOneVarChoices);
-						d = c >= 0 ? PickRandom(-9, 9 - (3 * c)) : PickRandom(-9 - (3 * c), 9);
+						c = PickRandom(rnd, multipyOneVarChoices);
+						d = c >= 0 ? PickRandom(rnd, -9, 9 - (3 * c)) : PickRandom(rnd, -9 - (3 * c), 9);
 					}
 
 					vars.Add(a);
@@ -56,29 +61,29 @@ namespace AlgeTiles
 				else if (Constants.TWO_VAR == numberOfVariables)
 				{
 
-					a = PickRandom(multipyTwoVarChoices);
-					b = a > 0 ? PickRandom(-2, 2 - a) : PickRandom(-2 - (2 * a), 2);
+					a = PickRandom(rnd, multipyTwoVarChoices);
+					b = a > 0 ? PickRandom(rnd, -2, 2 - a) : PickRandom(rnd, -2 - (2 * a), 2);
 					//e
 					if (a >= 0 && b >= 0)
-						c = PickRandom(-8, 8 - (3 * a) - (3 * b));
+						c = PickRandom(rnd, -8, 8 - (3 * a) - (3 * b));
 					if (a >= 0 && b < 0)
-						c = PickRandom(-8 - (3 * b), 8 - (3 * a));
+						c = PickRandom(rnd, -8 - (3 * b), 8 - (3 * a));
 					if (a < 0 && b >= 0)
-						c = PickRandom(-8 - (3 * a), 8 - (3 * b));
+						c = PickRandom(rnd, -8 - (3 * a), 8 - (3 * b));
 					if (a < 0 && b < 0)
-						c = PickRandom(-8 - (3 * a) - (3 * b), 8);
+						c = PickRandom(rnd, -8 - (3 * a) - (3 * b), 8);
 
-					d = PickRandom(multipyTwoVarChoices);
-					e = d > 0 ? PickRandom(-2, 2 - d) : PickRandom(-2 - (2 * d), 2);
+					d = PickRandom(rnd, multipyTwoVarChoices);
+					e = d > 0 ? PickRandom(rnd, -2, 2 - d) : PickRandom(rnd, -2 - (2 * d), 2);
 					//f
 					if (d >= 0 && e >= 0)
-						f = PickRandom(-8, 8 - (3 * d) - (3 * e));
+						f = PickRandom(rnd, -8, 8 - (3 * d) - (3 * e));
 					if (d >= 0 && e < 0)
-						f = PickRandom(-8 - (3 * e), 8 - (3 * d));
+						f = PickRandom(rnd, -8 - (3 * e), 8 - (3 * d));
 					if (d < 0 && e >= 0)
-						f = PickRandom(-8 - (3 * d), 8 - (3 * e));
+						f = PickRandom(rnd, -8 - (3 * d), 8 - (3 * e));
 					if (d < 0 && e < 0)
-						f = PickRandom(-8 - (3 * d) - (3 * e), 8);
+						f = PickRandom(rnd, -8 - (3 * d) - (3 * e), 8);
 
 					//TODO: Add more values for e and f generation
 					vars.Add(a); //ax
@@ -96,14 +101,14 @@ namespace AlgeTiles
 				{
 					while (a == 0 && b == 0)
 					{
-						a = PickRandom(-3, 3);
-						b = a >= 0 ? PickRandom(-9, 9 - (3 * a)) : PickRandom(-9 - (3 * a), 9);
+						a = PickRandom(rnd, -3, 3);
+						b = a >= 0 ? PickRandom(rnd, -9, 9 - (3 * a)) : PickRandom(rnd, -9 - (3 * a), 9);
 					}
 
 					while (c == 0 && d == 0)
 					{
-						c = PickRandom(-3, 3);
-						d = c >= 0 ? PickRandom(-9, 9 - (3 * c)) : PickRandom(-9 - (3 * c), 9);
+						c = PickRandom(rnd, -3, 3);
+						d = c >= 0 ? PickRandom(rnd, -9, 9 - (3 * c)) : PickRandom(rnd, -9 - (3 * c), 9);
 					}
 
 					vars.Add(a);
@@ -116,41 +121,54 @@ namespace AlgeTiles
 			foreach (int i in vars)
 				Log.Debug(TAG, "Generated: " + i);
 			//TODO: Fix for 2 variables
-			if (areConstantsOnlyOneWwithValues(vars, numberOfVariables))
+			if (areConstantsOnlyOneWwithValues(activityType, vars, numberOfVariables))
 				return RNG(activityType, numberOfVariables);
 			
 			return vars;
 		}
 
-		private static bool areConstantsOnlyOneWwithValues(List<int> vars, int numberOfVariables)
+		private static bool areConstantsOnlyOneWwithValues(String activityType, List<int> vars, int numberOfVariables)
 		{
 			if (numberOfVariables == 2)
 			{
-				int total = 0;
-				for (int i = 0; i <= 5; ++i)
-				{
-					total += vars[i];
-				}
-				if (total == 0)
+				int ax = vars[0];
+				int by = vars[1];
+				int dx = vars[3];
+				int ey = vars[4];
+
+				int total1 = ax + by;
+				int total2 = dx + ey;
+				if (total1 == 0 || total2 == 0)
 					return true;
 				return false;
-			} else
+			} else if (Constants.FACTOR == activityType)
 			{
-				if (vars[0] == 0 && vars[2] == 0)
+				int ax = vars[0];
+				int b = vars[1];
+				int cx = vars[2];
+				int d = vars[3];
+
+				if (ax == 0 || cx == 0)
+					return true;
+			} else if (Constants.MULTIPLY == activityType)
+			{
+				int ax = vars[0];
+				int b = vars[1];
+				int cx = vars[2];
+				int d = vars[3];
+				if (ax == 0 || cx == 0)
 					return true;
 			}
 			return false;
 		}
 
-		public static int PickRandom(params int[] Selection)
+		public static int PickRandom(Random rnd, params int[] Selection)
 		{
-			var rnd = new Random();
 			return Selection[rnd.Next(Selection.Length)];
 		}
 
-		public static int PickRandom(int a, int b)
+		public static int PickRandom(Random rnd, int a, int b)
 		{
-			var rnd = new Random();
 			return rnd.Next(a, b);
 		}
 
