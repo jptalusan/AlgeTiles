@@ -23,14 +23,38 @@
             android:layout_weight="92"
             android:weightSum="200">
         <!-- Upper Left -->
-            <GridLayout
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
+                android:background="@drawable/unavailable"
                 android:layout_weight="92"
-                android:background="@drawable/shape"
-                android:id="@+id/upperLeft"
-                android:rowCount="6"
-                android:columnCount="4" />
+                android:weightSum="3">
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="1"
+                    android:background="@drawable/notok"
+                    android:id="@+id/upperLeft"
+                    android:rowCount="6"
+                    android:columnCount="4" />
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="1"
+                    android:background="@drawable/notok"
+                    android:id="@+id/upperLeft2"
+                    android:rowCount="6"
+                    android:columnCount="4" />
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="1"
+                    android:background="@drawable/notok"
+                    android:id="@+id/upperLeft3"
+                    android:rowCount="6"
+                    android:columnCount="4" />
+            </LinearLayout>
         <!-- Upper Middle -->
             <GridLayout
                 android:layout_width="0px"
@@ -42,14 +66,38 @@
                 android:columnCount="1"
                 android:rotationX="180" />
         <!-- Upper Right -->
-            <GridLayout
+			<LinearLayout
+                android:orientation="vertical"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
+                android:background="@drawable/unavailable"
                 android:layout_weight="92"
-                android:background="@drawable/shape"
-                android:id="@+id/upperRight"
-                android:rowCount="6"
-                android:columnCount="4" />
+                android:weightSum="3">
+				<GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+					android:layout_weight="1"
+					android:background="@drawable/shape"
+					android:id="@+id/upperRight"
+					android:rowCount="6"
+					android:columnCount="4" />
+				<GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+					android:layout_weight="1"
+					android:background="@drawable/notok"
+					android:id="@+id/upperRight2"
+					android:rowCount="6"
+					android:columnCount="4" />
+				<GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+					android:layout_weight="1"
+					android:background="@drawable/notok"
+					android:id="@+id/upperRight3"
+					android:rowCount="6"
+					android:columnCount="4" />
+			</LinearLayout>
         </LinearLayout>
     <!-- Second Layer-->
         <LinearLayout
@@ -73,7 +121,7 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="16"
-                android:background="@drawable/shape"
+                android:background="@drawable/notok"
                 android:id="@+id/middleMiddle"
                 android:rowCount="1"
                 android:columnCount="1" />
@@ -82,7 +130,7 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
-                android:background="@drawable/shape"
+                android:background="@drawable/notok"
                 android:id="@+id/middleRight"
                 android:rowCount="1"
                 android:columnCount="12" />
@@ -95,14 +143,38 @@
             android:layout_weight="92"
             android:weightSum="200">
         <!-- Lower Left -->
-            <GridLayout
+			<LinearLayout
+                android:orientation="vertical"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
+                android:background="@drawable/unavailable"
                 android:layout_weight="92"
-                android:background="@drawable/shape"
-                android:id="@+id/lowerLeft"
-                android:rowCount="6"
-                android:columnCount="4" />
+                android:weightSum="3">
+				<GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+					android:layout_weight="1"
+					android:background="@drawable/shape"
+					android:id="@+id/lowerLeft"
+					android:rowCount="6"
+					android:columnCount="4" />
+				<GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+					android:layout_weight="1"
+					android:background="@drawable/notok"
+					android:id="@+id/lowerLeft2"
+					android:rowCount="6"
+					android:columnCount="4" />
+				<GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+					android:layout_weight="1"
+					android:background="@drawable/notok"
+					android:id="@+id/lowerLeft3"
+					android:rowCount="6"
+					android:columnCount="4" />
+			</LinearLayout>
         <!-- Lower Middle -->
             <GridLayout
                 android:layout_width="0px"
@@ -113,14 +185,38 @@
                 android:rowCount="8"
                 android:columnCount="1" />
         <!-- Lower Right -->
-            <GridLayout
+			<LinearLayout
+                android:orientation="vertical"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
+                android:background="@drawable/unavailable"
                 android:layout_weight="92"
-                android:background="@drawable/shape"
-                android:id="@+id/lowerRight"
-                android:rowCount="6"
-                android:columnCount="4" />
+                android:weightSum="3">
+				<GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+					android:layout_weight="1"
+					android:background="@drawable/shape"
+					android:id="@+id/lowerRight"
+					android:rowCount="6"
+					android:columnCount="4" />
+				<GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+					android:layout_weight="1"
+					android:background="@drawable/notok"
+					android:id="@+id/lowerRight2"
+					android:rowCount="6"
+					android:columnCount="4" />
+				<GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+					android:layout_weight="1"
+					android:background="@drawable/notok"
+					android:id="@+id/lowerRight3"
+					android:rowCount="6"
+					android:columnCount="4" />
+			</LinearLayout>
         </LinearLayout>
     </LinearLayout>
 <!-- Right Side -->

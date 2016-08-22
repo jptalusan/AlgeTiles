@@ -167,7 +167,7 @@ namespace AlgeTiles
 			lowerRightGrid.Drag += GridLayout_Drag;
 
 			//Shade red the other grids
-			for (int i = 0; i < outerGridLayoutList.Count; ++i)
+			for (int i = 0; i < innerGridLayoutList.Count; ++i)
 				innerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.unavailable);
 
 			removeToggle = (ToggleButton)FindViewById(Resource.Id.remove);
