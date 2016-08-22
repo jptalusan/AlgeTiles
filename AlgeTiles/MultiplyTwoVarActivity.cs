@@ -204,10 +204,9 @@ namespace AlgeTiles
 			gridValue2VarList.Add(midLeftGV);
 			gridValue2VarList.Add(midRightGV);
 
-			vars = AlgorithmUtilities.RNG(Constants.MULTIPLY, numberOfVariables);
-			setupQuestionString(vars);
+			setupNewQuestion();
 
-			correct = MediaPlayer.Create(this, Resource.Raw.correct);
+						correct = MediaPlayer.Create(this, Resource.Raw.correct);
 			incorrect = MediaPlayer.Create(this, Resource.Raw.wrong);
 
 			x2ET = FindViewById<EditText>(Resource.Id.x2_value);

@@ -187,8 +187,7 @@ namespace AlgeTiles
 			gridValueList.Add(midLeftGV);
 			gridValueList.Add(midRightGV);
 
-			vars = AlgorithmUtilities.RNG(Constants.MULTIPLY, numberOfVariables);
-			setupQuestionString(vars);
+			setupNewQuestion();
 
 			correct = MediaPlayer.Create(this, Resource.Raw.correct);
 			incorrect = MediaPlayer.Create(this, Resource.Raw.wrong);
@@ -486,7 +485,7 @@ namespace AlgeTiles
 
 		private void setupQuestionString(List<int> vars)
 		{
-			string output = "";
+			string output = "(";
 			//vars = (ax + b)(cx + d)
 			int ax = vars[0];
 			int b = vars[1];

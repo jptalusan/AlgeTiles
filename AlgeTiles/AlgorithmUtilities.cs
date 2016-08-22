@@ -118,8 +118,6 @@ namespace AlgeTiles
 				}
 			}
 
-			foreach (int i in vars)
-				Log.Debug(TAG, "Generated: " + i);
 			//TODO: Fix for 2 variables
 			if (areConstantsOnlyOneWwithValues(activityType, vars, numberOfVariables))
 				return RNG(activityType, numberOfVariables);
@@ -148,7 +146,7 @@ namespace AlgeTiles
 				int cx = vars[2];
 				int d = vars[3];
 
-				if (ax == 0 || cx == 0)
+				if (ax == 0 || b == 0 || cx == 0 || d == 0)
 					return true;
 			} else if (Constants.MULTIPLY == activityType)
 			{
@@ -351,8 +349,6 @@ namespace AlgeTiles
 
 		public static List<int> expandingVars(List<int> vars)
 		{
-			foreach (int i in vars)
-				Log.Debug(TAG, "Expanding: " + i);
 			List<int> output = new List<int>();
 			//For 1 variable
 			int a = 0;
@@ -389,12 +385,12 @@ namespace AlgeTiles
 				output.Add((b * f) + (c * e)); //y
 				output.Add(c * f); //one
 			}
-			if (vars.Count <= 4)
-				Log.Debug(TAG, "x2, x, 1");
-			else
-				Log.Debug(TAG, "x2, y2, xy, x, y, 1");
-			foreach (int i in output)
-				Log.Debug(TAG, "Expanded: " + i);
+			//if (vars.Count <= 4)
+			//	Log.Debug(TAG, "x2, x, 1");
+			//else
+			//	Log.Debug(TAG, "x2, y2, xy, x, y, 1");
+			//foreach (int i in output)
+			//	Log.Debug(TAG, "Expanded: " + i);
 			return output;
 		}
 

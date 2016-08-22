@@ -4,15 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="0dp"
+    android:layout_gravity="center"
+    android:layout_centerInParent="true"
     android:background="#CFE2F3">
-<!-- Left Side -->
-    <LinearLayout
+	<!-- Left Side -->
+	<LinearLayout
         android:orientation="vertical"
         android:layout_width="0px"
         android:layout_height="match_parent"
         android:layout_weight="10"
         android:weightSum="204"
-        android:padding="0dp">
+        android:layout_marginBottom="-10dp">
     <!-- First Layer-->
         <LinearLayout
             android:orientation="horizontal"
@@ -21,7 +23,6 @@
             android:layout_weight="92"
             android:weightSum="200"
             android:padding="0dp">
-        <!-- Second Layer-->
         <!-- Upper Left -->
             <GridLayout
                 android:layout_width="0px"
@@ -52,7 +53,7 @@
                 android:rowCount="6"
                 android:columnCount="4" />
         </LinearLayout>
-    <!-- Third Layer-->
+    <!-- Second Layer-->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"

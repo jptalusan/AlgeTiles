@@ -86,6 +86,11 @@ namespace AlgeTiles
 		private EditText x_value_2;
 		private EditText one_value_2;
 
+		private bool isFirstTime = false;
+
+		private int heightInPx = 0;
+		private int widthInPx = 0;
+
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
@@ -125,6 +130,22 @@ namespace AlgeTiles
 			lowerLeftGrid = FindViewById<GridLayout>(Resource.Id.lowerLeft);
 			lowerMiddleGrid = FindViewById<GridLayout>(Resource.Id.lowerMiddle);
 			lowerRightGrid = FindViewById<GridLayout>(Resource.Id.lowerRight);
+
+			ViewTreeObserver vto2 = upperLeftGrid.ViewTreeObserver;
+			vto2.GlobalLayout += (sender, e) =>
+			{
+				//vto2.RemoveOnGlobalLayoutListener(new MyLayoutListener(gL2));
+				if (!isFirstTime)
+				{
+					heightInPx = upperLeftGrid.Height;
+					widthInPx = upperLeftGrid.Width;
+					Log.Debug(TAG, "Inside h:" + heightInPx + "");
+					Log.Debug(TAG, "Inside w:" + widthInPx + "");
+					upperLeftGrid.SetMinimumHeight(0);
+					upperLeftGrid.SetMinimumWidth(0);
+					isFirstTime = true;
+				}
+			};
 
 			outerGridLayoutList.Add(upperLeftGrid);
 			outerGridLayoutList.Add(upperRightGrid);
@@ -187,9 +208,7 @@ namespace AlgeTiles
 			gridValueList.Add(midLeftGV);
 			gridValueList.Add(midRightGV);
 
-			vars = AlgorithmUtilities.RNG(Constants.FACTOR, numberOfVariables);
-			expandedVars = AlgorithmUtilities.expandingVars(vars);
-			setupQuestionString(expandedVars);
+			setupNewQuestion();
 
 			correct = MediaPlayer.Create(this, Resource.Raw.correct);
 			incorrect = MediaPlayer.Create(this, Resource.Raw.wrong);
@@ -352,8 +371,8 @@ namespace AlgeTiles
 			{
 				GridValue[] gvArr = { upperLeftGV, upperRightGV, lowerLeftGV, lowerRightGV };
 
-				for (int i = 0; i < gvArr.Length; ++i)
-					Log.Debug(TAG, gvArr[i].ToString());
+				//for (int i = 0; i < gvArr.Length; ++i)
+				//	Log.Debug(TAG, gvArr[i].ToString());
 
 				if (AlgorithmUtilities.isSecondAnswerCorrect(expandedVars, gvArr, numberOfVariables))
 				{
@@ -423,8 +442,8 @@ namespace AlgeTiles
 					}
 
 					expandedVars = AlgorithmUtilities.expandingVars(vars);
-					foreach (var i in expandedVars)
-						Log.Debug(TAG, i + "");
+					//foreach (var i in expandedVars)
+					//	Log.Debug(TAG, i + "");
 					Toast.MakeText(Application.Context, "1:correct", ToastLength.Short).Show();
 
 					correct.Start();
@@ -484,8 +503,17 @@ namespace AlgeTiles
 		{
 			isFirstAnswerCorrect = false;
 			vars = AlgorithmUtilities.RNG(Constants.FACTOR, numberOfVariables);
+			string temp = "";
+			foreach (int i in vars)
+				temp += i + ",";
+			Log.Debug(TAG, "factors (ax + b)(cx + d):" + temp);
+
 			expandedVars = AlgorithmUtilities.expandingVars(vars);
-			
+			string temp2 = "";
+			foreach (int i in expandedVars)
+				temp2 += i + ",";
+			Log.Debug(TAG, "expanded (ax^2 + bx + c):" + temp2);
+
 
 			//(ax + b)(cx + d)
 			if (Constants.ONE_VAR == numberOfVariables)
@@ -498,10 +526,10 @@ namespace AlgeTiles
 				setupQuestionString(expandedVars);
 			}
 
-			foreach (int i in vars)
-			{
-				Log.Debug(TAG, i + "");
-			}
+			//foreach (int i in vars)
+			//{
+			//	Log.Debug(TAG, i + "");
+			//}
 		}
 
 		private void setupQuestionString(List<int> vars)
@@ -532,6 +560,7 @@ namespace AlgeTiles
 			View view = (View)e.Event.LocalState;
 			var button_type = result.Text;
 			var drag_data = e.Event.ClipData;
+			bool isDroppedAtCenter = false;
 
 			switch (e.Event.Action)
 			{
@@ -606,6 +635,7 @@ namespace AlgeTiles
 							imageView.SetBackgroundResource(resID);
 						}
 						wasImageDropped = true;
+						isDroppedAtCenter = true;
 					}
 					//Second group x
 					else if (!isFirstAnswerCorrect &&
@@ -625,22 +655,57 @@ namespace AlgeTiles
 							imageView.SetBackgroundResource(resID);
 						}
 						wasImageDropped = true;
+						isDroppedAtCenter = true;
 					}
 
 					if (wasImageDropped)
 					{
+						GridLayout container = (GridLayout)v;
+
 						imageView.Tag = currentButtonType;
 						Log.Debug(TAG, "Check: " + currentButtonType);
 						checkWhichParentAndUpdate(v.Id, currentButtonType, Constants.ADD);
 						//Probably should put weight or alignment here
-						LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(
-							ViewGroup.LayoutParams.WrapContent,
-							ViewGroup.LayoutParams.WrapContent);
-						imageView.LayoutParameters = linearLayoutParams;
+						GridLayout.LayoutParams gridlayoutParams = new GridLayout.LayoutParams();
+						//gridlayoutParams.Height = ViewGroup.LayoutParams.WrapContent;
+						//gridlayoutParams.Width = ViewGroup.LayoutParams.WrapContent;
+
+						if (!isDroppedAtCenter)
+						{
+							int heightFactor = 0;
+							int widthFactor = 0;
+							switch (currentButtonType)
+							{
+								case Constants.X2_TILE:
+								case Constants.X2_TILE_ROT:
+									heightFactor = 3;
+									widthFactor = 3;
+									break;
+								case Constants.X_TILE:
+								case Constants.X_TILE_ROT:
+									heightFactor = 3;
+									widthFactor = 9;
+									break;
+								case Constants.ONE_TILE:
+								case Constants.ONE_TILE_ROT:
+									heightFactor = 9;
+									widthFactor = 9;
+									break;
+							}
+							Log.Debug(TAG, heightInPx + "," + heightFactor + "");
+							gridlayoutParams.Height = heightInPx / heightFactor;
+							gridlayoutParams.Width = heightInPx / widthFactor;
+							gridlayoutParams.SetGravity(GravityFlags.Left);
+						} else
+						{
+							gridlayoutParams.Height = ViewGroup.LayoutParams.WrapContent;
+							gridlayoutParams.Width = ViewGroup.LayoutParams.WrapContent;
+							gridlayoutParams.SetGravity(GravityFlags.FillVertical);
+						}
+
+						imageView.LayoutParameters = gridlayoutParams;
 						imageView.LongClick += clonedImageView_Touch;
 
-
-						GridLayout container = (GridLayout)v;
 						container.AddView(imageView);
 						view.Visibility = ViewStates.Visible;
 						v.SetBackgroundResource(Resource.Drawable.shape);

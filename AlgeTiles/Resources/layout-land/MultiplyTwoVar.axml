@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="0dp"
+    android:layout_gravity="center"
+    android:layout_centerInParent="true"
     android:background="#CFE2F3">
 	<!-- Left Side -->
 	<LinearLayout
@@ -12,18 +14,17 @@
         android:layout_height="match_parent"
         android:layout_weight="10"
         android:weightSum="204"
-		android:padding="0dp">
-		<!-- First Layer-->
-		<LinearLayout
+        android:layout_marginBottom="-10dp">
+    <!-- First Layer-->
+        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0px"
             android:layout_weight="92"
             android:weightSum="200"
-			android:padding="0dp">
-			<!-- Second Layer-->
-			<!-- Upper Left -->
-			<GridLayout
+            android:padding="0dp">
+        <!-- Upper Left -->
+            <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
@@ -31,10 +32,9 @@
                 android:id="@+id/upperLeft"
                 android:rowCount="6"
                 android:columnCount="4"
-                android:layout_gravity="right">
-			</GridLayout>
-			<!-- Upper Middle -->
-			<GridLayout
+                android:layout_gravity="right" />
+        <!-- Upper Middle -->
+            <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="16"
@@ -43,27 +43,26 @@
                 android:rowCount="8"
                 android:columnCount="1"
                 android:rotationX="180" />
-			<!-- Upper Right -->
-			<GridLayout
+        <!-- Upper Right -->
+            <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
                 android:background="@drawable/shape"
                 android:id="@+id/upperRight"
                 android:rowCount="6"
-                android:columnCount="4">
-			</GridLayout>
-		</LinearLayout>
-		<!-- Third Layer-->
-		<LinearLayout
+                android:columnCount="4" />
+        </LinearLayout>
+	<!-- Second Layer-->
+        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0px"
             android:layout_weight="15"
             android:weightSum="200"
-			android:padding="0dp">
-			<!-- Middle Left -->
-			<GridLayout
+            android:padding="0dp">
+        <!-- Middle Left -->
+            <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
@@ -72,8 +71,8 @@
                 android:rotationY="180"
                 android:rowCount="1"
                 android:columnCount="12" />
-			<!-- Middle Middle -->
-			<GridLayout
+        <!-- Middle Middle -->
+            <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="16"
@@ -81,8 +80,8 @@
                 android:id="@+id/middleMiddle"
                 android:rowCount="1"
                 android:columnCount="1" />
-			<!-- Middle Right -->
-			<GridLayout
+        <!-- Middle Right -->
+            <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
@@ -90,27 +89,26 @@
                 android:id="@+id/middleRight"
                 android:rowCount="1"
                 android:columnCount="12" />
-		</LinearLayout>
-		<!-- Fourth Layer-->
-		<LinearLayout
+        </LinearLayout>
+    <!-- Fourth Layer-->
+        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0px"
             android:layout_weight="92"
             android:weightSum="200"
-			android:padding="0dp">
-			<!-- Lower Left -->
-			<GridLayout
+            android:padding="0dp">
+        <!-- Lower Left -->
+            <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
                 android:background="@drawable/shape"
                 android:id="@+id/lowerLeft"
                 android:rowCount="6"
-                android:columnCount="4">
-			</GridLayout>
-			<!-- Lower Middle -->
-			<GridLayout
+                android:columnCount="4" />
+        <!-- Lower Middle -->
+            <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="16"
@@ -118,49 +116,48 @@
                 android:id="@+id/lowerMiddle"
                 android:rowCount="8"
                 android:columnCount="1" />
-			<!-- Lower Right -->
-			<GridLayout
+        <!-- Lower Right -->
+            <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
                 android:background="@drawable/shape"
                 android:id="@+id/lowerRight"
                 android:rowCount="6"
-                android:columnCount="4">
-			</GridLayout>
-		</LinearLayout>
-	</LinearLayout>
-	<!-- Right Side -->
-	<ScrollView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:id="@+id/sv">
-		<LinearLayout
-		android:orientation="vertical"
-		android:layout_width="wrap_content"
-		android:layout_height="match_parent"
-		android:layout_weight="2"
-		android:weightSum="110"
-		android:padding="0dp">
-			<TextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
+                android:columnCount="4" />
+        </LinearLayout>
+    </LinearLayout>
+<!-- Right Side -->
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sv">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:weightSum="110"
+            android:padding="0dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/result"
                 android:textColor="#000000"
-				android:layout_weight="5"
-				android:background="@drawable/tvBackground"
-				android:gravity="center"/>
-			<Space
-				android:layout_width="match_parent"
-				android:layout_height="1sp"/>
-			<LinearLayout
-				android:orientation="horizontal"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_weight="5"
-				android:gravity="fill"
-				android:padding="0dp">
-				<EditText
+                android:layout_weight="5"
+                android:background="@drawable/tvBackground"
+                android:gravity="center" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="1sp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="fill"
+                android:padding="0dp">
+                <EditText
                     android:hint="..."
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -168,15 +165,15 @@
                     android:textColor="#000000"
                     android:id="@+id/x2_value"
                     android:layout_weight="1"
-					android:imeOptions="actionDone"
-					android:inputType="numberSigned"/>
-				<TextView
+                    android:imeOptions="actionDone"
+                    android:inputType="numberSigned" />
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="x^2 + "
                     android:textColor="#000000"
                     android:id="@+id/x2TV" />
-				<EditText
+                <EditText
                     android:hint="..."
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -184,15 +181,15 @@
                     android:textColor="#000000"
                     android:id="@+id/y2_value"
                     android:layout_weight="1"
-					android:imeOptions="actionDone"
-					android:inputType="numberSigned"/>
-				<TextView
+                    android:imeOptions="actionDone"
+                    android:inputType="numberSigned" />
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="y^2 + "
                     android:textColor="#000000"
                     android:id="@+id/xTV" />
-				<EditText
+                <EditText
                     android:hint="..."
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -200,26 +197,26 @@
                     android:textColor="#000000"
                     android:id="@+id/xy_value"
                     android:layout_weight="1"
-					android:imeOptions="actionDone"
-					android:inputType="numberSigned"/>
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="match_parent"
-					android:text="xy + "
-					android:textColor="#000000"
-					android:id="@+id/xTV" />
-			</LinearLayout>
-			<Space
-				android:layout_width="match_parent"
-				android:layout_height="1sp"/>
-			<LinearLayout
-				android:orientation="horizontal"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_weight="5"
-				android:gravity="fill"
-				android:padding="0dp">
-				<EditText
+                    android:imeOptions="actionDone"
+                    android:inputType="numberSigned" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="xy + "
+                    android:textColor="#000000"
+                    android:id="@+id/xTV" />
+            </LinearLayout>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="1sp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="fill"
+                android:padding="0dp">
+                <EditText
                     android:hint="..."
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -227,15 +224,15 @@
                     android:textColor="#000000"
                     android:id="@+id/x_value"
                     android:layout_weight="1"
-					android:imeOptions="actionDone"
-					android:inputType="numberSigned"/>
-				<TextView
+                    android:imeOptions="actionDone"
+                    android:inputType="numberSigned" />
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="x + "
                     android:textColor="#000000"
                     android:id="@+id/x2TV" />
-				<EditText
+                <EditText
                     android:hint="..."
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -243,15 +240,15 @@
                     android:textColor="#000000"
                     android:id="@+id/y_value"
                     android:layout_weight="1"
-					android:imeOptions="actionDone"
-					android:inputType="numberSigned"/>
-				<TextView
+                    android:imeOptions="actionDone"
+                    android:inputType="numberSigned" />
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="y + "
                     android:textColor="#000000"
                     android:id="@+id/xTV" />
-				<EditText
+                <EditText
                     android:hint="..."
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -259,260 +256,260 @@
                     android:textColor="#000000"
                     android:id="@+id/one_value"
                     android:layout_weight="1"
-					android:imeOptions="actionDone"
-					android:inputType="numberSigned"/>
-			</LinearLayout>
-			<!-- First 0.5 (2) -->
-			<LinearLayout
-				android:orientation="horizontal"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_weight="10"
-				android:weightSum="2"
-				android:gravity="fill"
-				android:padding="0dp">
-				<ToggleButton
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:id="@+id/drag"
-					android:textOff="drag"
-					android:textOn="drag"
-					android:textSize="12sp"
-					android:layout_weight="1" />
-				<ToggleButton
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:id="@+id/remove"
-					android:textOff="remove"
-					android:textOn="remove"
-					android:textSize="12sp"
-					android:layout_weight="1" />
-			</LinearLayout>
-			<!-- First 0.5 (2) -->
-			<LinearLayout
-				android:orientation="horizontal"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_weight="10"
-				android:weightSum="1"
-				android:gravity="fill"
-				android:padding="0dp">
-				<ToggleButton
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:id="@+id/rotate"
-					android:textOff="rotate"
-					android:textOn="rotate"
-					android:textSize="12sp"
-					android:layout_weight="1" />
-			</LinearLayout>
-			<!-- Second (1) -->
-			<LinearLayout
-				android:orientation="horizontal"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_weight="10"
-				android:weightSum="2"
-				android:gravity="fill"
-				android:padding="0dp">
-				<Button
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:text="@string/check"
-					android:id="@+id/check_button"
-					android:layout_weight="1" />
-				<Button
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:text="@string/refresh"
-					android:id="@+id/refresh_button"
-					android:layout_weight="1" />
-			</LinearLayout>
-			<!-- Third (4) Draggable Blocks Area -->
-			<!-- add background="@null" to remove padding -->
-			<LinearLayout
-				android:orientation="vertical"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:layout_weight="60"
-				android:visibility="visible"
-				android:padding="5dp"
-				android:layout_gravity="center"
-				android:gravity="center">
-				<!-- Not rotated -->
-				<LinearLayout
-					android:orientation="horizontal"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:weightSum="4"
-					android:id="@+id/notRotatedButtonLayout"
-					android:visibility="visible"
-					android:padding="5dp"
-					android:layout_gravity="center">
-					<LinearLayout
-						android:orientation="vertical"
-						android:layout_width="wrap_content"
-						android:layout_height="match_parent"
-						android:layout_weight="1"
-						android:weightSum="4"
-						android:paddingRight="-10dp"
-						android:gravity="center">
-						<ImageButton
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:background="@null"
-							android:src="@drawable/tile_1"
-							android:id="@+id/tile_1"
-							android:layout_weight="1"
-							android:paddingBottom="5dp"/>
-						<ImageButton
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:background="@null"
-							android:src="@drawable/x_tile"
-							android:id="@+id/x_tile"
-							android:layout_weight="3" />
-					</LinearLayout>
-					<LinearLayout
-						android:orientation="vertical"
-						android:layout_width="wrap_content"
-						android:layout_height="match_parent"
-						android:layout_weight="1"
-						android:weightSum="4"
-						android:paddingLeft="-10dp"
-						android:paddingRight="-10dp"
-						android:gravity="center">
-						<ImageButton
-							android:layout_width="match_parent"
-							android:layout_height="match_parent"
-							android:background="@null"
-							android:layout_weight="4"
-							android:src="@drawable/y_tile"
-							android:id="@+id/y_tile" />
-					</LinearLayout>
-					<LinearLayout
-						android:orientation="vertical"
-						android:layout_width="wrap_content"
-						android:layout_height="match_parent"
-						android:layout_weight="2"
-						android:weightSum="4"
-						android:paddingLeft="-20dp"
-						android:gravity="center">
-						<ImageButton
-							android:layout_width="match_parent"
-							android:layout_height="match_parent"
-							android:background="@null"
-							android:layout_weight="4"
-							android:src="@drawable/xy_tile"
-							android:id="@+id/xy_tile" />
-					</LinearLayout>
-				</LinearLayout>
-				<!-- Rotated -->
-				<LinearLayout
-					android:orientation="vertical"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:weightSum="4"
-					android:id="@+id/rotatedButtonLayout"
-					android:visibility="gone"
-					android:padding="5dp"
-					android:layout_gravity="center">
-					<LinearLayout
-						android:orientation="horizontal"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_weight="1"
-						android:weightSum="4"
-						android:padding="5dp">
-						<ImageButton
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:background="@null"
-							android:src="@drawable/tile_1"
-							android:id="@+id/tile_1_rot"
-							android:layout_weight="1"
-							android:paddingBottom="5dp"/>
-						<ImageButton
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:background="@null"
-							android:src="@drawable/x_tile_rot"
-							android:id="@+id/x_tile_rot"
-							android:layout_weight="3"
-							android:paddingLeft="10dp"/>
-					</LinearLayout>
-					<LinearLayout
-						android:orientation="horizontal"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:layout_weight="1"
-						android:weightSum="4"
-						android:padding="5dp">
-						<ImageButton
-							android:layout_width="match_parent"
-							android:layout_height="match_parent"
-							android:background="@null"
-							android:layout_weight="4"
-							android:src="@drawable/y_tile_rot"
-							android:id="@+id/y_tile_rot" />
-					</LinearLayout>
-					<LinearLayout
-						android:orientation="horizontal"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:layout_weight="2"
-						android:weightSum="4"
-						android:padding="-10dp">
-						<ImageButton
-							android:layout_width="match_parent"
-							android:layout_height="match_parent"
-							android:background="@null"
-							android:layout_weight="4"
-							android:src="@drawable/xy_tile_rot"
-							android:id="@+id/xy_tile_rot" />
-					</LinearLayout>
-				</LinearLayout>
-				<!-- Constant tiles (no rotation) -->
-				<LinearLayout
-					android:orientation="horizontal"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:id="@+id/nonRotatingTiles"
-					android:padding="-10dp"
-					android:layout_gravity="center">
-					<ImageButton
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						android:background="@null"
-						android:src="@drawable/x2_tile"
-						android:id="@+id/x2_tile"
-						android:visibility="visible"
-						android:layout_weight="15"
-						android:padding="-10dp"/>
-					<ImageButton
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						android:background="@null"
-						android:src="@drawable/y2_tile"
-						android:id="@+id/y2_tile"
-						android:visibility="visible"
-						android:layout_weight="15"
-						android:paddingLeft="-20dp"/>
-				</LinearLayout>
-			</LinearLayout>
-			<!-- Fourth (1) -->
-			<LinearLayout
-				android:orientation="horizontal"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_weight="10"
-				android:gravity="fill">
-				<Button
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:text="@string/newQ"
-					android:id="@+id/new_question_button" />
-			</LinearLayout>
-		</LinearLayout>
-	</ScrollView>
+                    android:imeOptions="actionDone"
+                    android:inputType="numberSigned" />
+            </LinearLayout>
+        <!-- First 0.5 (2) -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:weightSum="2"
+                android:gravity="fill"
+                android:padding="0dp">
+                <ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/drag"
+                    android:textOff="drag"
+                    android:textOn="drag"
+                    android:textSize="12sp"
+                    android:layout_weight="1" />
+                <ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/remove"
+                    android:textOff="remove"
+                    android:textOn="remove"
+                    android:textSize="12sp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        <!-- First 0.5 (2) -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:weightSum="1"
+                android:gravity="fill"
+                android:padding="0dp">
+                <ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rotate"
+                    android:textOff="rotate"
+                    android:textOn="rotate"
+                    android:textSize="12sp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        <!-- Second (1) -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:weightSum="2"
+                android:gravity="fill"
+                android:padding="0dp">
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/check"
+                    android:id="@+id/check_button"
+                    android:layout_weight="1" />
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/refresh"
+                    android:id="@+id/refresh_button"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        <!-- Third (4) Draggable Blocks Area -->
+        <!-- add background="@null" to remove padding -->
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="60"
+                android:visibility="visible"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                android:gravity="center">
+            <!-- Not rotated -->
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="4"
+                    android:id="@+id/notRotatedButtonLayout"
+                    android:visibility="visible"
+                    android:padding="5dp"
+                    android:layout_gravity="center">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:weightSum="4"
+                        android:paddingRight="-10dp"
+                        android:gravity="center">
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:src="@drawable/tile_1"
+                            android:id="@+id/tile_1"
+                            android:layout_weight="1"
+                            android:paddingBottom="5dp" />
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:src="@drawable/x_tile"
+                            android:id="@+id/x_tile"
+                            android:layout_weight="3" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:weightSum="4"
+                        android:paddingLeft="-10dp"
+                        android:paddingRight="-10dp"
+                        android:gravity="center">
+                        <ImageButton
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:layout_weight="4"
+                            android:src="@drawable/y_tile"
+                            android:id="@+id/y_tile" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:weightSum="4"
+                        android:paddingLeft="-20dp"
+                        android:gravity="center">
+                        <ImageButton
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:layout_weight="4"
+                            android:src="@drawable/xy_tile"
+                            android:id="@+id/xy_tile" />
+                    </LinearLayout>
+                </LinearLayout>
+            <!-- Rotated -->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:weightSum="4"
+                    android:id="@+id/rotatedButtonLayout"
+                    android:visibility="gone"
+                    android:padding="5dp"
+                    android:layout_gravity="center">
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:weightSum="4"
+                        android:padding="5dp">
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:src="@drawable/tile_1"
+                            android:id="@+id/tile_1_rot"
+                            android:layout_weight="1"
+                            android:paddingBottom="5dp" />
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:src="@drawable/x_tile_rot"
+                            android:id="@+id/x_tile_rot"
+                            android:layout_weight="3"
+                            android:paddingLeft="10dp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:weightSum="4"
+                        android:padding="5dp">
+                        <ImageButton
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:layout_weight="4"
+                            android:src="@drawable/y_tile_rot"
+                            android:id="@+id/y_tile_rot" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:weightSum="4"
+                        android:padding="-10dp">
+                        <ImageButton
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:layout_weight="4"
+                            android:src="@drawable/xy_tile_rot"
+                            android:id="@+id/xy_tile_rot" />
+                    </LinearLayout>
+                </LinearLayout>
+            <!-- Constant tiles (no rotation) -->
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nonRotatingTiles"
+                    android:padding="-10dp"
+                    android:layout_gravity="center">
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:src="@drawable/x2_tile"
+                        android:id="@+id/x2_tile"
+                        android:visibility="visible"
+                        android:layout_weight="15"
+                        android:padding="-10dp" />
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:src="@drawable/y2_tile"
+                        android:id="@+id/y2_tile"
+                        android:visibility="visible"
+                        android:layout_weight="15"
+                        android:paddingLeft="-20dp" />
+                </LinearLayout>
+            </LinearLayout>
+        <!-- Fourth (1) -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:gravity="fill">
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/newQ"
+                    android:id="@+id/new_question_button" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
