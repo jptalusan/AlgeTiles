@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="0dp"
+    android:layout_gravity="center"
+    android:layout_centerInParent="true"
     android:background="#CFE2F3">
 <!-- Left Side -->
     <LinearLayout
@@ -11,7 +13,8 @@
         android:layout_width="0px"
         android:layout_height="match_parent"
         android:layout_weight="10"
-        android:weightSum="204">
+        android:weightSum="204"
+        android:layout_marginBottom="-10dp">
     <!-- First Layer-->
         <LinearLayout
             android:orientation="horizontal"
@@ -19,7 +22,6 @@
             android:layout_height="0px"
             android:layout_weight="92"
             android:weightSum="200">
-        <!-- Second Layer-->
         <!-- Upper Left -->
             <GridLayout
                 android:layout_width="0px"
@@ -28,8 +30,7 @@
                 android:background="@drawable/shape"
                 android:id="@+id/upperLeft"
                 android:rowCount="6"
-                android:columnCount="4"
-                android:layout_gravity="right" />
+                android:columnCount="4" />
         <!-- Upper Middle -->
             <GridLayout
                 android:layout_width="0px"
@@ -50,7 +51,7 @@
                 android:rowCount="6"
                 android:columnCount="4" />
         </LinearLayout>
-    <!-- Third Layer-->
+    <!-- Second Layer-->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -86,7 +87,7 @@
                 android:rowCount="1"
                 android:columnCount="12" />
         </LinearLayout>
-    <!-- Fourth Layer-->
+    <!-- Third Layer-->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -161,8 +162,8 @@
                     android:textColor="#000000"
                     android:id="@+id/x_value_1"
                     android:layout_weight="1"
-					android:imeOptions="actionDone"
-					android:inputType="number"/>
+                    android:imeOptions="actionDone"
+                    android:inputType="numberSigned" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -176,8 +177,8 @@
                     android:textColor="#000000"
                     android:id="@+id/one_value_1"
                     android:layout_weight="1"
-					android:imeOptions="actionDone"
-					android:inputType="number" />
+                    android:imeOptions="actionDone"
+                    android:inputType="numberSigned" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -191,8 +192,8 @@
                     android:textColor="#000000"
                     android:id="@+id/x_value_2"
                     android:layout_weight="1"
-					android:imeOptions="actionDone"
-					android:inputType="number" />
+                    android:imeOptions="actionDone"
+                    android:inputType="numberSigned" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -205,8 +206,8 @@
                     android:background="#ffffff"
                     android:textColor="#000000"
                     android:id="@+id/one_value_2"
-					android:imeOptions="actionDone"
-					android:inputType="number"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberSigned"
                     android:layout_weight="1" />
                 <TextView
                     android:layout_width="wrap_content"

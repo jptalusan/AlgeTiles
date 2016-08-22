@@ -507,27 +507,20 @@ namespace AlgeTiles
 		private void setupQuestionString(List<int> vars)
 		{
 			string output = "";
+			//vars = (ax^2 + bx + c)
+			int ax2 = vars[0];
+			int bx = vars[1];
+			int c = vars[2];
 
-			if (Constants.ONE_VAR == numberOfVariables)
-			{
-				if (vars[0] == 0)
-					output += "";
-				else
-					output += vars[0] + " x^2 ";
+			if (ax2 != 0)
+				output += ax2 + "x^2+";
+			if (bx != 0)
+				output += bx + "x+";
+			if (c != 0)
+				output += c;
 
-				if (vars[1] > 0 && vars[0] != 0)
-					output += "+" + vars[1] + "x ";
-				else if (vars[1] < 0 || vars[0] == 0)
-					output += vars[1] + "x ";
-				else if (vars[1] == 0)
-					output += "";
-
-				if (vars[2] > 0 && vars[1] != 0)
-					output += " + " + vars[2];
-				else if (vars[2] < 0 || vars[1] == 0)
-					output += vars[2];
-			}
 			output = output.Replace(" ", "");
+			output = output.Replace("+-", "-");
 			output = output.Replace("+", " + ");
 			output = output.Replace("-", " - ");
 			result.Text = output;

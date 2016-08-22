@@ -3,245 +3,369 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+    android:padding="0dp"
     android:background="#CFE2F3">
 <!-- Left Side -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="0px"
         android:layout_height="match_parent"
-        android:layout_weight="7"
-        android:weightSum="70">
+        android:layout_weight="10"
+        android:weightSum="204"
+        android:padding="0dp">
     <!-- First Layer-->
-    <!-- Second Layer-->
-        <GridLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:columnCount="15"
-            android:id="@+id/gridLayout2">
-            <TextView
-                android:text="L1-1"
-                android:id="@+id/result"
-                android:background="#ffffff"
-                android:textColor="#000000"
-                android:layout_columnSpan="5"
-                android:layout_gravity="fill_horizontal" />
-            <Space
-                android:layout_width="170dp"
-                android:id="@+id/space1" />
-            <EditText
-                android:text="x^2"
-                android:background="#ffffff"
-                android:textColor="#000000"
-                android:layout_columnSpan="2"
-                android:layout_gravity="fill_horizontal"
-                android:id="@+id/editText1" />
-            <Space
-                android:layout_width="20dp"
-                android:id="@+id/space2" />
-            <EditText
-                android:text="+x"
-                android:background="#ffffff"
-                android:textColor="#000000"
-                android:layout_columnSpan="2"
-                android:layout_gravity="fill_horizontal"
-                android:id="@+id/editText2" />
-            <Space
-                android:layout_width="20dp"
-                android:id="@+id/space3" />
-            <EditText
-                android:text="+c"
-                android:background="#ffffff"
-                android:textColor="#000000"
-                android:layout_columnSpan="2"
-                android:layout_gravity="fill_horizontal"
-                android:id="@+id/editText3" />
-        </GridLayout>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:layout_weight="30"
-            android:weightSum="65">
+            android:layout_weight="92"
+            android:weightSum="200"
+            android:padding="0dp">
+        <!-- Second Layer-->
         <!-- Upper Left -->
             <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
-                android:layout_weight="30"
+                android:layout_weight="92"
                 android:background="@drawable/shape"
                 android:id="@+id/upperLeft"
                 android:rowCount="6"
-                android:columnCount="4">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="L2-3-1"
-                    android:id="@+id/textView2" />
-            </GridLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="L2-1-2"
-                android:layout_weight="5" />
+                android:columnCount="4"
+                android:layout_gravity="right" />
+        <!-- Upper Middle -->
+            <GridLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="16"
+                android:background="@drawable/shape"
+                android:id="@+id/upperMiddle"
+                android:rowCount="8"
+                android:columnCount="1"
+                android:rotationX="180" />
         <!-- Upper Right -->
             <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
-                android:layout_weight="30"
+                android:layout_weight="92"
                 android:background="@drawable/shape"
                 android:id="@+id/upperRight"
                 android:rowCount="6"
-                android:columnCount="4">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="L2-3-3" />
-            </GridLayout>
+                android:columnCount="4" />
         </LinearLayout>
     <!-- Third Layer-->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="5">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="L3-1" />
+            android:layout_height="0px"
+            android:layout_weight="15"
+            android:weightSum="200"
+            android:padding="0dp">
+        <!-- Middle Left -->
+            <GridLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="92"
+                android:background="@drawable/shape"
+                android:id="@+id/middleLeft"
+                android:rotationY="180"
+                android:rowCount="1"
+                android:columnCount="12" />
+        <!-- Middle Middle -->
+            <GridLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="16"
+                android:background="@drawable/shape"
+                android:id="@+id/middleMiddle"
+                android:rowCount="1"
+                android:columnCount="1" />
+        <!-- Middle Right -->
+            <GridLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="92"
+                android:background="@drawable/shape"
+                android:id="@+id/middleRight"
+                android:rowCount="1"
+                android:columnCount="12" />
         </LinearLayout>
     <!-- Fourth Layer-->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:layout_weight="30"
-            android:weightSum="65">
+            android:layout_weight="92"
+            android:weightSum="200"
+            android:padding="0dp">
         <!-- Lower Left -->
             <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
-                android:layout_weight="30"
+                android:layout_weight="92"
                 android:background="@drawable/shape"
                 android:id="@+id/lowerLeft"
                 android:rowCount="6"
-                android:columnCount="4">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="L4-3-1" />
-            </GridLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="L4-1-2"
-                android:layout_weight="5" />
+                android:columnCount="4" />
+        <!-- Lower Middle -->
+            <GridLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="16"
+                android:background="@drawable/shape"
+                android:id="@+id/lowerMiddle"
+                android:rowCount="8"
+                android:columnCount="1" />
         <!-- Lower Right -->
             <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
-                android:layout_weight="30"
+                android:layout_weight="92"
                 android:background="@drawable/shape"
                 android:id="@+id/lowerRight"
                 android:rowCount="6"
-                android:columnCount="4">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="L4-3-3" />
-            </GridLayout>
+                android:columnCount="4" />
         </LinearLayout>
     </LinearLayout>
 <!-- Right Side -->
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="0px"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:weightSum="70">
-    <!-- First (2) -->
-        <GridLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="20"
-            android:rowCount="3"
-            android:columnCount="2">
-        <!--TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="R1-1" /-->
-            <ToggleButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/drag"
-                android:textOff="@null"
-                android:textOn="@null"
-                android:id="@+id/drag" />
-            <ToggleButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/remove"
-                android:textOff="@null"
-                android:textOn="@null"
-                android:id="@+id/remove" />
-            <ToggleButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rotate"
-                android:textOff="@null"
-                android:textOn="@null"
-                android:id="@+id/rotate" />
-        </GridLayout>
-    <!-- Second (1) -->
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="10">
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:weightSum="80"
+            android:padding="0dp">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="R2-1" />
-        </LinearLayout>
-    <!-- Third (4) Draggable Blocks Area -->
-        <GridLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="30"
-            android:layout_marginTop="0.0dp">
-        <!--TextView
+                android:id="@+id/result"
+                android:textColor="#000000"
+                android:layout_weight="5"
+                android:background="@drawable/tvBackground"
+                android:gravity="center" />
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Buttons" /-->
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/tile_1"
-                android:id="@+id/tile_1" />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/x_tile"
-                android:id="@+id/x_tile" />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/x2_tile"
-                android:id="@+id/x2_tile" />
-        </GridLayout>
-    <!-- Fourth (1) -->
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="10">
-            <TextView
+                android:layout_weight="5"
+                android:gravity="fill"
+                android:padding="0dp">
+                <EditText
+                    android:hint="..."
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:textColor="#000000"
+                    android:id="@+id/x2_value"
+                    android:layout_weight="1"
+					android:imeOptions="actionDone"
+					android:inputType="number"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="x^2 + "
+                    android:textColor="#000000"
+                    android:id="@+id/x2TV" />
+                <EditText
+                    android:hint="..."
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:textColor="#000000"
+                    android:id="@+id/x_value"
+                    android:layout_weight="1"
+					android:imeOptions="actionDone"
+					android:inputType="number"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="x + "
+                    android:textColor="#000000"
+                    android:id="@+id/xTV" />
+                <EditText
+                    android:hint="..."
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:textColor="#000000"
+                    android:id="@+id/one_value"
+                    android:layout_weight="1"
+					android:imeOptions="actionDone"
+					android:inputType="number"/>
+            </LinearLayout>
+        <!-- First 0.5 (2) -->
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="R3-4" />
+                android:layout_weight="10"
+                android:weightSum="2"
+                android:gravity="fill"
+                android:padding="0dp">
+                <ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/drag"
+                    android:textOff="drag"
+                    android:textOn="drag"
+                    android:textSize="12sp"
+                    android:layout_weight="1" />
+                <ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/remove"
+                    android:textOff="remove"
+                    android:textOn="remove"
+                    android:textSize="12sp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        <!-- First 0.5 (2) -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:weightSum="1"
+                android:gravity="fill"
+                android:padding="0dp">
+                <ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rotate"
+                    android:textOff="rotate"
+                    android:textOn="rotate"
+                    android:textSize="12sp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        <!-- Second (1) -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:weightSum="2"
+                android:gravity="fill"
+                android:padding="0dp">
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/check"
+                    android:id="@+id/check_button"
+                    android:layout_weight="1" />
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/refresh"
+                    android:id="@+id/refresh_button"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        <!-- Third (4) Draggable Blocks Area -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="30"
+                android:weightSum="4"
+                android:gravity="fill"
+                android:id="@+id/notRotatedButtonLayout"
+                android:visibility="visible">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:weightSum="4">
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/tile_1"
+                        android:id="@+id/tile_1"
+                        android:layout_weight="1" />
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/x_tile"
+                        android:id="@+id/x_tile"
+                        android:layout_weight="3" />
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:weightSum="4">
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:layout_weight="4"
+                        android:src="@drawable/x2_tile"
+                        android:id="@+id/x2_tile" />
+                </LinearLayout>
+            </LinearLayout>
+        <!-- Rotated -->
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="30"
+                android:weightSum="4"
+                android:gravity="fill"
+                android:id="@+id/rotatedButtonLayout"
+                android:visibility="gone">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:weightSum="4">
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:layout_weight="1"
+                        android:src="@drawable/tile_1"
+                        android:id="@+id/tile_1_rot" />
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:layout_weight="3"
+                        android:src="@drawable/x_tile_rot"
+                        android:id="@+id/x_tile_rot" />
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:weightSum="4">
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:layout_weight="4"
+                        android:src="@drawable/x2_tile"
+                        android:id="@+id/x2_tile_rot" />
+                </LinearLayout>
+            </LinearLayout>
+        <!-- Fourth (1) -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:gravity="fill">
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/newQ"
+                    android:id="@+id/new_question_button" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

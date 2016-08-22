@@ -487,32 +487,27 @@ namespace AlgeTiles
 		private void setupQuestionString(List<int> vars)
 		{
 			string output = "";
-			output += "(";
 			//vars = (ax + b)(cx + d)
-			if (vars[0] != 0)
-				output += vars[0] + "x";
+			int ax = vars[0];
+			int b = vars[1];
+			int cx = vars[2];
+			int d = vars[3];
 
-			if (vars[1] > 0 && vars[0] != 0)
-				output += " + " + vars[1];
-			else if (vars[1] < 0 || vars[0] == 0)
-				output += vars[1];
-			else if (vars[1] == 0)
-				output += "";
+			if (ax != 0)
+				output += ax + "x+";
+			if (b != 0)
+				output += b;
 
 			output += ")(";
 
-			if (vars[2] != 0)
-				output += vars[2] + "x";
-
-			if (vars[3] > 0 && vars[2] != 0)
-				output += " + " + vars[3];
-			else if (vars[3] < 0 || vars[2] == 0)
-				output += vars[3];
-			else if (vars[3] == 0)
-				output += "";
+			if (cx != 0)
+				output += cx + "x+";
+			if (d != 0)
+				output += d;
 
 			output += ")";
 			output = output.Replace(" ", "");
+			output = output.Replace("+-", "-");
 			output = output.Replace("+", " + ");
 			output = output.Replace("-", " - ");
 			result.Text = output;
