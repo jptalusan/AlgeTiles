@@ -25,7 +25,7 @@ namespace AlgeTiles
 		private static string CLONED_BUTTON = "CLONE_BUTTON";
 		private static string ORIGINAL_BUTTON = "ORIGINAL_BUTTON";
 		private TextView result;
-		private Boolean hasButtonBeenDroppedInCorrectzone = false;
+		private bool hasButtonBeenDroppedInCorrectzone = false;
 		private string currentButtonType = "";
 		private ViewGroup currentOwner;
 
@@ -47,9 +47,9 @@ namespace AlgeTiles
 
 		private int numberOfVariables = 0;
 
-		private Boolean isFirstAnswerCorrect = false;
-		private Boolean isSecondAnswerCorrect = false;
-		private Boolean isThirdAnswerCorrect = false;
+		private bool isFirstAnswerCorrect = false;
+		private bool isSecondAnswerCorrect = false;
+		private bool isThirdAnswerCorrect = false;
 
 		private GridLayout upperLeftGrid;
 		private GridLayout upperMiddleGrid;
@@ -586,7 +586,7 @@ namespace AlgeTiles
 					}
 
 					ImageView imageView = new ImageView(this);
-					Boolean wasImageDropped = false;
+					bool wasImageDropped = false;
 
 					//Check if x_tile is rotated before fitting or rotate before dropping automatically
 					if ((v.Id == Resource.Id.upperMiddle ||
@@ -678,25 +678,26 @@ namespace AlgeTiles
 							{
 								case Constants.X2_TILE:
 								case Constants.X2_TILE_ROT:
-									heightFactor = 3;
-									widthFactor = 3;
+									heightFactor = 1;
+									widthFactor = 1;
 									break;
 								case Constants.X_TILE:
 								case Constants.X_TILE_ROT:
-									heightFactor = 3;
-									widthFactor = 9;
+									heightFactor = 1;
+									widthFactor = 3;
 									break;
 								case Constants.ONE_TILE:
 								case Constants.ONE_TILE_ROT:
-									heightFactor = 9;
-									widthFactor = 9;
+									heightFactor = 3;
+									widthFactor = 3;
 									break;
 							}
 							Log.Debug(TAG, heightInPx + "," + heightFactor + "");
 							gridlayoutParams.Height = heightInPx / heightFactor;
 							gridlayoutParams.Width = heightInPx / widthFactor;
 							gridlayoutParams.SetGravity(GravityFlags.Left);
-						} else
+						}
+						else
 						{
 							gridlayoutParams.Height = ViewGroup.LayoutParams.WrapContent;
 							gridlayoutParams.Width = ViewGroup.LayoutParams.WrapContent;
@@ -761,199 +762,199 @@ namespace AlgeTiles
 		//http://stackoverflow.com/questions/18836432/how-to-find-the-view-of-a-button-in-its-click-eventhandler
 		//TODO: When top most layer textview increases in length, the edit text gets pushed
 		private void clonedImageView_Touch(object sender, View.LongClickEventArgs e)
+{
+	var touchedImageView = (sender) as ImageView;
+	ViewGroup vg = (ViewGroup)touchedImageView.Parent;
+	if (removeToggle.Checked)
+	{
+		Log.Debug(TAG, "Switch: Remove");
+		vg.RemoveView(touchedImageView);
+		touchedImageView.Visibility = ViewStates.Gone;
+		Vibrator vibrator = (Vibrator)GetSystemService(Context.VibratorService);
+		vibrator.Vibrate(30);
+
+		int id = touchedImageView.Id;
+
+		checkWhichParentAndUpdate(vg.Id, touchedImageView.Tag.ToString(), Constants.SUBTRACT);
+	}
+
+	if (dragToggle.Checked)
+	{
+		Log.Debug(TAG, "Switch: Drag");
+	}
+
+	//TODO: Not working
+	if (rotateToggle.Checked)
+	{
+		Log.Debug(TAG, "Switch: Rotate");
+		touchedImageView.Rotation = touchedImageView.Rotation - 90;
+	}
+}
+
+private void updateResults(string text)
+{
+	result.Text = text;
+}
+
+private void checkWhichParentAndUpdate(int id, string tile, int process)
+{
+	if (Constants.ADD == process)
+	{
+		if (Resource.Id.upperLeft == id)
 		{
-			var touchedImageView = (sender) as ImageView;
-			ViewGroup vg = (ViewGroup)touchedImageView.Parent;
-			if (removeToggle.Checked)
-			{
-				Log.Debug(TAG, "Switch: Remove");
-				vg.RemoveView(touchedImageView);
-				touchedImageView.Visibility = ViewStates.Gone;
-				Vibrator vibrator = (Vibrator)GetSystemService(Context.VibratorService);
-				vibrator.Vibrate(30);
-
-				int id = touchedImageView.Id;
-
-				checkWhichParentAndUpdate(vg.Id, touchedImageView.Tag.ToString(), Constants.SUBTRACT);
-			}
-
-			if (dragToggle.Checked)
-			{
-				Log.Debug(TAG, "Switch: Drag");
-			}
-
-			//TODO: Not working
-			if (rotateToggle.Checked)
-			{
-				Log.Debug(TAG, "Switch: Rotate");
-				touchedImageView.Rotation = touchedImageView.Rotation - 90;
-			}
+			if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+				++upperLeftGV.x2Val;
+			if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+				++upperLeftGV.xVal;
+			if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+				++upperLeftGV.oneVal;
+		}
+		if (Resource.Id.upperRight == id)
+		{
+			if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+				++upperRightGV.x2Val;
+			if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+				++upperRightGV.xVal;
+			if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+				++upperRightGV.oneVal;
+		}
+		if (Resource.Id.lowerLeft == id)
+		{
+			if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+				++lowerLeftGV.x2Val;
+			if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+				++lowerLeftGV.xVal;
+			if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+				++lowerLeftGV.oneVal;
+		}
+		if (Resource.Id.lowerRight == id)
+		{
+			if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+				++lowerRightGV.x2Val;
+			if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+				++lowerRightGV.xVal;
+			if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+				++lowerRightGV.oneVal;
 		}
 
-		private void updateResults(string text)
+		//CENTER
+		if (Resource.Id.upperMiddle == id)
 		{
-			result.Text = text;
+			if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+				++midUpGV.x2Val;
+			if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+				++midUpGV.xVal;
+			if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+				++midUpGV.oneVal;
+		}
+		if (Resource.Id.lowerMiddle == id)
+		{
+			if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+				++midLowGV.x2Val;
+			if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+				++midLowGV.xVal;
+			if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+				++midLowGV.oneVal;
+		}
+		if (Resource.Id.middleLeft == id)
+		{
+			if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+				++midLeftGV.x2Val;
+			if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+				++midLeftGV.xVal;
+			if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+				++midLeftGV.oneVal;
+		}
+		if (Resource.Id.middleRight == id)
+		{
+			if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+				++midRightGV.x2Val;
+			if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+				++midRightGV.xVal;
+			if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+				++midRightGV.oneVal;
 		}
 
-		private void checkWhichParentAndUpdate(int id, string tile, int process)
+	}
+	//REMOVE
+	else if (Constants.SUBTRACT == process)
+	{
+		if (Resource.Id.upperLeft == id)
 		{
-			if (Constants.ADD == process)
-			{
-				if (Resource.Id.upperLeft == id)
-				{
-					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
-						++upperLeftGV.x2Val;
-					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
-						++upperLeftGV.xVal;
-					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
-						++upperLeftGV.oneVal;
-				}
-				if (Resource.Id.upperRight == id)
-				{
-					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
-						++upperRightGV.x2Val;
-					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
-						++upperRightGV.xVal;
-					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
-						++upperRightGV.oneVal;
-				}
-				if (Resource.Id.lowerLeft == id)
-				{
-					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
-						++lowerLeftGV.x2Val;
-					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
-						++lowerLeftGV.xVal;
-					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
-						++lowerLeftGV.oneVal;
-				}
-				if (Resource.Id.lowerRight == id)
-				{
-					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
-						++lowerRightGV.x2Val;
-					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
-						++lowerRightGV.xVal;
-					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
-						++lowerRightGV.oneVal;
-				}
-
-				//CENTER
-				if (Resource.Id.upperMiddle == id)
-				{
-					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
-						++midUpGV.x2Val;
-					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
-						++midUpGV.xVal;
-					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
-						++midUpGV.oneVal;
-				}
-				if (Resource.Id.lowerMiddle == id)
-				{
-					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
-						++midLowGV.x2Val;
-					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
-						++midLowGV.xVal;
-					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
-						++midLowGV.oneVal;
-				}
-				if (Resource.Id.middleLeft == id)
-				{
-					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
-						++midLeftGV.x2Val;
-					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
-						++midLeftGV.xVal;
-					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
-						++midLeftGV.oneVal;
-				}
-				if (Resource.Id.middleRight == id)
-				{
-					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
-						++midRightGV.x2Val;
-					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
-						++midRightGV.xVal;
-					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
-						++midRightGV.oneVal;
-				}
-
-			}
-			//REMOVE
-			else if (Constants.SUBTRACT == process)
-			{
-				if (Resource.Id.upperLeft == id)
-				{
-					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
-						--upperLeftGV.x2Val;
-					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
-						--upperLeftGV.xVal;
-					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
-						--upperLeftGV.oneVal;
-				}
-				if (Resource.Id.upperRight == id)
-				{
-					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
-						--upperRightGV.x2Val;
-					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
-						--upperRightGV.xVal;
-					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
-						--upperRightGV.oneVal;
-				}
-				if (Resource.Id.lowerLeft == id)
-				{
-					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
-						--lowerLeftGV.x2Val;
-					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
-						--lowerLeftGV.xVal;
-					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
-						--lowerLeftGV.oneVal;
-				}
-				if (Resource.Id.lowerRight == id)
-				{
-					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
-						--lowerRightGV.x2Val;
-					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
-						--lowerRightGV.xVal;
-					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
-						--lowerRightGV.oneVal;
-				}
-
-				//CENTER
-				if (Resource.Id.upperMiddle == id)
-				{
-					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
-						--midUpGV.x2Val;
-					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
-						--midUpGV.xVal;
-					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
-						--midUpGV.oneVal;
-				}
-				if (Resource.Id.lowerMiddle == id)
-				{
-					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
-						--midLowGV.x2Val;
-					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
-						--midLowGV.xVal;
-					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
-						--midLowGV.oneVal;
-				}
-				if (Resource.Id.middleLeft == id)
-				{
-					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
-						--midLeftGV.x2Val;
-					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
-						--midLeftGV.xVal;
-					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
-						--midLeftGV.oneVal;
-				}
-				if (Resource.Id.middleRight == id)
-				{
-					if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
-						--midRightGV.x2Val;
-					if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
-						--midRightGV.xVal;
-					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
-						--midRightGV.oneVal;
-				}
-
-			}
+			if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+				--upperLeftGV.x2Val;
+			if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+				--upperLeftGV.xVal;
+			if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+				--upperLeftGV.oneVal;
 		}
+		if (Resource.Id.upperRight == id)
+		{
+			if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+				--upperRightGV.x2Val;
+			if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+				--upperRightGV.xVal;
+			if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+				--upperRightGV.oneVal;
+		}
+		if (Resource.Id.lowerLeft == id)
+		{
+			if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+				--lowerLeftGV.x2Val;
+			if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+				--lowerLeftGV.xVal;
+			if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+				--lowerLeftGV.oneVal;
+		}
+		if (Resource.Id.lowerRight == id)
+		{
+			if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+				--lowerRightGV.x2Val;
+			if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+				--lowerRightGV.xVal;
+			if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+				--lowerRightGV.oneVal;
+		}
+
+		//CENTER
+		if (Resource.Id.upperMiddle == id)
+		{
+			if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+				--midUpGV.x2Val;
+			if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+				--midUpGV.xVal;
+			if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+				--midUpGV.oneVal;
+		}
+		if (Resource.Id.lowerMiddle == id)
+		{
+			if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+				--midLowGV.x2Val;
+			if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+				--midLowGV.xVal;
+			if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+				--midLowGV.oneVal;
+		}
+		if (Resource.Id.middleLeft == id)
+		{
+			if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+				--midLeftGV.x2Val;
+			if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+				--midLeftGV.xVal;
+			if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+				--midLeftGV.oneVal;
+		}
+		if (Resource.Id.middleRight == id)
+		{
+			if (Constants.X2_TILE == tile || Constants.X2_TILE_ROT == tile)
+				--midRightGV.x2Val;
+			if (Constants.X_TILE == tile || Constants.X_TILE_ROT == tile)
+				--midRightGV.xVal;
+			if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
+				--midRightGV.oneVal;
+		}
+
+	}
+}
 	}
 }

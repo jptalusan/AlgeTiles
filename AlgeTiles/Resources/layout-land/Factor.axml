@@ -467,7 +467,7 @@
                         android:scaleType="fitXY"
                         android:layout_weight="4"
                         android:src="@drawable/x2_tile"
-                        android:id="@+id/x2_tile_rot" />
+                        android:id="@+id/x2_tile_rot"/>
                 </LinearLayout>
             </LinearLayout>
         <!-- Fourth (1) -->
