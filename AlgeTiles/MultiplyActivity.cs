@@ -390,8 +390,7 @@ namespace AlgeTiles
 					foreach (var i in expandedVars)
 						Log.Debug(TAG, i + "");
 					Toast.MakeText(Application.Context, "1:correct", ToastLength.Short).Show();
-
-					//TODO:accomodate for 2 variables (right now just for one)
+				
 					x2ET.Enabled = true;
 					xET.Enabled = true;
 					oneET.Enabled = true;
@@ -418,6 +417,73 @@ namespace AlgeTiles
 					Log.Debug(TAG, gvArr[i].ToString());
 				if (AlgorithmUtilities.isSecondAnswerCorrect(expandedVars, gvArr, numberOfVariables))
 				{
+					//Cancelling out
+					int posX = 0;
+					ViewGroup posXVG = null;
+					if (upperRightGV.xVal != 0)
+					{
+						posX = upperRightGV.xVal;
+						posXVG = upperRightGrid;
+					} else
+					{
+						if (lowerLeftGV.xVal != 0)
+						{
+							posX = lowerLeftGV.xVal;
+							posXVG = lowerLeftGrid;
+						}
+					}
+
+					int negX = 0;
+					ViewGroup negXVG = null;
+					if (upperLeftGV.xVal != 0)
+					{
+						negX = upperLeftGV.xVal;
+						negXVG = upperLeftGrid;
+					}
+					else
+					{
+						if (lowerRightGV.xVal != 0)
+						{
+							negX = lowerRightGV.xVal;
+							negXVG = lowerRightGrid;
+						}
+					}
+
+
+					if (posX != 0 && negX != 0)
+					{
+						Log.Debug(TAG, "Cancelling out: " + posX + ", " + negX);
+						int xToRemove = posX > negX ? negX : posX;
+						Log.Debug(TAG, "To remove: " + xToRemove);
+						List<AlgeTilesImageView> tobeRemoved = new List<AlgeTilesImageView>();
+						for (int j = 0; j < posXVG.ChildCount; ++j)
+						{
+							AlgeTilesImageView alIV = posXVG.GetChildAt(j) as AlgeTilesImageView;
+							if (alIV.getTileType().Equals(Constants.X_TILE) ||
+								alIV.getTileType().Equals(Constants.X_TILE_ROT))
+							{
+								tobeRemoved.Add(alIV);
+							}
+						}
+
+						List<AlgeTilesImageView> negTobeRemoved = new List<AlgeTilesImageView>();
+						for (int j = 0; j < negXVG.ChildCount; ++j)
+						{
+							AlgeTilesImageView negalIV = negXVG.GetChildAt(j) as AlgeTilesImageView;
+							if (negalIV.getTileType().Equals(Constants.X_TILE) ||
+								negalIV.getTileType().Equals(Constants.X_TILE_ROT))
+							{
+								negTobeRemoved.Add(negalIV);
+							}
+						}
+
+						for (int j = 0; j < xToRemove; ++j)
+						{
+							posXVG.RemoveView(tobeRemoved[j]);
+							negXVG.RemoveView(negTobeRemoved[j]);
+						}
+					}
+					//End Cancelling out
 					Toast.MakeText(Application.Context, "2:correct", ToastLength.Short).Show();
 					correct.Start();
 
