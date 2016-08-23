@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlgorithmUtilities.cs" />
+    <Compile Include="AlgeTilesImageView.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="GridValue2Var.cs" />
     <Compile Include="HomeScreenActivity.cs" />

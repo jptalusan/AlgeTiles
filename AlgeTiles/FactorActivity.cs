@@ -52,13 +52,14 @@ namespace AlgeTiles
 		private Boolean isThirdAnswerCorrect = false;
 
 		private RelativeLayout upperLeftGrid;
+		private RelativeLayout upperRightGrid;
+		private RelativeLayout lowerLeftGrid;
+		private RelativeLayout lowerRightGrid;
+
 		private GridLayout upperMiddleGrid;
-		private GridLayout upperRightGrid;
 		private GridLayout middleLeftGrid;
 		private GridLayout middleRightGrid;
-		private GridLayout lowerLeftGrid;
 		private GridLayout lowerMiddleGrid;
-		private GridLayout lowerRightGrid;
 
 		//Four outer grids
 		private GridValue upperLeftGV;
@@ -74,8 +75,8 @@ namespace AlgeTiles
 
 		private List<int> vars = new List<int>();
 		private List<int> expandedVars = new List<int>();
-		private List<GridLayout> innerGridLayoutList = new List<GridLayout>();
-		private List<GridLayout> outerGridLayoutList = new List<GridLayout>();
+		private List<ViewGroup> innerGridLayoutList = new List<ViewGroup>();
+		private List<ViewGroup> outerGridLayoutList = new List<ViewGroup>();
 		private List<GridValue> gridValueList = new List<GridValue>();
 
 		private MediaPlayer correct;
@@ -119,107 +120,98 @@ namespace AlgeTiles
 			x2_tile_rot.LongClick += tile_LongClick;
 
 			upperLeftGrid = FindViewById<RelativeLayout>(Resource.Id.upperLeft);
-			//upperMiddleGrid = FindViewById<GridLayout>(Resource.Id.upperMiddle);
-			//upperRightGrid = FindViewById<GridLayout>(Resource.Id.upperRight);
+			upperRightGrid = FindViewById<RelativeLayout>(Resource.Id.upperRight);
+			lowerLeftGrid = FindViewById<RelativeLayout>(Resource.Id.lowerLeft);
+			lowerRightGrid = FindViewById<RelativeLayout>(Resource.Id.lowerRight);
 
-			////Restrict x^2 from being dragged here.
-			//middleLeftGrid = FindViewById<GridLayout>(Resource.Id.middleLeft);
-			////FindViewById(Resource.Id.middleMiddle).Drag += GridLayout_Drag;
-			//middleRightGrid = FindViewById<GridLayout>(Resource.Id.middleRight);
-
-			//lowerLeftGrid = FindViewById<GridLayout>(Resource.Id.lowerLeft);
-			//lowerMiddleGrid = FindViewById<GridLayout>(Resource.Id.lowerMiddle);
-			//lowerRightGrid = FindViewById<GridLayout>(Resource.Id.lowerRight);
+			upperMiddleGrid = FindViewById<GridLayout>(Resource.Id.upperMiddle);
+			middleLeftGrid = FindViewById<GridLayout>(Resource.Id.middleLeft);
+			middleRightGrid = FindViewById<GridLayout>(Resource.Id.middleRight);
+			lowerMiddleGrid = FindViewById<GridLayout>(Resource.Id.lowerMiddle);
 
 			ViewTreeObserver vto2 = upperLeftGrid.ViewTreeObserver;
 			vto2.GlobalLayout += (sender, e) =>
 			{
-				//vto2.RemoveOnGlobalLayoutListener(new MyLayoutListener(gL2));
 				if (!isFirstTime)
 				{
 					heightInPx = upperLeftGrid.Height;
 					widthInPx = upperLeftGrid.Width;
-					Log.Debug(TAG, "Inside h:" + heightInPx + "");
-					Log.Debug(TAG, "Inside w:" + widthInPx + "");
 					upperLeftGrid.SetMinimumHeight(0);
 					upperLeftGrid.SetMinimumWidth(0);
 					isFirstTime = true;
 				}
 			};
 
-			//outerGridLayoutList.Add(upperLeftGrid);
-			//outerGridLayoutList.Add(upperRightGrid);
-			//outerGridLayoutList.Add(lowerLeftGrid);
-			//outerGridLayoutList.Add(lowerRightGrid);
+			outerGridLayoutList.Add(upperLeftGrid);
+			outerGridLayoutList.Add(upperRightGrid);
+			outerGridLayoutList.Add(lowerLeftGrid);
+			outerGridLayoutList.Add(lowerRightGrid);
 
-			//innerGridLayoutList.Add(upperMiddleGrid);
-			//innerGridLayoutList.Add(middleLeftGrid);
-			//innerGridLayoutList.Add(middleRightGrid);
-			//innerGridLayoutList.Add(lowerMiddleGrid);
+			innerGridLayoutList.Add(upperMiddleGrid);
+			innerGridLayoutList.Add(middleLeftGrid);
+			innerGridLayoutList.Add(middleRightGrid);
+			innerGridLayoutList.Add(lowerMiddleGrid);
 
 			//For multiply this is the initial grid available
-			//Together form one Part of the formula
-			upperLeftGrid.Drag += GridLayout_Drag;
-			//upperRightGrid.Drag += GridLayout_Drag;
+			upperLeftGrid.Drag += Layout_Drag;
+			upperRightGrid.Drag += Layout_Drag;
+			lowerLeftGrid.Drag += Layout_Drag;
+			lowerRightGrid.Drag += Layout_Drag;
 
-			////Together form one Part of the formula
-			//lowerLeftGrid.Drag += GridLayout_Drag;
-			//lowerRightGrid.Drag += GridLayout_Drag;
+			//Shade red the other grids
+			for (int i = 0; i < innerGridLayoutList.Count; ++i)
+				innerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.unavailable);
 
-			////Shade red the other grids
-			//for (int i = 0; i < outerGridLayoutList.Count; ++i)
-			//	innerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.unavailable);
+			removeToggle = (ToggleButton)FindViewById(Resource.Id.remove);
+			dragToggle = (ToggleButton)FindViewById(Resource.Id.drag);
+			rotateToggle = (ToggleButton)FindViewById(Resource.Id.rotate);
 
-			//removeToggle = (ToggleButton)FindViewById(Resource.Id.remove);
-			//dragToggle = (ToggleButton)FindViewById(Resource.Id.drag);
-			//rotateToggle = (ToggleButton)FindViewById(Resource.Id.rotate);
+			removeToggle.Click += toggle_click;
+			dragToggle.Click += toggle_click;
+			rotateToggle.Click += toggle_click;
 
-			//removeToggle.Click += toggle_click;
-			//dragToggle.Click += toggle_click;
-			//rotateToggle.Click += toggle_click;
+			numberOfVariables = Intent.GetIntExtra(Constants.VARIABLE_COUNT, 0);
 
-			//numberOfVariables = Intent.GetIntExtra(Constants.VARIABLE_COUNT, 0);
+			newQuestionButton = (Button)FindViewById<Button>(Resource.Id.new_question_button);
+			refreshButton = (Button)FindViewById<Button>(Resource.Id.refresh_button);
+			checkButton = (Button)FindViewById<Button>(Resource.Id.check_button);
 
-			//newQuestionButton = (Button)FindViewById<Button>(Resource.Id.new_question_button);
-			//refreshButton = (Button)FindViewById<Button>(Resource.Id.refresh_button);
-			//checkButton = (Button)FindViewById<Button>(Resource.Id.check_button);
+			newQuestionButton.Click += button_click;
+			refreshButton.Click += button_click;
+			checkButton.Click += button_click;
 
-			//newQuestionButton.Click += button_click;
-			//refreshButton.Click += button_click;
-			//checkButton.Click += button_click;
+			upperLeftGV = new GridValue();
+			upperRightGV = new GridValue();
+			lowerLeftGV = new GridValue();
+			lowerRightGV = new GridValue();
 
-			//upperLeftGV = new GridValue();
-			//upperRightGV = new GridValue();
-			//lowerLeftGV = new GridValue();
-			//lowerRightGV = new GridValue();
+			midUpGV = new GridValue();
+			midLowGV = new GridValue();
+			midLeftGV = new GridValue();
+			midRightGV = new GridValue();
 
-			//midUpGV = new GridValue();
-			//midLowGV = new GridValue();
-			//midLeftGV = new GridValue();
-			//midRightGV = new GridValue();
+			gridValueList.Add(upperLeftGV);
+			gridValueList.Add(upperRightGV);
+			gridValueList.Add(lowerLeftGV);
+			gridValueList.Add(lowerRightGV);
 
-			//gridValueList.Add(upperLeftGV);
-			//gridValueList.Add(upperRightGV);
-			//gridValueList.Add(lowerLeftGV);
-			//gridValueList.Add(lowerRightGV);
+			gridValueList.Add(midUpGV);
+			gridValueList.Add(midLowGV);
+			gridValueList.Add(midLeftGV);
+			gridValueList.Add(midRightGV);
 
-			//gridValueList.Add(midUpGV);
-			//gridValueList.Add(midLowGV);
-			//gridValueList.Add(midLeftGV);
-			//gridValueList.Add(midRightGV);
+			setupNewQuestion();
 
-			//setupNewQuestion();
+			correct = MediaPlayer.Create(this, Resource.Raw.correct);
+			incorrect = MediaPlayer.Create(this, Resource.Raw.wrong);
 
-			//correct = MediaPlayer.Create(this, Resource.Raw.correct);
-			//incorrect = MediaPlayer.Create(this, Resource.Raw.wrong);
+			x_value_1 = FindViewById<EditText>(Resource.Id.x_value_1);
+			one_value_1 = FindViewById<EditText>(Resource.Id.one_value_1);
 
-			//x_value_1 = FindViewById<EditText>(Resource.Id.x_value_1);
-			//one_value_1 = FindViewById<EditText>(Resource.Id.one_value_1);
+			x_value_2 = FindViewById<EditText>(Resource.Id.x_value_2);
+			one_value_2 = FindViewById<EditText>(Resource.Id.one_value_2);
 
-			//x_value_2 = FindViewById<EditText>(Resource.Id.x_value_2);
-			//one_value_2 = FindViewById<EditText>(Resource.Id.one_value_2);
-
-			//refreshScreen(Constants.FACTOR, gridValueList, innerGridLayoutList, outerGridLayoutList);
+			refreshScreen(Constants.FACTOR, gridValueList, innerGridLayoutList, outerGridLayoutList);
 		}
 
 		private void toggle_click(object sender, EventArgs e)
@@ -282,7 +274,7 @@ namespace AlgeTiles
 			}
 		}
 
-		private void refreshScreen(string ActivityType, List<GridValue> gvList, List<GridLayout> inGLList, List<GridLayout> outGLList)
+		private void refreshScreen(string ActivityType, List<GridValue> gvList, List<ViewGroup> inGLList, List<ViewGroup> outGLList)
 		{
 			x_value_1.Enabled = false;
 			one_value_1.Enabled = false;
@@ -301,13 +293,13 @@ namespace AlgeTiles
 			for (int i = 0; i < inGLList.Count; ++i)
 			{
 				inGLList[i].SetBackgroundResource(Resource.Drawable.shape);
-				inGLList[i].Drag -= GridLayout_Drag;
+				inGLList[i].Drag -= Layout_Drag;
 			}
 
 			for (int i = 0; i < outGLList.Count; ++i)
 			{
 				outGLList[i].SetBackgroundResource(Resource.Drawable.shape);
-				outGLList[i].Drag -= GridLayout_Drag;
+				outGLList[i].Drag -= Layout_Drag;
 			}
 
 			for (int i = 0; i < gvList.Count; ++i)
@@ -338,13 +330,13 @@ namespace AlgeTiles
 				for (int i = 0; i < inGLList.Count; ++i)
 				{
 					inGLList[i].SetBackgroundResource(Resource.Drawable.unavailable);
-					inGLList[i].Drag -= GridLayout_Drag;
+					inGLList[i].Drag -= Layout_Drag;
 				}
 
 				for (int i = 0; i < outGLList.Count; ++i)
 				{
 					outGLList[i].SetBackgroundResource(Resource.Drawable.shape);
-					outGLList[i].Drag += GridLayout_Drag;
+					outGLList[i].Drag += Layout_Drag;
 				}
 			}
 			else
@@ -352,13 +344,13 @@ namespace AlgeTiles
 				for (int i = 0; i < inGLList.Count; ++i)
 				{
 					inGLList[i].SetBackgroundResource(Resource.Drawable.shape);
-					inGLList[i].Drag += GridLayout_Drag;
+					inGLList[i].Drag += Layout_Drag;
 				}
 
 				for (int i = 0; i < outGLList.Count; ++i)
 				{
 					outGLList[i].SetBackgroundResource(Resource.Drawable.unavailable);
-					outGLList[i].Drag -= GridLayout_Drag;
+					outGLList[i].Drag -= Layout_Drag;
 				}
 			}
 		}
@@ -371,9 +363,6 @@ namespace AlgeTiles
 			{
 				GridValue[] gvArr = { upperLeftGV, upperRightGV, lowerLeftGV, lowerRightGV };
 
-				//for (int i = 0; i < gvArr.Length; ++i)
-				//	Log.Debug(TAG, gvArr[i].ToString());
-
 				if (AlgorithmUtilities.isSecondAnswerCorrect(expandedVars, gvArr, numberOfVariables))
 				{
 					Toast.MakeText(Application.Context, "2:correct", ToastLength.Short).Show();
@@ -384,7 +373,7 @@ namespace AlgeTiles
 					for (int i = 0; i < outerGridLayoutList.Count; ++i)
 					{
 						outerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.ok);
-						outerGridLayoutList[i].Drag -= GridLayout_Drag;
+						outerGridLayoutList[i].Drag -= Layout_Drag;
 						for (int j = 0; j < outerGridLayoutList[i].ChildCount; ++j)
 						{
 							var iv = outerGridLayoutList[i].GetChildAt(j) as ImageView;
@@ -396,7 +385,7 @@ namespace AlgeTiles
 					for (int i = 0; i < innerGridLayoutList.Count; ++i)
 					{
 						innerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.shape);
-						innerGridLayoutList[i].Drag += GridLayout_Drag;
+						innerGridLayoutList[i].Drag += Layout_Drag;
 					}
 
 					//TODO:accomodate for 2 variables (right now just for one)
@@ -419,13 +408,6 @@ namespace AlgeTiles
 					//TODO: First answer is second in factor
 					isFirstAnswerCorrect = true;
 
-					//Change color of draggable areas to signify "Done/Correct"
-					//upperLeftGrid.Drag += GridLayout_Drag;
-					//upperRightGrid.Drag += GridLayout_Drag;
-
-					//lowerLeftGrid.Drag += GridLayout_Drag;
-					//lowerRightGrid.Drag += GridLayout_Drag;
-
 					for (int i = 0; i < outerGridLayoutList.Count; ++i)
 						outerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.ok);
 
@@ -433,35 +415,28 @@ namespace AlgeTiles
 					for (int i = 0; i < innerGridLayoutList.Count; ++i)
 					{
 						innerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.ok);
-						innerGridLayoutList[i].Drag -= GridLayout_Drag;
+						innerGridLayoutList[i].Drag -= Layout_Drag;
 						for (int j = 0; j < innerGridLayoutList[i].ChildCount; ++j)
 						{
 							var iv = innerGridLayoutList[i].GetChildAt(j) as ImageView;
 							iv.LongClick -= clonedImageView_Touch;
 						}
 					}
-
 					expandedVars = AlgorithmUtilities.expandingVars(vars);
-					//foreach (var i in expandedVars)
-					//	Log.Debug(TAG, i + "");
 					Toast.MakeText(Application.Context, "1:correct", ToastLength.Short).Show();
-
 					correct.Start();
 				}
 				else
 				{
 					for (int i = 0; i < outerGridLayoutList.Count; ++i)
-						outerGridLayoutList[i].Drag -= GridLayout_Drag;
+						outerGridLayoutList[i].Drag -= Layout_Drag;
 
 					incorrectPrompt(innerGridLayoutList);
-
 					Toast.MakeText(Application.Context, "1:incorrect", ToastLength.Short).Show();
 				}
 			}
-			//TODO: Add checking if both answers are true?
 			else
 			{
-				//TODO: Accomodate for two variables
 				int[] answer = new int[4];
 				int temp = 0;
 				answer[0] = int.TryParse(x_value_1.Text, out temp) ? temp : 0;
@@ -477,9 +452,8 @@ namespace AlgeTiles
 
 				if (isThirdAnswerCorrect)
 				{
-					Toast.MakeText(Application.Context, "3:correct", ToastLength.Short).Show();
+					Toast.MakeText(Application.Context, "3:correct/end", ToastLength.Short).Show();
 					correct.Start();
-					//TODO: Refresh then new question?
 				}
 				else
 				{
@@ -489,7 +463,7 @@ namespace AlgeTiles
 			}
 		}
 
-		public async void incorrectPrompt(List<GridLayout> gvList)
+		public async void incorrectPrompt(List<ViewGroup> gvList)
 		{
 			incorrect.Start();
 			for (int i = 0; i < gvList.Count; ++i)
@@ -522,14 +496,8 @@ namespace AlgeTiles
 				{
 					gridValueList[i].init();
 				}
-
 				setupQuestionString(expandedVars);
 			}
-
-			//foreach (int i in vars)
-			//{
-			//	Log.Debug(TAG, i + "");
-			//}
 		}
 
 		private void setupQuestionString(List<int> vars)
@@ -554,10 +522,9 @@ namespace AlgeTiles
 			result.Text = output;
 		}
 
-		private void GridLayout_Drag(object sender, View.DragEventArgs e)
+		private void Layout_Drag(object sender, View.DragEventArgs e)
 		{
-			double SNAP_GRID_INTERVAL = 9.0;
-			var v = (RelativeLayout)sender;
+			var v = (ViewGroup)sender;
 			View view = (View)e.Event.LocalState;
 			var button_type = result.Text;
 			var drag_data = e.Event.ClipData;
@@ -585,7 +552,7 @@ namespace AlgeTiles
 				case DragAction.Location:
 					x = e.Event.GetX(); //width
 					y = e.Event.GetY(); //height
-					//For drawing graph or to check if there is already an object below?
+										//Add checking for overlap here
 					break;
 				case DragAction.Drop:
 					Log.Debug(TAG, "Drop");
@@ -594,7 +561,8 @@ namespace AlgeTiles
 						currentButtonType = drag_data.GetItemAt(0).Text;
 					}
 
-					ImageView imageView = new ImageView(this);
+					AlgeTilesImageView algeTilesIV = new AlgeTilesImageView(this);
+					algeTilesIV.setTileType(currentButtonType);
 					Boolean wasImageDropped = false;
 
 					//Check if x_tile is rotated before fitting or rotate before dropping automatically
@@ -622,7 +590,7 @@ namespace AlgeTiles
 							 v.Id == Resource.Id.lowerRight))
 					{
 						int resID = Resources.GetIdentifier(currentButtonType, "drawable", PackageName);
-						imageView.SetBackgroundResource(resID);
+						algeTilesIV.SetBackgroundResource(resID);
 						wasImageDropped = true;
 					}
 					//Handle auto rotate for x_tile (middle)
@@ -632,16 +600,19 @@ namespace AlgeTiles
 							 v.Id == Resource.Id.middleRight))
 					{
 						if (v.Id == Resource.Id.middleLeft)
-							imageView.RotationY = 180;
+						{
+							algeTilesIV.RotationY = 180;
+						}
+
 						if ((currentButtonType.Equals(Constants.X_TILE) && !rotateToggle.Checked) ||
 								(currentButtonType.Equals(Constants.X_TILE_ROT) && rotateToggle.Checked))
 						{
-							imageView.SetBackgroundResource(Resource.Drawable.x_tile_rot);
+							algeTilesIV.SetBackgroundResource(Resource.Drawable.x_tile_rot);
 						}
 						else if (currentButtonType.Equals(Constants.ONE_TILE))
 						{
 							int resID = Resources.GetIdentifier(currentButtonType, "drawable", PackageName);
-							imageView.SetBackgroundResource(resID);
+							algeTilesIV.SetBackgroundResource(resID);
 						}
 						wasImageDropped = true;
 						isDroppedAtCenter = true;
@@ -652,16 +623,16 @@ namespace AlgeTiles
 							v.Id == Resource.Id.lowerMiddle))
 					{
 						if (v.Id == Resource.Id.upperMiddle)
-							imageView.RotationX = 180;
+							algeTilesIV.RotationX = 180;
 						if ((currentButtonType.Equals(Constants.X_TILE_ROT) && rotateToggle.Checked) ||
 								(currentButtonType.Equals(Constants.X_TILE) && !rotateToggle.Checked))
 						{
-							imageView.SetBackgroundResource(Resource.Drawable.x_tile);
+							algeTilesIV.SetBackgroundResource(Resource.Drawable.x_tile);
 						}
 						else if (currentButtonType.Equals(Constants.ONE_TILE))
 						{
 							int resID = Resources.GetIdentifier(currentButtonType, "drawable", PackageName);
-							imageView.SetBackgroundResource(resID);
+							algeTilesIV.SetBackgroundResource(resID);
 						}
 						wasImageDropped = true;
 						isDroppedAtCenter = true;
@@ -669,51 +640,47 @@ namespace AlgeTiles
 
 					if (wasImageDropped)
 					{
-						RelativeLayout container = (RelativeLayout)v;
+						ViewGroup container = (ViewGroup)v;
+						Log.Debug(TAG, currentButtonType);
+						int heightFactor = 0;
+						int widthFactor = 0;
+						switch (currentButtonType)
+						{
+							case Constants.X2_TILE:
+							case Constants.X2_TILE_ROT:
+								heightFactor = 3;
+								widthFactor = 3;
+								break;
+							case Constants.X_TILE:
+								heightFactor = 3;
+								widthFactor = 9;
+								break;
+							case Constants.X_TILE_ROT:
+								heightFactor = 9;
+								widthFactor = 3;
+								break;
+							case Constants.ONE_TILE:
+							case Constants.ONE_TILE_ROT:
+								heightFactor = 9;
+								widthFactor = 9;
+								break;
+						}
 
-						imageView.Tag = currentButtonType;
-						Log.Debug(TAG, "Check: " + currentButtonType);
-						//checkWhichParentAndUpdate(v.Id, currentButtonType, Constants.ADD);
-						//Probably should put weight or alignment here
-						RelativeLayout.LayoutParams par = new RelativeLayout.LayoutParams(
-							ViewGroup.LayoutParams.WrapContent,
-							ViewGroup.LayoutParams.WrapContent);
-						//RelativeLayout.LayoutParams par = (RelativeLayout.LayoutParams)imageView.LayoutParameters;
 						x = e.Event.GetX(); //width
 						y = e.Event.GetY(); //height
-
-						Log.Debug(TAG, "y: " + y);
-						Log.Debug(TAG, "y: " + y / SNAP_GRID_INTERVAL);
-
-
+						bool doesItIntersect = false;
 
 						if (!isDroppedAtCenter)
 						{
-							int heightFactor = 0;
-							int widthFactor = 0;
-							switch (currentButtonType)
-							{
-								case Constants.X2_TILE:
-								case Constants.X2_TILE_ROT:
-									heightFactor = 3;
-									widthFactor = 3;
-									break;
-								case Constants.X_TILE:
-								case Constants.X_TILE_ROT:
-									heightFactor = 3;
-									widthFactor = 9;
-									break;
-								case Constants.ONE_TILE:
-								case Constants.ONE_TILE_ROT:
-									heightFactor = 9;
-									widthFactor = 9;
-									break;
-							}
-							Log.Debug(TAG, heightInPx + "," + heightFactor + "");
+							RelativeLayout.LayoutParams par = new RelativeLayout.LayoutParams(
+								ViewGroup.LayoutParams.WrapContent,
+								ViewGroup.LayoutParams.WrapContent);
+
 							par.Height = heightInPx / heightFactor;
 							par.Width = heightInPx / widthFactor;
-							int top = Convert.ToInt32(Math.Round(y / SNAP_GRID_INTERVAL) * SNAP_GRID_INTERVAL) - (par.Height / 2);
-							int left = Convert.ToInt32(Math.Round(x / SNAP_GRID_INTERVAL) * SNAP_GRID_INTERVAL) - (par.Width / 2);
+
+							int top = Convert.ToInt32(Math.Round(y / Constants.SNAP_GRID_INTERVAL) * Constants.SNAP_GRID_INTERVAL) - (par.Height / 2);
+							int left = Convert.ToInt32(Math.Round(x / Constants.SNAP_GRID_INTERVAL) * Constants.SNAP_GRID_INTERVAL) - (par.Width / 2);
 							if (top < 0)
 								top = 0;
 							if (left < 0)
@@ -722,18 +689,92 @@ namespace AlgeTiles
 							par.LeftMargin = left;
 							Log.Debug(TAG, "TopMargin:" + par.TopMargin);
 							Log.Debug(TAG, "LeftMargin:" + par.LeftMargin);
-						} else
+							algeTilesIV.LayoutParameters = par;
+
+							//check if overlap
+							Rect toDrop = AlgorithmUtilities.getRectOfView(algeTilesIV);
+							Rect toCheck = new Rect();
+							for (int i = 0; i < container.ChildCount; ++i)
+							{
+								Log.Debug(TAG, "Container count: " + i);
+								if (container.GetChildAt(i) is AlgeTilesImageView)
+								{									
+									toCheck = AlgorithmUtilities.getRectOfView((AlgeTilesImageView)container.GetChildAt(i));
+									if (Rect.Intersects(toDrop, toCheck))
+										doesItIntersect = true;
+									//switch (setNewCoordinatesForOverlappingRect(toDrop, toCheck))
+									//{
+									//	case OVERLAP.CAN_LEFT:
+									//		par.TopMargin = toCheck.Top;
+									//		par.LeftMargin = toCheck.Left - (toDrop.Right - toDrop.Left);
+									//		break;
+									//	case OVERLAP.CAN_RIGHT:
+									//		par.TopMargin = toCheck.Top;
+									//		par.LeftMargin = toCheck.Left + (toCheck.Right - toCheck.Left);
+									//		break;
+									//	case OVERLAP.CAN_TOP:
+									//		par.TopMargin = toCheck.Top - (toDrop.Bottom - toDrop.Top);
+									//		par.LeftMargin = toCheck.Left;
+									//		break;
+									//	case OVERLAP.CAN_BOTTOM:
+									//		par.TopMargin = toCheck.Top + (toCheck.Bottom - toCheck.Top);
+									//		par.LeftMargin = toCheck.Left;
+									//		break;
+									//	case OVERLAP.NO_SPACE:
+									//		doesItIntersect = true;
+									//		break;
+									//}
+								}
+							}
+							algeTilesIV.LayoutParameters = par;
+						}
+						else
 						{
+							GridLayout.LayoutParams gParms = new GridLayout.LayoutParams();
+							if (v.Id == Resource.Id.middleLeft ||
+							 v.Id == Resource.Id.middleRight)
+							{
+								gParms.SetGravity(GravityFlags.FillVertical);
+								if (rotateToggle.Checked)
+								{
+									gParms.Height = heightInPx / heightFactor;
+									gParms.Width = heightInPx / widthFactor;
+								}
+								else
+								{
+									gParms.Width = heightInPx / heightFactor;
+									gParms.Height = heightInPx / widthFactor;
+								}
+							}
+							else
+							{
+								gParms.SetGravity(GravityFlags.FillHorizontal);
+								if (rotateToggle.Checked)
+								{
+									gParms.Width = heightInPx / heightFactor;
+									gParms.Height = heightInPx / widthFactor;
+								}
+								else
+								{
+									gParms.Height = heightInPx / heightFactor;
+									gParms.Width = heightInPx / widthFactor;
+								}
+							}
+							algeTilesIV.LayoutParameters = gParms;
 						}
 
-
-						imageView.LayoutParameters = par;
-						imageView.LongClick += clonedImageView_Touch;
-
-						container.AddView(imageView);
+						if (!doesItIntersect)
+						{
+							algeTilesIV.LongClick += clonedImageView_Touch;
+							container.AddView(algeTilesIV);
+							checkWhichParentAndUpdate(v.Id, currentButtonType, Constants.ADD);
+							hasButtonBeenDroppedInCorrectzone = true;
+						} else
+						{
+							//Place in correct place
+						}
 						view.Visibility = ViewStates.Visible;
 						v.SetBackgroundResource(Resource.Drawable.shape);
-						hasButtonBeenDroppedInCorrectzone = true;
 					}
 					break;
 				case DragAction.Ended:
@@ -751,6 +792,33 @@ namespace AlgeTiles
 				default:
 					break;
 			}
+		}
+
+		enum OVERLAP { CAN_LEFT, CAN_RIGHT, CAN_TOP, CAN_BOTTOM, NO_SPACE };
+
+		private OVERLAP setNewCoordinatesForOverlappingRect(Rect overlapper, Rect overlapped)
+		{
+			if ((overlapper.Bottom > overlapped.Top) &&
+				(overlapped.Top > overlapper.Bottom - overlapper.Top))
+			{
+				return OVERLAP.CAN_TOP;
+			}
+			if ((overlapper.Right > overlapped.Left) &&
+					(overlapped.Left > overlapper.Right - overlapper.Left))
+			{
+				return OVERLAP.CAN_LEFT;
+			}
+			if ((overlapper.Top < overlapped.Bottom) &&
+					(overlapped.Bottom < overlapper.Bottom - overlapper.Top))
+			{
+				return OVERLAP.CAN_BOTTOM;
+			}
+			if ((overlapper.Left < overlapped.Right) &&
+			  (overlapped.Right > overlapper.Right - overlapper.Left))
+			{
+				return OVERLAP.CAN_RIGHT;
+			}
+			return OVERLAP.NO_SPACE;
 		}
 
 		private void tile_LongClick(object sender, View.LongClickEventArgs e)
@@ -775,8 +843,8 @@ namespace AlgeTiles
 					break;
 			}
 
-			//dragToggle.Checked = false;
-			//removeToggle.Checked = false;
+			dragToggle.Checked = false;
+			removeToggle.Checked = false;
 
 			View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(imageViewTouch);
 			imageViewTouch.StartDrag(data, shadowBuilder, imageViewTouch, 0);
@@ -786,7 +854,7 @@ namespace AlgeTiles
 		//TODO: When top most layer textview increases in length, the edit text gets pushed
 		private void clonedImageView_Touch(object sender, View.LongClickEventArgs e)
 		{
-			var touchedImageView = (sender) as ImageView;
+			var touchedImageView = (sender) as AlgeTilesImageView;
 			ViewGroup vg = (ViewGroup)touchedImageView.Parent;
 			if (removeToggle.Checked)
 			{
@@ -798,7 +866,7 @@ namespace AlgeTiles
 
 				int id = touchedImageView.Id;
 
-				checkWhichParentAndUpdate(vg.Id, touchedImageView.Tag.ToString(), Constants.SUBTRACT);
+				checkWhichParentAndUpdate(vg.Id, touchedImageView.getTileType(), Constants.SUBTRACT);
 			}
 
 			if (dragToggle.Checked)

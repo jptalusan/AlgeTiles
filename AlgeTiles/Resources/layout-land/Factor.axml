@@ -40,14 +40,12 @@
                 android:columnCount="1"
                 android:rotationX="180" />
         <!-- Upper Right -->
-            <GridLayout
+            <RelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
                 android:background="@drawable/shape"
-                android:id="@+id/upperRight"
-                android:rowCount="6"
-                android:columnCount="4" />
+                android:id="@+id/upperRight" />
         </LinearLayout>
     <!-- Second Layer-->
         <LinearLayout
@@ -93,14 +91,12 @@
             android:layout_weight="92"
             android:weightSum="200">
         <!-- Lower Left -->
-            <GridLayout
+            <RelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
                 android:background="@drawable/shape"
-                android:id="@+id/lowerLeft"
-                android:rowCount="6"
-                android:columnCount="4" />
+                android:id="@+id/lowerLeft" />
         <!-- Lower Middle -->
             <GridLayout
                 android:layout_width="0px"
@@ -111,14 +107,12 @@
                 android:rowCount="8"
                 android:columnCount="1" />
         <!-- Lower Right -->
-            <GridLayout
+            <RelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
                 android:background="@drawable/shape"
-                android:id="@+id/lowerRight"
-                android:rowCount="6"
-                android:columnCount="4" />
+                android:id="@+id/lowerRight" />
         </LinearLayout>
     </LinearLayout>
 <!-- Right Side -->

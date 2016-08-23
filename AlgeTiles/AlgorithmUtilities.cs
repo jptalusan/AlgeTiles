@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using Android.Util;
 using System.Text.RegularExpressions;
+using Android.Graphics;
 
 namespace AlgeTiles
 {
@@ -404,6 +405,12 @@ namespace AlgeTiles
 			answer = removeSpacesFromString(answer);
 
 			return false;
+		}
+
+		public static Rect getRectOfView(AlgeTilesImageView alIV)
+		{
+			RelativeLayout.LayoutParams rPrms = (RelativeLayout.LayoutParams)alIV.LayoutParameters;
+			return new Rect(rPrms.LeftMargin, rPrms.TopMargin, rPrms.LeftMargin + rPrms.Width, rPrms.TopMargin + rPrms.Height);
 		}
 	}
 }
