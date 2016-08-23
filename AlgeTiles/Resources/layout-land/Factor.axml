@@ -23,14 +23,12 @@
             android:layout_weight="92"
             android:weightSum="200">
         <!-- Upper Left -->
-            <GridLayout
+            <RelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
                 android:background="@drawable/shape"
-                android:id="@+id/upperLeft"
-                android:rowCount="6"
-                android:columnCount="4" />
+                android:id="@+id/upperLeft" />
         <!-- Upper Middle -->
             <GridLayout
                 android:layout_width="0px"
