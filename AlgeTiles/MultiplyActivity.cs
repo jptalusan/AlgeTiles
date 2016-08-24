@@ -49,7 +49,7 @@ namespace AlgeTiles
 
 		private Boolean isFirstAnswerCorrect = false;
 		private Boolean isSecondAnswerCorrect = false;
-		private Boolean isThirdAnswerCorrect = true;
+		private Boolean isThirdAnswerCorrect = false;
 
 		private RelativeLayout upperLeftGrid;
 		private RelativeLayout upperRightGrid;
@@ -85,6 +85,8 @@ namespace AlgeTiles
 		private EditText x2ET;
 		private EditText xET;
 		private EditText oneET;
+
+		private List<EditText> editTextList = new List<EditText>();
 
 		private bool isFirstTime = false;
 
@@ -212,6 +214,10 @@ namespace AlgeTiles
 			xET = FindViewById<EditText>(Resource.Id.x_value);
 			oneET = FindViewById<EditText>(Resource.Id.one_value);
 
+			editTextList.Add(x2ET);
+			editTextList.Add(xET);
+			editTextList.Add(oneET);
+
 			refreshScreen(Constants.MULTIPLY, gridValueList, innerGridLayoutList, outerGridLayoutList);
 		}
 
@@ -287,7 +293,7 @@ namespace AlgeTiles
 
 			isFirstAnswerCorrect = false;
 			isSecondAnswerCorrect = false;
-			isThirdAnswerCorrect = true;
+			isThirdAnswerCorrect = false;
 
 			for (int i = 0; i < inGLList.Count; ++i)
 			{
@@ -390,7 +396,7 @@ namespace AlgeTiles
 					foreach (var i in expandedVars)
 						Log.Debug(TAG, i + "");
 					Toast.MakeText(Application.Context, "1:correct", ToastLength.Short).Show();
-				
+
 					x2ET.Enabled = true;
 					xET.Enabled = true;
 					oneET.Enabled = true;
@@ -407,7 +413,7 @@ namespace AlgeTiles
 					Toast.MakeText(Application.Context, "1:incorrect", ToastLength.Short).Show();
 				}
 			}
-			else if (isFirstAnswerCorrect)
+			else if (!isSecondAnswerCorrect)
 			{
 				Log.Debug(TAG, "isSecondAnswerCorrect branch");
 				GridValue[] gvArr = { upperLeftGV, upperRightGV, lowerLeftGV, lowerRightGV };
@@ -498,6 +504,7 @@ namespace AlgeTiles
 							iv.LongClick -= clonedImageView_Touch;
 						}
 					}
+					isSecondAnswerCorrect = true;
 				}
 				else
 				{
@@ -506,31 +513,54 @@ namespace AlgeTiles
 					incorrectPrompt(outerGridLayoutList);
 				}
 			}
-			else
+			else if (!isThirdAnswerCorrect)
 			{
 				//TODO: Accomodate for two variables
 				int[] answer = new int[3];
 				int temp = 0;
 				answer[0] = int.TryParse(x2ET.Text, out temp) ? temp : 0;
 				answer[1] = int.TryParse(xET.Text, out temp) ? temp : 0;
-				answer[2] = int.TryParse(oneET.Text, out temp) ? temp : 0; ;
-				for (int i = 0; i < expandedVars.Count; ++i)
+				answer[2] = int.TryParse(oneET.Text, out temp) ? temp : 0;
+				if (Math.Abs(answer[0] + answer[1] + answer[2]) == 0)
 				{
-					if (expandedVars[i] != answer[i])
-						isThirdAnswerCorrect = false;
+					isThirdAnswerCorrect = false;
 				}
+				else
+				{
+					for (int i = 0; i < expandedVars.Count; ++i)
+					{
+						if (expandedVars[i] != answer[i])
+							isThirdAnswerCorrect = false;
+					}
+					isThirdAnswerCorrect = true;
+				}
+
 				if (isThirdAnswerCorrect)
 				{
 					Toast.MakeText(Application.Context, "3:correct", ToastLength.Short).Show();
+					for (int i = 0; i < editTextList.Count; ++i)
+					{
+						editTextList[i].SetBackgroundResource(Resource.Drawable.ok);
+						editTextList[i].Enabled = false;
+					}
 					correct.Start();
-					//TODO: Refresh then new question?
 				}
 				else
 				{
 					Toast.MakeText(Application.Context, "3:incorrect", ToastLength.Short).Show();
-					incorrect.Start();
+					incorrectPrompt(editTextList);
 				}
 			}
+		}
+
+		public async void incorrectPrompt(List<EditText> gvList)
+		{
+			incorrect.Start();
+			for (int i = 0; i < gvList.Count; ++i)
+				gvList[i].SetBackgroundResource(Resource.Drawable.notok);
+			await Task.Delay(Constants.DELAY);
+			for (int i = 0; i < gvList.Count; ++i)
+				gvList[i].SetBackgroundResource(Resource.Drawable.shape);
 		}
 
 		public async void incorrectPrompt(List<ViewGroup> gvList)

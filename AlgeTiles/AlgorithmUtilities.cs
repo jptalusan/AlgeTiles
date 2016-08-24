@@ -122,7 +122,7 @@ namespace AlgeTiles
 			//TODO: Fix for 2 variables
 			if (areConstantsOnlyOneWwithValues(activityType, vars, numberOfVariables))
 				return RNG(activityType, numberOfVariables);
-			
+
 			return vars;
 		}
 
@@ -388,12 +388,12 @@ namespace AlgeTiles
 				output.Add((b * f) + (c * e)); //y
 				output.Add(c * f); //one
 			}
-			//if (vars.Count <= 4)
-			//	Log.Debug(TAG, "x2, x, 1");
-			//else
-			//	Log.Debug(TAG, "x2, y2, xy, x, y, 1");
-			//foreach (int i in output)
-			//	Log.Debug(TAG, "Expanded: " + i);
+			if (vars.Count <= 4)
+				Log.Debug(TAG, "x2, x, 1");
+			else
+				Log.Debug(TAG, "x2, y2, xy, x, y, 1");
+			foreach (int i in output)
+				Log.Debug(TAG, "Expanded: " + i);
 			return output;
 		}
 

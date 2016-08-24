@@ -51,9 +51,9 @@ namespace AlgeTiles
 
 		private int numberOfVariables = 0;
 
-		private Boolean isFirstAnswerCorrect = false;
-		private Boolean isSecondAnswerCorrect = false;
-		private Boolean isThirdAnswerCorrect = true;
+		private Boolean isFirstAnswerCorrect = true;
+		private Boolean isSecondAnswerCorrect = true;
+		private Boolean isThirdAnswerCorrect = false;
 
 		private RelativeLayout upperLeftGrid;
 		private RelativeLayout upperRightGrid;
@@ -92,6 +92,8 @@ namespace AlgeTiles
 		private EditText xET;
 		private EditText yET;
 		private EditText oneET;
+
+		private List<EditText> editTextList = new List<EditText>();
 
 		private ScrollView sv;
 
@@ -232,6 +234,13 @@ namespace AlgeTiles
 			yET = FindViewById<EditText>(Resource.Id.y_value);
 			oneET = FindViewById<EditText>(Resource.Id.one_value);
 
+			editTextList.Add(x2ET);
+			editTextList.Add(y2ET);
+			editTextList.Add(xyET);
+			editTextList.Add(xET);
+			editTextList.Add(yET);
+			editTextList.Add(oneET);
+
 			sv = FindViewById<ScrollView>(Resource.Id.sv);
 
 			refreshScreen(Constants.MULTIPLY, gridValue2VarList, innerGridLayoutList, outerGridLayoutList);
@@ -316,7 +325,7 @@ namespace AlgeTiles
 
 			isFirstAnswerCorrect = false;
 			isSecondAnswerCorrect = false;
-			isThirdAnswerCorrect = true;
+			isThirdAnswerCorrect = false;
 
 			for (int i = 0; i < inGLList.Count; ++i)
 			{
@@ -440,7 +449,7 @@ namespace AlgeTiles
 					Toast.MakeText(Application.Context, "1:incorrect", ToastLength.Short).Show();
 				}
 			}
-			else if (isFirstAnswerCorrect)
+			else if (!isSecondAnswerCorrect)
 			{
 				Log.Debug(TAG, "isSecondAnswerCorrect branch");
 				GridValue2Var[] gvArr = { upperLeftGV, upperRightGV, lowerLeftGV, lowerRightGV };
@@ -450,6 +459,205 @@ namespace AlgeTiles
 					Log.Debug(TAG, gvArr[i].ToString());
 				if (AlgorithmUtilities.isSecondAnswerCorrect(expandedVars, gvArr, numberOfVariables))
 				{
+					//Cancelling out
+					int posX = 0;
+					ViewGroup posXVG = null;
+					if (upperRightGV.xVal != 0)
+					{
+						posX = upperRightGV.xVal;
+						posXVG = upperRightGrid;
+					}
+					else
+					{
+						if (lowerLeftGV.xVal != 0)
+						{
+							posX = lowerLeftGV.xVal;
+							posXVG = lowerLeftGrid;
+						}
+					}
+
+					int posY = 0;
+					ViewGroup posYVG = null;
+					if (upperRightGV.yVal != 0)
+					{
+						posY = upperRightGV.yVal;
+						posYVG = upperRightGrid;
+					}
+					else
+					{
+						if (lowerLeftGV.yVal != 0)
+						{
+							posY = lowerLeftGV.yVal;
+							posYVG = lowerLeftGrid;
+						}
+					}
+
+					int posXY = 0;
+					ViewGroup posXYVG = null;
+					if (upperRightGV.xyVal != 0)
+					{
+						posXY = upperRightGV.xyVal;
+						posXYVG = upperRightGrid;
+					}
+					else
+					{
+						if (lowerLeftGV.xyVal != 0)
+						{
+							posXY = lowerLeftGV.xyVal;
+							posXYVG = lowerLeftGrid;
+						}
+					}
+
+					int negX = 0;
+					ViewGroup negXVG = null;
+					if (upperLeftGV.xVal != 0)
+					{
+						negX = upperLeftGV.xVal;
+						negXVG = upperLeftGrid;
+					}
+					else
+					{
+						if (lowerRightGV.xVal != 0)
+						{
+							negX = lowerRightGV.xVal;
+							negXVG = lowerRightGrid;
+						}
+					}
+
+					int negY = 0;
+					ViewGroup negYVG = null;
+					if (upperLeftGV.yVal != 0)
+					{
+						negY = upperLeftGV.yVal;
+						negYVG = upperLeftGrid;
+					}
+					else
+					{
+						if (lowerRightGV.yVal != 0)
+						{
+							negY = lowerRightGV.yVal;
+							negYVG = lowerRightGrid;
+						}
+					}
+
+					int negXY = 0;
+					ViewGroup negXYVG = null;
+					if (upperLeftGV.xyVal != 0)
+					{
+						negXY = upperLeftGV.xyVal;
+						negXYVG = upperLeftGrid;
+					}
+					else
+					{
+						if (lowerRightGV.xyVal != 0)
+						{
+							negXY = lowerRightGV.xyVal;
+							negXYVG = lowerRightGrid;
+						}
+					}
+
+					if (posX != 0 && negX != 0)
+					{
+						Log.Debug(TAG, "Cancelling out: " + posX + ", " + negX);
+						int xToRemove = posX > negX ? negX : posX;
+						Log.Debug(TAG, "To remove: " + xToRemove);
+						List<AlgeTilesImageView> tobeRemoved = new List<AlgeTilesImageView>();
+						for (int j = 0; j < posXVG.ChildCount; ++j)
+						{
+							AlgeTilesImageView alIV = posXVG.GetChildAt(j) as AlgeTilesImageView;
+							if (alIV.getTileType().Equals(Constants.X_TILE) ||
+								alIV.getTileType().Equals(Constants.X_TILE_ROT))
+							{
+								tobeRemoved.Add(alIV);
+							}
+						}
+
+						List<AlgeTilesImageView> negTobeRemoved = new List<AlgeTilesImageView>();
+						for (int j = 0; j < negXVG.ChildCount; ++j)
+						{
+							AlgeTilesImageView negalIV = negXVG.GetChildAt(j) as AlgeTilesImageView;
+							if (negalIV.getTileType().Equals(Constants.X_TILE) ||
+								negalIV.getTileType().Equals(Constants.X_TILE_ROT))
+							{
+								negTobeRemoved.Add(negalIV);
+							}
+						}
+
+						for (int j = 0; j < xToRemove; ++j)
+						{
+							posXVG.RemoveView(tobeRemoved[j]);
+							negXVG.RemoveView(negTobeRemoved[j]);
+						}
+					}
+
+					if (posY != 0 && negY != 0)
+					{
+						Log.Debug(TAG, "Cancelling out: " + posY + ", " + negY);
+						int yToRemove = posY > negY ? negY : posY;
+						Log.Debug(TAG, "To remove: " + yToRemove);
+						List<AlgeTilesImageView> tobeRemoved = new List<AlgeTilesImageView>();
+						for (int j = 0; j < posYVG.ChildCount; ++j)
+						{
+							AlgeTilesImageView alIV = posYVG.GetChildAt(j) as AlgeTilesImageView;
+							if (alIV.getTileType().Equals(Constants.Y_TILE) ||
+								alIV.getTileType().Equals(Constants.Y_TILE_ROT))
+							{
+								tobeRemoved.Add(alIV);
+							}
+						}
+
+						List<AlgeTilesImageView> negTobeRemoved = new List<AlgeTilesImageView>();
+						for (int j = 0; j < negYVG.ChildCount; ++j)
+						{
+							AlgeTilesImageView negalIV = negYVG.GetChildAt(j) as AlgeTilesImageView;
+							if (negalIV.getTileType().Equals(Constants.Y_TILE) ||
+								negalIV.getTileType().Equals(Constants.Y_TILE_ROT))
+							{
+								negTobeRemoved.Add(negalIV);
+							}
+						}
+
+						for (int j = 0; j < yToRemove; ++j)
+						{
+							posYVG.RemoveView(tobeRemoved[j]);
+							negYVG.RemoveView(negTobeRemoved[j]);
+						}
+					}
+
+					if (posXY != 0 && negXY != 0)
+					{
+						Log.Debug(TAG, "Cancelling out: " + posXY + ", " + negXY);
+						int xyToRemove = posXY > negXY ? negXY : posXY;
+						Log.Debug(TAG, "To remove: " + xyToRemove);
+						List<AlgeTilesImageView> tobeRemoved = new List<AlgeTilesImageView>();
+						for (int j = 0; j < posXYVG.ChildCount; ++j)
+						{
+							AlgeTilesImageView alIV = posXYVG.GetChildAt(j) as AlgeTilesImageView;
+							if (alIV.getTileType().Equals(Constants.XY_TILE) ||
+								alIV.getTileType().Equals(Constants.XY_TILE_ROT))
+							{
+								tobeRemoved.Add(alIV);
+							}
+						}
+
+						List<AlgeTilesImageView> negTobeRemoved = new List<AlgeTilesImageView>();
+						for (int j = 0; j < negXYVG.ChildCount; ++j)
+						{
+							AlgeTilesImageView negalIV = negXYVG.GetChildAt(j) as AlgeTilesImageView;
+							if (negalIV.getTileType().Equals(Constants.XY_TILE) ||
+								negalIV.getTileType().Equals(Constants.XY_TILE_ROT))
+							{
+								negTobeRemoved.Add(negalIV);
+							}
+						}
+
+						for (int j = 0; j < xyToRemove; ++j)
+						{
+							posXYVG.RemoveView(tobeRemoved[j]);
+							negXYVG.RemoveView(negTobeRemoved[j]);
+						}
+					}
+					//End Cancelling out
 					Toast.MakeText(Application.Context, "2:correct", ToastLength.Short).Show();
 					correct.Start();
 
@@ -464,6 +672,7 @@ namespace AlgeTiles
 							iv.LongClick -= clonedImageView_Touch;
 						}
 					}
+					isSecondAnswerCorrect = true;
 				}
 				else
 				{
@@ -472,31 +681,57 @@ namespace AlgeTiles
 					incorrectPrompt(outerGridLayoutList);
 				}
 			}
-			else
+			else if (!isThirdAnswerCorrect)
 			{
 				//TODO: Accomodate for two variables
-				int[] answer = new int[3];
+				int[] answer = new int[7];
 				int temp = 0;
 				answer[0] = int.TryParse(x2ET.Text, out temp) ? temp : 0;
-				answer[1] = int.TryParse(xET.Text, out temp) ? temp : 0;
-				answer[2] = int.TryParse(oneET.Text, out temp) ? temp : 0; ;
-				for (int i = 0; i < expandedVars.Count; ++i)
+				answer[1] = int.TryParse(y2ET.Text, out temp) ? temp : 0;
+				answer[2] = int.TryParse(xyET.Text, out temp) ? temp : 0;
+				answer[3] = int.TryParse(xET.Text, out temp) ? temp : 0;
+				answer[4] = int.TryParse(yET.Text, out temp) ? temp : 0;
+				answer[5] = int.TryParse(oneET.Text, out temp) ? temp : 0;
+			
+				if (Math.Abs(answer[0] + answer[0] + answer[0] + answer[0] + answer[0] + answer[0]) == 0)
 				{
-					if (expandedVars[i] != answer[i])
-						isThirdAnswerCorrect = false;
+					isThirdAnswerCorrect = false;
+				} else
+				{
+					for (int i = 0; i < expandedVars.Count; ++i)
+					{
+						if (expandedVars[i] != answer[i])
+							isThirdAnswerCorrect = false;
+					}
+					isThirdAnswerCorrect = true;
 				}
 				if (isThirdAnswerCorrect)
 				{
 					Toast.MakeText(Application.Context, "3:correct", ToastLength.Short).Show();
+					for (int i = 0; i < editTextList.Count; ++i)
+					{
+						editTextList[i].SetBackgroundResource(Resource.Drawable.ok);
+						editTextList[i].Enabled = false;
+					}
 					correct.Start();
-					//TODO: Refresh then new question?
+					isThirdAnswerCorrect = true;
 				}
 				else
 				{
 					Toast.MakeText(Application.Context, "3:incorrect", ToastLength.Short).Show();
-					incorrect.Start();
+					incorrectPrompt(editTextList);
 				}
 			}
+		}
+
+		public async void incorrectPrompt(List<EditText> gvList)
+		{
+			incorrect.Start();
+			for (int i = 0; i < gvList.Count; ++i)
+				gvList[i].SetBackgroundResource(Resource.Drawable.notok);
+			await Task.Delay(Constants.DELAY);
+			for (int i = 0; i < gvList.Count; ++i)
+				gvList[i].SetBackgroundResource(Resource.Drawable.shape);
 		}
 
 		public async void incorrectPrompt(List<ViewGroup> gvList)
@@ -511,8 +746,9 @@ namespace AlgeTiles
 
 		private void setupNewQuestion()
 		{
-			isFirstAnswerCorrect = false;
 			vars = AlgorithmUtilities.RNG(Constants.MULTIPLY, numberOfVariables);
+			//Debug
+			AlgorithmUtilities.expandingVars(vars);
 
 			for (int i = 0; i < gridValue2VarList.Count; ++i)
 			{
@@ -726,10 +962,10 @@ namespace AlgeTiles
 								break;
 							case Constants.XY_TILE:
 								heightFactor = 3;
-								widthFactor = 5;
+								widthFactor = 3;
 								break;
 							case Constants.XY_TILE_ROT:
-								heightFactor = 5;
+								heightFactor = 3;
 								widthFactor = 3;
 								break;
 						}

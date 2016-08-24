@@ -87,6 +87,8 @@ namespace AlgeTiles
 		private EditText x_value_2;
 		private EditText one_value_2;
 
+		private List<EditText> editTextList = new List<EditText>();
+
 		private bool isFirstTime = false;
 
 		private int heightInPx = 0;
@@ -210,6 +212,12 @@ namespace AlgeTiles
 
 			x_value_2 = FindViewById<EditText>(Resource.Id.x_value_2);
 			one_value_2 = FindViewById<EditText>(Resource.Id.one_value_2);
+
+			editTextList.Add(x_value_1);
+			editTextList.Add(one_value_1);
+
+			editTextList.Add(x_value_2);
+			editTextList.Add(one_value_2);
 
 			refreshScreen(Constants.FACTOR, gridValueList, innerGridLayoutList, outerGridLayoutList);
 		}
@@ -359,7 +367,7 @@ namespace AlgeTiles
 		private void checkAnswers()
 		{
 			//TODO: rename, for factor activity, second answer is first answer
-			if (!isSecondAnswerCorrect)
+			if (!isFirstAnswerCorrect)
 			{
 				GridValue[] gvArr = { upperLeftGV, upperRightGV, lowerLeftGV, lowerRightGV };
 
@@ -367,7 +375,7 @@ namespace AlgeTiles
 				{
 					Toast.MakeText(Application.Context, "2:correct", ToastLength.Short).Show();
 					correct.Start();
-					isSecondAnswerCorrect = true;
+					isFirstAnswerCorrect = true;
 
 					//Loop through inner and prevent deletions by removing: clonedImageView_Touch
 					for (int i = 0; i < outerGridLayoutList.Count; ++i)
@@ -400,13 +408,13 @@ namespace AlgeTiles
 					incorrectPrompt(outerGridLayoutList);
 				}
 			}
-			else if (isSecondAnswerCorrect)
+			else if (!isSecondAnswerCorrect)
 			{
 				GridValue[] gvArr = { midUpGV, midLowGV, midLeftGV, midRightGV };
 				if (AlgorithmUtilities.isFirstAnswerCorrect(vars, gvArr, numberOfVariables))
 				{
 					//TODO: First answer is second in factor
-					isFirstAnswerCorrect = true;
+					isSecondAnswerCorrect = true;
 
 					for (int i = 0; i < outerGridLayoutList.Count; ++i)
 						outerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.ok);
@@ -435,7 +443,7 @@ namespace AlgeTiles
 					Toast.MakeText(Application.Context, "1:incorrect", ToastLength.Short).Show();
 				}
 			}
-			else
+			else if (!isThirdAnswerCorrect)
 			{
 				int[] answer = new int[4];
 				int temp = 0;
@@ -444,23 +452,44 @@ namespace AlgeTiles
 				answer[2] = int.TryParse(x_value_2.Text, out temp) ? temp : 0; ;
 				answer[3] = int.TryParse(one_value_2.Text, out temp) ? temp : 0;
 
-				if ((vars[0] == answer[0] && vars[1] == answer[1]) &&
-					(vars[2] == answer[2] && vars[3] == answer[3]) ||
-					(vars[0] == answer[2] && vars[1] == answer[3]) &&
-					(vars[2] == answer[0] && vars[3] == answer[1]))
-					isThirdAnswerCorrect = true;
-
+				if (Math.Abs(answer[0] + answer[1] + answer[2] + answer[3]) == 0)
+				{
+					isThirdAnswerCorrect = false;
+				}
+				else
+				{
+					if ((vars[0] == answer[0] && vars[1] == answer[1]) &&
+						(vars[2] == answer[2] && vars[3] == answer[3]) ||
+						(vars[0] == answer[2] && vars[1] == answer[3]) &&
+						(vars[2] == answer[0] && vars[3] == answer[1]))
+						isThirdAnswerCorrect = true;
+				}
 				if (isThirdAnswerCorrect)
 				{
 					Toast.MakeText(Application.Context, "3:correct/end", ToastLength.Short).Show();
 					correct.Start();
+					for (int i = 0; i < editTextList.Count; ++i)
+					{
+						editTextList[i].SetBackgroundResource(Resource.Drawable.ok);
+						editTextList[i].Enabled = false;
+					}
 				}
 				else
 				{
 					Toast.MakeText(Application.Context, "3:incorrect", ToastLength.Short).Show();
-					incorrect.Start();
+					incorrectPrompt(editTextList);
 				}
 			}
+		}
+
+		public async void incorrectPrompt(List<EditText> gvList)
+		{
+			incorrect.Start();
+			for (int i = 0; i < gvList.Count; ++i)
+				gvList[i].SetBackgroundResource(Resource.Drawable.notok);
+			await Task.Delay(Constants.DELAY);
+			for (int i = 0; i < gvList.Count; ++i)
+				gvList[i].SetBackgroundResource(Resource.Drawable.shape);
 		}
 
 		public async void incorrectPrompt(List<ViewGroup> gvList)
@@ -475,7 +504,6 @@ namespace AlgeTiles
 
 		private void setupNewQuestion()
 		{
-			isFirstAnswerCorrect = false;
 			vars = AlgorithmUtilities.RNG(Constants.FACTOR, numberOfVariables);
 			string temp = "";
 			foreach (int i in vars)
@@ -574,7 +602,7 @@ namespace AlgeTiles
 					{
 						//Do nothing
 					}
-					else if (isSecondAnswerCorrect &&
+					else if (isFirstAnswerCorrect &&
 							(v.Id == Resource.Id.upperLeft ||
 							 v.Id == Resource.Id.upperRight ||
 							 v.Id == Resource.Id.lowerLeft ||
@@ -583,7 +611,7 @@ namespace AlgeTiles
 						//Do nothing
 					}
 					//Handle drops for second part of problem (expanded form)
-					else if (!isSecondAnswerCorrect &&
+					else if (!isFirstAnswerCorrect &&
 							(v.Id == Resource.Id.upperLeft ||
 							 v.Id == Resource.Id.upperRight ||
 							 v.Id == Resource.Id.lowerLeft ||
@@ -595,7 +623,7 @@ namespace AlgeTiles
 					}
 					//Handle auto rotate for x_tile (middle)
 					//First group x
-					else if (!isFirstAnswerCorrect &&
+					else if (isFirstAnswerCorrect &&
 							(v.Id == Resource.Id.middleLeft ||
 							 v.Id == Resource.Id.middleRight))
 					{
@@ -618,7 +646,7 @@ namespace AlgeTiles
 						isDroppedAtCenter = true;
 					}
 					//Second group x
-					else if (!isFirstAnswerCorrect &&
+					else if (isFirstAnswerCorrect &&
 							(v.Id == Resource.Id.upperMiddle ||
 							v.Id == Resource.Id.lowerMiddle))
 					{
