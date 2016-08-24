@@ -578,6 +578,8 @@ namespace AlgeTiles
 				output += ax + "x+";
 			if (b != 0)
 				output += b;
+			else
+				output = output.Remove(output.Length - 1);
 
 			output += ")(";
 
@@ -585,6 +587,8 @@ namespace AlgeTiles
 				output += cx + "x+";
 			if (d != 0)
 				output += d;
+			else 
+				output = output.Remove(output.Length - 1);
 
 			output += ")";
 			output = output.Replace(" ", "");

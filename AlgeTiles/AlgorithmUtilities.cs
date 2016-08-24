@@ -140,7 +140,17 @@ namespace AlgeTiles
 				if (total1 == 0 || total2 == 0)
 					return true;
 				return false;
-			} else if (Constants.FACTOR == activityType)
+			}
+			else if (Constants.MULTIPLY == activityType)
+			{
+				int ax = vars[0];
+				int b = vars[1];
+				int cx = vars[2];
+				int d = vars[3];
+				if (ax == 0 || cx == 0)
+					return true;
+			}
+			else if (Constants.FACTOR == activityType)
 			{
 				int ax = vars[0];
 				int b = vars[1];
@@ -148,14 +158,6 @@ namespace AlgeTiles
 				int d = vars[3];
 
 				if (ax == 0 || b == 0 || cx == 0 || d == 0)
-					return true;
-			} else if (Constants.MULTIPLY == activityType)
-			{
-				int ax = vars[0];
-				int b = vars[1];
-				int cx = vars[2];
-				int d = vars[3];
-				if (ax == 0 || cx == 0)
 					return true;
 			}
 			return false;

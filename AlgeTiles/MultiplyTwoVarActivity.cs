@@ -546,6 +546,8 @@ namespace AlgeTiles
 				output += by + "y+";
 			if (c != 0)
 				output += c;
+			else
+				output = output.Remove(output.Length - 1);
 
 			output += ")(";
 
@@ -555,6 +557,8 @@ namespace AlgeTiles
 				output += ey + "y+";
 			if (f != 0)
 				output += f;
+			else
+				output = output.Remove(output.Length - 1);
 
 			output += ")";
 			output = output.Replace(" ", "");
