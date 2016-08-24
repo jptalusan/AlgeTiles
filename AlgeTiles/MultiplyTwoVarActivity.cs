@@ -756,15 +756,17 @@ namespace AlgeTiles
 							algeTilesIV.LayoutParameters = par;
 
 							//check if overlap
-							Rect toDrop = AlgorithmUtilities.getRectOfView(algeTilesIV);
-							Rect toCheck = new Rect();
+							Rect possibleOverlapper = AlgorithmUtilities.getRectOfView(algeTilesIV);
+							Rect possibleOverlappee = new Rect();
 							for (int i = 0; i < container.ChildCount; ++i)
 							{
 								Log.Debug(TAG, "Container count: " + i);
 								if (container.GetChildAt(i) is AlgeTilesImageView)
 								{
-									toCheck = AlgorithmUtilities.getRectOfView((AlgeTilesImageView)container.GetChildAt(i));
-									if (Rect.Intersects(toDrop, toCheck))
+									possibleOverlappee = AlgorithmUtilities.getRectOfView((AlgeTilesImageView)container.GetChildAt(i));
+									if (possibleOverlappee.Contains(possibleOverlapper) ||
+										possibleOverlapper.Contains(possibleOverlappee) ||
+										possibleOverlappee == possibleOverlapper)
 										doesItIntersect = true;
 								}
 							}

@@ -766,38 +766,18 @@ namespace AlgeTiles
 							algeTilesIV.LayoutParameters = par;
 
 							//check if overlap
-							Rect toDrop = AlgorithmUtilities.getRectOfView(algeTilesIV);
-							Rect toCheck = new Rect();
+							Rect possibleOverlapper = AlgorithmUtilities.getRectOfView(algeTilesIV);
+							Rect possibleOverlappee = new Rect();
 							for (int i = 0; i < container.ChildCount; ++i)
 							{
 								Log.Debug(TAG, "Container count: " + i);
 								if (container.GetChildAt(i) is AlgeTilesImageView)
 								{
-									toCheck = AlgorithmUtilities.getRectOfView((AlgeTilesImageView)container.GetChildAt(i));
-									if (Rect.Intersects(toDrop, toCheck))
+									possibleOverlappee = AlgorithmUtilities.getRectOfView((AlgeTilesImageView)container.GetChildAt(i));
+									if (possibleOverlappee.Contains(possibleOverlapper) ||
+										possibleOverlapper.Contains(possibleOverlappee) ||
+										possibleOverlappee == possibleOverlapper)
 										doesItIntersect = true;
-									//switch (setNewCoordinatesForOverlappingRect(toDrop, toCheck))
-									//{
-									//	case OVERLAP.CAN_LEFT:
-									//		par.TopMargin = toCheck.Top;
-									//		par.LeftMargin = toCheck.Left - (toDrop.Right - toDrop.Left);
-									//		break;
-									//	case OVERLAP.CAN_RIGHT:
-									//		par.TopMargin = toCheck.Top;
-									//		par.LeftMargin = toCheck.Left + (toCheck.Right - toCheck.Left);
-									//		break;
-									//	case OVERLAP.CAN_TOP:
-									//		par.TopMargin = toCheck.Top - (toDrop.Bottom - toDrop.Top);
-									//		par.LeftMargin = toCheck.Left;
-									//		break;
-									//	case OVERLAP.CAN_BOTTOM:
-									//		par.TopMargin = toCheck.Top + (toCheck.Bottom - toCheck.Top);
-									//		par.LeftMargin = toCheck.Left;
-									//		break;
-									//	case OVERLAP.NO_SPACE:
-									//		doesItIntersect = true;
-									//		break;
-									//}
 								}
 							}
 							algeTilesIV.LayoutParameters = par;
