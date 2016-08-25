@@ -1011,6 +1011,17 @@ namespace AlgeTiles
 								}
 							}
 							algeTilesIV.LayoutParameters = par;
+							if (!doesItIntersect)
+							{
+								algeTilesIV.LongClick += clonedImageView_Touch;
+								container.AddView(algeTilesIV);
+								checkWhichParentAndUpdate(v.Id, currentButtonType, Constants.ADD);
+								hasButtonBeenDroppedInCorrectzone = true;
+							}
+							else
+							{
+								//Place in correct place
+							}
 						}
 						else
 						{
@@ -1045,18 +1056,28 @@ namespace AlgeTiles
 								}
 							}
 							algeTilesIV.LayoutParameters = gParms;
-						}
-
-						if (!doesItIntersect)
-						{
 							algeTilesIV.LongClick += clonedImageView_Touch;
 							container.AddView(algeTilesIV);
 							checkWhichParentAndUpdate(v.Id, currentButtonType, Constants.ADD);
-							hasButtonBeenDroppedInCorrectzone = true;
-						}
-						else
-						{
-							//Place in correct place
+
+							//Auto re-arrange of center tiles
+							List<AlgeTilesImageView> centerTileList = new List<AlgeTilesImageView>();
+							Log.Debug(TAG, "Container count: " + container.ChildCount);
+							for (int i = 0; i < container.ChildCount; ++i)
+							{
+								AlgeTilesImageView a = (AlgeTilesImageView)container.GetChildAt(i);
+								centerTileList.Add(a);
+								Log.Debug(TAG, "Center count: " + i + ", " + a.getTileType());
+							}
+							container.RemoveAllViews();
+
+							List<AlgeTilesImageView> sortedList = centerTileList.OrderByDescending(o => o.getTileType()).ToList();
+							for (int i = 0; i < sortedList.Count; ++i)
+							{
+								Log.Debug(TAG, "Tile order:" + sortedList[i].getTileType());
+								container.AddView(sortedList[i]);
+							}
+							//End of auto re-arrange
 						}
 						view.Visibility = ViewStates.Visible;
 						v.SetBackgroundResource(Resource.Drawable.shape);

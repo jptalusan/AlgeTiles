@@ -414,5 +414,17 @@ namespace AlgeTiles
 			RelativeLayout.LayoutParams rPrms = (RelativeLayout.LayoutParams)alIV.LayoutParameters;
 			return new Rect(rPrms.LeftMargin, rPrms.TopMargin, rPrms.LeftMargin + rPrms.Width, rPrms.TopMargin + rPrms.Height);
 		}
+
+		public static int GCD(int p, int q)
+		{
+			if (q == 0)
+			{
+				return p;
+			}
+
+			int r = p % q;
+
+			return GCD(q, r);
+		}
 	}
 }

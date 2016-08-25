@@ -133,8 +133,8 @@ namespace AlgeTiles
 			middleRightGrid = FindViewById<GridLayout>(Resource.Id.middleRight);
 			lowerMiddleGrid = FindViewById<GridLayout>(Resource.Id.lowerMiddle);
 
-			ViewTreeObserver vto2 = upperLeftGrid.ViewTreeObserver;
-			vto2.GlobalLayout += (sender, e) =>
+			ViewTreeObserver vto = upperLeftGrid.ViewTreeObserver;
+			vto.GlobalLayout += (sender, e) =>
 			{
 				if (!isFirstTime)
 				{
@@ -749,7 +749,7 @@ namespace AlgeTiles
 					if (wasImageDropped)
 					{
 						ViewGroup container = (ViewGroup)v;
-						Log.Debug(TAG, currentButtonType);
+						Log.Debug(TAG, "Dropped: " + currentButtonType);
 						int heightFactor = 0;
 						int widthFactor = 0;
 						switch (currentButtonType)
@@ -815,6 +815,17 @@ namespace AlgeTiles
 								}
 							}
 							algeTilesIV.LayoutParameters = par;
+							if (!doesItIntersect)
+							{
+								algeTilesIV.LongClick += clonedImageView_Touch;
+								container.AddView(algeTilesIV);
+								checkWhichParentAndUpdate(v.Id, currentButtonType, Constants.ADD);
+								hasButtonBeenDroppedInCorrectzone = true;
+							}
+							else
+							{
+								//Place in correct place
+							}
 						}
 						else
 						{
@@ -849,18 +860,30 @@ namespace AlgeTiles
 								}
 							}
 							algeTilesIV.LayoutParameters = gParms;
-						}
-
-						if (!doesItIntersect)
-						{
 							algeTilesIV.LongClick += clonedImageView_Touch;
 							container.AddView(algeTilesIV);
 							checkWhichParentAndUpdate(v.Id, currentButtonType, Constants.ADD);
-							hasButtonBeenDroppedInCorrectzone = true;
-						}
-						else
-						{
-							//Place in correct place
+
+							//Auto re-arrange of center tiles
+							List<AlgeTilesImageView> centerTileList = new List<AlgeTilesImageView>();
+							Log.Debug(TAG, "Container count: " + container.ChildCount);
+							for (int i = 0; i < container.ChildCount; ++i)
+							{
+								AlgeTilesImageView a = (AlgeTilesImageView)container.GetChildAt(i);
+								centerTileList.Add(a);
+								Log.Debug(TAG, "Center count: " + i + ", " + a.getTileType());
+							}
+
+							container.RemoveAllViews();
+
+							List<AlgeTilesImageView> sortedList = centerTileList.OrderByDescending(o => o.getTileType()).ToList();
+							for (int i = 0; i < sortedList.Count; ++i)
+							{
+								Log.Debug(TAG, "Tile order:" + sortedList[i].getTileType());
+								container.AddView(sortedList[i]);
+								
+							}
+							//End of auto re-arrange
 						}
 						view.Visibility = ViewStates.Visible;
 						v.SetBackgroundResource(Resource.Drawable.shape);
@@ -901,7 +924,6 @@ namespace AlgeTiles
 		}
 		//http://stackoverflow.com/questions/18836432/how-to-find-the-view-of-a-button-in-its-click-eventhandler
 
-		//TODO: When top most layer textview increases in length, the edit text gets pushed
 		private void clonedImageView_Touch(object sender, View.LongClickEventArgs e)
 		{
 			var touchedImageView = (sender) as AlgeTilesImageView;
