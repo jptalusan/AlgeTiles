@@ -14,24 +14,24 @@ using Android.Graphics;
 
 namespace AlgeTiles
 {
-	public class AlgeTilesImageView : TextView
+	public class AlgeTilesTextView : TextView
 	{
 		private string tileType;
 		
-		public AlgeTilesImageView(Context context) :
+		public AlgeTilesTextView(Context context) :
             base(context)
         {
 			this.TextAlignment = TextAlignment.Center;
 			this.Gravity = GravityFlags.Center;
 			this.SetTextColor(Color.Black);
 		}
-		public AlgeTilesImageView(Context context, IAttributeSet attrs) :
+		public AlgeTilesTextView(Context context, IAttributeSet attrs) :
             base(context, attrs)
         {
 
 		}
 
-		public AlgeTilesImageView(Context context, IAttributeSet attrs, int defStyle) :
+		public AlgeTilesTextView(Context context, IAttributeSet attrs, int defStyle) :
             base(context, attrs, defStyle)
         {
 

@@ -58,6 +58,7 @@ namespace AlgeTiles
 			bClearRects = true;
 			this.height = height;
 			this.width = width;
+			rList.Clear();
 		}
 
 		protected override void OnDraw(Canvas canvas)

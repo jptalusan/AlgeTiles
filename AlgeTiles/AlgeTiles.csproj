@@ -58,7 +58,7 @@
   <ItemGroup>
     <Compile Include="AlgeTilesRelativeLayout.cs" />
     <Compile Include="AlgorithmUtilities.cs" />
-    <Compile Include="AlgeTilesImageView.cs" />
+    <Compile Include="AlgeTilesTextView.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="GridValue2Var.cs" />
     <Compile Include="HomeScreenActivity.cs" />
@@ -69,6 +69,7 @@
     <Compile Include="RectTile.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TileUtilities.cs" />
     <Compile Include="UIUtilities.cs" />
   </ItemGroup>
   <ItemGroup>

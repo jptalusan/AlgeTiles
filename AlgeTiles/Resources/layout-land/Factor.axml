@@ -23,7 +23,7 @@
             android:layout_weight="92"
             android:weightSum="200">
         <!-- Upper Left -->
-            <RelativeLayout
+            <algetiles.AlgeTilesRelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
@@ -40,7 +40,7 @@
                 android:columnCount="1"
                 android:rotationX="180" />
         <!-- Upper Right -->
-            <RelativeLayout
+            <algetiles.AlgeTilesRelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
@@ -91,7 +91,7 @@
             android:layout_weight="92"
             android:weightSum="200">
         <!-- Lower Left -->
-            <RelativeLayout
+            <algetiles.AlgeTilesRelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
@@ -107,7 +107,7 @@
                 android:rowCount="8"
                 android:columnCount="1" />
         <!-- Lower Right -->
-            <RelativeLayout
+            <algetiles.AlgeTilesRelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
@@ -155,7 +155,8 @@
                     android:id="@+id/x_value_1"
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
-                    android:inputType="numberSigned" />
+                    android:inputType="numberSigned"
+					android:gravity="center" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -170,7 +171,8 @@
                     android:id="@+id/one_value_1"
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
-                    android:inputType="numberSigned" />
+                    android:inputType="numberSigned"
+					android:gravity="center" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -185,7 +187,8 @@
                     android:id="@+id/x_value_2"
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
-                    android:inputType="numberSigned" />
+                    android:inputType="numberSigned"
+					android:gravity="center" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -200,7 +203,8 @@
                     android:id="@+id/one_value_2"
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+					android:gravity="center" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -248,7 +252,7 @@
                     android:textOn="rotate"
                     android:textSize="12sp"
                     android:layout_weight="1" />
-				<ToggleButton
+                <ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/mute"
@@ -256,7 +260,7 @@
                     android:textOn="mute"
                     android:textSize="12sp"
                     android:layout_weight="1" />
-			</LinearLayout>
+            </LinearLayout>
         <!-- Second (1) -->
             <LinearLayout
                 android:orientation="horizontal"

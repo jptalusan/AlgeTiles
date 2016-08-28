@@ -19,6 +19,7 @@ namespace AlgeTiles
 		private string tileType;
 		private int height;
 		private int width;
+		private bool alreadyHasTile = false;
 
 		public RectTile(Rect r, string tileType)
 		{
@@ -46,6 +47,16 @@ namespace AlgeTiles
 		public Rect getRect()
 		{
 			return r;
+		}
+
+		public void setTilePresence(bool b)
+		{
+			alreadyHasTile = b;
+		}
+
+		public bool getTilePresence()
+		{
+			return alreadyHasTile;
 		}
 
 		public bool isPointInsideRect(float x, float y)

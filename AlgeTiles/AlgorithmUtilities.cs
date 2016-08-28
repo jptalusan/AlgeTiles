@@ -417,7 +417,7 @@ namespace AlgeTiles
 			return false;
 		}
 
-		public static Rect getRectOfView(AlgeTilesImageView alIV)
+		public static Rect getRectOfView(AlgeTilesTextView alIV)
 		{
 			RelativeLayout.LayoutParams rPrms = (RelativeLayout.LayoutParams)alIV.LayoutParameters;
 			return new Rect(rPrms.LeftMargin, rPrms.TopMargin, rPrms.LeftMargin + rPrms.Width, rPrms.TopMargin + rPrms.Height);

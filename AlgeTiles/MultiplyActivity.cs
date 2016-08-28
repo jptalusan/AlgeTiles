@@ -32,6 +32,7 @@ namespace AlgeTiles
 		private ToggleButton removeToggle;
 		private ToggleButton dragToggle;
 		private ToggleButton rotateToggle;
+		private ToggleButton muteToggle;
 
 		private ImageButton tile_1;
 		private ImageButton x_tile;
@@ -177,11 +178,13 @@ namespace AlgeTiles
 			removeToggle = (ToggleButton)FindViewById(Resource.Id.remove);
 			dragToggle = (ToggleButton)FindViewById(Resource.Id.drag);
 			rotateToggle = (ToggleButton)FindViewById(Resource.Id.rotate);
+			muteToggle = (ToggleButton)FindViewById(Resource.Id.mute);
 
 			removeToggle.Click += toggle_click;
 			dragToggle.Click += toggle_click;
 			rotateToggle.Click += toggle_click;
-			
+			muteToggle.Click += toggle_click;
+
 			newQuestionButton = (Button)FindViewById<Button>(Resource.Id.new_question_button);
 			refreshButton = (Button)FindViewById<Button>(Resource.Id.refresh_button);
 			checkButton = (Button)FindViewById<Button>(Resource.Id.check_button);
@@ -271,9 +274,15 @@ namespace AlgeTiles
 		private void button_click(object sender, EventArgs e)
 		{
 			var button = sender as Button;
-			switch(button.Text)
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			AlertDialog alertDialog = builder.Create();
+			alertDialog.SetMessage("Are you sure?");
+
+			alertDialog.SetButton("Yes", (s, ev) =>
 			{
-				case Constants.NEW_Q:
+				switch (button.Text)
+				{
+					case Constants.NEW_Q:
 					setupNewQuestion();
 					refreshScreen(Constants.MULTIPLY, gridValueList, innerGridLayoutList, outerGridLayoutList);
 					break;
@@ -283,7 +292,15 @@ namespace AlgeTiles
 				case Constants.CHK:
 					checkAnswers();
 					break;
-			}
+				}
+			});
+
+			alertDialog.SetButton2("No", (s, ev) =>
+			{
+
+			});
+
+			alertDialog.Show();
 		}
 
 		private void refreshScreen(string ActivityType, List<GridValue> gvList, List<ViewGroup> inGLList, List<ViewGroup> outGLList)
@@ -292,6 +309,11 @@ namespace AlgeTiles
 			upperLeftGrid.clearRects(heightInPx, widthInPx);
 			lowerRightGrid.clearRects(heightInPx, widthInPx);
 			lowerLeftGrid.clearRects(heightInPx, widthInPx);
+
+			upperRightRectTileList.Clear();
+			upperLeftRectTileList.Clear();
+			lowerRightRectTileList.Clear();
+			lowerLeftRectTileList.Clear();
 
 			x2ET.Enabled = false;
 			xET.Enabled = false;
@@ -372,13 +394,6 @@ namespace AlgeTiles
 
 		private void checkAnswers()
 		{
-			generateInnerLayoutTileArrays();
-			upperRightGrid.drawRects(upperRightRectTileList);
-			upperLeftGrid.drawRects(upperLeftRectTileList);
-			lowerRightGrid.drawRects(lowerRightRectTileList);
-			lowerLeftGrid.drawRects(lowerLeftRectTileList);
-
-
 			if (!isFirstAnswerCorrect)
 			{
 				GridValue[] gvArr = { midUpGV, midLowGV, midLeftGV, midRightGV };
@@ -404,7 +419,7 @@ namespace AlgeTiles
 						innerGridLayoutList[i].Drag -= GridLayout_Drag;
 						for (int j = 0; j < innerGridLayoutList[i].ChildCount; ++j)
 						{
-							var iv = innerGridLayoutList[i].GetChildAt(j) as AlgeTilesImageView;
+							var iv = innerGridLayoutList[i].GetChildAt(j) as AlgeTilesTextView;
 							iv.LongClick -= clonedImageView_Touch;
 						}
 					}
@@ -418,7 +433,14 @@ namespace AlgeTiles
 					xET.Enabled = true;
 					oneET.Enabled = true;
 
-					correct.Start();
+					if (!muteToggle.Checked)
+						correct.Start();
+
+					generateInnerLayoutTileArrays();
+					upperRightGrid.drawRects(upperRightRectTileList);
+					upperLeftGrid.drawRects(upperLeftRectTileList);
+					lowerRightGrid.drawRects(lowerRightRectTileList);
+					lowerLeftGrid.drawRects(lowerLeftRectTileList);
 				}
 				else
 				{
@@ -434,7 +456,6 @@ namespace AlgeTiles
 			{
 				Log.Debug(TAG, "isSecondAnswerCorrect branch");
 				GridValue[] gvArr = { upperLeftGV, upperRightGV, lowerLeftGV, lowerRightGV };
-
 
 				for (int i = 0; i < gvArr.Length; ++i)
 					Log.Debug(TAG, gvArr[i].ToString());
@@ -472,16 +493,15 @@ namespace AlgeTiles
 						}
 					}
 
-
 					if (posX != 0 && negX != 0)
 					{
 						Log.Debug(TAG, "Cancelling out: " + posX + ", " + negX);
 						int xToRemove = posX > negX ? negX : posX;
 						Log.Debug(TAG, "To remove: " + xToRemove);
-						List<AlgeTilesImageView> tobeRemoved = new List<AlgeTilesImageView>();
+						List<AlgeTilesTextView> tobeRemoved = new List<AlgeTilesTextView>();
 						for (int j = 0; j < posXVG.ChildCount; ++j)
 						{
-							AlgeTilesImageView alIV = posXVG.GetChildAt(j) as AlgeTilesImageView;
+							AlgeTilesTextView alIV = posXVG.GetChildAt(j) as AlgeTilesTextView;
 							if (alIV.getTileType().Equals(Constants.X_TILE) ||
 								alIV.getTileType().Equals(Constants.X_TILE_ROT))
 							{
@@ -489,10 +509,10 @@ namespace AlgeTiles
 							}
 						}
 
-						List<AlgeTilesImageView> negTobeRemoved = new List<AlgeTilesImageView>();
+						List<AlgeTilesTextView> negTobeRemoved = new List<AlgeTilesTextView>();
 						for (int j = 0; j < negXVG.ChildCount; ++j)
 						{
-							AlgeTilesImageView negalIV = negXVG.GetChildAt(j) as AlgeTilesImageView;
+							AlgeTilesTextView negalIV = negXVG.GetChildAt(j) as AlgeTilesTextView;
 							if (negalIV.getTileType().Equals(Constants.X_TILE) ||
 								negalIV.getTileType().Equals(Constants.X_TILE_ROT))
 							{
@@ -508,7 +528,8 @@ namespace AlgeTiles
 					}
 					//End Cancelling out
 					Toast.MakeText(Application.Context, "2:correct", ToastLength.Short).Show();
-					correct.Start();
+					if (!muteToggle.Checked)
+						correct.Start();
 
 					//Loop through inner and prevent deletions by removing: clonedImageView_Touch
 					for (int i = 0; i < outerGridLayoutList.Count; ++i)
@@ -517,7 +538,7 @@ namespace AlgeTiles
 						outerGridLayoutList[i].Drag -= GridLayout_Drag;
 						for (int j = 0; j < outerGridLayoutList[i].ChildCount; ++j)
 						{
-							var iv = outerGridLayoutList[i].GetChildAt(j) as View;
+							var iv = outerGridLayoutList[i].GetChildAt(j) as AlgeTilesTextView;
 							iv.LongClick -= clonedImageView_Touch;
 						}
 					}
@@ -560,7 +581,8 @@ namespace AlgeTiles
 						editTextList[i].SetBackgroundResource(Resource.Drawable.ok);
 						editTextList[i].Enabled = false;
 					}
-					correct.Start();
+					if (!muteToggle.Checked)
+						correct.Start();
 				}
 				else
 				{
@@ -572,7 +594,8 @@ namespace AlgeTiles
 
 		public async void incorrectPrompt(List<EditText> gvList)
 		{
-			incorrect.Start();
+			if (!muteToggle.Checked)
+				incorrect.Start();
 			for (int i = 0; i < gvList.Count; ++i)
 				gvList[i].SetBackgroundResource(Resource.Drawable.notok);
 			await Task.Delay(Constants.DELAY);
@@ -582,7 +605,8 @@ namespace AlgeTiles
 
 		public async void incorrectPrompt(List<ViewGroup> gvList)
 		{
-			incorrect.Start();
+			if (!muteToggle.Checked)
+				incorrect.Start();
 			for (int i = 0; i < gvList.Count; ++i)
 				gvList[i].SetBackgroundResource(Resource.Drawable.notok);
 			await Task.Delay(Constants.DELAY);
@@ -690,7 +714,7 @@ namespace AlgeTiles
 						currentButtonType = drag_data.GetItemAt(0).Text;
 					}
 
-					AlgeTilesImageView algeTilesIV = new AlgeTilesImageView(this);
+					AlgeTilesTextView algeTilesIV = new AlgeTilesTextView(this);
 					Boolean wasImageDropped = false;
 
 					//Check if x_tile is rotated before fitting or rotate before dropping automatically
@@ -747,35 +771,35 @@ namespace AlgeTiles
 					{
 						ViewGroup container = (ViewGroup)v;
 						Log.Debug(TAG, "Dropped: " + currentButtonType);
-						int heightFactor = 0;
-						int widthFactor = 0;
+						double heightFactor = 0;
+						double widthFactor = 0;
 						switch (currentButtonType)
 						{
 							case Constants.X2_TILE:
 							case Constants.X2_TILE_ROT:
 								algeTilesIV.SetBackgroundResource(Resource.Drawable.x);
 								algeTilesIV.Text = "x2";
-								heightFactor = 3;
-								widthFactor = 3;
+								heightFactor = Constants.X_LONG_SIDE;
+								widthFactor = Constants.X_LONG_SIDE;
 								break;
 							case Constants.X_TILE:
 								algeTilesIV.SetBackgroundResource(Resource.Drawable.x);
 								algeTilesIV.Text = "x";
-								heightFactor = 3;
-								widthFactor = 9;
+								heightFactor = Constants.X_LONG_SIDE;
+								widthFactor = Constants.ONE_SIDE;
 								break;
 							case Constants.X_TILE_ROT:
 								algeTilesIV.SetBackgroundResource(Resource.Drawable.x);
 								algeTilesIV.Text = "x";
-								heightFactor = 9;
-								widthFactor = 3;
+								heightFactor = Constants.ONE_SIDE;
+								widthFactor = Constants.X_LONG_SIDE;
 								break;
 							case Constants.ONE_TILE:
 							case Constants.ONE_TILE_ROT:
 								algeTilesIV.SetBackgroundResource(Resource.Drawable.one);
 								algeTilesIV.Text = "1";
-								heightFactor = 9;
-								widthFactor = 9;
+								heightFactor = Constants.ONE_SIDE;
+								widthFactor = Constants.ONE_SIDE;
 								break;
 						}
 
@@ -810,13 +834,13 @@ namespace AlgeTiles
 								gParms.SetGravity(GravityFlags.FillVertical);
 								if (rotateToggle.Checked)
 								{
-									gParms.Height = heightInPx / heightFactor;
-									gParms.Width = heightInPx / widthFactor;
+									gParms.Height = (int) (heightInPx / heightFactor);
+									gParms.Width = (int) (heightInPx / widthFactor);
 								}
 								else
 								{
-									gParms.Width = heightInPx / heightFactor;
-									gParms.Height = heightInPx / widthFactor;
+									gParms.Width = (int) (heightInPx / heightFactor);
+									gParms.Height = (int)(heightInPx / widthFactor);
 								}
 							}
 							else
@@ -824,13 +848,13 @@ namespace AlgeTiles
 								gParms.SetGravity(GravityFlags.FillHorizontal);
 								if (rotateToggle.Checked)
 								{
-									gParms.Width = heightInPx / heightFactor;
-									gParms.Height = heightInPx / widthFactor;
+									gParms.Width = (int)(heightInPx / heightFactor);
+									gParms.Height = (int)(heightInPx / widthFactor);
 								}
 								else
 								{
-									gParms.Height = heightInPx / heightFactor;
-									gParms.Width = heightInPx / widthFactor;
+									gParms.Height = (int)(heightInPx / heightFactor);
+									gParms.Width = (int)(heightInPx / widthFactor);
 								}
 							}
 							algeTilesIV.LayoutParameters = gParms;
@@ -839,18 +863,18 @@ namespace AlgeTiles
 							checkWhichParentAndUpdate(v.Id, currentButtonType, Constants.ADD);
 
 							//Auto re-arrange of center tiles
-							List<AlgeTilesImageView> centerTileList = new List<AlgeTilesImageView>();
+							List<AlgeTilesTextView> centerTileList = new List<AlgeTilesTextView>();
 							Log.Debug(TAG, "Container count: " + container.ChildCount);
 							for (int i = 0; i < container.ChildCount; ++i)
 							{
-								AlgeTilesImageView a = (AlgeTilesImageView)container.GetChildAt(i);
+								AlgeTilesTextView a = (AlgeTilesTextView)container.GetChildAt(i);
 								centerTileList.Add(a);
 								Log.Debug(TAG, "Center count: " + i + ", " + a.getTileType());
 							}
 
 							container.RemoveAllViews();
 
-							List<AlgeTilesImageView> sortedList = centerTileList.OrderByDescending(o => o.getTileType()).ToList();
+							List<AlgeTilesTextView> sortedList = centerTileList.OrderByDescending(o => o.getTileType()).ToList();
 							for (int i = 0; i < sortedList.Count; ++i)
 							{
 								Log.Debug(TAG, "Tile order:" + sortedList[i].getTileType());
@@ -874,8 +898,9 @@ namespace AlgeTiles
 			{
 				foreach(RectTile r in upperLeftRectTileList)
 				{
-					if (r.isPointInsideRect(x, y) && r.isTileTypeSame(tileType))
+					if (r.isPointInsideRect(x, y) && r.isTileTypeSame(tileType) && !r.getTilePresence())
 					{
+						r.setTilePresence(true);
 						return r.getRect();
 					}
 				}
@@ -885,8 +910,9 @@ namespace AlgeTiles
 			{
 				foreach (RectTile r in upperRightRectTileList)
 				{
-					if (r.isPointInsideRect(x, y) && r.isTileTypeSame(tileType))
+					if (r.isPointInsideRect(x, y) && r.isTileTypeSame(tileType) && !r.getTilePresence())
 					{
+						r.setTilePresence(true);
 						return r.getRect();
 					}
 				}
@@ -896,8 +922,9 @@ namespace AlgeTiles
 			{
 				foreach (RectTile r in lowerLeftRectTileList)
 				{
-					if (r.isPointInsideRect(x, y) && r.isTileTypeSame(tileType))
+					if (r.isPointInsideRect(x, y) && r.isTileTypeSame(tileType) && !r.getTilePresence())
 					{
+						r.setTilePresence(true);
 						return r.getRect();
 					}
 				}
@@ -907,8 +934,9 @@ namespace AlgeTiles
 			{
 				foreach (RectTile r in lowerRightRectTileList)
 				{
-					if (r.isPointInsideRect(x, y) && r.isTileTypeSame(tileType))
+					if (r.isPointInsideRect(x, y) && r.isTileTypeSame(tileType) && !r.getTilePresence())
 					{
+						r.setTilePresence(true);
 						return r.getRect();
 					}
 				}
@@ -936,7 +964,7 @@ namespace AlgeTiles
 				GridLayout gl = (GridLayout)innerGridLayoutList[i];
 				for (int j = 0; j < gl.ChildCount; ++j)
 				{
-					AlgeTilesImageView al = gl.GetChildAt(j) as AlgeTilesImageView;
+					AlgeTilesTextView al = gl.GetChildAt(j) as AlgeTilesTextView;
 					switch (al.getTileType())
 					{
 						case Constants.X_TILE:
@@ -957,7 +985,6 @@ namespace AlgeTiles
 
 			int height = heightInPx;
 			int width = widthInPx;
-			Log.Debug(TAG, "RLayout: h:" + height + "x w:" + width);
 
 			//upmid x midRight = quadrant1
 			if (midUp.Count != 0 || midRight.Count != 0)
@@ -971,7 +998,7 @@ namespace AlgeTiles
 					bool firstPass = true;
 					for (int j = 0; j < midRight.Count; ++j)
 					{
-						int[] productDimensions = getDimensionsOfProduct(midUp[i], midRight[j]);
+						int[] productDimensions = TileUtilities.getDimensionsOfProduct(height, midUp[i], midRight[j]);
 						if (firstPass)
 						{
 							//top = subtract height of first tile in midup ( then subtract next tile  ) etc...
@@ -986,7 +1013,7 @@ namespace AlgeTiles
 						left = right - productDimensions[1];
 
 						Rect r = new Rect(left, top, right, bottom);
-						upperRightRectTileList.Add(new RectTile(r, getTileTypeOfProduct(midUp[i], midRight[j])));
+						upperRightRectTileList.Add(new RectTile(r, TileUtilities.getTileTypeOfProduct(midUp[i], midRight[j])));
 					}
 				}
 			}
@@ -1003,7 +1030,7 @@ namespace AlgeTiles
 					bool firstPass = true;
 					for (int j = 0; j < midLeft.Count; ++j)
 					{
-						int[] productDimensions = getDimensionsOfProduct(midUp[i], midLeft[j]);
+						int[] productDimensions = TileUtilities.getDimensionsOfProduct(height, midUp[i], midLeft[j]);
 						if (firstPass)
 						{
 							top -= productDimensions[0];
@@ -1014,7 +1041,7 @@ namespace AlgeTiles
 						right = left + productDimensions[1];
 
 						Rect r = new Rect(left, top, right, bottom);
-						upperLeftRectTileList.Add(new RectTile(r, getTileTypeOfProduct(midUp[i], midLeft[j])));
+						upperLeftRectTileList.Add(new RectTile(r, TileUtilities.getTileTypeOfProduct(midUp[i], midLeft[j])));
 					}
 				}
 			}
@@ -1031,7 +1058,7 @@ namespace AlgeTiles
 					bool firstPass = true;
 					for (int j = 0; j < midLeft.Count; ++j)
 					{
-						int[] productDimensions = getDimensionsOfProduct(midDown[i], midLeft[j]);
+						int[] productDimensions = TileUtilities.getDimensionsOfProduct(height, midDown[i], midLeft[j]);
 						if (firstPass)
 						{
 							bottom += productDimensions[0];
@@ -1042,7 +1069,7 @@ namespace AlgeTiles
 						right = left + productDimensions[1];
 
 						Rect r = new Rect(left, top, right, bottom);
-						lowerLeftRectTileList.Add(new RectTile(r, getTileTypeOfProduct(midDown[i], midLeft[j])));
+						lowerLeftRectTileList.Add(new RectTile(r, TileUtilities.getTileTypeOfProduct(midDown[i], midLeft[j])));
 					}
 				}
 			}
@@ -1059,7 +1086,7 @@ namespace AlgeTiles
 					bool firstPass = true;
 					for (int j = 0; j < midRight.Count; ++j)
 					{
-						int[] productDimensions = getDimensionsOfProduct(midDown[i], midRight[j]);
+						int[] productDimensions = TileUtilities.getDimensionsOfProduct(height, midDown[i], midRight[j]);
 						if (firstPass)
 						{
 							bottom += productDimensions[0];
@@ -1069,105 +1096,12 @@ namespace AlgeTiles
 						right += productDimensions[1];
 						left = right - productDimensions[1];
 						Rect r = new Rect(left, top, right, bottom);
-						lowerRightRectTileList.Add(new RectTile(r, getTileTypeOfProduct(midDown[i], midRight[j])));
+						lowerRightRectTileList.Add(new RectTile(r, TileUtilities.getTileTypeOfProduct(midDown[i], midRight[j])));
 					}
 				}
 			}
 		}
 		
-		private string getTileTypeOfProduct(string tile1, string tile2)
-		{
-			string output = "";
-			if (tile1.Contains(Constants.X_TILE) &&
-				tile2.Contains(Constants.X_TILE))
-				output = Constants.X2_TILE;
-
-			if (tile1.Contains(Constants.Y_TILE) &&
-				tile2.Contains(Constants.Y_TILE))
-				output = Constants.Y2_TILE;
-
-			if ((tile1.Contains(Constants.X_TILE) &&
-				tile2.Contains(Constants.Y_TILE)) ||
-				(tile1.Contains(Constants.Y_TILE) &&
-				tile2.Contains(Constants.X_TILE)))
-				output = Constants.XY_TILE;
-
-			if ((tile1.Contains(Constants.X_TILE) &&
-				tile2.Contains(Constants.ONE_TILE)) ||
-				(tile1.Contains(Constants.ONE_TILE) &&
-				tile2.Contains(Constants.X_TILE)))
-				output = Constants.X_TILE;
-
-			if ((tile1.Contains(Constants.Y_TILE) &&
-				tile2.Contains(Constants.ONE_TILE)) ||
-				(tile1.Contains(Constants.ONE_TILE) &&
-				tile2.Contains(Constants.Y_TILE)))
-				output = Constants.Y_TILE;
-
-			if (tile1.Contains(Constants.ONE_TILE) &&
-				tile2.Contains(Constants.ONE_TILE))
-				output = Constants.ONE_TILE;
-
-			Log.Debug(TAG, "tile1 x tile2=" + tile1 + " x " + tile2 + "=" + output);
-			return output;
-		}
-
-		private int[] getTileFactors(string tileType)
-		{
-			int[] output = { 0, 0 }; //height x width
-			int heightFactor = 0;
-			int widthFactor = 0;
-			switch (tileType)
-			{
-				case Constants.X2_TILE:
-				case Constants.X2_TILE_ROT:
-				case Constants.Y2_TILE:
-				case Constants.Y2_TILE_ROT:
-					heightFactor = 3;
-					widthFactor = 3;
-					break;
-				case Constants.X_TILE:
-				case Constants.Y_TILE:
-					heightFactor = 3;
-					widthFactor = 9;
-					break;
-				case Constants.X_TILE_ROT:
-				case Constants.Y_TILE_ROT:
-					heightFactor = 9;
-					widthFactor = 3;
-					break;
-				case Constants.ONE_TILE:
-				case Constants.ONE_TILE_ROT:
-					heightFactor = 9;
-					widthFactor = 9;
-					break;
-				case Constants.XY_TILE:
-					heightFactor = 3;
-					widthFactor = 3;
-					break;
-				case Constants.XY_TILE_ROT:
-					heightFactor = 3;
-					widthFactor = 3;
-					break;
-			}
-
-			output[0] = heightFactor;
-			output[1] = widthFactor;
-			Log.Debug(TAG, tileType + ": " + output[0] + "," + output[1]);
-			return output;
-		}
-
-		private int[] getDimensionsOfProduct(string verticalTile, string horizontalTile)
-		{
-			int[] output = { 0, 0 };
-			int[] verticalTileFactors = getTileFactors(verticalTile);
-			int[] horizontalTileFactors = getTileFactors(horizontalTile);
-			output[0] = heightInPx / verticalTileFactors[0];
-			output[1] = heightInPx / horizontalTileFactors[0];
-
-			return output;
-		}
-
 		private void tile_LongClick(object sender, View.LongClickEventArgs e)
 		{
 			var imageViewTouch = (sender) as ImageButton;
@@ -1200,7 +1134,7 @@ namespace AlgeTiles
 
 		private void clonedImageView_Touch(object sender, View.LongClickEventArgs e)
 		{
-			var touchedImageView = (sender) as AlgeTilesImageView;
+			var touchedImageView = (sender) as AlgeTilesTextView;
 			ViewGroup vg = (ViewGroup)touchedImageView.Parent;
 			if (removeToggle.Checked)
 			{

@@ -52,10 +52,10 @@ namespace AlgeTiles
 		private Boolean isSecondAnswerCorrect = false;
 		private Boolean isThirdAnswerCorrect = false;
 
-		private RelativeLayout upperLeftGrid;
-		private RelativeLayout upperRightGrid;
-		private RelativeLayout lowerLeftGrid;
-		private RelativeLayout lowerRightGrid;
+		private AlgeTilesRelativeLayout upperLeftGrid;
+		private AlgeTilesRelativeLayout upperRightGrid;
+		private AlgeTilesRelativeLayout lowerLeftGrid;
+		private AlgeTilesRelativeLayout lowerRightGrid;
 
 		private GridLayout upperMiddleGrid;
 		private GridLayout middleLeftGrid;
@@ -95,6 +95,11 @@ namespace AlgeTiles
 		private int heightInPx = 0;
 		private int widthInPx = 0;
 
+		private List<RectTile> upperRightRectTileList = new List<RectTile>();
+		private List<RectTile> upperLeftRectTileList = new List<RectTile>();
+		private List<RectTile> lowerRightRectTileList = new List<RectTile>();
+		private List<RectTile> lowerLeftRectTileList = new List<RectTile>();
+
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
@@ -122,10 +127,10 @@ namespace AlgeTiles
 			x_tile_rot.LongClick += tile_LongClick;
 			x2_tile_rot.LongClick += tile_LongClick;
 
-			upperLeftGrid = FindViewById<RelativeLayout>(Resource.Id.upperLeft);
-			upperRightGrid = FindViewById<RelativeLayout>(Resource.Id.upperRight);
-			lowerLeftGrid = FindViewById<RelativeLayout>(Resource.Id.lowerLeft);
-			lowerRightGrid = FindViewById<RelativeLayout>(Resource.Id.lowerRight);
+			upperLeftGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.upperLeft);
+			upperRightGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.upperRight);
+			lowerLeftGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.lowerLeft);
+			lowerRightGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.lowerRight);
 
 			upperMiddleGrid = FindViewById<GridLayout>(Resource.Id.upperMiddle);
 			middleLeftGrid = FindViewById<GridLayout>(Resource.Id.middleLeft);
@@ -301,6 +306,11 @@ namespace AlgeTiles
 
 		private void refreshScreen(string ActivityType, List<GridValue> gvList, List<ViewGroup> inGLList, List<ViewGroup> outGLList)
 		{
+			upperRightGrid.clearRects(heightInPx, widthInPx);
+			upperLeftGrid.clearRects(heightInPx, widthInPx);
+			lowerRightGrid.clearRects(heightInPx, widthInPx);
+			lowerLeftGrid.clearRects(heightInPx, widthInPx);
+
 			x_value_1.Enabled = false;
 			one_value_1.Enabled = false;
 			x_value_2.Enabled = false;
@@ -611,7 +621,7 @@ namespace AlgeTiles
 						currentButtonType = drag_data.GetItemAt(0).Text;
 					}
 
-					AlgeTilesImageView algeTilesIV = new AlgeTilesImageView(this);
+					AlgeTilesTextView algeTilesIV = new AlgeTilesTextView(this);
 					algeTilesIV.setTileType(currentButtonType);
 					Boolean wasImageDropped = false;
 
@@ -755,9 +765,9 @@ namespace AlgeTiles
 							for (int i = 0; i < container.ChildCount; ++i)
 							{
 								Log.Debug(TAG, "Container prev count: " + i);
-								if (container.GetChildAt(i) is AlgeTilesImageView)
+								if (container.GetChildAt(i) is AlgeTilesTextView)
 								{
-									possibleOverlappee = AlgorithmUtilities.getRectOfView((AlgeTilesImageView)container.GetChildAt(i));
+									possibleOverlappee = AlgorithmUtilities.getRectOfView((AlgeTilesTextView)container.GetChildAt(i));
 									if (possibleOverlappee.Contains(possibleOverlapper) ||
 										possibleOverlapper.Contains(possibleOverlappee) ||
 										possibleOverlappee == possibleOverlapper)
@@ -815,17 +825,17 @@ namespace AlgeTiles
 							checkWhichParentAndUpdate(v.Id, currentButtonType, Constants.ADD);
 
 							//Auto re-arrange of center tiles
-							List<AlgeTilesImageView> centerTileList = new List<AlgeTilesImageView>();
+							List<AlgeTilesTextView> centerTileList = new List<AlgeTilesTextView>();
 							Log.Debug(TAG, "Container count: " + container.ChildCount);
 							for (int i = 0; i < container.ChildCount; ++i)
 							{
-								AlgeTilesImageView a = (AlgeTilesImageView)container.GetChildAt(i);
+								AlgeTilesTextView a = (AlgeTilesTextView)container.GetChildAt(i);
 								centerTileList.Add(a);
 								Log.Debug(TAG, "Center count: " + i + ", " + a.getTileType());
 							}
 							container.RemoveAllViews();
 
-							List<AlgeTilesImageView> sortedList = centerTileList.OrderByDescending(o => o.getTileType()).ToList();
+							List<AlgeTilesTextView> sortedList = centerTileList.OrderByDescending(o => o.getTileType()).ToList();
 							for (int i = 0; i < sortedList.Count; ++i)
 							{
 								Log.Debug(TAG, "Tile order:" + sortedList[i].getTileType());
@@ -914,7 +924,7 @@ namespace AlgeTiles
 		//TODO: When top most layer textview increases in length, the edit text gets pushed
 		private void clonedImageView_Touch(object sender, View.LongClickEventArgs e)
 		{
-			var touchedImageView = (sender) as AlgeTilesImageView;
+			var touchedImageView = (sender) as AlgeTilesTextView;
 			ViewGroup vg = (ViewGroup)touchedImageView.Parent;
 			if (removeToggle.Checked)
 			{

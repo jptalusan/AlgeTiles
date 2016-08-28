@@ -48,5 +48,9 @@ namespace AlgeTiles
 		public const int DELAY = 1500;
 
 		public const double SNAP_GRID_INTERVAL = 9.0; //TODO: Move to constants
+
+		public const double X_LONG_SIDE = 3.0;
+		public const double ONE_SIDE = 9.0;
+		public const double Y_LONG_SIDE = 2.7;
 	}
 }
