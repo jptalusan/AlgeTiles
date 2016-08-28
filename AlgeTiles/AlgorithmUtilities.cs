@@ -112,6 +112,14 @@ namespace AlgeTiles
 						d = c >= 0 ? PickRandom(rnd, -9, 9 - (3 * c)) : PickRandom(rnd, -9 - (3 * c), 9);
 					}
 
+					int gcdOfFirst = GCD(a, b);
+					int gcdOfSecond = GCD(c, d);
+
+					a /= gcdOfFirst;
+					b /= gcdOfFirst;
+					c /= gcdOfSecond;
+					d /= gcdOfSecond;
+
 					vars.Add(a);
 					vars.Add(b);
 					vars.Add(c);

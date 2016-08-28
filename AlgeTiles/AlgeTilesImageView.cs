@@ -10,18 +10,20 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Util;
+using Android.Graphics;
 
 namespace AlgeTiles
 {
-	public class AlgeTilesImageView : ImageView
+	public class AlgeTilesImageView : TextView
 	{
 		private string tileType;
-		private int resID;
 		
 		public AlgeTilesImageView(Context context) :
             base(context)
         {
-
+			this.TextAlignment = TextAlignment.Center;
+			this.Gravity = GravityFlags.Center;
+			this.SetTextColor(Color.Black);
 		}
 		public AlgeTilesImageView(Context context, IAttributeSet attrs) :
             base(context, attrs)
@@ -33,17 +35,6 @@ namespace AlgeTiles
             base(context, attrs, defStyle)
         {
 
-		}
-
-		public void setImageResource(int resId)
-		{
-			this.resID = resId;
-			base.SetImageResource(resId);
-		}
-
-		public int getResourceId()
-		{
-			return resID;
 		}
 
 		public void setTileType(string tileType)

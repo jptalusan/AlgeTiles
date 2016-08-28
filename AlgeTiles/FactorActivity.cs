@@ -32,6 +32,7 @@ namespace AlgeTiles
 		private ToggleButton removeToggle;
 		private ToggleButton dragToggle;
 		private ToggleButton rotateToggle;
+		private ToggleButton muteToggle;
 
 		private ImageButton tile_1;
 		private ImageButton x_tile;
@@ -167,10 +168,12 @@ namespace AlgeTiles
 			removeToggle = (ToggleButton)FindViewById(Resource.Id.remove);
 			dragToggle = (ToggleButton)FindViewById(Resource.Id.drag);
 			rotateToggle = (ToggleButton)FindViewById(Resource.Id.rotate);
+			muteToggle = (ToggleButton)FindViewById(Resource.Id.mute);
 
 			removeToggle.Click += toggle_click;
 			dragToggle.Click += toggle_click;
 			rotateToggle.Click += toggle_click;
+			muteToggle.Click += toggle_click;
 
 			numberOfVariables = Intent.GetIntExtra(Constants.VARIABLE_COUNT, 0);
 
@@ -267,19 +270,33 @@ namespace AlgeTiles
 		private void button_click(object sender, EventArgs e)
 		{
 			var button = sender as Button;
-			switch (button.Text)
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			AlertDialog alertDialog = builder.Create();
+			alertDialog.SetMessage("Are you sure?");
+
+			alertDialog.SetButton("Yes", (s, ev) =>
 			{
-				case Constants.NEW_Q:
-					setupNewQuestion();
-					refreshScreen(Constants.FACTOR, gridValueList, innerGridLayoutList, outerGridLayoutList);
-					break;
-				case Constants.REFR:
-					refreshScreen(Constants.FACTOR, gridValueList, innerGridLayoutList, outerGridLayoutList);
-					break;
-				case Constants.CHK:
-					checkAnswers();
-					break;
-			}
+				switch (button.Text)
+				{
+					case Constants.NEW_Q:
+						setupNewQuestion();
+						refreshScreen(Constants.FACTOR, gridValueList, innerGridLayoutList, outerGridLayoutList);
+						break;
+					case Constants.REFR:
+						refreshScreen(Constants.FACTOR, gridValueList, innerGridLayoutList, outerGridLayoutList);
+						break;
+					case Constants.CHK:
+						checkAnswers();
+						break;
+				}
+			});
+
+			alertDialog.SetButton2("No", (s, ev) =>
+			{
+
+			});
+
+			alertDialog.Show();
 		}
 
 		private void refreshScreen(string ActivityType, List<GridValue> gvList, List<ViewGroup> inGLList, List<ViewGroup> outGLList)
@@ -374,7 +391,8 @@ namespace AlgeTiles
 				if (AlgorithmUtilities.isSecondAnswerCorrect(expandedVars, gvArr, numberOfVariables))
 				{
 					Toast.MakeText(Application.Context, "2:correct", ToastLength.Short).Show();
-					correct.Start();
+					if (!muteToggle.Checked)
+						correct.Start();
 					isFirstAnswerCorrect = true;
 
 					//Loop through inner and prevent deletions by removing: clonedImageView_Touch
@@ -432,7 +450,8 @@ namespace AlgeTiles
 					}
 					expandedVars = AlgorithmUtilities.expandingVars(vars);
 					Toast.MakeText(Application.Context, "1:correct", ToastLength.Short).Show();
-					correct.Start();
+					if (!muteToggle.Checked)
+						correct.Start();
 				}
 				else
 				{
@@ -467,7 +486,8 @@ namespace AlgeTiles
 				if (isThirdAnswerCorrect)
 				{
 					Toast.MakeText(Application.Context, "3:correct/end", ToastLength.Short).Show();
-					correct.Start();
+					if (!muteToggle.Checked)
+						correct.Start();
 					for (int i = 0; i < editTextList.Count; ++i)
 					{
 						editTextList[i].SetBackgroundResource(Resource.Drawable.ok);
@@ -484,7 +504,8 @@ namespace AlgeTiles
 
 		public async void incorrectPrompt(List<EditText> gvList)
 		{
-			incorrect.Start();
+			if (!muteToggle.Checked)
+				incorrect.Start();
 			for (int i = 0; i < gvList.Count; ++i)
 				gvList[i].SetBackgroundResource(Resource.Drawable.notok);
 			await Task.Delay(Constants.DELAY);
@@ -494,7 +515,8 @@ namespace AlgeTiles
 
 		public async void incorrectPrompt(List<ViewGroup> gvList)
 		{
-			incorrect.Start();
+			if (!muteToggle.Checked)
+				incorrect.Start();
 			for (int i = 0; i < gvList.Count; ++i)
 				gvList[i].SetBackgroundResource(Resource.Drawable.notok);
 			await Task.Delay(Constants.DELAY);
@@ -509,8 +531,6 @@ namespace AlgeTiles
 			foreach (int i in vars)
 				temp += i + ",";
 			Log.Debug(TAG, "factors (ax + b)(cx + d):" + temp);
-			Log.Debug(TAG, "GCF a,b: " + AlgorithmUtilities.GCD(vars[0], vars[1]));
-			Log.Debug(TAG, "GCF c,d: " + AlgorithmUtilities.GCD(vars[2], vars[3]));
 
 			expandedVars = AlgorithmUtilities.expandingVars(vars);
 			string temp2 = "";
@@ -619,8 +639,8 @@ namespace AlgeTiles
 							 v.Id == Resource.Id.lowerLeft ||
 							 v.Id == Resource.Id.lowerRight))
 					{
-						int resID = Resources.GetIdentifier(currentButtonType, "drawable", PackageName);
-						algeTilesIV.SetBackgroundResource(resID);
+						//int resID = Resources.GetIdentifier(currentButtonType, "drawable", PackageName);
+						//algeTilesIV.SetBackgroundResource(resID);
 						wasImageDropped = true;
 					}
 					//Handle auto rotate for x_tile (middle)
@@ -637,12 +657,12 @@ namespace AlgeTiles
 						if ((currentButtonType.Equals(Constants.X_TILE) && !rotateToggle.Checked) ||
 								(currentButtonType.Equals(Constants.X_TILE_ROT) && rotateToggle.Checked))
 						{
-							algeTilesIV.SetBackgroundResource(Resource.Drawable.x_tile_rot);
+							//algeTilesIV.SetBackgroundResource(Resource.Drawable.x_tile_rot);
 						}
 						else if (currentButtonType.Equals(Constants.ONE_TILE))
 						{
-							int resID = Resources.GetIdentifier(currentButtonType, "drawable", PackageName);
-							algeTilesIV.SetBackgroundResource(resID);
+							//int resID = Resources.GetIdentifier(currentButtonType, "drawable", PackageName);
+							//algeTilesIV.SetBackgroundResource(resID);
 						}
 						wasImageDropped = true;
 						isDroppedAtCenter = true;
@@ -657,12 +677,12 @@ namespace AlgeTiles
 						if ((currentButtonType.Equals(Constants.X_TILE_ROT) && rotateToggle.Checked) ||
 								(currentButtonType.Equals(Constants.X_TILE) && !rotateToggle.Checked))
 						{
-							algeTilesIV.SetBackgroundResource(Resource.Drawable.x_tile);
+							//algeTilesIV.SetBackgroundResource(Resource.Drawable.x_tile);
 						}
 						else if (currentButtonType.Equals(Constants.ONE_TILE))
 						{
-							int resID = Resources.GetIdentifier(currentButtonType, "drawable", PackageName);
-							algeTilesIV.SetBackgroundResource(resID);
+							//int resID = Resources.GetIdentifier(currentButtonType, "drawable", PackageName);
+							//algeTilesIV.SetBackgroundResource(resID);
 						}
 						wasImageDropped = true;
 						isDroppedAtCenter = true;
@@ -678,19 +698,27 @@ namespace AlgeTiles
 						{
 							case Constants.X2_TILE:
 							case Constants.X2_TILE_ROT:
+								algeTilesIV.SetBackgroundResource(Resource.Drawable.x);
+								algeTilesIV.Text = "x2";
 								heightFactor = 3;
 								widthFactor = 3;
 								break;
 							case Constants.X_TILE:
+								algeTilesIV.SetBackgroundResource(Resource.Drawable.x);
+								algeTilesIV.Text = "x";
 								heightFactor = 3;
 								widthFactor = 9;
 								break;
 							case Constants.X_TILE_ROT:
+								algeTilesIV.SetBackgroundResource(Resource.Drawable.x);
+								algeTilesIV.Text = "x";
 								heightFactor = 9;
 								widthFactor = 3;
 								break;
 							case Constants.ONE_TILE:
 							case Constants.ONE_TILE_ROT:
+								algeTilesIV.SetBackgroundResource(Resource.Drawable.one);
+								algeTilesIV.Text = "1";
 								heightFactor = 9;
 								widthFactor = 9;
 								break;
@@ -1076,7 +1104,6 @@ namespace AlgeTiles
 					if (Constants.ONE_TILE == tile || Constants.ONE_TILE_ROT == tile)
 						--midRightGV.oneVal;
 				}
-
 			}
 		}
 	}
