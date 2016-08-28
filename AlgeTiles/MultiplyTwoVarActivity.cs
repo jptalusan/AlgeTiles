@@ -419,7 +419,7 @@ namespace AlgeTiles
 						innerGridLayoutList[i].Drag -= GridLayout_Drag;
 						for (int j = 0; j < innerGridLayoutList[i].ChildCount; ++j)
 						{
-							var iv = innerGridLayoutList[i].GetChildAt(j) as ImageView;
+							var iv = innerGridLayoutList[i].GetChildAt(j) as View;
 							iv.LongClick -= clonedImageView_Touch;
 						}
 					}
@@ -668,7 +668,7 @@ namespace AlgeTiles
 						outerGridLayoutList[i].Drag -= GridLayout_Drag;
 						for (int j = 0; j < outerGridLayoutList[i].ChildCount; ++j)
 						{
-							var iv = outerGridLayoutList[i].GetChildAt(j) as ImageView;
+							var iv = outerGridLayoutList[i].GetChildAt(j) as AlgeTilesImageView;
 							iv.LongClick -= clonedImageView_Touch;
 						}
 					}
