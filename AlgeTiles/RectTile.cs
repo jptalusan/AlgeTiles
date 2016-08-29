@@ -16,7 +16,7 @@ namespace AlgeTiles
 	public class RectTile
 	{
 		private Rect r;
-		private string tileType;
+		private string _tileType;
 		private int height;
 		private int width;
 		private bool alreadyHasTile = false;
@@ -26,12 +26,12 @@ namespace AlgeTiles
 			this.r = r;
 			height = r.Top - r.Bottom;
 			width = r.Right - r.Left;
-			this.tileType = tileType;
+			this._tileType = tileType;
 		}
 
 		public string getTileType()
 		{
-			return tileType;
+			return _tileType;
 		}
 
 		public int getHeight()
@@ -68,7 +68,7 @@ namespace AlgeTiles
 
 		public bool isTileTypeSame(string tileType)
 		{
-			if (this.tileType.Contains(tileType) || tileType.Contains(this.tileType))
+			if (this._tileType.Contains(tileType) || tileType.Contains(this._tileType))
 				return true;
 			return false;
 		}

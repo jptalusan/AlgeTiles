@@ -886,6 +886,7 @@ namespace AlgeTiles
 					{
 						currentButtonType = drag_data.GetItemAt(0).Text;
 					}
+					Log.Debug(TAG, "Dropped: " + currentButtonType);
 
 					AlgeTilesTextView algeTilesIV = new AlgeTilesTextView(this);
 					Boolean wasImageDropped = false;
@@ -895,20 +896,21 @@ namespace AlgeTiles
 						 v.Id == Resource.Id.middleLeft ||
 						 v.Id == Resource.Id.middleRight ||
 						 v.Id == Resource.Id.lowerMiddle) &&
-						currentButtonType.Equals(Constants.X2_TILE) ||
-						currentButtonType.Equals(Constants.Y2_TILE) ||
-						currentButtonType.Equals(Constants.XY_TILE))
+						(currentButtonType.Contains(Constants.X2_TILE) ||
+						currentButtonType.Contains(Constants.Y2_TILE) ||
+						currentButtonType.Contains(Constants.XY_TILE)))
 					{
+						Log.Debug(TAG, "Goes here");
 						//Do nothing
 					}
-					else if (!isFirstAnswerCorrect &&
-							(v.Id == Resource.Id.upperLeft ||
-							 v.Id == Resource.Id.upperRight ||
-							 v.Id == Resource.Id.lowerLeft ||
-							 v.Id == Resource.Id.lowerRight))
-					{
-						//Do nothing
-					}
+					//else if (!isFirstAnswerCorrect &&
+					//		(v.Id == Resource.Id.upperLeft ||
+					//		 v.Id == Resource.Id.upperRight ||
+					//		 v.Id == Resource.Id.lowerLeft ||
+					//		 v.Id == Resource.Id.lowerRight))
+					//{
+					//	//Do nothing
+					//}
 					//Handle drops for second part of problem (expanded form)
 					else if (isFirstAnswerCorrect &&
 							(v.Id == Resource.Id.upperLeft ||
@@ -916,6 +918,7 @@ namespace AlgeTiles
 							 v.Id == Resource.Id.lowerLeft ||
 							 v.Id == Resource.Id.lowerRight))
 					{
+						Log.Debug(TAG, "Dropped at correct area");
 						wasImageDropped = true;
 					}
 					//Handle auto rotate for x_tile (middle)
@@ -1111,6 +1114,7 @@ namespace AlgeTiles
 			{
 				foreach (RectTile r in upperLeftRectTileList)
 				{
+					Log.Debug(TAG, "tiletype input: " + tileType + ", rect: " + r.getTileType());
 					if (r.isPointInsideRect(x, y) && r.isTileTypeSame(tileType) && !r.getTilePresence())
 					{
 						if (Constants.ADD == command)
@@ -1132,6 +1136,7 @@ namespace AlgeTiles
 			{
 				foreach (RectTile r in upperRightRectTileList)
 				{
+					Log.Debug(TAG, "tiletype input: " + tileType + ", rect: " + r.getTileType());
 					if (r.isPointInsideRect(x, y) && r.isTileTypeSame(tileType) && !r.getTilePresence())
 					{
 						if (Constants.ADD == command)
@@ -1153,6 +1158,7 @@ namespace AlgeTiles
 			{
 				foreach (RectTile r in lowerLeftRectTileList)
 				{
+					Log.Debug(TAG, "tiletype input: " + tileType + ", rect: " + r.getTileType());
 					if (r.isPointInsideRect(x, y) && r.isTileTypeSame(tileType) && !r.getTilePresence())
 					{
 						if (Constants.ADD == command)
@@ -1174,6 +1180,7 @@ namespace AlgeTiles
 			{
 				foreach (RectTile r in lowerRightRectTileList)
 				{
+					Log.Debug(TAG, "tiletype input: " + tileType + ", rect: " + r.getTileType());
 					if (r.isPointInsideRect(x, y) && r.isTileTypeSame(tileType) && !r.getTilePresence())
 					{
 						if (Constants.ADD == command)
