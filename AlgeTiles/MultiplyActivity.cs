@@ -99,6 +99,8 @@ namespace AlgeTiles
 		private List<RectTile> lowerRightRectTileList = new List<RectTile>();
 		private List<RectTile> lowerLeftRectTileList = new List<RectTile>();
 
+		private List<List<RectTile>> rectTileListList = new List<List<RectTile>>();
+
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
@@ -213,6 +215,7 @@ namespace AlgeTiles
 			gridValueList.Add(midLeftGV);
 			gridValueList.Add(midRightGV);
 
+			Log.Debug(TAG, heightInPx + "");
 			setupNewQuestion();
 
 			correct = MediaPlayer.Create(this, Resource.Raw.correct);
@@ -227,6 +230,11 @@ namespace AlgeTiles
 			editTextList.Add(oneET);
 
 			refreshScreen(Constants.MULTIPLY, gridValueList, innerGridLayoutList, outerGridLayoutList);
+
+			rectTileListList.Add(upperRightRectTileList);
+			rectTileListList.Add(upperLeftRectTileList);
+			rectTileListList.Add(lowerLeftRectTileList);
+			rectTileListList.Add(lowerRightRectTileList);
 		}
 
 		private void toggle_click(object sender, EventArgs e)
@@ -315,13 +323,12 @@ namespace AlgeTiles
 			lowerRightRectTileList.Clear();
 			lowerLeftRectTileList.Clear();
 
-			x2ET.Enabled = false;
-			xET.Enabled = false;
-			oneET.Enabled = false;
-
-			x2ET.Text = "";
-			xET.Text = "";
-			oneET.Text = "";
+			for (int i = 0; i < editTextList.Count; ++i)
+			{
+				editTextList[i].SetBackgroundResource(Resource.Drawable.shape);
+				editTextList[i].Enabled = false;
+				editTextList[i].Text = "";
+			}
 
 			isFirstAnswerCorrect = false;
 			isSecondAnswerCorrect = false;
@@ -689,16 +696,11 @@ namespace AlgeTiles
 					{
 						currentButtonType = drag_data.GetItemAt(0).Text;
 					}
-					//TODO: how to know which grid is which?
-					//Log.Debug(TAG, "DragAction.Started");
 					break;
 				case DragAction.Entered:
-					//Log.Debug(TAG, "DragAction.Entered");
 					v.SetBackgroundResource(Resource.Drawable.shape_droptarget);
 					break;
 				case DragAction.Exited:
-					//Log.Debug(TAG, "DragAction.Exited");
-					//upperRightGrid.clearRects(heightInPx, widthInPx);
 					currentOwner = (ViewGroup)view.Parent;
 					hasButtonBeenDroppedInCorrectzone = false;
 					v.SetBackgroundResource(Resource.Drawable.shape);
@@ -708,7 +710,6 @@ namespace AlgeTiles
 					y = e.Event.GetY(); //height
 					break;
 				case DragAction.Drop:
-					//Log.Debug(TAG, "DragAction.Drop");
 					if (null != drag_data)
 					{
 						currentButtonType = drag_data.GetItemAt(0).Text;
@@ -808,7 +809,7 @@ namespace AlgeTiles
 
 						if (!isDroppedAtCenter)
 						{
-							Rect r = checkIfUserDropsOnRect(v.Id, currentButtonType, x, y);
+							Rect r = checkIfUserDropsOnRect(v.Id, currentButtonType, x, y, Constants.ADD);
 							if (null != r)
 							{
 								RelativeLayout.LayoutParams par = new RelativeLayout.LayoutParams(
@@ -892,16 +893,25 @@ namespace AlgeTiles
 			}
 		}
 
-		private Rect checkIfUserDropsOnRect(int vId, string tileType, float x, float y)
+		private Rect checkIfUserDropsOnRect(int vId, string tileType, float x, float y, int command)
 		{
 			if (Resource.Id.upperLeft == vId)
 			{
-				foreach(RectTile r in upperLeftRectTileList)
+				foreach (RectTile r in upperLeftRectTileList)
 				{
 					if (r.isPointInsideRect(x, y) && r.isTileTypeSame(tileType) && !r.getTilePresence())
 					{
-						r.setTilePresence(true);
+						if (Constants.ADD == command)
+							r.setTilePresence(true);
 						return r.getRect();
+					}
+					else if (r.isPointInsideRect(x, y) && r.isTileTypeSame(tileType) && r.getTilePresence())
+					{
+						if (Constants.SUBTRACT == command)
+						{
+							r.setTilePresence(false);
+							return null;
+						}
 					}
 				}
 			}
@@ -912,8 +922,17 @@ namespace AlgeTiles
 				{
 					if (r.isPointInsideRect(x, y) && r.isTileTypeSame(tileType) && !r.getTilePresence())
 					{
-						r.setTilePresence(true);
+						if (Constants.ADD == command)
+							r.setTilePresence(true);
 						return r.getRect();
+					}
+					else if (r.isPointInsideRect(x, y) && r.isTileTypeSame(tileType) && r.getTilePresence())
+					{
+						if (Constants.SUBTRACT == command)
+						{
+							r.setTilePresence(false);
+							return null;
+						}
 					}
 				}
 			}
@@ -924,8 +943,17 @@ namespace AlgeTiles
 				{
 					if (r.isPointInsideRect(x, y) && r.isTileTypeSame(tileType) && !r.getTilePresence())
 					{
-						r.setTilePresence(true);
+						if (Constants.ADD == command)
+							r.setTilePresence(true);
 						return r.getRect();
+					}
+					else if (r.isPointInsideRect(x, y) && r.isTileTypeSame(tileType) && r.getTilePresence())
+					{
+						if (Constants.SUBTRACT == command)
+						{
+							r.setTilePresence(false);
+							return null;
+						}
 					}
 				}
 			}
@@ -936,8 +964,17 @@ namespace AlgeTiles
 				{
 					if (r.isPointInsideRect(x, y) && r.isTileTypeSame(tileType) && !r.getTilePresence())
 					{
-						r.setTilePresence(true);
+						if (Constants.ADD == command)
+							r.setTilePresence(true);
 						return r.getRect();
+					}
+					else if (r.isPointInsideRect(x, y) && r.isTileTypeSame(tileType) && r.getTilePresence())
+					{
+						if (Constants.SUBTRACT == command)
+						{
+							r.setTilePresence(false);
+							return null;
+						}
 					}
 				}
 			}
@@ -1139,6 +1176,11 @@ namespace AlgeTiles
 			if (removeToggle.Checked)
 			{
 				Log.Debug(TAG, "Switch: Remove");
+				checkIfUserDropsOnRect(vg.Id, 
+					touchedImageView.getTileType(),
+					touchedImageView.Left + 10,
+					touchedImageView.Top + 10,
+					Constants.SUBTRACT);
 				vg.RemoveView(touchedImageView);
 				touchedImageView.Visibility = ViewStates.Gone;
 				Vibrator vibrator = (Vibrator)GetSystemService(Context.VibratorService);

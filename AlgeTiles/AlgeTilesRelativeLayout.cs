@@ -21,6 +21,7 @@ namespace AlgeTiles
 	{
 		private Paint paint;
 		private bool bDrawRects = false;
+		private bool update = false;
 		private bool bClearRects = false;
 		private int height = 0;
 		private int width = 0;
@@ -29,7 +30,7 @@ namespace AlgeTiles
 		public AlgeTilesRelativeLayout(Context context) :
 			base(context)
 		{
-			paint = new Paint();
+			paint = new Paint();	
 		}
 
 		public AlgeTilesRelativeLayout(Context context, IAttributeSet attrs) :
@@ -50,6 +51,7 @@ namespace AlgeTiles
 				rList.Add(rectTile.getRect());
 
 			bDrawRects = true;
+			bClearRects = false;
 		}
 
 		public void clearRects(int height, int width)
@@ -59,6 +61,11 @@ namespace AlgeTiles
 			this.height = height;
 			this.width = width;
 			rList.Clear();
+		}
+
+		public void updatesomething(bool b)
+		{
+			update = b;
 		}
 
 		protected override void OnDraw(Canvas canvas)

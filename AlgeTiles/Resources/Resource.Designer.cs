@@ -31,6 +31,9 @@ namespace AlgeTiles
 		public partial class Attribute
 		{
 			
+			// aapt resource value: 0x7f010000
+			public const int tileType = 2130771968;
+			
 			static Attribute()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -390,6 +393,25 @@ namespace AlgeTiles
 			}
 			
 			private String()
+			{
+			}
+		}
+		
+		public partial class Styleable
+		{
+			
+			public static int[] AlgeTilesTextView = new int[] {
+					2130771968};
+			
+			// aapt resource value: 0
+			public const int AlgeTilesTextView_tileType = 0;
+			
+			static Styleable()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Styleable()
 			{
 			}
 		}

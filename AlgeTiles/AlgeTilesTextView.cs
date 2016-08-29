@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using Android.Util;
 using Android.Graphics;
+using Android.Content.Res;
 
 namespace AlgeTiles
 {
@@ -28,7 +29,11 @@ namespace AlgeTiles
 		public AlgeTilesTextView(Context context, IAttributeSet attrs) :
             base(context, attrs)
         {
+			TypedArray a = context.Theme.ObtainStyledAttributes(
+				attrs,
+				Resource.Styleable.AlgeTilesTextView, 0, 0);
 
+			tileType = a.GetString(Resource.Styleable.AlgeTilesTextView_tileType);
 		}
 
 		public AlgeTilesTextView(Context context, IAttributeSet attrs, int defStyle) :
