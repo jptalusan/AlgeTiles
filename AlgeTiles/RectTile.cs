@@ -68,7 +68,7 @@ namespace AlgeTiles
 
 		public bool isTileTypeSame(string tileType)
 		{
-			if (this._tileType.Contains(tileType) || tileType.Contains(this._tileType))
+			if (this._tileType.Equals(tileType) || tileType.Equals(this._tileType))
 				return true;
 			return false;
 		}

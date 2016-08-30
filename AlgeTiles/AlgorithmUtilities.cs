@@ -192,89 +192,79 @@ namespace AlgeTiles
 			Log.Debug(TAG, "Mult: GvArr: midUpGV, midLowGV, midLeftGV, midRightGV");
 			for (int i = 0; i < gvArr.Length; ++i)
 				Log.Debug(TAG, "GvArr:" + gvArr[i].ToString());
-			//For 1 variable
-			int a = 0;
-			int b = 0;
-			int c = 0;
-			int d = 0;
 
-			//Should expand/change when checking for outer grids
-			GridValue midUp = gvArr[0];
-			GridValue midLo = gvArr[1];
-			GridValue midLeft = gvArr[2];
-			GridValue midRight = gvArr[3];
 
 			if (Constants.ONE_VAR == numberOfVariables)
 			{
+				//For 1 variable
+				int a = 0;
+				int b = 0;
+				int c = 0;
+				int d = 0;
+
+				//Should expand/change when checking for outer grids
+				GridValue midUp = gvArr[0];
+				GridValue midLo = gvArr[1];
+				GridValue midLeft = gvArr[2];
+				GridValue midRight = gvArr[3];
+
 				a = vars[0];
 				b = vars[1];
 				c = vars[2];
 				d = vars[3];
-			}
 
-			if ((a == (midUp - midLo).xVal && b == (midUp - midLo).oneVal) &&
-				(c == (midRight - midLeft).xVal && d == (midRight - midLeft).oneVal))
-			{
-				return true;
-			}
-			else if ((a == (midRight - midLeft).xVal && b == (midRight - midLeft).oneVal) &&
-					 (c == (midUp - midLo).xVal && d == (midUp - midLo).oneVal))
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		//For 2 var
-		public static bool isFirstAnswerCorrect(List<int> vars, GridValue2Var[] gvArr)
-		{
-			Log.Debug(TAG, "isFirstAnswerCorrect");
-			foreach (int i in vars)
-			{
-				Log.Debug(TAG, i + "");
-			}
-
-			Log.Debug(TAG, "Mult: GvArr: midUpGV, midLowGV, midLeftGV, midRightGV");
-			for (int i = 0; i < gvArr.Length; ++i)
-				Log.Debug(TAG, "GvArr:" + gvArr[i].ToString());
-			//For 1 variable
-			int a = 0;
-			int b = 0;
-			int c = 0;
-			int d = 0;
-			int e = 0;
-			int f = 0;
-
-			//Should expand/change when checking for outer grids
-			GridValue2Var midUp = gvArr[0];
-			GridValue2Var midLo = gvArr[1];
-			GridValue2Var midLeft = gvArr[2];
-			GridValue2Var midRight = gvArr[3];
-
-			a = vars[0]; //x
-			b = vars[1]; //y
-			c = vars[2]; //one
-
-			d = vars[3]; //x
-			e = vars[4]; //y
-			f = vars[5]; //one
-
-			if ((a == (midUp - midLo).xVal && b == (midUp - midLo).yVal && c == (midUp - midLo).oneVal) &&
-				(d == (midRight - midLeft).xVal && e == (midRight - midLeft).yVal && f == (midRight - midLeft).oneVal))
-			{
-				return true;
-			}
-			else if ((a == (midRight - midLeft).xVal && b == (midRight - midLeft).yVal && c == (midRight - midLeft).oneVal) &&
-					 (d == (midUp - midLo).xVal && e == (midUp - midLo).yVal && f == (midUp - midLo).oneVal))
-			{
-				return true;
+				if ((a == (midUp - midLo).xVal && b == (midUp - midLo).oneVal) &&
+					(c == (midRight - midLeft).xVal && d == (midRight - midLeft).oneVal))
+				{
+					return true;
+				}
+				else if ((a == (midRight - midLeft).xVal && b == (midRight - midLeft).oneVal) &&
+						 (c == (midUp - midLo).xVal && d == (midUp - midLo).oneVal))
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
 			}
 			else
 			{
-				return false;
+				int a = 0;
+				int b = 0;
+				int c = 0;
+				int d = 0;
+				int e = 0;
+				int f = 0;
+
+				//Should expand/change when checking for outer grids
+				GridValue midUp = gvArr[0];
+				GridValue midLo = gvArr[1];
+				GridValue midLeft = gvArr[2];
+				GridValue midRight = gvArr[3];
+
+				a = vars[0]; //x
+				b = vars[1]; //y
+				c = vars[2]; //one
+
+				d = vars[3]; //x
+				e = vars[4]; //y
+				f = vars[5]; //one
+
+				if ((a == (midUp - midLo).xVal && b == (midUp - midLo).yVal && c == (midUp - midLo).oneVal) &&
+					(d == (midRight - midLeft).xVal && e == (midRight - midLeft).yVal && f == (midRight - midLeft).oneVal))
+				{
+					return true;
+				}
+				else if ((a == (midRight - midLeft).xVal && b == (midRight - midLeft).yVal && c == (midRight - midLeft).oneVal) &&
+						 (d == (midUp - midLo).xVal && e == (midUp - midLo).yVal && f == (midUp - midLo).oneVal))
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
 			}
 		}
 
@@ -288,73 +278,66 @@ namespace AlgeTiles
 			Log.Debug(TAG, "Mult: GvArr:  upperLeftGV, upperRightGV, lowerLeftGV, lowerRightGV ");
 			for (int i = 0; i < gvArr.Length; ++i)
 				Log.Debug(TAG, "GvArr:" + gvArr[i].ToString());
-			//For 1 variable
-			int a = 0;
-			int b = 0;
-			int c = 0;
-
-			//Should expand/change when checking for outer grids
-			GridValue upLeft = gvArr[0];
-			GridValue upRight = gvArr[1];
-			GridValue downLeft = gvArr[2];
-			GridValue downRight = gvArr[3];
-
-			a = vars[0];
-			b = vars[1];
-			c = vars[2];
-
-			if (a == (upRight + downLeft - (upLeft + downRight)).x2Val &&
-				b == (upRight + downLeft - (upLeft + downRight)).xVal &&
-				c == (upRight + downLeft - (upLeft + downRight)).oneVal)
-				return true;
-			else
+			if (Constants.ONE_VAR == numberOfVariables)
 			{
-				return false;
-			}
-		}
+				//For 1 variable
+				Log.Debug(TAG, "One var");
+				int a = 0;
+				int b = 0;
+				int c = 0;
 
-		//For 2 var
-		public static bool isSecondAnswerCorrect(List<int> vars, GridValue2Var[] gvArr, int numberOfVariables)
-		{
-			Log.Debug(TAG, "isSecondAnswerCorrect");
-			foreach (int i in vars)
+				//Should expand/change when checking for outer grids
+				GridValue upLeft = gvArr[0];
+				GridValue upRight = gvArr[1];
+				GridValue downLeft = gvArr[2];
+				GridValue downRight = gvArr[3];
+
+				a = vars[0];
+				b = vars[1];
+				c = vars[2];
+
+				if (a == (upRight + downLeft - (upLeft + downRight)).x2Val &&
+					b == (upRight + downLeft - (upLeft + downRight)).xVal &&
+					c == (upRight + downLeft - (upLeft + downRight)).oneVal)
+					return true;
+				else
+				{
+					return false;
+				}
+			} else
 			{
-				Log.Debug(TAG, i + "");
-			}
-			Log.Debug(TAG, "Mult: GvArr:  upperLeftGV, upperRightGV, lowerLeftGV, lowerRightGV ");
-			for (int i = 0; i < gvArr.Length; ++i)
-				Log.Debug(TAG, "GvArr:" + gvArr[i].ToString());
+				Log.Debug(TAG, "Two var");
+				int a = 0;
+				int b = 0;
+				int c = 0;
+				int d = 0;
+				int e = 0;
+				int f = 0;
 
-			int a = 0;
-			int b = 0;
-			int c = 0;
-			int d = 0;
-			int e = 0;
-			int f = 0;
+				//Should expand/change when checking for outer grids
+				GridValue upLeft = gvArr[0];
+				GridValue upRight = gvArr[1];
+				GridValue downLeft = gvArr[2];
+				GridValue downRight = gvArr[3];
 
-			//Should expand/change when checking for outer grids
-			GridValue2Var upLeft = gvArr[0];
-			GridValue2Var upRight = gvArr[1];
-			GridValue2Var downLeft = gvArr[2];
-			GridValue2Var downRight = gvArr[3];
+				a = vars[0]; //x2
+				b = vars[1]; //y2
+				c = vars[2]; //xy
+				d = vars[3]; //x
+				e = vars[4]; //y
+				f = vars[5]; //one
 
-			a = vars[0]; //x2
-			b = vars[1]; //y2
-			c = vars[2]; //xy
-			d = vars[3]; //x
-			e = vars[4]; //y
-			f = vars[5]; //one
-
-			if (a == (upRight + downLeft - (upLeft + downRight)).x2Val &&
-				b == (upRight + downLeft - (upLeft + downRight)).y2Val &&
-				c == (upRight + downLeft - (upLeft + downRight)).xyVal &&
-				d == (upRight + downLeft - (upLeft + downRight)).xVal &&
-				e == (upRight + downLeft - (upLeft + downRight)).yVal &&
-				f == (upRight + downLeft - (upLeft + downRight)).oneVal)
-				return true;
-			else
-			{
-				return false;
+				if (a == (upRight + downLeft - (upLeft + downRight)).x2Val &&
+					b == (upRight + downLeft - (upLeft + downRight)).y2Val &&
+					c == (upRight + downLeft - (upLeft + downRight)).xyVal &&
+					d == (upRight + downLeft - (upLeft + downRight)).xVal &&
+					e == (upRight + downLeft - (upLeft + downRight)).yVal &&
+					f == (upRight + downLeft - (upLeft + downRight)).oneVal)
+					return true;
+				else
+				{
+					return false;
+				}
 			}
 		}
 

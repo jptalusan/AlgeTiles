@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlgeTilesActivity.cs" />
     <Compile Include="AlgeTilesRelativeLayout.cs" />
     <Compile Include="AlgorithmUtilities.cs" />
     <Compile Include="AlgeTilesTextView.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="GridValue2Var.cs" />
     <Compile Include="HomeScreenActivity.cs" />
     <Compile Include="FactorActivity.cs" />
+    <Compile Include="Listeners.cs" />
     <Compile Include="MultiplyTwoVarActivity.cs" />
     <Compile Include="MultiplyActivity.cs" />
     <Compile Include="GridValue.cs" />

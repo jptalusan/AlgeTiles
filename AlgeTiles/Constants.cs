@@ -21,6 +21,7 @@ namespace AlgeTiles
 		public const string NEW_Q = "new Q";
 		public const string CHK = "chk";
 		public const string REFR = "refr";
+		public const string MUTE = "mute";
 
 		public const string DRAG = "drag";
 		public const string REMOVE = "remove";
@@ -41,6 +42,10 @@ namespace AlgeTiles
 		public const string X2_TILE_ROT = "x2_tile_rot";
 		public const string Y2_TILE_ROT = "y2_tile_rot";
 		public const string XY_TILE_ROT = "xy_tile_rot";
+
+		public const string BUTTON_TYPE = "BUTTON_TYPE";
+		public const string CLONED_BUTTON = "CLONE_BUTTON";
+		public const string ORIGINAL_BUTTON = "ORIGINAL_BUTTON";
 		//TODO:const  Add for y, xy, x2 and rotated versions (probably just for y and xy)
 
 		public const int SUBTRACT = 0;

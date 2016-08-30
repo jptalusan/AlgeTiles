@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace AlgeTiles
 {
-	class GridValue2Var
+	public class GridValue2Var
 	{
 		//Add type (x, x2, 1)
 		//Add group?

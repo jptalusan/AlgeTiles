@@ -14,6 +14,7 @@ using Android.Graphics;
 using Android.Media;
 using System.Threading.Tasks;
 using Java.Util.Concurrent.Atomic;
+using Android.Preferences;
 
 namespace AlgeTiles
 {
@@ -107,7 +108,9 @@ namespace AlgeTiles
 		List<string> midDown = new List<string>();
 
 		private List<List<RectTile>> rectTileListList = new List<List<RectTile>>();
-	
+
+		public ISharedPreferences prefs;
+
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
@@ -189,6 +192,9 @@ namespace AlgeTiles
 			dragToggle.Click += toggle_click;
 			rotateToggle.Click += toggle_click;
 			muteToggle.Click += toggle_click;
+
+			prefs = PreferenceManager.GetDefaultSharedPreferences(this);
+			muteToggle.Checked = prefs.GetBoolean(Constants.MUTE, false);
 
 			numberOfVariables = Intent.GetIntExtra(Constants.VARIABLE_COUNT, 0);
 
@@ -283,6 +289,13 @@ namespace AlgeTiles
 					}
 					removeToggle.Checked = removeToggle.Checked ? false : false;
 					dragToggle.Checked = dragToggle.Checked ? false : false;
+					break;
+				case Resource.Id.mute:
+					ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);
+					ISharedPreferencesEditor editor = prefs.Edit();
+					editor.PutBoolean(Constants.MUTE, muteToggle.Checked);
+					// editor.Commit();    // applies changes synchronously on older APIs
+					editor.Apply();        // applies changes asynchronously on newer APIs
 					break;
 			}
 		}
@@ -523,7 +536,12 @@ namespace AlgeTiles
 				answer[2] = int.TryParse(x_value_2.Text, out temp) ? temp : 0; ;
 				answer[3] = int.TryParse(one_value_2.Text, out temp) ? temp : 0;
 
-				if (Math.Abs(answer[0] + answer[1] + answer[2] + answer[3]) == 0)
+				Log.Debug(TAG, "answer:" + answer[0] + ", " + answer[1] + ", " + answer[2] + ", " + answer[3]);
+				Log.Debug(TAG, "answer:" + vars[0] + ", " + vars[1] + ", " + vars[2] + ", " + vars[3]);
+				if ((Math.Abs(answer[0]) +
+					Math.Abs(answer[1]) +
+					Math.Abs(answer[2]) +
+					Math.Abs(answer[3])) == 0)
 				{
 					isThirdAnswerCorrect = false;
 				}
