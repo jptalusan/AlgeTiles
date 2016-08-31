@@ -241,6 +241,38 @@ namespace AlgeTiles
 						}
 					}
 
+					int posY = 0;
+					ViewGroup posYVG = null;
+					if (upperRightGV.yVal != 0)
+					{
+						posY = upperRightGV.yVal;
+						posYVG = upperRightGrid;
+					}
+					else
+					{
+						if (lowerLeftGV.yVal != 0)
+						{
+							posY = lowerLeftGV.yVal;
+							posYVG = lowerLeftGrid;
+						}
+					}
+
+					int posXY = 0;
+					ViewGroup posXYVG = null;
+					if (upperRightGV.xyVal != 0)
+					{
+						posXY = upperRightGV.xyVal;
+						posXYVG = upperRightGrid;
+					}
+					else
+					{
+						if (lowerLeftGV.xyVal != 0)
+						{
+							posXY = lowerLeftGV.xyVal;
+							posXYVG = lowerLeftGrid;
+						}
+					}
+
 					int negX = 0;
 					ViewGroup negXVG = null;
 					if (upperLeftGV.xVal != 0)
@@ -254,6 +286,38 @@ namespace AlgeTiles
 						{
 							negX = lowerRightGV.xVal;
 							negXVG = lowerRightGrid;
+						}
+					}
+
+					int negY = 0;
+					ViewGroup negYVG = null;
+					if (upperLeftGV.yVal != 0)
+					{
+						negY = upperLeftGV.yVal;
+						negYVG = upperLeftGrid;
+					}
+					else
+					{
+						if (lowerRightGV.yVal != 0)
+						{
+							negY = lowerRightGV.yVal;
+							negYVG = lowerRightGrid;
+						}
+					}
+
+					int negXY = 0;
+					ViewGroup negXYVG = null;
+					if (upperLeftGV.xyVal != 0)
+					{
+						negXY = upperLeftGV.xyVal;
+						negXYVG = upperLeftGrid;
+					}
+					else
+					{
+						if (lowerRightGV.xyVal != 0)
+						{
+							negXY = lowerRightGV.xyVal;
+							negXYVG = lowerRightGrid;
 						}
 					}
 
@@ -288,6 +352,74 @@ namespace AlgeTiles
 						{
 							posXVG.RemoveView(tobeRemoved[j]);
 							negXVG.RemoveView(negTobeRemoved[j]);
+						}
+					}
+
+					if (posY != 0 && negY != 0)
+					{
+						Log.Debug(TAG, "Cancelling out: " + posY + ", " + negY);
+						int yToRemove = posY > negY ? negY : posY;
+						Log.Debug(TAG, "To remove: " + yToRemove);
+						List<AlgeTilesTextView> tobeRemoved = new List<AlgeTilesTextView>();
+						for (int j = 0; j < posYVG.ChildCount; ++j)
+						{
+							AlgeTilesTextView alIV = posYVG.GetChildAt(j) as AlgeTilesTextView;
+							if (alIV.getTileType().Equals(Constants.Y_TILE) ||
+								alIV.getTileType().Equals(Constants.Y_TILE_ROT))
+							{
+								tobeRemoved.Add(alIV);
+							}
+						}
+
+						List<AlgeTilesTextView> negTobeRemoved = new List<AlgeTilesTextView>();
+						for (int j = 0; j < negYVG.ChildCount; ++j)
+						{
+							AlgeTilesTextView negalIV = negYVG.GetChildAt(j) as AlgeTilesTextView;
+							if (negalIV.getTileType().Equals(Constants.Y_TILE) ||
+								negalIV.getTileType().Equals(Constants.Y_TILE_ROT))
+							{
+								negTobeRemoved.Add(negalIV);
+							}
+						}
+
+						for (int j = 0; j < yToRemove; ++j)
+						{
+							posYVG.RemoveView(tobeRemoved[j]);
+							negYVG.RemoveView(negTobeRemoved[j]);
+						}
+					}
+
+					if (posXY != 0 && negXY != 0)
+					{
+						Log.Debug(TAG, "Cancelling out: " + posXY + ", " + negXY);
+						int xyToRemove = posXY > negXY ? negXY : posXY;
+						Log.Debug(TAG, "To remove: " + xyToRemove);
+						List<AlgeTilesTextView> tobeRemoved = new List<AlgeTilesTextView>();
+						for (int j = 0; j < posXYVG.ChildCount; ++j)
+						{
+							AlgeTilesTextView alIV = posXYVG.GetChildAt(j) as AlgeTilesTextView;
+							if (alIV.getTileType().Equals(Constants.XY_TILE) ||
+								alIV.getTileType().Equals(Constants.XY_TILE_ROT))
+							{
+								tobeRemoved.Add(alIV);
+							}
+						}
+
+						List<AlgeTilesTextView> negTobeRemoved = new List<AlgeTilesTextView>();
+						for (int j = 0; j < negXYVG.ChildCount; ++j)
+						{
+							AlgeTilesTextView negalIV = negXYVG.GetChildAt(j) as AlgeTilesTextView;
+							if (negalIV.getTileType().Equals(Constants.XY_TILE) ||
+								negalIV.getTileType().Equals(Constants.XY_TILE_ROT))
+							{
+								negTobeRemoved.Add(negalIV);
+							}
+						}
+
+						for (int j = 0; j < xyToRemove; ++j)
+						{
+							posXYVG.RemoveView(tobeRemoved[j]);
+							negXYVG.RemoveView(negTobeRemoved[j]);
 						}
 					}
 					//End Cancelling out
