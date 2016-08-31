@@ -73,8 +73,22 @@ namespace AlgeTiles
 					upperLeftGrid.SetMinimumHeight(0);
 					upperLeftGrid.SetMinimumWidth(0);
 					isFirstTime = true;
+
+					AlgeTilesTextView test = (AlgeTilesTextView)FindViewById(Resource.Id.test);
+					LinearLayout.LayoutParams par = new LinearLayout.LayoutParams(
+						ViewGroup.LayoutParams.WrapContent,
+						ViewGroup.LayoutParams.WrapContent);
+					par.Height = heightInPx / 3;
+					par.Width = heightInPx / 3;
+					test.TextAlignment = TextAlignment.Center;
+					test.Gravity = GravityFlags.Center;
+					test.SetTextColor(Color.Black);
+					test.SetBackgroundResource(Resource.Drawable.x);
+					test.LayoutParameters = par;
+					Log.Debug(TAG, test.getTileType());
 				}
 			};
+
 
 			outerGridLayoutList.Add(upperLeftGrid);
 			outerGridLayoutList.Add(upperRightGrid);

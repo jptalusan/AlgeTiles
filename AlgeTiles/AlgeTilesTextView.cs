@@ -33,7 +33,7 @@ namespace AlgeTiles
 				attrs,
 				Resource.Styleable.AlgeTilesTextView, 0, 0);
 
-			tileType = a.GetString(Resource.Styleable.AlgeTilesTextView_tileType);
+			this.tileType = a.GetString(Resource.Styleable.AlgeTilesTextView_tileType);
 		}
 
 		public AlgeTilesTextView(Context context, IAttributeSet attrs, int defStyle) :

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  xmlns:whatever="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -178,7 +179,7 @@
                     android:layout_height="match_parent"
                     android:text="x + "
                     android:textColor="#000000"
-                    android:id="@+id/xTV" />
+                    android:id="@+id/xTV"/>
                 <EditText
                     android:hint="......."
                     android:layout_width="wrap_content"
@@ -291,7 +292,7 @@
                         android:src="@drawable/tile_1"
                         android:id="@+id/tile_1"
                         android:layout_weight="1"
-                        android:paddingBottom="5dp" />
+                        android:paddingBottom="5dp"/>
                     <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -313,7 +314,15 @@
                         android:background="@null"
                         android:layout_weight="4"
                         android:src="@drawable/x2_tile"
-                        android:id="@+id/x2_tile" />
+                        android:id="@+id/x2_tile"/>
+					<algetiles.AlgeTilesTextView
+						android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+						android:text="x2"
+						whatever:tileType="x2_tile"
+                        android:id="@+id/test"
+						android:visibility="gone"/>
                 </LinearLayout>
             </LinearLayout>
         <!-- Rotated -->
