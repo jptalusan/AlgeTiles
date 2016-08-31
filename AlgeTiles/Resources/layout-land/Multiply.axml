@@ -24,7 +24,7 @@
             android:weightSum="200"
             android:padding="0dp">
         <!-- Upper Left -->
-			<algetiles.AlgeTilesRelativeLayout
+            <algetiles.AlgeTilesRelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
@@ -94,7 +94,7 @@
             android:weightSum="200"
             android:padding="0dp">
         <!-- Lower Left -->
-			<algetiles.AlgeTilesRelativeLayout
+            <algetiles.AlgeTilesRelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
@@ -110,7 +110,7 @@
                 android:rowCount="8"
                 android:columnCount="1" />
         <!-- Lower Right -->
-			<algetiles.AlgeTilesRelativeLayout
+            <algetiles.AlgeTilesRelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
@@ -139,13 +139,14 @@
                 android:gravity="center" />
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:gravity="fill"
-                android:padding="0dp">
+                android:padding="0dp"
+				android:paddingRight="5dp">
                 <EditText
-                    android:hint="..."
+                    android:hint="......."
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="#ffffff"
@@ -154,7 +155,7 @@
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
-					android:gravity="center" />
+                    android:gravity="center" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -162,7 +163,7 @@
                     android:textColor="#000000"
                     android:id="@+id/x2TV" />
                 <EditText
-                    android:hint="..."
+                    android:hint="......."
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="#ffffff"
@@ -171,7 +172,7 @@
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
-					android:gravity="center" />
+                    android:gravity="center" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -179,7 +180,7 @@
                     android:textColor="#000000"
                     android:id="@+id/xTV" />
                 <EditText
-                    android:hint="..."
+                    android:hint="......."
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="#ffffff"
@@ -188,7 +189,7 @@
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
-					android:gravity="center" />
+                    android:gravity="center"/>
             </LinearLayout>
         <!-- First 0.5 (2) -->
             <LinearLayout
@@ -233,7 +234,7 @@
                     android:textOn="rotate"
                     android:textSize="12sp"
                     android:layout_weight="1" />
-				<ToggleButton
+                <ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/mute"
@@ -241,7 +242,7 @@
                     android:textOn="mute"
                     android:textSize="12sp"
                     android:layout_weight="1" />
-			</LinearLayout>
+            </LinearLayout>
         <!-- Second (1) -->
             <LinearLayout
                 android:orientation="horizontal"
@@ -267,30 +268,34 @@
         <!-- Third (4) Draggable Blocks Area -->
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="30"
                 android:weightSum="4"
-                android:gravity="fill"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:id="@+id/notRotatedButtonLayout"
+                android:padding="5dp"
                 android:visibility="visible">
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:weightSum="4">
+                    android:weightSum="4"
+					android:gravity="center">
                     <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
+                        android:background="@null"
                         android:src="@drawable/tile_1"
                         android:id="@+id/tile_1"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:paddingBottom="5dp" />
                     <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
+                        android:background="@null"
                         android:src="@drawable/x_tile"
                         android:id="@+id/x_tile"
                         android:layout_weight="3" />
@@ -300,11 +305,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:weightSum="4">
+                    android:weightSum="4"
+                    android:gravity="center">
                     <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
                         android:layout_weight="4"
                         android:src="@drawable/x2_tile"
                         android:id="@+id/x2_tile" />
@@ -314,10 +320,12 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="30"
                 android:weightSum="4"
-                android:gravity="fill"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="5dp"
                 android:id="@+id/rotatedButtonLayout"
                 android:visibility="gone">
                 <LinearLayout
@@ -325,18 +333,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:weightSum="4">
+                    android:weightSum="4"
+					android:gravity="center">
                     <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
+                        android:background="@null"
                         android:layout_weight="1"
                         android:src="@drawable/tile_1"
-                        android:id="@+id/tile_1_rot" />
+                        android:id="@+id/tile_1_rot"
+                        android:padding="5dp" />
                     <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
+                        android:background="@null"
                         android:layout_weight="3"
                         android:src="@drawable/x_tile_rot"
                         android:id="@+id/x_tile_rot" />
@@ -346,11 +356,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:weightSum="4">
+                    android:weightSum="4"
+                    android:gravity="center">
                     <ImageButton
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="fitXY"
+                        android:background="@null"
                         android:layout_weight="4"
                         android:src="@drawable/x2_tile"
                         android:id="@+id/x2_tile_rot" />

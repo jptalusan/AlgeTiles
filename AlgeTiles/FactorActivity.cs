@@ -15,6 +15,8 @@ using Android.Media;
 using System.Threading.Tasks;
 using Java.Util.Concurrent.Atomic;
 using Android.Preferences;
+using Android.Text;
+using Android.Text.Style;
 
 namespace AlgeTiles
 {
@@ -682,7 +684,6 @@ namespace AlgeTiles
 					}
 
 					AlgeTilesTextView algeTilesIV = new AlgeTilesTextView(this);
-					algeTilesIV.setTileType(currentButtonType);
 					Boolean wasImageDropped = false;
 
 					//Check if x_tile is rotated before fitting or rotate before dropping automatically
@@ -772,6 +773,14 @@ namespace AlgeTiles
 								heightFactor = 9;
 								widthFactor = 9;
 								break;
+						}
+
+						if (algeTilesIV.Text.Length > 1)
+						{
+							var cs = new SpannableStringBuilder(algeTilesIV.Text);
+							cs.SetSpan(new SuperscriptSpan(), 1, 2, SpanTypes.ExclusiveExclusive);
+							cs.SetSpan(new RelativeSizeSpan(0.75f), 1, 2, SpanTypes.ExclusiveExclusive);
+							algeTilesIV.TextFormatted = cs;
 						}
 
 						x = e.Event.GetX(); //width

@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using Android.Util;
 using Android.Graphics;
+using Android.Text;
 
 namespace AlgeTiles
 {

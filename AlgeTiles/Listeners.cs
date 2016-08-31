@@ -12,6 +12,8 @@ using Android.Widget;
 using Android.Util;
 using Android.Graphics;
 using Android.Preferences;
+using Android.Text;
+using Android.Text.Style;
 
 namespace AlgeTiles
 {
@@ -104,13 +106,9 @@ namespace AlgeTiles
 					if (a.activityType.Equals(Constants.MULTIPLY))
 					{
 						if (!a.isFirstAnswerCorrect &&
-							(v.Id == Resource.Id.upperMiddle ||
-							 v.Id == Resource.Id.middleLeft ||
-							 v.Id == Resource.Id.middleRight ||
-							 v.Id == Resource.Id.lowerMiddle) &&
-							(!a.currentButtonType.Equals(Constants.X2_TILE) ||
-							!a.currentButtonType.Equals(Constants.Y2_TILE) ||
-							!a.currentButtonType.Equals(Constants.XY_TILE)))
+							(a.currentButtonType.Equals(Constants.X_TILE) ||
+							a.currentButtonType.Equals(Constants.Y_TILE) ||
+							a.currentButtonType.Equals(Constants.ONE_TILE)))
 						{
 							if (v.Id == Resource.Id.middleLeft)
 								algeTilesIV.RotationY = 180;
@@ -120,24 +118,16 @@ namespace AlgeTiles
 							wasImageDropped = true;
 							isDroppedAtCenter = true;
 						}
-						else if (a.isFirstAnswerCorrect &&
-								(v.Id == Resource.Id.upperLeft ||
-								 v.Id == Resource.Id.upperRight ||
-								 v.Id == Resource.Id.lowerLeft ||
-								 v.Id == Resource.Id.lowerRight))
+						else if (a.isFirstAnswerCorrect)
 						{
 							wasImageDropped = true;
 						}
 					} else
 					{
 						if (a.isFirstAnswerCorrect &&
-							(v.Id == Resource.Id.upperMiddle ||
-							 v.Id == Resource.Id.middleLeft ||
-							 v.Id == Resource.Id.middleRight ||
-							 v.Id == Resource.Id.lowerMiddle) &&
-							(!a.currentButtonType.Equals(Constants.X2_TILE) ||
-							!a.currentButtonType.Equals(Constants.Y2_TILE) ||
-							!a.currentButtonType.Equals(Constants.XY_TILE)))
+							(a.currentButtonType.Equals(Constants.X_TILE) ||
+							a.currentButtonType.Equals(Constants.Y_TILE) ||
+							a.currentButtonType.Equals(Constants.ONE_TILE)))
 						{
 							if (v.Id == Resource.Id.middleLeft)
 								algeTilesIV.RotationY = 180;
@@ -146,11 +136,7 @@ namespace AlgeTiles
 							wasImageDropped = true;
 							isDroppedAtCenter = true;
 						}
-						else if (!a.isFirstAnswerCorrect &&
-								(v.Id == Resource.Id.upperLeft ||
-								 v.Id == Resource.Id.upperRight ||
-								 v.Id == Resource.Id.lowerLeft ||
-								 v.Id == Resource.Id.lowerRight))
+						else if (!a.isFirstAnswerCorrect)
 						{
 							wasImageDropped = true;
 						}
@@ -166,7 +152,18 @@ namespace AlgeTiles
 						double widthFactor = 0;
 						TileUtilities.TileFactor tF = TileUtilities.getTileFactors(a.currentButtonType);
 						algeTilesIV.SetBackgroundResource(tF.id);
-						algeTilesIV.Text = tF.text;
+
+						if (tF.text.Length > 1 && !tF.text.Equals("xy"))
+						{
+							var cs = new SpannableStringBuilder(tF.text);
+							cs.SetSpan(new SuperscriptSpan(), 1, 2, SpanTypes.ExclusiveExclusive);
+							cs.SetSpan(new RelativeSizeSpan(0.75f), 1, 2, SpanTypes.ExclusiveExclusive);
+							algeTilesIV.TextFormatted = cs;
+						} else
+						{
+							algeTilesIV.Text = tF.text;
+						}
+
 						heightFactor = tF.heightFactor;
 						widthFactor = tF.widthFactor;
 						x = e.Event.GetX();
