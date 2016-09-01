@@ -226,9 +226,9 @@
 				<ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/drag"
-                    android:textOff="drag"
-                    android:textOn="drag"
+                    android:id="@+id/mute"
+                    android:textOff="mute"
+                    android:textOn="mute"
                     android:textSize="12sp"
                     android:layout_weight="1" />
 				<ToggleButton
@@ -248,21 +248,22 @@
                 android:layout_weight="10"
                 android:weightSum="2"
                 android:gravity="fill"
-                android:padding="0dp">
+                android:padding="0dp"
+				android:visibility="gone">
+				<ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/drag"
+                    android:textOff="drag"
+                    android:textOn="drag"
+                    android:textSize="12sp"
+                    android:layout_weight="1" />
 				<ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/rotate"
                     android:textOff="rotate"
                     android:textOn="rotate"
-                    android:textSize="12sp"
-                    android:layout_weight="1" />
-				<ToggleButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/mute"
-                    android:textOff="mute"
-                    android:textOn="mute"
                     android:textSize="12sp"
                     android:layout_weight="1" />
 			</LinearLayout>

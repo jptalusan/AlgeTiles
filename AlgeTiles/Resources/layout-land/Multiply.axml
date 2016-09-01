@@ -193,7 +193,7 @@
                     android:gravity="center"/>
             </LinearLayout>
         <!-- First 0.5 (2) -->
-            <LinearLayout
+			<LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -201,41 +201,7 @@
                 android:weightSum="2"
                 android:gravity="fill"
                 android:padding="0dp">
-                <ToggleButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/drag"
-                    android:textOff="drag"
-                    android:textOn="drag"
-                    android:textSize="12sp"
-                    android:layout_weight="1" />
-                <ToggleButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/remove"
-                    android:textOff="remove"
-                    android:textOn="remove"
-                    android:textSize="12sp"
-                    android:layout_weight="1" />
-            </LinearLayout>
-        <!-- First 0.5 (2) -->
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="10"
-                android:weightSum="2"
-                android:gravity="fill"
-                android:padding="0dp">
-                <ToggleButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/rotate"
-                    android:textOff="rotate"
-                    android:textOn="rotate"
-                    android:textSize="12sp"
-                    android:layout_weight="1" />
-                <ToggleButton
+				<ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/mute"
@@ -243,8 +209,43 @@
                     android:textOn="mute"
                     android:textSize="12sp"
                     android:layout_weight="1" />
-            </LinearLayout>
-        <!-- Second (1) -->
+				<ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/remove"
+                    android:textOff="remove"
+                    android:textOn="remove"
+                    android:textSize="12sp"
+                    android:layout_weight="1" />
+			</LinearLayout>
+			<!-- First 0.5 (2) -->
+			<LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:weightSum="2"
+                android:gravity="fill"
+                android:padding="0dp"
+				android:visibility="gone">
+				<ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/drag"
+                    android:textOff="drag"
+                    android:textOn="drag"
+                    android:textSize="12sp"
+                    android:layout_weight="1" />
+				<ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rotate"
+                    android:textOff="rotate"
+                    android:textOn="rotate"
+                    android:textSize="12sp"
+                    android:layout_weight="1" />
+			</LinearLayout>
+			<!-- Second (1) -->
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
