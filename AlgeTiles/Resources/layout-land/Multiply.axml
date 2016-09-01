@@ -201,6 +201,41 @@
                 android:weightSum="2"
                 android:gravity="fill"
                 android:padding="0dp">
+				<!-- Tutorial button -->
+				<Button
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Tutorial"
+					android:id="@+id/tutorial"
+					android:layout_weight="2" />
+				<ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/drag"
+                    android:textOff="drag"
+                    android:textOn="drag"
+                    android:textSize="12sp"
+                    android:layout_weight="1"
+					android:visibility="gone" />
+				<ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rotate"
+                    android:textOff="rotate"
+                    android:textOn="rotate"
+                    android:textSize="12sp"
+                    android:layout_weight="1"
+					android:visibility="gone" />
+			</LinearLayout>
+			<!-- First 0.5 (2) -->
+			<LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:weightSum="2"
+                android:gravity="fill"
+                android:padding="0dp">
 				<ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -215,33 +250,6 @@
                     android:id="@+id/remove"
                     android:textOff="remove"
                     android:textOn="remove"
-                    android:textSize="12sp"
-                    android:layout_weight="1" />
-			</LinearLayout>
-			<!-- First 0.5 (2) -->
-			<LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="10"
-                android:weightSum="2"
-                android:gravity="fill"
-                android:padding="0dp"
-				android:visibility="gone">
-				<ToggleButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/drag"
-                    android:textOff="drag"
-                    android:textOn="drag"
-                    android:textSize="12sp"
-                    android:layout_weight="1" />
-				<ToggleButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/rotate"
-                    android:textOff="rotate"
-                    android:textOn="rotate"
                     android:textSize="12sp"
                     android:layout_weight="1" />
 			</LinearLayout>
@@ -277,7 +285,8 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:id="@+id/notRotatedButtonLayout"
-                android:padding="5dp"
+                android:paddingTop="10dp"
+				android:paddingLeft="10dp"
                 android:visibility="visible">
                 <LinearLayout
                     android:orientation="vertical"
@@ -286,19 +295,21 @@
                     android:layout_weight="1"
                     android:weightSum="4"
 					android:gravity="center">
-                    <ImageButton
+                    <algetiles.AlgeTilesTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:src="@drawable/tile_1"
+						android:text="1"
+                        whatever:tileType="tile_1"
                         android:id="@+id/tile_1"
-                        android:layout_weight="1"
-                        android:paddingBottom="5dp"/>
-                    <ImageButton
+                        android:layout_weight="1"/>
+					<Space
+						android:layout_width="15dp"
+						android:layout_height="15dp"/>
+                    <algetiles.AlgeTilesTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:src="@drawable/x_tile"
+						android:text="x"
+                        whatever:tileType="x_tile"
                         android:id="@+id/x_tile"
                         android:layout_weight="3" />
                 </LinearLayout>
@@ -309,72 +320,12 @@
                     android:layout_weight="3"
                     android:weightSum="4"
                     android:gravity="center">
-                    <ImageButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:layout_weight="4"
-                        android:src="@drawable/x2_tile"
-                        android:id="@+id/x2_tile"/>
 					<algetiles.AlgeTilesTextView
 						android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@null"
 						android:text="x2"
 						whatever:tileType="x2_tile"
-                        android:id="@+id/test"
-						android:visibility="gone"/>
-                </LinearLayout>
-            </LinearLayout>
-        <!-- Rotated -->
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="30"
-                android:weightSum="4"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="5dp"
-                android:id="@+id/rotatedButtonLayout"
-                android:visibility="gone">
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:weightSum="4"
-					android:gravity="center">
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:layout_weight="1"
-                        android:src="@drawable/tile_1"
-                        android:id="@+id/tile_1_rot"
-                        android:padding="5dp" />
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:layout_weight="3"
-                        android:src="@drawable/x_tile_rot"
-                        android:id="@+id/x_tile_rot" />
-                </LinearLayout>
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:weightSum="4"
-                    android:gravity="center">
-                    <ImageButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:layout_weight="4"
-                        android:src="@drawable/x2_tile"
-                        android:id="@+id/x2_tile_rot" />
+                        android:id="@+id/x2_tile"/>
                 </LinearLayout>
             </LinearLayout>
         <!-- Fourth (1) -->

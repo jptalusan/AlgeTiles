@@ -34,6 +34,10 @@ namespace AlgeTiles
 				Resource.Styleable.AlgeTilesTextView, 0, 0);
 
 			this.tileType = a.GetString(Resource.Styleable.AlgeTilesTextView_tileType);
+			this.TextAlignment = TextAlignment.Center;
+			this.Gravity = GravityFlags.Center;
+			this.SetTextColor(Color.Black);
+			a.Recycle();
 		}
 
 		public AlgeTilesTextView(Context context, IAttributeSet attrs, int defStyle) :

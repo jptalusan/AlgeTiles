@@ -14,6 +14,8 @@ using Android.Graphics;
 using Android.Media;
 using System.Threading.Tasks;
 using Android.Preferences;
+using Android.Text;
+using Android.Text.Style;
 
 namespace AlgeTiles
 {
@@ -39,17 +41,12 @@ namespace AlgeTiles
 
 			result = (TextView)FindViewById(Resource.Id.result);
 
-			tile_1 = (ImageButton)FindViewById(Resource.Id.tile_1);
-			x_tile = (ImageButton)FindViewById(Resource.Id.x_tile);
-			y_tile = (ImageButton)FindViewById(Resource.Id.y_tile);
-			xy_tile = (ImageButton)FindViewById(Resource.Id.xy_tile);
-			x2_tile = (ImageButton)FindViewById(Resource.Id.x2_tile);
-			y2_tile = (ImageButton)FindViewById(Resource.Id.y2_tile);
-
-			tile_1_rot = (ImageButton)FindViewById(Resource.Id.tile_1_rot);
-			x_tile_rot = (ImageButton)FindViewById(Resource.Id.x_tile_rot);
-			y_tile_rot = (ImageButton)FindViewById(Resource.Id.y_tile_rot);
-			xy_tile_rot = (ImageButton)FindViewById(Resource.Id.xy_tile_rot);
+			tile_1 = (AlgeTilesTextView)FindViewById(Resource.Id.tile_1);
+			x_tile = (AlgeTilesTextView)FindViewById(Resource.Id.x_tile);
+			y_tile = (AlgeTilesTextView)FindViewById(Resource.Id.y_tile);
+			xy_tile = (AlgeTilesTextView)FindViewById(Resource.Id.xy_tile);
+			x2_tile = (AlgeTilesTextView)FindViewById(Resource.Id.x2_tile);
+			y2_tile = (AlgeTilesTextView)FindViewById(Resource.Id.y2_tile);
 
 			tile_1.LongClick += listeners.tile_LongClick;
 			x_tile.LongClick += listeners.tile_LongClick;
@@ -57,11 +54,6 @@ namespace AlgeTiles
 			x2_tile.LongClick += listeners.tile_LongClick;
 			y2_tile.LongClick += listeners.tile_LongClick;
 			xy_tile.LongClick += listeners.tile_LongClick;
-
-			tile_1_rot.LongClick += listeners.tile_LongClick;
-			x_tile_rot.LongClick += listeners.tile_LongClick;
-			y_tile_rot.LongClick += listeners.tile_LongClick;
-			xy_tile_rot.LongClick += listeners.tile_LongClick;
 
 			upperLeftGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.upperLeft);
 			upperRightGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.upperRight);
@@ -83,6 +75,84 @@ namespace AlgeTiles
 					upperLeftGrid.SetMinimumHeight(0);
 					upperLeftGrid.SetMinimumWidth(0);
 					isFirstTime = true;
+
+					LinearLayout.LayoutParams par_1 = (LinearLayout.LayoutParams)tile_1.LayoutParameters;
+					TileUtilities.TileFactor tF = TileUtilities.getTileFactors(tile_1.getTileType());
+					par_1.Height = heightInPx / 7;
+					par_1.Width = heightInPx / 7;
+					tile_1.SetBackgroundResource(tF.id);
+					tile_1.Text = tF.text;
+					tile_1.LayoutParameters = par_1;
+
+					LinearLayout.LayoutParams par_x = (LinearLayout.LayoutParams)x_tile.LayoutParameters;
+					tF = TileUtilities.getTileFactors(x_tile.getTileType());
+					par_x.Height = (int)(heightInPx / tF.heightFactor);
+					par_x.Width = heightInPx / 7;
+					x_tile.SetBackgroundResource(tF.id);
+					x_tile.Text = tF.text;
+					x_tile.LayoutParameters = par_x;
+
+					LinearLayout.LayoutParams par_y = (LinearLayout.LayoutParams)y_tile.LayoutParameters;
+					tF = TileUtilities.getTileFactors(y_tile.getTileType());
+					par_y.Height = (int)(heightInPx / tF.heightFactor);
+					par_y.Width = heightInPx / 7;
+					y_tile.SetBackgroundResource(tF.id);
+					y_tile.Text = tF.text;
+					y_tile.LayoutParameters = par_y;
+
+					LinearLayout.LayoutParams par_x2 = (LinearLayout.LayoutParams)x2_tile.LayoutParameters;
+					tF = TileUtilities.getTileFactors(x2_tile.getTileType());
+					par_x2.Height = (int)(heightInPx / tF.heightFactor);
+					par_x2.Width = (int)(heightInPx / tF.widthFactor);
+					x2_tile.SetBackgroundResource(tF.id);
+					if (tF.text.Length > 1 && !tF.text.Equals("xy"))
+					{
+						var cs = new SpannableStringBuilder(tF.text);
+						cs.SetSpan(new SuperscriptSpan(), 1, 2, SpanTypes.ExclusiveExclusive);
+						cs.SetSpan(new RelativeSizeSpan(0.75f), 1, 2, SpanTypes.ExclusiveExclusive);
+						x2_tile.TextFormatted = cs;
+					}
+					else
+					{
+						x2_tile.Text = tF.text;
+					}
+					x2_tile.LayoutParameters = par_x2;
+
+					LinearLayout.LayoutParams par_y2 = (LinearLayout.LayoutParams)y2_tile.LayoutParameters;
+					tF = TileUtilities.getTileFactors(y2_tile.getTileType());
+					par_y2.Height = (int)(heightInPx / tF.heightFactor);
+					par_y2.Width = (int)(heightInPx / tF.widthFactor);
+					y2_tile.SetBackgroundResource(tF.id);
+					if (tF.text.Length > 1 && !tF.text.Equals("xy"))
+					{
+						var cs = new SpannableStringBuilder(tF.text);
+						cs.SetSpan(new SuperscriptSpan(), 1, 2, SpanTypes.ExclusiveExclusive);
+						cs.SetSpan(new RelativeSizeSpan(0.75f), 1, 2, SpanTypes.ExclusiveExclusive);
+						y2_tile.TextFormatted = cs;
+					}
+					else
+					{
+						y2_tile.Text = tF.text;
+					}
+					y2_tile.LayoutParameters = par_y2;
+
+					LinearLayout.LayoutParams par_xy = (LinearLayout.LayoutParams)xy_tile.LayoutParameters;
+					tF = TileUtilities.getTileFactors(xy_tile.getTileType());
+					par_xy.Height = (int)(heightInPx / tF.heightFactor);
+					par_xy.Width = (int)(heightInPx / tF.widthFactor);
+					xy_tile.SetBackgroundResource(tF.id);
+					if (tF.text.Length > 1 && !tF.text.Equals("xy"))
+					{
+						var cs = new SpannableStringBuilder(tF.text);
+						cs.SetSpan(new SuperscriptSpan(), 1, 2, SpanTypes.ExclusiveExclusive);
+						cs.SetSpan(new RelativeSizeSpan(0.75f), 1, 2, SpanTypes.ExclusiveExclusive);
+						xy_tile.TextFormatted = cs;
+					}
+					else
+					{
+						xy_tile.Text = tF.text;
+					}
+					xy_tile.LayoutParameters = par_xy;
 				}
 			};
 
@@ -118,6 +188,9 @@ namespace AlgeTiles
 			dragToggle.Click += listeners.toggle_click;
 			rotateToggle.Click += listeners.toggle_click;
 			muteToggle.Click += listeners.toggle_click;
+
+			tutorialButton = FindViewById<Button>(Resource.Id.tutorial);
+			tutorialButton.Click += listeners.toggle_click;
 
 			prefs = PreferenceManager.GetDefaultSharedPreferences(this);
 			muteToggle.Checked = prefs.GetBoolean(Constants.MUTE, false);
@@ -177,6 +250,22 @@ namespace AlgeTiles
 			rectTileListList.Add(upperLeftRectTileList);
 			rectTileListList.Add(lowerLeftRectTileList);
 			rectTileListList.Add(lowerRightRectTileList);
+
+			settingsDialog = new Dialog(this);
+			settingsDialog.Window.RequestFeature(WindowFeatures.NoTitle);
+		}
+
+		[Java.Interop.Export("dismissListener")]
+		public void dismissListener(View v)
+		{
+			LayoutInflater factory = (LayoutInflater)GetSystemService(Context.LayoutInflaterService);
+			View view = factory.Inflate(Resource.Layout.tutorial_page, null);
+			ImageView user = (ImageView)view.FindViewById<ImageView>(Resource.Id.image);
+			user.SetImageDrawable(Resources.GetDrawable(Resource.Drawable.y_tile, ApplicationContext.Theme));
+			settingsDialog.SetContentView(factory.Inflate(Resource.Layout.tutorial_page, null));
+			settingsDialog.Show();
+			Log.Debug(TAG, "change image ");
+			//settingsDialog.Cancel();
 		}
 
 		private void button_click(object sender, EventArgs e)

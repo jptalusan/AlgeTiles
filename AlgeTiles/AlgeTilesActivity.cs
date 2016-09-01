@@ -25,23 +25,19 @@ namespace AlgeTiles
 		public string currentButtonType = "";
 		public ViewGroup currentOwner;
 
+		public Button tutorialButton;
+		
 		public ToggleButton removeToggle;
 		public ToggleButton dragToggle;
 		public ToggleButton rotateToggle;
 		public ToggleButton muteToggle;
 
-		public ImageButton tile_1;
-		public ImageButton x_tile;
-		public ImageButton y_tile;
-		public ImageButton x2_tile;
-		public ImageButton y2_tile;
-		public ImageButton xy_tile;
-
-		public ImageButton tile_1_rot;
-		public ImageButton x_tile_rot;
-		public ImageButton x2_tile_rot;
-		public ImageButton y_tile_rot;
-		public ImageButton xy_tile_rot;
+		public AlgeTilesTextView tile_1;
+		public AlgeTilesTextView x_tile;
+		public AlgeTilesTextView y_tile;
+		public AlgeTilesTextView x2_tile;
+		public AlgeTilesTextView y2_tile;
+		public AlgeTilesTextView xy_tile;
 
 		public Button newQuestionButton;
 		public Button refreshButton;
@@ -111,6 +107,7 @@ namespace AlgeTiles
 		public ISharedPreferences prefs;
 		public string UserName { get; set; }
 		internal Context PackageContext { get; set; }
+		public Dialog settingsDialog;
 
 		protected override void OnCreate(Bundle bundle)
 		{

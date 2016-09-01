@@ -33,18 +33,15 @@ namespace AlgeTiles
 		private string currentButtonType = "";
 		private ViewGroup currentOwner;
 
+		private Button tutorialButton;
 		private ToggleButton removeToggle;
 		private ToggleButton dragToggle;
 		private ToggleButton rotateToggle;
 		private ToggleButton muteToggle;
 
-		private ImageButton tile_1;
-		private ImageButton x_tile;
-		private ImageButton x2_tile;
-
-		private ImageButton tile_1_rot;
-		private ImageButton x_tile_rot;
-		private ImageButton x2_tile_rot;
+		private AlgeTilesTextView tile_1;
+		private AlgeTilesTextView x_tile;
+		private AlgeTilesTextView x2_tile;
 
 		private Button newQuestionButton;
 		private Button refreshButton;
@@ -124,21 +121,13 @@ namespace AlgeTiles
 			// Create your application here
 			result = (TextView)FindViewById(Resource.Id.result);
 
-			tile_1 = (ImageButton)FindViewById(Resource.Id.tile_1);
-			x_tile = (ImageButton)FindViewById(Resource.Id.x_tile);
-			x2_tile = (ImageButton)FindViewById(Resource.Id.x2_tile);
-
-			tile_1_rot = (ImageButton)FindViewById(Resource.Id.tile_1_rot);
-			x_tile_rot = (ImageButton)FindViewById(Resource.Id.x_tile_rot);
-			x2_tile_rot = (ImageButton)FindViewById(Resource.Id.x2_tile_rot);
+			tile_1 = (AlgeTilesTextView)FindViewById(Resource.Id.tile_1);
+			x_tile = (AlgeTilesTextView)FindViewById(Resource.Id.x_tile);
+			x2_tile = (AlgeTilesTextView)FindViewById(Resource.Id.x2_tile);
 
 			tile_1.LongClick += tile_LongClick;
 			x_tile.LongClick += tile_LongClick;
 			x2_tile.LongClick += tile_LongClick;
-
-			tile_1_rot.LongClick += tile_LongClick;
-			x_tile_rot.LongClick += tile_LongClick;
-			x2_tile_rot.LongClick += tile_LongClick;
 
 			upperLeftGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.upperLeft);
 			upperRightGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.upperRight);
@@ -162,6 +151,43 @@ namespace AlgeTiles
 					setupNewQuestion();
 					refreshScreen(Constants.FACTOR, gridValueList, innerGridLayoutList, outerGridLayoutList);
 					isFirstTime = true;
+
+					LinearLayout.LayoutParams par_1 = (LinearLayout.LayoutParams)tile_1.LayoutParameters;
+					TileUtilities.TileFactor tF = TileUtilities.getTileFactors(tile_1.getTileType());
+					par_1.Height = heightInPx / 7;
+					par_1.Width = heightInPx / 7;
+					tile_1.SetBackgroundResource(tF.id);
+					tile_1.Text = tF.text;
+					tile_1.LayoutParameters = par_1;
+					Log.Debug(TAG, tile_1.getTileType());
+
+					LinearLayout.LayoutParams par_x = (LinearLayout.LayoutParams)x_tile.LayoutParameters;
+					tF = TileUtilities.getTileFactors(x_tile.getTileType());
+					par_x.Height = (int)(heightInPx / tF.heightFactor);
+					par_x.Width = heightInPx / 7;
+					x_tile.SetBackgroundResource(tF.id);
+					x_tile.Text = tF.text;
+					x_tile.LayoutParameters = par_x;
+					Log.Debug(TAG, x_tile.getTileType());
+
+					LinearLayout.LayoutParams par_x2 = (LinearLayout.LayoutParams)x2_tile.LayoutParameters;
+					tF = TileUtilities.getTileFactors(x2_tile.getTileType());
+					par_x2.Height = (int)(heightInPx / tF.heightFactor);
+					par_x2.Width = (int)(heightInPx / tF.widthFactor);
+					x2_tile.SetBackgroundResource(tF.id);
+					if (tF.text.Length > 1 && !tF.text.Equals("xy"))
+					{
+						var cs = new SpannableStringBuilder(tF.text);
+						cs.SetSpan(new SuperscriptSpan(), 1, 2, SpanTypes.ExclusiveExclusive);
+						cs.SetSpan(new RelativeSizeSpan(0.75f), 1, 2, SpanTypes.ExclusiveExclusive);
+						x2_tile.TextFormatted = cs;
+					}
+					else
+					{
+						x2_tile.Text = tF.text;
+					}
+					x2_tile.LayoutParameters = par_x2;
+					Log.Debug(TAG, x2_tile.getTileType());
 				}
 			};
 
@@ -194,6 +220,9 @@ namespace AlgeTiles
 			dragToggle.Click += toggle_click;
 			rotateToggle.Click += toggle_click;
 			muteToggle.Click += toggle_click;
+
+			tutorialButton = FindViewById<Button>(Resource.Id.tutorial);
+			tutorialButton.Click += toggle_click;
 
 			prefs = PreferenceManager.GetDefaultSharedPreferences(this);
 			muteToggle.Checked = prefs.GetBoolean(Constants.MUTE, false);
@@ -255,7 +284,7 @@ namespace AlgeTiles
 
 		private void toggle_click(object sender, EventArgs e)
 		{
-			ToggleButton clicked_toggle = (sender) as ToggleButton;
+			View clicked_toggle = (sender) as View;
 			int buttonText = clicked_toggle.Id;
 			switch (buttonText)
 			{
@@ -298,6 +327,11 @@ namespace AlgeTiles
 					editor.PutBoolean(Constants.MUTE, muteToggle.Checked);
 					// editor.Commit();    // applies changes synchronously on older APIs
 					editor.Apply();        // applies changes asynchronously on newer APIs
+					break;
+				case Resource.Id.tutorial:
+					//https://developer.android.com/training/animation/screen-slide.html
+					//https://www.bignerdranch.com/blog/viewpager-without-fragments/
+					Toast.MakeText(this, "Tutorial", ToastLength.Short).Show();
 					break;
 			}
 		}
@@ -1175,7 +1209,7 @@ namespace AlgeTiles
 
 		private void tile_LongClick(object sender, View.LongClickEventArgs e)
 		{
-			var imageViewTouch = (sender) as ImageButton;
+			var imageViewTouch = (sender) as AlgeTilesTextView;
 			ClipData data = ClipData.NewPlainText(BUTTON_TYPE, ORIGINAL_BUTTON);
 			switch (imageViewTouch.Id)
 			{

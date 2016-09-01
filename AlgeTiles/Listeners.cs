@@ -66,7 +66,7 @@ namespace AlgeTiles
 		{
 			var v = (ViewGroup)sender;
 			View view = (View)e.Event.LocalState;
-			var button_type = a.result.Text;
+			//can just get currentButtonType from view.getTileType()
 			var drag_data = e.Event.ClipData;
 			bool isDroppedAtCenter = false;
 			float x = 0.0f;
@@ -264,7 +264,7 @@ namespace AlgeTiles
 
 		public void tile_LongClick(object sender, View.LongClickEventArgs e)
 		{
-			var imageViewTouch = (sender) as ImageButton;
+			var imageViewTouch = (sender) as AlgeTilesTextView;
 			ClipData data = ClipData.NewPlainText(Constants.BUTTON_TYPE, Constants.ORIGINAL_BUTTON);
 			switch (imageViewTouch.Id)
 			{
@@ -306,7 +306,7 @@ namespace AlgeTiles
 
 		public void toggle_click(object sender, EventArgs e)
 		{
-			ToggleButton clicked_toggle = (sender) as ToggleButton;
+			View clicked_toggle = (sender) as View;
 			int buttonText = clicked_toggle.Id;
 			switch (buttonText)
 			{
@@ -349,6 +349,18 @@ namespace AlgeTiles
 					editor.PutBoolean(Constants.MUTE, a.muteToggle.Checked);
 					// editor.Commit();    // applies changes synchronously on older APIs
 					editor.Apply();        // applies changes asynchronously on newer APIs
+					break;
+				case Resource.Id.tutorial:
+					//https://developer.android.com/training/animation/screen-slide.html
+					//https://www.bignerdranch.com/blog/viewpager-without-fragments/
+					//https://developer.xamarin.com/samples/monodroid/ActionBarViewPager/
+					//https://components.xamarin.com/gettingstarted/xamandroidsupportdesign
+					//http://stackoverflow.com/questions/7693633/android-image-dialog-popup
+					Toast.MakeText(a, "Tutorial", ToastLength.Short).Show();
+					LayoutInflater inflater = (LayoutInflater)a.GetSystemService(Context.LayoutInflaterService);
+					a.settingsDialog.SetContentView(inflater.Inflate(Resource.Layout.tutorial_page, null));
+					a.settingsDialog.Show();
+					Log.Debug(TAG, "show()");
 					break;
 			}
 		}
