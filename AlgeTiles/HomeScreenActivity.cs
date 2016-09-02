@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace AlgeTiles
 {
-	[Activity(Label = "AlgeTiles", MainLauncher = true, Icon = "@drawable/icon", ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape)]
+	[Activity(Label = "AlgeTiles", MainLauncher = true, Icon = "@drawable/ic_launcher", ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape)]
 	public class HomeScreenActivity : Activity
 	{
 		private Button multiplyActivityButton;
