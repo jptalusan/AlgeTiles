@@ -14,6 +14,7 @@ using Android.Graphics;
 using Android.Preferences;
 using Android.Text;
 using Android.Text.Style;
+using AlgeTiles.Activities;
 
 namespace AlgeTiles
 {
@@ -356,11 +357,8 @@ namespace AlgeTiles
 					//https://developer.xamarin.com/samples/monodroid/ActionBarViewPager/
 					//https://components.xamarin.com/gettingstarted/xamandroidsupportdesign
 					//http://stackoverflow.com/questions/7693633/android-image-dialog-popup
-					Toast.MakeText(a, "Tutorial", ToastLength.Short).Show();
-					LayoutInflater inflater = (LayoutInflater)a.GetSystemService(Context.LayoutInflaterService);
-					a.settingsDialog.SetContentView(inflater.Inflate(Resource.Layout.tutorial_page, null));
-					a.settingsDialog.Show();
-					Log.Debug(TAG, "show()");
+					var intent = new Intent(a, typeof(TutorialActivity));
+					a.StartActivity(intent);
 					break;
 			}
 		}

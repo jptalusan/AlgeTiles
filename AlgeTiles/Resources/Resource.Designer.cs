@@ -156,8 +156,11 @@ namespace AlgeTiles
 			// aapt resource value: 0x7f06001f
 			public const int factor_button = 2131099679;
 			
-			// aapt resource value: 0x7f060032
-			public const int image = 2131099698;
+			// aapt resource value: 0x7f060034
+			public const int image = 2131099700;
+			
+			// aapt resource value: 0x7f060033
+			public const int imageview_card = 2131099699;
 			
 			// aapt resource value: 0x7f06001e
 			public const int linearLayout1 = 2131099678;
@@ -206,6 +209,9 @@ namespace AlgeTiles
 			
 			// aapt resource value: 0x7f060020
 			public const int one_variable_button = 2131099680;
+			
+			// aapt resource value: 0x7f060032
+			public const int pager = 2131099698;
 			
 			// aapt resource value: 0x7f060012
 			public const int refresh_button = 2131099666;
@@ -326,7 +332,13 @@ namespace AlgeTiles
 			public const int MultiplyTwoVar = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int tutorial_page = 2130903044;
+			public const int Tutorial = 2130903044;
+			
+			// aapt resource value: 0x7f030005
+			public const int tutorial_fragment = 2130903045;
+			
+			// aapt resource value: 0x7f030006
+			public const int tutorial_page = 2130903046;
 			
 			static Layout()
 			{

@@ -17,6 +17,7 @@ using Java.Util.Concurrent.Atomic;
 using Android.Preferences;
 using Android.Text;
 using Android.Text.Style;
+using AlgeTiles.Activities;
 
 namespace AlgeTiles
 {
@@ -329,9 +330,8 @@ namespace AlgeTiles
 					editor.Apply();        // applies changes asynchronously on newer APIs
 					break;
 				case Resource.Id.tutorial:
-					//https://developer.android.com/training/animation/screen-slide.html
-					//https://www.bignerdranch.com/blog/viewpager-without-fragments/
-					Toast.MakeText(this, "Tutorial", ToastLength.Short).Show();
+					var intent = new Intent(this, typeof(TutorialActivity));
+					StartActivity(intent);
 					break;
 			}
 		}

@@ -22,6 +22,7 @@ namespace AlgeTiles
 		public const string CHK = "chk";
 		public const string REFR = "refr";
 		public const string MUTE = "mute";
+		public const string FIRST_TIME = "firsttime";
 
 		public const string DRAG = "drag";
 		public const string REMOVE = "remove";

@@ -9,6 +9,8 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Android.Preferences;
+using AlgeTiles.Activities;
 
 namespace AlgeTiles
 {
@@ -21,6 +23,10 @@ namespace AlgeTiles
 		private Button oneVarBtn;
 		private Button twoVarBtn;
 
+		public ISharedPreferences prefs;
+		public string UserName { get; set; }
+		internal Context PackageContext { get; set; }
+
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
@@ -28,15 +34,33 @@ namespace AlgeTiles
 			Window.ClearFlags(WindowManagerFlags.ForceNotFullscreen);
 			ActionBar.Hide();
 			SetContentView(Resource.Layout.HomeScreen);
-			// Create your application here
-			multiplyActivityButton = FindViewById<Button>(Resource.Id.multiply_button);
-			multiplyActivityButton.Click += button_click;
 
-			factorActivityButton = FindViewById<Button>(Resource.Id.factor_button);
-			factorActivityButton.Click += button_click;
-		
-			oneVarBtn = FindViewById<Button>(Resource.Id.one_variable_button);
-			twoVarBtn = FindViewById<Button>(Resource.Id.two_variable_button);
+			prefs = PreferenceManager.GetDefaultSharedPreferences(this);
+			bool firstTime = prefs.GetBoolean(Constants.MUTE, true);
+
+			//if (firstTime)
+			//{
+			//	var intent = new Intent(this, typeof(TutorialActivity));
+			//	StartActivity(intent);
+
+			//	ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences(this);
+			//	ISharedPreferencesEditor editor = prefs.Edit();
+			//	editor.PutBoolean(Constants.FIRST_TIME, false);
+			//	// editor.Commit();    // applies changes synchronously on older APIs
+			//	editor.Apply();        // applies changes asynchronously on newer APIs
+			//}
+			//else
+			//{
+				// Create your application here
+				multiplyActivityButton = FindViewById<Button>(Resource.Id.multiply_button);
+				multiplyActivityButton.Click += button_click;
+
+				factorActivityButton = FindViewById<Button>(Resource.Id.factor_button);
+				factorActivityButton.Click += button_click;
+
+				oneVarBtn = FindViewById<Button>(Resource.Id.one_variable_button);
+				twoVarBtn = FindViewById<Button>(Resource.Id.two_variable_button);
+			//}
 		}
 
 		private void button_click(object sender, EventArgs e)

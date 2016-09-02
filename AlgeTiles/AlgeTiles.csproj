@@ -57,27 +57,33 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
+    <Reference Include="Xamarin.Android.Support.v4, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Android.Support.v4.23.4.0.1\lib\MonoAndroid403\Xamarin.Android.Support.v4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlgeTilesActivity.cs" />
-    <Compile Include="AlgeTilesRelativeLayout.cs" />
-    <Compile Include="AlgorithmUtilities.cs" />
-    <Compile Include="AlgeTilesTextView.cs" />
-    <Compile Include="Constants.cs" />
-    <Compile Include="GridValue2Var.cs" />
-    <Compile Include="HomeScreenActivity.cs" />
-    <Compile Include="FactorActivity.cs" />
-    <Compile Include="Listeners.cs" />
-    <Compile Include="MultiplyTwoVarActivity.cs" />
-    <Compile Include="MultiplyActivity.cs" />
-    <Compile Include="GridValue.cs" />
-    <Compile Include="RectTile.cs" />
+    <Compile Include="Activities\TutorialActivity.cs" />
+    <Compile Include="Activities\TutorialFragment.cs" />
+    <Compile Include="ExtendedViews\AlgeTilesActivity.cs" />
+    <Compile Include="ExtendedViews\AlgeTilesRelativeLayout.cs" />
+    <Compile Include="Utilities\AlgorithmUtilities.cs" />
+    <Compile Include="ExtendedViews\AlgeTilesTextView.cs" />
+    <Compile Include="Utilities\Constants.cs" />
+    <Compile Include="Activities\HomeScreenActivity.cs" />
+    <Compile Include="Activities\FactorActivity.cs" />
+    <Compile Include="Utilities\Listeners.cs" />
+    <Compile Include="Activities\MultiplyTwoVarActivity.cs" />
+    <Compile Include="Activities\MultiplyActivity.cs" />
+    <Compile Include="Utilities\GridValue.cs" />
+    <Compile Include="Utilities\RectTile.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TileUtilities.cs" />
+    <Compile Include="Utilities\TileUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GettingStarted.Xamarin" />
+    <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <AndroidResource Include="Resources\layout\Multiply.axml">
@@ -108,6 +114,12 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout-land\tutorial_page.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout-land\Tutorial.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout-land\tutorial_fragment.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -238,7 +250,6 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\ic_launcher.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_launcher.png" />
   </ItemGroup>
@@ -256,6 +267,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_launcher.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="xamandroidsupportv4-18">
+      <Visible>False</Visible>
+      <Version>23.4.0.1</Version>
+    </XamarinComponentReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
