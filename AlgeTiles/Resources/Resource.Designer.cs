@@ -93,46 +93,70 @@ namespace AlgeTiles
 			public const int shape_droptarget = 2130837518;
 			
 			// aapt resource value: 0x7f02000f
-			public const int tile_1 = 2130837519;
+			public const int slide1 = 2130837519;
 			
 			// aapt resource value: 0x7f020010
-			public const int tvBackground = 2130837520;
+			public const int slide2 = 2130837520;
 			
 			// aapt resource value: 0x7f020011
-			public const int unavailable = 2130837521;
+			public const int slide3 = 2130837521;
 			
 			// aapt resource value: 0x7f020012
-			public const int x = 2130837522;
+			public const int slide4 = 2130837522;
 			
 			// aapt resource value: 0x7f020013
-			public const int x2_tile = 2130837523;
+			public const int slide5 = 2130837523;
 			
 			// aapt resource value: 0x7f020014
-			public const int x_tile = 2130837524;
+			public const int slide6 = 2130837524;
 			
 			// aapt resource value: 0x7f020015
-			public const int x_tile_rot = 2130837525;
+			public const int slide7 = 2130837525;
 			
 			// aapt resource value: 0x7f020016
-			public const int xy = 2130837526;
+			public const int slide8 = 2130837526;
 			
 			// aapt resource value: 0x7f020017
-			public const int xy_tile = 2130837527;
+			public const int tile_1 = 2130837527;
 			
 			// aapt resource value: 0x7f020018
-			public const int xy_tile_rot = 2130837528;
+			public const int tvBackground = 2130837528;
 			
 			// aapt resource value: 0x7f020019
-			public const int y = 2130837529;
+			public const int unavailable = 2130837529;
 			
 			// aapt resource value: 0x7f02001a
-			public const int y2_tile = 2130837530;
+			public const int x = 2130837530;
 			
 			// aapt resource value: 0x7f02001b
-			public const int y_tile = 2130837531;
+			public const int x2_tile = 2130837531;
 			
 			// aapt resource value: 0x7f02001c
-			public const int y_tile_rot = 2130837532;
+			public const int x_tile = 2130837532;
+			
+			// aapt resource value: 0x7f02001d
+			public const int x_tile_rot = 2130837533;
+			
+			// aapt resource value: 0x7f02001e
+			public const int xy = 2130837534;
+			
+			// aapt resource value: 0x7f02001f
+			public const int xy_tile = 2130837535;
+			
+			// aapt resource value: 0x7f020020
+			public const int xy_tile_rot = 2130837536;
+			
+			// aapt resource value: 0x7f020021
+			public const int y = 2130837537;
+			
+			// aapt resource value: 0x7f020022
+			public const int y2_tile = 2130837538;
+			
+			// aapt resource value: 0x7f020023
+			public const int y_tile = 2130837539;
+			
+			// aapt resource value: 0x7f020024
+			public const int y_tile_rot = 2130837540;
 			
 			static Drawable()
 			{
@@ -156,11 +180,8 @@ namespace AlgeTiles
 			// aapt resource value: 0x7f06001f
 			public const int factor_button = 2131099679;
 			
-			// aapt resource value: 0x7f060034
-			public const int image = 2131099700;
-			
-			// aapt resource value: 0x7f060033
-			public const int imageview_card = 2131099699;
+			// aapt resource value: 0x7f060035
+			public const int imageview_card = 2131099701;
 			
 			// aapt resource value: 0x7f06001e
 			public const int linearLayout1 = 2131099678;
@@ -192,6 +213,9 @@ namespace AlgeTiles
 			// aapt resource value: 0x7f06001b
 			public const int new_question_button = 2131099675;
 			
+			// aapt resource value: 0x7f060034
+			public const int next = 2131099700;
+			
 			// aapt resource value: 0x7f060030
 			public const int nonRotatingTiles = 2131099696;
 			
@@ -212,6 +236,9 @@ namespace AlgeTiles
 			
 			// aapt resource value: 0x7f060032
 			public const int pager = 2131099698;
+			
+			// aapt resource value: 0x7f060033
+			public const int prev = 2131099699;
 			
 			// aapt resource value: 0x7f060012
 			public const int refresh_button = 2131099666;
@@ -251,6 +278,9 @@ namespace AlgeTiles
 			
 			// aapt resource value: 0x7f060002
 			public const int upperRight = 2131099650;
+			
+			// aapt resource value: 0x7f060036
+			public const int video = 2131099702;
 			
 			// aapt resource value: 0x7f060024
 			public const int x2TV = 2131099684;
@@ -338,7 +368,7 @@ namespace AlgeTiles
 			public const int tutorial_fragment = 2130903045;
 			
 			// aapt resource value: 0x7f030006
-			public const int tutorial_page = 2130903046;
+			public const int video_fragment = 2130903046;
 			
 			static Layout()
 			{
@@ -357,7 +387,13 @@ namespace AlgeTiles
 			public const int correct = 2130968576;
 			
 			// aapt resource value: 0x7f040001
-			public const int wrong = 2130968577;
+			public const int var1 = 2130968577;
+			
+			// aapt resource value: 0x7f040002
+			public const int var2 = 2130968578;
+			
+			// aapt resource value: 0x7f040003
+			public const int wrong = 2130968579;
 			
 			static Raw()
 			{

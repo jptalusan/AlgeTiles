@@ -77,10 +77,12 @@ namespace AlgeTiles
 			{
 				case DragAction.Started:
 					a.hasButtonBeenDroppedInCorrectzone = false;
-					if (null != drag_data)
-					{
-						a.currentButtonType = drag_data.GetItemAt(0).Text;
-					}
+					AlgeTilesTextView aTv = (AlgeTilesTextView)view;
+					a.currentButtonType = aTv.getTileType();
+					//if (null != drag_data)
+					//{
+					//	a.currentButtonType = drag_data.GetItemAt(0).Text;
+					//}
 					break;
 				case DragAction.Entered:
 					v.SetBackgroundResource(Resource.Drawable.shape_droptarget);
@@ -196,30 +198,14 @@ namespace AlgeTiles
 							 v.Id == Resource.Id.middleRight)
 							{
 								gParms.SetGravity(GravityFlags.FillVertical);
-								if (a.rotateToggle.Checked)
-								{
-									gParms.Height = (int)(a.heightInPx / heightFactor);
-									gParms.Width = (int)(a.heightInPx / widthFactor);
-								}
-								else
-								{
-									gParms.Width = (int)(a.heightInPx / heightFactor);
-									gParms.Height = (int)(a.heightInPx / widthFactor);
-								}
+								gParms.Width = (int)(a.heightInPx / heightFactor);
+								gParms.Height = (int)(a.heightInPx / widthFactor);
 							}
 							else
 							{
 								gParms.SetGravity(GravityFlags.FillHorizontal);
-								if (a.rotateToggle.Checked)
-								{
-									gParms.Width = (int)(a.heightInPx / heightFactor);
-									gParms.Height = (int)(a.heightInPx / widthFactor);
-								}
-								else
-								{
-									gParms.Height = (int)(a.heightInPx / heightFactor);
-									gParms.Width = (int)(a.heightInPx / widthFactor);
-								}
+								gParms.Height = (int)(a.heightInPx / heightFactor);
+								gParms.Width = (int)(a.heightInPx / widthFactor);
 							}
 							algeTilesIV.LayoutParameters = gParms;
 							algeTilesIV.LongClick += a.listeners.clonedImageView_Touch;
@@ -270,23 +256,13 @@ namespace AlgeTiles
 			switch (imageViewTouch.Id)
 			{
 				case Resource.Id.tile_1:
-				case Resource.Id.tile_1_rot:
 					data = ClipData.NewPlainText(Constants.BUTTON_TYPE, Constants.ONE_TILE);
 					break;
 				case Resource.Id.x_tile:
 					data = ClipData.NewPlainText(Constants.BUTTON_TYPE, Constants.X_TILE);
 					break;
-				case Resource.Id.x_tile_rot:
-					data = ClipData.NewPlainText(Constants.BUTTON_TYPE, Constants.X_TILE_ROT);
-					break;
 				case Resource.Id.y_tile:
 					data = ClipData.NewPlainText(Constants.BUTTON_TYPE, Constants.Y_TILE);
-					break;
-				case Resource.Id.y_tile_rot:
-					data = ClipData.NewPlainText(Constants.BUTTON_TYPE, Constants.Y_TILE_ROT);
-					break;
-				case Resource.Id.xy_tile_rot:
-					data = ClipData.NewPlainText(Constants.BUTTON_TYPE, Constants.XY_TILE_ROT);
 					break;
 				case Resource.Id.xy_tile:
 					data = ClipData.NewPlainText(Constants.BUTTON_TYPE, Constants.XY_TILE);

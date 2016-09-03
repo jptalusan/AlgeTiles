@@ -10,12 +10,17 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using Android.Graphics;
+using System.Threading.Tasks;
 
+//http://stackoverflow.com/questions/9838301/how-can-i-make-my-button-to-do-something-in-fragments-viewpager
 namespace AlgeTiles.Activities
 {
 	public class TutorialFragment : Android.Support.V4.App.Fragment
 	{
 		int IDIMG { get; set; }
+		ImageView iv;
+
 		public TutorialFragment(int id)
 		{
 			IDIMG = id;
@@ -24,8 +29,33 @@ namespace AlgeTiles.Activities
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			var view = inflater.Inflate(Resource.Layout.tutorial_fragment, container, false);
-			((ImageView)view.FindViewById(Resource.Id.imageview_card)).SetImageResource(IDIMG);
 			return view;
+		}
+
+		public override void OnViewCreated(View view, Bundle savedInstanceState)
+		{
+			base.OnViewCreated(view, savedInstanceState);
+			var metrics = Resources.DisplayMetrics;
+			var widthInDp = ConvertPixelsToDp(metrics.WidthPixels);
+			var heightInDp = ConvertPixelsToDp(metrics.HeightPixels);
+			iv = (ImageView)view.FindViewById(Resource.Id.imageview_card);
+			var t = Task.Run(async () =>
+			{
+				iv.SetImageBitmap(await LocalImageService.LoadDrawableAsync(Resources, IDIMG, widthInDp / 2, heightInDp / 2));
+			});
+			t.Wait();
+			//Button clicks?
+		}
+
+		public override void OnResume()
+		{
+			base.OnResume();
+		}
+
+		private int ConvertPixelsToDp(float pixelValue)
+		{
+			var dp = (int)((pixelValue) / Resources.DisplayMetrics.Density);
+			return dp;
 		}
 	}
 }

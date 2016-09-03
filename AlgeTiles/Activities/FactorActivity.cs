@@ -777,37 +777,11 @@ namespace AlgeTiles
 					{
 						ViewGroup container = (ViewGroup)v;
 						Log.Debug(TAG, currentButtonType);
-						int heightFactor = 0;
-						int widthFactor = 0;
-						switch (currentButtonType)
-						{
-							case Constants.X2_TILE:
-							case Constants.X2_TILE_ROT:
-								algeTilesIV.SetBackgroundResource(Resource.Drawable.x);
-								algeTilesIV.Text = "x2";
-								heightFactor = 3;
-								widthFactor = 3;
-								break;
-							case Constants.X_TILE:
-								algeTilesIV.SetBackgroundResource(Resource.Drawable.x);
-								algeTilesIV.Text = "x";
-								heightFactor = 3;
-								widthFactor = 9;
-								break;
-							case Constants.X_TILE_ROT:
-								algeTilesIV.SetBackgroundResource(Resource.Drawable.x);
-								algeTilesIV.Text = "x";
-								heightFactor = 9;
-								widthFactor = 3;
-								break;
-							case Constants.ONE_TILE:
-							case Constants.ONE_TILE_ROT:
-								algeTilesIV.SetBackgroundResource(Resource.Drawable.one);
-								algeTilesIV.Text = "1";
-								heightFactor = 9;
-								widthFactor = 9;
-								break;
-						}
+						double heightFactor = 0;
+						double widthFactor = 0;
+						TileUtilities.TileFactor tF = TileUtilities.getTileFactors(currentButtonType);
+						heightFactor = tF.heightFactor;
+						widthFactor = tF.widthFactor;
 
 						if (algeTilesIV.Text.Length > 1)
 						{
@@ -846,30 +820,14 @@ namespace AlgeTiles
 							 v.Id == Resource.Id.middleRight)
 							{
 								gParms.SetGravity(GravityFlags.FillVertical);
-								if (rotateToggle.Checked)
-								{
-									gParms.Height = heightInPx / heightFactor;
-									gParms.Width = heightInPx / widthFactor;
-								}
-								else
-								{
-									gParms.Width = heightInPx / heightFactor;
-									gParms.Height = heightInPx / widthFactor;
-								}
+								gParms.Width = (int)(heightInPx / heightFactor);
+								gParms.Height = (int)(heightInPx / widthFactor);
 							}
 							else
 							{
 								gParms.SetGravity(GravityFlags.FillHorizontal);
-								if (rotateToggle.Checked)
-								{
-									gParms.Width = heightInPx / heightFactor;
-									gParms.Height = heightInPx / widthFactor;
-								}
-								else
-								{
-									gParms.Height = heightInPx / heightFactor;
-									gParms.Width = heightInPx / widthFactor;
-								}
+								gParms.Height = (int)(heightInPx / heightFactor);
+								gParms.Width = (int)(heightInPx / widthFactor);
 							}
 							algeTilesIV.LayoutParameters = gParms;
 							algeTilesIV.LongClick += clonedImageView_Touch;
@@ -1076,14 +1034,12 @@ namespace AlgeTiles
 
 			int height = heightInPx;
 			int width = widthInPx;
-			//int height = 500;
-			//int width = 698;
 
 			//upmid x midRight = quadrant1
 			if (midUp.Count != 0 || midRight.Count != 0)
 			{
-				int top = height; //height of relative layout
-				int bottom = height; //height of relative layout
+				int top = height;
+				int bottom = height;
 				for (int i = 0; i < midUp.Count; ++i)
 				{
 					int left = 0;
@@ -1092,24 +1048,17 @@ namespace AlgeTiles
 					for (int j = 0; j < midRight.Count; ++j)
 					{
 						int[] productDimensions = TileUtilities.getDimensionsOfProduct(height, midUp[i], midRight[j]);
-						//Log.Debug(TAG, height + ":" + midUp[i] + "," + midRight[j]);
-						//Log.Debug(TAG, productDimensions[0] + "," + productDimensions[1]);
 						if (firstPass)
 						{
-							//top = subtract height of first tile in midup ( then subtract next tile  ) etc...
 							top -= productDimensions[0];
-							//bottom = height at i = 0, else bottom = previous top
-							bottom = top + productDimensions[0]; //don't add to stack since only getting the latest top/height
+							bottom = top + productDimensions[0];
 							firstPass = false;
 						}
-						//right = width of midleft (then add next tile) etc...
-						right += productDimensions[1]; //width adds up
-													   //left = 0 at start, else width of midleft
+						right += productDimensions[1];
 						left = right - productDimensions[1];
 
 						Rect r = new Rect(left, top, right, bottom);
 						upperRightRectTileList.Add(new RectTile(r, TileUtilities.getTileTypeOfProduct(midUp[i], midRight[j])));
-						Log.Debug(TAG, "Q1: " + TileUtilities.getTileTypeOfProduct(midUp[i], midRight[j]) + ":" + r.Left + "," + r.Top + ":" + r.Right + "," + r.Bottom);
 					}
 				}
 			}
@@ -1127,8 +1076,6 @@ namespace AlgeTiles
 					for (int j = 0; j < midLeft.Count; ++j)
 					{
 						int[] productDimensions = TileUtilities.getDimensionsOfProduct(height, midUp[i], midLeft[j]);
-						//Log.Debug(TAG, height + ":" + midUp[i] + "," + midRight[j]);
-						//Log.Debug(TAG, productDimensions[0] + "," + productDimensions[1]);
 						if (firstPass)
 						{
 							top -= productDimensions[0];
@@ -1140,7 +1087,6 @@ namespace AlgeTiles
 
 						Rect r = new Rect(left, top, right, bottom);
 						upperLeftRectTileList.Add(new RectTile(r, TileUtilities.getTileTypeOfProduct(midUp[i], midLeft[j])));
-						Log.Debug(TAG, "Q2: " + TileUtilities.getTileTypeOfProduct(midUp[i], midLeft[j]) + ":" + r.Left + "," + r.Top + ":" + r.Right + "," + r.Bottom);
 					}
 				}
 			}
@@ -1158,8 +1104,6 @@ namespace AlgeTiles
 					for (int j = 0; j < midLeft.Count; ++j)
 					{
 						int[] productDimensions = TileUtilities.getDimensionsOfProduct(height, midDown[i], midLeft[j]);
-						//Log.Debug(TAG, height + ":" + midUp[i] + "," + midRight[j]);
-						//Log.Debug(TAG, productDimensions[0] + "," + productDimensions[1]);
 						if (firstPass)
 						{
 							bottom += productDimensions[0];
@@ -1171,7 +1115,6 @@ namespace AlgeTiles
 
 						Rect r = new Rect(left, top, right, bottom);
 						lowerLeftRectTileList.Add(new RectTile(r, TileUtilities.getTileTypeOfProduct(midDown[i], midLeft[j])));
-						Log.Debug(TAG, "Q3: " + TileUtilities.getTileTypeOfProduct(midDown[i], midLeft[j]) + ":" + r.Left + "," + r.Top + ":" + r.Right + "," + r.Bottom);
 					}
 				}
 			}
@@ -1189,8 +1132,6 @@ namespace AlgeTiles
 					for (int j = 0; j < midRight.Count; ++j)
 					{
 						int[] productDimensions = TileUtilities.getDimensionsOfProduct(height, midDown[i], midRight[j]);
-						//Log.Debug(TAG, height + ":" + midUp[i] + "," + midRight[j]);
-						//Log.Debug(TAG, productDimensions[0] + "," + productDimensions[1]);
 						if (firstPass)
 						{
 							bottom += productDimensions[0];
@@ -1201,7 +1142,6 @@ namespace AlgeTiles
 						left = right - productDimensions[1];
 						Rect r = new Rect(left, top, right, bottom);
 						lowerRightRectTileList.Add(new RectTile(r, TileUtilities.getTileTypeOfProduct(midDown[i], midRight[j])));
-						Log.Debug(TAG, "Q4: " + TileUtilities.getTileTypeOfProduct(midDown[i], midRight[j]) + ":" + r.Left + "," + r.Top + ":" + r.Right + "," + r.Bottom);
 					}
 				}
 			}

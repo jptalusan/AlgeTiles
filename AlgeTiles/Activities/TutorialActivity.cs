@@ -6,6 +6,8 @@ using Android.OS;
 using Android.Views;
 using Android.Support.V4.View;
 using Android.Support.V4.App;
+using Java.Lang;
+using Android.Util;
 
 //https://www.youtube.com/watch?v=EBmBKivPVX4
 //Use video view: http://stackoverflow.com/questions/37942711/play-video-inside-view-pager
@@ -16,7 +18,7 @@ namespace AlgeTiles.Activities
 	[Activity(Label = "TutorialActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape)]
 	public class TutorialActivity : FragmentActivity, ViewPager.IOnPageChangeListener
 	{
-		private ViewPager _viewPager;
+		public static ViewPager _viewPager;
 
 		public void OnPageScrolled(int position, float positionOffset, int positionOffsetPixels)
 		{
@@ -44,8 +46,9 @@ namespace AlgeTiles.Activities
 			SetContentView(Resource.Layout.Tutorial);
 
 			_viewPager = FindViewById<ViewPager>(Resource.Id.pager);
+			_viewPager.OffscreenPageLimit = 1;
 			_viewPager.Adapter = new TutorialFragmentAdapter(SupportFragmentManager);
-			_viewPager.SetPageTransformer(true, new FadeTransformer());
+			//_viewPager.SetPageTransformer(true, new FadeTransformer());
 		}
 	}
 
@@ -53,10 +56,18 @@ namespace AlgeTiles.Activities
 	{
 		private int[] tutorialPages =
 		{
-			Resource.Drawable.tile_1,
-			Resource.Drawable.x_tile,
-			Resource.Drawable.y_tile
-	};
+			Resource.Drawable.slide1,
+			Resource.Drawable.slide2,
+			Resource.Drawable.slide3,
+			Resource.Drawable.slide4,
+			Resource.Drawable.slide5,
+			Resource.Drawable.slide6,
+			Resource.Drawable.slide7,
+			Resource.Drawable.slide8,
+			Resource.Raw.var1,
+			Resource.Raw.var2
+		};
+
 
 		private List<Android.Support.V4.App.Fragment> tutorialPagesFragments { get; set; }
 
@@ -66,7 +77,14 @@ namespace AlgeTiles.Activities
 			{
 				new TutorialFragment(tutorialPages[0]),
 				new TutorialFragment(tutorialPages[1]),
-				new TutorialFragment(tutorialPages[2])
+				new TutorialFragment(tutorialPages[2]),
+				new TutorialFragment(tutorialPages[3]),
+				new TutorialFragment(tutorialPages[4]),
+				new TutorialFragment(tutorialPages[5]),
+				new TutorialFragment(tutorialPages[6]),
+				new TutorialFragment(tutorialPages[7]),
+				new VideoFragment(tutorialPages[8]),
+				new VideoFragment(tutorialPages[9])
 			};
 		}
 

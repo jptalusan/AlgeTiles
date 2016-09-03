@@ -22,34 +22,34 @@ namespace AlgeTiles
 		public static string getTileTypeOfProduct(string tile1, string tile2)
 		{
 			string output = "";
-			if (tile1.Contains(Constants.X_TILE) &&
-				tile2.Contains(Constants.X_TILE))
+			if (tile1.Equals(Constants.X_TILE) &&
+				tile2.Equals(Constants.X_TILE))
 				output = Constants.X2_TILE;
 
-			if (tile1.Contains(Constants.Y_TILE) &&
-				tile2.Contains(Constants.Y_TILE))
+			if (tile1.Equals(Constants.Y_TILE) &&
+				tile2.Equals(Constants.Y_TILE))
 				output = Constants.Y2_TILE;
 
-			if ((tile1.Contains(Constants.X_TILE) &&
-				tile2.Contains(Constants.Y_TILE)) ||
-				(tile1.Contains(Constants.Y_TILE) &&
-				tile2.Contains(Constants.X_TILE)))
+			if ((tile1.Equals(Constants.X_TILE) &&
+				tile2.Equals(Constants.Y_TILE)) ||
+				(tile1.Equals(Constants.Y_TILE) &&
+				tile2.Equals(Constants.X_TILE)))
 				output = Constants.XY_TILE;
 
-			if ((tile1.Contains(Constants.X_TILE) &&
-				tile2.Contains(Constants.ONE_TILE)) ||
-				(tile1.Contains(Constants.ONE_TILE) &&
-				tile2.Contains(Constants.X_TILE)))
+			if ((tile1.Equals(Constants.X_TILE) &&
+				tile2.Equals(Constants.ONE_TILE)) ||
+				(tile1.Equals(Constants.ONE_TILE) &&
+				tile2.Equals(Constants.X_TILE)))
 				output = Constants.X_TILE;
 
-			if ((tile1.Contains(Constants.Y_TILE) &&
-				tile2.Contains(Constants.ONE_TILE)) ||
-				(tile1.Contains(Constants.ONE_TILE) &&
-				tile2.Contains(Constants.Y_TILE)))
+			if ((tile1.Equals(Constants.Y_TILE) &&
+				tile2.Equals(Constants.ONE_TILE)) ||
+				(tile1.Equals(Constants.ONE_TILE) &&
+				tile2.Equals(Constants.Y_TILE)))
 				output = Constants.Y_TILE;
 
-			if (tile1.Contains(Constants.ONE_TILE) &&
-				tile2.Contains(Constants.ONE_TILE))
+			if (tile1.Equals(Constants.ONE_TILE) &&
+				tile2.Equals(Constants.ONE_TILE))
 				output = Constants.ONE_TILE;
 
 			return output;
@@ -82,19 +82,11 @@ namespace AlgeTiles
 
 			switch (tileType)
 			{
-				case Constants.X2_TILE:
-				case Constants.X2_TILE_ROT:
-					tF.id = Resource.Drawable.x;
-					tF.text = "x2";
-					tF.heightFactor = Constants.X_LONG_SIDE;
-					tF.widthFactor = Constants.X_LONG_SIDE;
-					break;
-				case Constants.Y2_TILE:
-				case Constants.Y2_TILE_ROT:
-					tF.id = Resource.Drawable.y;
-					tF.text = "y2";
-					tF.heightFactor = Constants.Y_LONG_SIDE;
-					tF.widthFactor = Constants.Y_LONG_SIDE;
+				case Constants.ONE_TILE:
+					tF.id = Resource.Drawable.one;
+					tF.text = "1";
+					tF.heightFactor = Constants.ONE_SIDE;
+					tF.widthFactor = Constants.ONE_SIDE;
 					break;
 				case Constants.X_TILE:
 					tF.id = Resource.Drawable.x;
@@ -102,42 +94,29 @@ namespace AlgeTiles
 					tF.heightFactor = Constants.X_LONG_SIDE;
 					tF.widthFactor = Constants.ONE_SIDE;
 					break;
+				case Constants.X2_TILE:
+					tF.id = Resource.Drawable.x;
+					tF.text = "x2";
+					tF.heightFactor = Constants.X_LONG_SIDE;
+					tF.widthFactor = Constants.X_LONG_SIDE;
+					break;
 				case Constants.Y_TILE:
 					tF.id = Resource.Drawable.y;
 					tF.text = "y";
 					tF.heightFactor = Constants.Y_LONG_SIDE;
 					tF.widthFactor = Constants.ONE_SIDE;
 					break;
-				case Constants.X_TILE_ROT:
-					tF.id = Resource.Drawable.x;
-					tF.text = "x";
-					tF.heightFactor = Constants.ONE_SIDE;
-					tF.widthFactor = Constants.X_LONG_SIDE;
-					break;
-				case Constants.Y_TILE_ROT:
+				case Constants.Y2_TILE:
 					tF.id = Resource.Drawable.y;
-					tF.text = "y";
-					tF.heightFactor = Constants.ONE_SIDE;
+					tF.text = "y2";
+					tF.heightFactor = Constants.Y_LONG_SIDE;
 					tF.widthFactor = Constants.Y_LONG_SIDE;
-					break;
-				case Constants.ONE_TILE:
-				case Constants.ONE_TILE_ROT:
-					tF.id = Resource.Drawable.one;
-					tF.text = "1";
-					tF.heightFactor = Constants.ONE_SIDE;
-					tF.widthFactor = Constants.ONE_SIDE;
 					break;
 				case Constants.XY_TILE:
 					tF.id = Resource.Drawable.xy;
 					tF.text = "xy";
 					tF.heightFactor = Constants.Y_LONG_SIDE;
 					tF.widthFactor = Constants.X_LONG_SIDE;
-					break;
-				case Constants.XY_TILE_ROT:
-					tF.id = Resource.Drawable.xy;
-					tF.text = "xy";
-					tF.heightFactor = Constants.X_LONG_SIDE;
-					tF.widthFactor = Constants.Y_LONG_SIDE;
 					break;
 			}
 			return tF;
@@ -534,15 +513,12 @@ namespace AlgeTiles
 					switch (al.getTileType())
 					{
 						case Constants.X_TILE:
-						case Constants.X_TILE_ROT:
 							output[i].Add(al.getTileType());
 							break;
 						case Constants.Y_TILE:
-						case Constants.Y_TILE_ROT:
 							output[i].Add(al.getTileType());
 							break;
 						case Constants.ONE_TILE:
-						case Constants.ONE_TILE_ROT:
 							output[i].Add(al.getTileType());
 							break;
 					}

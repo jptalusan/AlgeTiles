@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:whatever="http://schemas.android.com/apk/res-auto"
+    xmlns:whatever="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="0dp"
     android:background="#CFE2F3">
-	<!-- Left Side -->
-	<LinearLayout
+<!-- Left Side -->
+    <LinearLayout
         android:orientation="vertical"
         android:layout_width="0px"
         android:layout_height="match_parent"
         android:layout_weight="10"
         android:weightSum="204"
         android:layout_marginBottom="-10dp">
-		<!-- First Layer-->
-		<LinearLayout
+    <!-- First Layer-->
+        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0px"
             android:layout_weight="92"
             android:weightSum="200"
             android:padding="0dp">
-			<!-- Upper Left -->
-			<algetiles.AlgeTilesRelativeLayout
+        <!-- Upper Left -->
+            <algetiles.AlgeTilesRelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
                 android:background="@drawable/shape"
                 android:id="@+id/upperLeft" />
-			<!-- Upper Middle -->
-			<GridLayout
+        <!-- Upper Middle -->
+            <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="16"
@@ -39,24 +39,24 @@ xmlns:whatever="http://schemas.android.com/apk/res-auto"
                 android:rowCount="8"
                 android:columnCount="1"
                 android:rotationX="180" />
-			<!-- Upper Right -->
-			<algetiles.AlgeTilesRelativeLayout
+        <!-- Upper Right -->
+            <algetiles.AlgeTilesRelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
                 android:background="@drawable/shape"
                 android:id="@+id/upperRight" />
-		</LinearLayout>
-		<!-- Second Layer-->
-		<LinearLayout
+        </LinearLayout>
+    <!-- Second Layer-->
+        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0px"
             android:layout_weight="15"
             android:weightSum="200"
             android:padding="0dp">
-			<!-- Middle Left -->
-			<GridLayout
+        <!-- Middle Left -->
+            <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
@@ -65,8 +65,8 @@ xmlns:whatever="http://schemas.android.com/apk/res-auto"
                 android:rotationY="180"
                 android:rowCount="1"
                 android:columnCount="12" />
-			<!-- Middle Middle -->
-			<GridLayout
+        <!-- Middle Middle -->
+            <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="16"
@@ -74,8 +74,8 @@ xmlns:whatever="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/middleMiddle"
                 android:rowCount="1"
                 android:columnCount="1" />
-			<!-- Middle Right -->
-			<GridLayout
+        <!-- Middle Right -->
+            <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
@@ -83,24 +83,24 @@ xmlns:whatever="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/middleRight"
                 android:rowCount="1"
                 android:columnCount="12" />
-		</LinearLayout>
-		<!-- Third Layer-->
-		<LinearLayout
+        </LinearLayout>
+    <!-- Third Layer-->
+        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0px"
             android:layout_weight="92"
             android:weightSum="200"
             android:padding="0dp">
-			<!-- Lower Left -->
-			<algetiles.AlgeTilesRelativeLayout
+        <!-- Lower Left -->
+            <algetiles.AlgeTilesRelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
                 android:background="@drawable/shape"
                 android:id="@+id/lowerLeft" />
-			<!-- Lower Middle -->
-			<GridLayout
+        <!-- Lower Middle -->
+            <GridLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="16"
@@ -108,28 +108,28 @@ xmlns:whatever="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/lowerMiddle"
                 android:rowCount="8"
                 android:columnCount="1" />
-			<!-- Lower Right -->
-			<algetiles.AlgeTilesRelativeLayout
+        <!-- Lower Right -->
+            <algetiles.AlgeTilesRelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
                 android:background="@drawable/shape"
                 android:id="@+id/lowerRight" />
-		</LinearLayout>
-	</LinearLayout>
-	<!-- Right Side -->
-	<ScrollView
+        </LinearLayout>
+    </LinearLayout>
+<!-- Right Side -->
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/sv">
-		<LinearLayout
+        <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:weightSum="110"
             android:padding="0dp">
-			<TextView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/result"
@@ -137,17 +137,17 @@ xmlns:whatever="http://schemas.android.com/apk/res-auto"
                 android:layout_weight="5"
                 android:background="@drawable/tvBackground"
                 android:gravity="center" />
-			<Space
+            <Space
                 android:layout_width="match_parent"
                 android:layout_height="1sp" />
-			<LinearLayout
+            <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:gravity="fill"
                 android:padding="0dp">
-				<EditText
+                <EditText
                     android:hint="......."
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -157,14 +157,14 @@ xmlns:whatever="http://schemas.android.com/apk/res-auto"
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
-					android:gravity="center"/>
-				<TextView
+                    android:gravity="center" />
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="x^2 + "
                     android:textColor="#000000"
                     android:id="@+id/x2TV" />
-				<EditText
+                <EditText
                     android:hint="......."
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -174,14 +174,14 @@ xmlns:whatever="http://schemas.android.com/apk/res-auto"
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
-					android:gravity="center" />
-				<TextView
+                    android:gravity="center" />
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="y^2 + "
                     android:textColor="#000000"
                     android:id="@+id/xTV" />
-				<EditText
+                <EditText
                     android:hint="......."
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -191,25 +191,25 @@ xmlns:whatever="http://schemas.android.com/apk/res-auto"
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
-					android:gravity="center" />
-				<TextView
+                    android:gravity="center" />
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="xy + "
                     android:textColor="#000000"
                     android:id="@+id/xTV" />
-			</LinearLayout>
-			<Space
+            </LinearLayout>
+            <Space
                 android:layout_width="match_parent"
                 android:layout_height="1sp" />
-			<LinearLayout
+            <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:gravity="fill"
                 android:paddingTop="10dp">
-				<EditText
+                <EditText
                     android:hint="......."
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -219,14 +219,14 @@ xmlns:whatever="http://schemas.android.com/apk/res-auto"
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
-					android:gravity="center" />
-				<TextView
+                    android:gravity="center" />
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="x + "
                     android:textColor="#000000"
                     android:id="@+id/x2TV" />
-				<EditText
+                <EditText
                     android:hint="......."
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -236,14 +236,14 @@ xmlns:whatever="http://schemas.android.com/apk/res-auto"
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
-					android:gravity="center" />
-				<TextView
+                    android:gravity="center" />
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="y + "
                     android:textColor="#000000"
                     android:id="@+id/xTV" />
-				<EditText
+                <EditText
                     android:hint="......."
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -253,10 +253,10 @@ xmlns:whatever="http://schemas.android.com/apk/res-auto"
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
-					android:gravity="center"/>
-			</LinearLayout>
-			<!-- First 0.5 (2) -->
-			<LinearLayout
+                    android:gravity="center" />
+            </LinearLayout>
+        <!-- First 0.5 (2) -->
+            <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -264,14 +264,14 @@ xmlns:whatever="http://schemas.android.com/apk/res-auto"
                 android:weightSum="2"
                 android:gravity="fill"
                 android:padding="0dp">
-				<!-- Tutorial button -->
-				<Button
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:text="Tutorial"
-					android:id="@+id/tutorial"
-					android:layout_weight="2" />
-				<ToggleButton
+            <!-- Tutorial button -->
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tutorial"
+                    android:id="@+id/tutorial"
+                    android:layout_weight="2" />
+                <ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/drag"
@@ -279,8 +279,8 @@ xmlns:whatever="http://schemas.android.com/apk/res-auto"
                     android:textOn="drag"
                     android:textSize="12sp"
                     android:layout_weight="1"
-					android:visibility="gone" />
-				<ToggleButton
+                    android:visibility="gone" />
+                <ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/rotate"
@@ -288,10 +288,10 @@ xmlns:whatever="http://schemas.android.com/apk/res-auto"
                     android:textOn="rotate"
                     android:textSize="12sp"
                     android:layout_weight="1"
-					android:visibility="gone" />
-			</LinearLayout>
-			<!-- First 0.5 (2) -->
-			<LinearLayout
+                    android:visibility="gone" />
+            </LinearLayout>
+        <!-- First 0.5 (2) -->
+            <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -299,7 +299,7 @@ xmlns:whatever="http://schemas.android.com/apk/res-auto"
                 android:weightSum="2"
                 android:gravity="fill"
                 android:padding="0dp">
-				<ToggleButton
+                <ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/mute"
@@ -307,7 +307,7 @@ xmlns:whatever="http://schemas.android.com/apk/res-auto"
                     android:textOn="mute"
                     android:textSize="12sp"
                     android:layout_weight="1" />
-				<ToggleButton
+                <ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/remove"
@@ -315,9 +315,9 @@ xmlns:whatever="http://schemas.android.com/apk/res-auto"
                     android:textOn="remove"
                     android:textSize="12sp"
                     android:layout_weight="1" />
-			</LinearLayout>
-			<!-- Second (1) -->
-			<LinearLayout
+            </LinearLayout>
+        <!-- Second (1) -->
+            <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -325,21 +325,21 @@ xmlns:whatever="http://schemas.android.com/apk/res-auto"
                 android:weightSum="2"
                 android:gravity="fill"
                 android:padding="0dp">
-				<Button
+                <Button
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="@string/check"
                     android:id="@+id/check_button"
                     android:layout_weight="1" />
-				<Button
+                <Button
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="@string/refresh"
                     android:id="@+id/refresh_button"
                     android:layout_weight="1" />
-			</LinearLayout>
-			<!-- Third (4) Draggable Blocks Area -->
-			<LinearLayout
+            </LinearLayout>
+        <!-- Third (4) Draggable Blocks Area -->
+            <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -348,75 +348,75 @@ xmlns:whatever="http://schemas.android.com/apk/res-auto"
                 android:padding="5dp"
                 android:layout_gravity="center"
                 android:gravity="center">
-				<LinearLayout
+                <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/notRotatedButtonLayout"
-					android:padding="10dp">
-					<algetiles.AlgeTilesTextView
+                    android:padding="10dp">
+                    <algetiles.AlgeTilesTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-						android:text="1"
-						whatever:tileType="tile_1"
+                        android:text="1"
+                        whatever:tileType="tile_1"
                         android:id="@+id/tile_1" />
-					<Space
-						android:layout_width="15dp"
-						android:layout_height="15dp"/>
-					<algetiles.AlgeTilesTextView
+                    <Space
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+                    <algetiles.AlgeTilesTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-						android:text="x"
-						whatever:tileType="x_tile"
+                        android:text="x"
+                        whatever:tileType="x_tile"
                         android:id="@+id/x_tile" />
-					<Space
-						android:layout_width="15dp"
-						android:layout_height="15dp"/>
-					<algetiles.AlgeTilesTextView
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="y"
-						whatever:tileType="y_tile"
-						android:id="@+id/y_tile" />
-				</LinearLayout>
-				<algetiles.AlgeTilesTextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="xy"
-					whatever:tileType="xy_tile"
-					android:id="@+id/xy_tile" />
-				<Space
-					android:layout_width="15dp"
-					android:layout_height="15dp"/>
-				<algetiles.AlgeTilesTextView
+                    <Space
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+                    <algetiles.AlgeTilesTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="y"
+                        whatever:tileType="y_tile"
+                        android:id="@+id/y_tile" />
+                </LinearLayout>
+                <algetiles.AlgeTilesTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-					android:text="x2"
-					whatever:tileType="x2_tile"
+                    android:text="xy"
+                    whatever:tileType="xy_tile"
+                    android:id="@+id/xy_tile" />
+                <Space
+                    android:layout_width="15dp"
+                    android:layout_height="15dp" />
+                <algetiles.AlgeTilesTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x2"
+                    whatever:tileType="x2_tile"
                     android:id="@+id/x2_tile" />
-				<Space
-					android:layout_width="15dp"
-					android:layout_height="15dp"/>
-				<algetiles.AlgeTilesTextView
+                <Space
+                    android:layout_width="15dp"
+                    android:layout_height="15dp" />
+                <algetiles.AlgeTilesTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-					android:text="y2"
-					whatever:tileType="y2_tile"
+                    android:text="y2"
+                    whatever:tileType="y2_tile"
                     android:id="@+id/y2_tile" />
-			</LinearLayout>
-			<!-- Fourth (1) -->
-			<LinearLayout
+            </LinearLayout>
+        <!-- Fourth (1) -->
+            <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
                 android:gravity="fill">
-				<Button
+                <Button
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="@string/newQ"
                     android:id="@+id/new_question_button" />
-			</LinearLayout>
-		</LinearLayout>
-	</ScrollView>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

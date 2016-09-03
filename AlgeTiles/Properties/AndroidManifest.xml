@@ -3,5 +3,5 @@
 	<uses-sdk android:minSdkVersion="16" />
 	<uses-permission android:name="android.permission.VIBRATE" />
 	<supports-screens android:resizeable="true" android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true" />
-	<application android:label="AlgeTiles" android:icon="@drawable/ic_launcher"></application>
+	<application android:label="AlgeTiles" android:largeHeap="true" android:icon="@drawable/ic_launcher"></application>
 </manifest>

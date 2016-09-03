@@ -198,19 +198,6 @@ namespace AlgeTiles
 			settingsDialog.Window.RequestFeature(WindowFeatures.NoTitle);
 		}
 
-		[Java.Interop.Export("dismissListener")]
-		public void dismissListener(View v)
-		{
-			LayoutInflater factory = (LayoutInflater)GetSystemService(Context.LayoutInflaterService);
-			View view = factory.Inflate(Resource.Layout.tutorial_page, null);
-			ImageView user = (ImageView)view.FindViewById<ImageView>(Resource.Id.image);
-			user.SetImageDrawable(Resources.GetDrawable(Resource.Drawable.y_tile, ApplicationContext.Theme));
-			settingsDialog.SetContentView(factory.Inflate(Resource.Layout.tutorial_page, null));
-			settingsDialog.Show();
-			Log.Debug(TAG, "change image ");
-			//settingsDialog.Cancel();
-		}
-
 		private void button_click(object sender, EventArgs e)
 		{
 			var button = sender as Button;

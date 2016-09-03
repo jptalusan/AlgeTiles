@@ -78,8 +78,8 @@ namespace AlgeTiles
 
 					LinearLayout.LayoutParams par_1 = (LinearLayout.LayoutParams)tile_1.LayoutParameters;
 					TileUtilities.TileFactor tF = TileUtilities.getTileFactors(tile_1.getTileType());
-					par_1.Height = heightInPx / 7;
-					par_1.Width = heightInPx / 7;
+					par_1.Height = (int)(heightInPx / tF.heightFactor);
+					par_1.Width = (int)(heightInPx / tF.widthFactor);
 					tile_1.SetBackgroundResource(tF.id);
 					tile_1.Text = tF.text;
 					tile_1.LayoutParameters = par_1;
@@ -87,7 +87,7 @@ namespace AlgeTiles
 					LinearLayout.LayoutParams par_x = (LinearLayout.LayoutParams)x_tile.LayoutParameters;
 					tF = TileUtilities.getTileFactors(x_tile.getTileType());
 					par_x.Height = (int)(heightInPx / tF.heightFactor);
-					par_x.Width = heightInPx / 7;
+					par_x.Width = (int)(heightInPx / tF.widthFactor);
 					x_tile.SetBackgroundResource(tF.id);
 					x_tile.Text = tF.text;
 					x_tile.LayoutParameters = par_x;
@@ -95,7 +95,7 @@ namespace AlgeTiles
 					LinearLayout.LayoutParams par_y = (LinearLayout.LayoutParams)y_tile.LayoutParameters;
 					tF = TileUtilities.getTileFactors(y_tile.getTileType());
 					par_y.Height = (int)(heightInPx / tF.heightFactor);
-					par_y.Width = heightInPx / 7;
+					par_y.Width = (int)(heightInPx / tF.widthFactor);
 					y_tile.SetBackgroundResource(tF.id);
 					y_tile.Text = tF.text;
 					y_tile.LayoutParameters = par_y;
@@ -253,19 +253,6 @@ namespace AlgeTiles
 
 			settingsDialog = new Dialog(this);
 			settingsDialog.Window.RequestFeature(WindowFeatures.NoTitle);
-		}
-
-		[Java.Interop.Export("dismissListener")]
-		public void dismissListener(View v)
-		{
-			LayoutInflater factory = (LayoutInflater)GetSystemService(Context.LayoutInflaterService);
-			View view = factory.Inflate(Resource.Layout.tutorial_page, null);
-			ImageView user = (ImageView)view.FindViewById<ImageView>(Resource.Id.image);
-			user.SetImageDrawable(Resources.GetDrawable(Resource.Drawable.y_tile, ApplicationContext.Theme));
-			settingsDialog.SetContentView(factory.Inflate(Resource.Layout.tutorial_page, null));
-			settingsDialog.Show();
-			Log.Debug(TAG, "change image ");
-			//settingsDialog.Cancel();
 		}
 
 		private void button_click(object sender, EventArgs e)

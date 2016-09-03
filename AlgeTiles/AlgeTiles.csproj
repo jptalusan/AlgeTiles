@@ -65,8 +65,10 @@
   <ItemGroup>
     <Compile Include="Activities\TutorialActivity.cs" />
     <Compile Include="Activities\TutorialFragment.cs" />
+    <Compile Include="Activities\VideoFragment.cs" />
     <Compile Include="ExtendedViews\AlgeTilesActivity.cs" />
     <Compile Include="ExtendedViews\AlgeTilesRelativeLayout.cs" />
+    <Compile Include="LocalImageService.cs" />
     <Compile Include="Utilities\AlgorithmUtilities.cs" />
     <Compile Include="ExtendedViews\AlgeTilesTextView.cs" />
     <Compile Include="Utilities\Constants.cs" />
@@ -113,7 +115,7 @@
     <AndroidResource Include="Resources\drawable\tvBackground.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout-land\tutorial_page.axml">
+    <AndroidResource Include="Resources\layout-land\video_fragment.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout-land\Tutorial.axml">
@@ -273,6 +275,36 @@
       <Visible>False</Visible>
       <Version>23.4.0.1</Version>
     </XamarinComponentReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\slide1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\slide2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\slide3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\slide4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\slide5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\slide6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\slide7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\slide8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\var1.mp4" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\var2.mp4" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
