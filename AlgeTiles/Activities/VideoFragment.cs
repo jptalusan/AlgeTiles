@@ -48,13 +48,12 @@ namespace AlgeTiles.Activities
 			vv = (VideoView)view.FindViewById(Resource.Id.video);
 			mediaController = new MediaController(Activity, true);
 			vv.SetMediaController(mediaController);
-			SetMenuVisibility(true);
+			//SetMenuVisibility(true);
 		}
 
 		public override void OnResume()
 		{
 			base.OnResume();
-			vv.Prepared += OnVideoPlayerPrepared;
 			vv.Start();
 		}
 
@@ -63,7 +62,7 @@ namespace AlgeTiles.Activities
 			base.OnPause();
 			vv.Prepared -= OnVideoPlayerPrepared;
 			vv.StopPlayback();
-			mediaController.Hide();
+			mediaController.Enabled = false;
 		}
 
 		public override void OnStart()
@@ -78,7 +77,7 @@ namespace AlgeTiles.Activities
 			base.OnStop();
 			vv.Prepared -= OnVideoPlayerPrepared;
 			vv.StopPlayback();
-			mediaController.Hide();
+			mediaController.Enabled = false;
 		}
 
 		public override void OnHiddenChanged(bool hidden)

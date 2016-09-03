@@ -46,7 +46,7 @@ namespace AlgeTiles.Activities
 			SetContentView(Resource.Layout.Tutorial);
 
 			_viewPager = FindViewById<ViewPager>(Resource.Id.pager);
-			_viewPager.OffscreenPageLimit = 1;
+			_viewPager.OffscreenPageLimit = 0;
 			_viewPager.Adapter = new TutorialFragmentAdapter(SupportFragmentManager);
 			//_viewPager.SetPageTransformer(true, new FadeTransformer());
 		}
