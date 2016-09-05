@@ -138,7 +138,7 @@ namespace AlgeTiles
 				}
 			} else
 			{
-				cameFromTutorial = false;
+				Finish();
 			}
 		}
 	}

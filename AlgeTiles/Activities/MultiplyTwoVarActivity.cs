@@ -78,8 +78,8 @@ namespace AlgeTiles
 
 					LinearLayout.LayoutParams par_1 = (LinearLayout.LayoutParams)tile_1.LayoutParameters;
 					TileUtilities.TileFactor tF = TileUtilities.getTileFactors(tile_1.getTileType());
-					par_1.Height = (int)(heightInPx / tF.heightFactor);
-					par_1.Width = (int)(heightInPx / tF.widthFactor);
+					par_1.Height = (int)(heightInPx / 7);
+					par_1.Width = (int)(heightInPx / 7);
 					tile_1.SetBackgroundResource(tF.id);
 					tile_1.Text = tF.text;
 					tile_1.LayoutParameters = par_1;
@@ -87,7 +87,7 @@ namespace AlgeTiles
 					LinearLayout.LayoutParams par_x = (LinearLayout.LayoutParams)x_tile.LayoutParameters;
 					tF = TileUtilities.getTileFactors(x_tile.getTileType());
 					par_x.Height = (int)(heightInPx / tF.heightFactor);
-					par_x.Width = (int)(heightInPx / tF.widthFactor);
+					par_x.Width = (int)(heightInPx / 7);
 					x_tile.SetBackgroundResource(tF.id);
 					x_tile.Text = tF.text;
 					x_tile.LayoutParameters = par_x;
@@ -95,7 +95,7 @@ namespace AlgeTiles
 					LinearLayout.LayoutParams par_y = (LinearLayout.LayoutParams)y_tile.LayoutParameters;
 					tF = TileUtilities.getTileFactors(y_tile.getTileType());
 					par_y.Height = (int)(heightInPx / tF.heightFactor);
-					par_y.Width = (int)(heightInPx / tF.widthFactor);
+					par_y.Width = (int)(heightInPx / 7);
 					y_tile.SetBackgroundResource(tF.id);
 					y_tile.Text = tF.text;
 					y_tile.LayoutParameters = par_y;
