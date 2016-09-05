@@ -19,6 +19,7 @@ namespace AlgeTiles.Activities
 	public class TutorialActivity : FragmentActivity, ViewPager.IOnPageChangeListener
 	{
 		public static ViewPager _viewPager;
+		private static string TAG = "TutorialActivity";
 
 		public void OnPageScrolled(int position, float positionOffset, int positionOffsetPixels)
 		{
@@ -48,7 +49,19 @@ namespace AlgeTiles.Activities
 			_viewPager = FindViewById<ViewPager>(Resource.Id.pager);
 			_viewPager.OffscreenPageLimit = 0;
 			_viewPager.Adapter = new TutorialFragmentAdapter(SupportFragmentManager);
+			//_viewPager.PageScrollStateChanged += _viewPager_PageScrollStateChanged;
+			//_viewPager.LayoutChange += _viewPager_LayoutChange;
 			//_viewPager.SetPageTransformer(true, new FadeTransformer());
+		}
+
+		private void _viewPager_LayoutChange(object sender, View.LayoutChangeEventArgs e)
+		{
+			Log.Debug(TAG, "_viewPager_LayoutChange");
+		}
+
+		private void _viewPager_PageScrollStateChanged(object sender, ViewPager.PageScrollStateChangedEventArgs e)
+		{
+			Log.Debug(TAG, "_viewPager_PageScrollStateChanged");
 		}
 	}
 
@@ -67,7 +80,6 @@ namespace AlgeTiles.Activities
 			Resource.Raw.var1,
 			Resource.Raw.var2
 		};
-
 
 		private List<Android.Support.V4.App.Fragment> tutorialPagesFragments { get; set; }
 

@@ -4,6 +4,7 @@
     <string name="ApplicationName">AlgeTiles</string>
 	<string name="Multiply">Multiply</string>
 	<string name="Factor">Factor</string>
+	<string name="Tutorial">Tutorial</string>
 	<string name="oneVar">1-Variable</string>
 	<string name="twoVar">2-Variables</string>
 	<string name="newQ">new Q</string>

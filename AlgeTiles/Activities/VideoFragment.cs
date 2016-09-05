@@ -20,7 +20,8 @@ using Android.Graphics;
 namespace AlgeTiles.Activities
 {
 	public class VideoFragment : Android.Support.V4.App.Fragment
-	{	
+	{
+		private static string TAG = "VideoFragment";
 		private VideoView vv;
 		private MediaController mediaController;
 		private int id;
@@ -31,7 +32,7 @@ namespace AlgeTiles.Activities
 		public override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
-
+			Log.Debug(TAG, "OnCreate");
 			// Create your fragment here
 		}
 
@@ -44,17 +45,13 @@ namespace AlgeTiles.Activities
 		public override void OnViewCreated(View view, Bundle savedInstanceState)
 		{
 			base.OnViewCreated(view, savedInstanceState);
+
+			Log.Debug(TAG, "OnViewCreated");
 			var metrics = Resources.DisplayMetrics;
 			vv = (VideoView)view.FindViewById(Resource.Id.video);
 			mediaController = new MediaController(Activity, true);
 			vv.SetMediaController(mediaController);
-			//SetMenuVisibility(true);
-		}
-
-		public override void OnResume()
-		{
-			base.OnResume();
-			vv.Start();
+			SetMenuVisibility(true);
 		}
 
 		public override void OnPause()
@@ -62,7 +59,9 @@ namespace AlgeTiles.Activities
 			base.OnPause();
 			vv.Prepared -= OnVideoPlayerPrepared;
 			vv.StopPlayback();
+			mediaController.Hide();
 			mediaController.Enabled = false;
+			Log.Debug(TAG, "OnPause");
 		}
 
 		public override void OnStart()
@@ -70,6 +69,15 @@ namespace AlgeTiles.Activities
 			base.OnStart();
 			vv.Prepared += OnVideoPlayerPrepared;
 			LaunchVideo();
+			Log.Debug(TAG, "OnStart");
+		}
+
+		public override void OnResume()
+		{
+			base.OnResume();
+			if (!vv.IsPlaying)
+				vv.Start();
+			Log.Debug(TAG, "OnResume");
 		}
 
 		public override void OnStop()
@@ -77,21 +85,25 @@ namespace AlgeTiles.Activities
 			base.OnStop();
 			vv.Prepared -= OnVideoPlayerPrepared;
 			vv.StopPlayback();
+			mediaController.Hide();
 			mediaController.Enabled = false;
+			Log.Debug(TAG, "OnStop");
 		}
 
 		public override void OnHiddenChanged(bool hidden)
 		{
 			base.OnHiddenChanged(hidden);
+			Log.Debug(TAG, "OnHiddenChanged:" + hidden.ToString());
 			if (hidden)
 			{
 				UserVisibleHint = false;
 				vv.Pause();
+				vv.StopPlayback();
 			}
 			else
 			{
 				UserVisibleHint = true;
-				LaunchVideo();
+				//LaunchVideo();
 			}
 		}
 
@@ -111,18 +123,20 @@ namespace AlgeTiles.Activities
 		public override void SetMenuVisibility(bool menuVisible)
 		{
 			base.SetMenuVisibility(menuVisible);
+			Log.Debug(TAG, "SetMenuVisibility:" + menuVisible.ToString());
 		}
 
 		private void OnVideoPlayerPrepared(object sender, EventArgs e)
 		{
+			Log.Debug(TAG, "OnVideoPlayerPrepared");
 			mediaController.SetAnchorView(vv);
-
 			//show media controls for 3 seconds when video starts to play
 			mediaController.Show(3000);
 		}
 
 		private void LaunchVideo()
 		{
+			Log.Debug(TAG, "LaunchVideo");
 			String uriPath = "android.resource://AlgeTiles.AlgeTiles/" + id;
 			var uri = Android.Net.Uri.Parse(uriPath);
 			vv.SetVideoURI(uri);

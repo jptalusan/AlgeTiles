@@ -57,6 +57,6 @@ namespace AlgeTiles
 
 		public const double X_LONG_SIDE = 3.0;
 		public const double ONE_SIDE = 9.0;
-		public const double Y_LONG_SIDE = 3.0;
+		public const double Y_LONG_SIDE = 2.6;
 	}
 }
