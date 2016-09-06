@@ -780,8 +780,7 @@ namespace AlgeTiles
 						double heightFactor = 0;
 						double widthFactor = 0;
 						TileUtilities.TileFactor tF = TileUtilities.getTileFactors(currentButtonType);
-						heightFactor = tF.heightFactor;
-						widthFactor = tF.widthFactor;
+						algeTilesIV.SetBackgroundResource(tF.id);
 
 						if (algeTilesIV.Text.Length > 1)
 						{
@@ -790,7 +789,13 @@ namespace AlgeTiles
 							cs.SetSpan(new RelativeSizeSpan(0.75f), 1, 2, SpanTypes.ExclusiveExclusive);
 							algeTilesIV.TextFormatted = cs;
 						}
+						else
+						{
+							algeTilesIV.Text = tF.text;
+						}
 
+						heightFactor = tF.heightFactor;
+						widthFactor = tF.widthFactor;
 						x = e.Event.GetX(); //width
 						y = e.Event.GetY(); //height
 
@@ -799,6 +804,7 @@ namespace AlgeTiles
 							Rect r = checkIfUserDropsOnRect(v.Id, currentButtonType, x, y, Constants.ADD);
 							if (null != r)
 							{
+								Log.Debug(TAG, "Dropped successfully.");
 								RelativeLayout.LayoutParams par = new RelativeLayout.LayoutParams(
 									ViewGroup.LayoutParams.WrapContent,
 									ViewGroup.LayoutParams.WrapContent);
@@ -876,6 +882,7 @@ namespace AlgeTiles
 
 		private Rect checkIfUserDropsOnRect(int vId, string tileType, float x, float y, int command)
 		{
+			Log.Debug(TAG, "checkIfUserDropsOnRect");
 			if (Resource.Id.upperLeft == vId)
 			{
 				foreach (RectTile r in upperLeftRectTileList)
