@@ -26,6 +26,11 @@ namespace AlgeTiles.Activities
 			IDIMG = id;
 		}
 
+		public void setIDIMG(int id)
+		{
+			IDIMG = id;
+		}
+
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			var view = inflater.Inflate(Resource.Layout.tutorial_fragment, container, false);

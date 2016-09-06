@@ -63,6 +63,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\FactorVideo.cs" />
+    <Compile Include="Activities\TextFragment.cs" />
     <Compile Include="Activities\TutorialActivity.cs" />
     <Compile Include="Activities\TutorialFragment.cs" />
     <Compile Include="Activities\VideoFragment.cs" />
@@ -122,6 +124,12 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout-land\tutorial_fragment.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout-land\button_fragment.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout-land\text_fragment.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

@@ -82,11 +82,12 @@ namespace AlgeTiles.Activities
 		};
 
 		private List<Android.Support.V4.App.Fragment> tutorialPagesFragments { get; set; }
-
+		
 		public TutorialFragmentAdapter(Android.Support.V4.App.FragmentManager fm) : base(fm)
 		{
 			tutorialPagesFragments = new List<Android.Support.V4.App.Fragment>
 			{
+				new TextFragment("Welcome to AlgeTiles tutorial. Please swipe to the left to continue. Press back anytime to quit."),
 				new TutorialFragment(tutorialPages[0]),
 				new TutorialFragment(tutorialPages[1]),
 				new TutorialFragment(tutorialPages[2]),
@@ -96,7 +97,8 @@ namespace AlgeTiles.Activities
 				new TutorialFragment(tutorialPages[6]),
 				new TutorialFragment(tutorialPages[7]),
 				new VideoFragment(tutorialPages[8]),
-				new VideoFragment(tutorialPages[9])
+				new VideoFragment(tutorialPages[9]),
+				new TextFragment("END. Please press back to return to main menu.")
 			};
 		}
 

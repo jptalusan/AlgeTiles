@@ -29,6 +29,7 @@ namespace AlgeTiles
 		public const string ROTATE = "rotate";
 
 		public const string VARIABLE_COUNT = "variable_count";
+		public const string VIDEO_ID = "video_id";
 
 		public const string ONE_TILE = "tile_1";
 		public const string X_TILE = "x_tile";
