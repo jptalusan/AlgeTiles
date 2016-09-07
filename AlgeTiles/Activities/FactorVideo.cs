@@ -31,7 +31,7 @@ namespace AlgeTiles.Activities
 			String uriPath = "android.resource://AlgeTiles.AlgeTiles/" + id;
 			var uri = Android.Net.Uri.Parse(uriPath);
 			mediaController.SetAnchorView(vv);
-			mediaController.Show(2000);
+			//mediaController.Show(2000);
 			vv.SetVideoURI(uri);
 			vv.RequestFocus();
 			vv.Start();
