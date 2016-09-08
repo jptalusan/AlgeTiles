@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  xmlns:whatever="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="0dp"
+    android:layout_gravity="center"
+    android:layout_centerInParent="true"
     android:background="#CFE2F3">
 <!-- Left Side -->
     <LinearLayout
@@ -12,7 +15,7 @@
         android:layout_height="match_parent"
         android:layout_weight="10"
         android:weightSum="204"
-        android:padding="0dp">
+        android:layout_marginBottom="-10dp">
     <!-- First Layer-->
         <LinearLayout
             android:orientation="horizontal"
@@ -21,17 +24,13 @@
             android:layout_weight="92"
             android:weightSum="200"
             android:padding="0dp">
-        <!-- Second Layer-->
         <!-- Upper Left -->
-            <GridLayout
+            <algetiles.AlgeTilesRelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
                 android:background="@drawable/shape"
-                android:id="@+id/upperLeft"
-                android:rowCount="6"
-                android:columnCount="4"
-                android:layout_gravity="right" />
+                android:id="@+id/upperLeft" />
         <!-- Upper Middle -->
             <GridLayout
                 android:layout_width="0px"
@@ -43,16 +42,14 @@
                 android:columnCount="1"
                 android:rotationX="180" />
         <!-- Upper Right -->
-            <GridLayout
+            <algetiles.AlgeTilesRelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
                 android:background="@drawable/shape"
-                android:id="@+id/upperRight"
-                android:rowCount="6"
-                android:columnCount="4" />
+                android:id="@+id/upperRight" />
         </LinearLayout>
-    <!-- Third Layer-->
+    <!-- Second Layer-->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -98,14 +95,12 @@
             android:weightSum="200"
             android:padding="0dp">
         <!-- Lower Left -->
-            <GridLayout
+            <algetiles.AlgeTilesRelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
                 android:background="@drawable/shape"
-                android:id="@+id/lowerLeft"
-                android:rowCount="6"
-                android:columnCount="4" />
+                android:id="@+id/lowerLeft" />
         <!-- Lower Middle -->
             <GridLayout
                 android:layout_width="0px"
@@ -116,14 +111,12 @@
                 android:rowCount="8"
                 android:columnCount="1" />
         <!-- Lower Right -->
-            <GridLayout
+            <algetiles.AlgeTilesRelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
                 android:background="@drawable/shape"
-                android:id="@+id/lowerRight"
-                android:rowCount="6"
-                android:columnCount="4" />
+                android:id="@+id/lowerRight" />
         </LinearLayout>
     </LinearLayout>
 <!-- Right Side -->
@@ -147,13 +140,14 @@
                 android:gravity="center" />
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:gravity="fill"
-                android:padding="0dp">
+                android:padding="0dp"
+				android:paddingRight="5dp">
                 <EditText
-                    android:hint="..."
+                    android:hint="......."
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="#ffffff"
@@ -161,7 +155,8 @@
                     android:id="@+id/x2_value"
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
-                    android:inputType="number" />
+                    android:inputType="numberSigned"
+                    android:gravity="center" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -169,7 +164,7 @@
                     android:textColor="#000000"
                     android:id="@+id/x2TV" />
                 <EditText
-                    android:hint="..."
+                    android:hint="......."
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="#ffffff"
@@ -177,15 +172,16 @@
                     android:id="@+id/x_value"
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
-                    android:inputType="number" />
+                    android:inputType="numberSigned"
+                    android:gravity="center" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="x + "
                     android:textColor="#000000"
-                    android:id="@+id/xTV" />
+                    android:id="@+id/xTV"/>
                 <EditText
-                    android:hint="..."
+                    android:hint="......."
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="#ffffff"
@@ -193,10 +189,11 @@
                     android:id="@+id/one_value"
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
-                    android:inputType="number" />
+                    android:inputType="numberSigned"
+                    android:gravity="center"/>
             </LinearLayout>
         <!-- First 0.5 (2) -->
-            <LinearLayout
+			<LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -204,15 +201,50 @@
                 android:weightSum="2"
                 android:gravity="fill"
                 android:padding="0dp">
-                <ToggleButton
+				<!-- Tutorial button -->
+				<Button
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Tutorial"
+					android:id="@+id/tutorial"
+					android:layout_weight="2" />
+				<ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/drag"
                     android:textOff="drag"
                     android:textOn="drag"
                     android:textSize="12sp"
+                    android:layout_weight="1"
+					android:visibility="gone" />
+				<ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rotate"
+                    android:textOff="rotate"
+                    android:textOn="rotate"
+                    android:textSize="12sp"
+                    android:layout_weight="1"
+					android:visibility="gone" />
+			</LinearLayout>
+			<!-- First 0.5 (2) -->
+			<LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:weightSum="2"
+                android:gravity="fill"
+                android:padding="0dp">
+				<ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/mute"
+                    android:textOff="mute"
+                    android:textOn="mute"
+                    android:textSize="12sp"
                     android:layout_weight="1" />
-                <ToggleButton
+				<ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/remove"
@@ -220,26 +252,8 @@
                     android:textOn="remove"
                     android:textSize="12sp"
                     android:layout_weight="1" />
-            </LinearLayout>
-        <!-- First 0.5 (2) -->
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="10"
-                android:weightSum="1"
-                android:gravity="fill"
-                android:padding="0dp">
-                <ToggleButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/rotate"
-                    android:textOff="rotate"
-                    android:textOn="rotate"
-                    android:textSize="12sp"
-                    android:layout_weight="1" />
-            </LinearLayout>
-        <!-- Second (1) -->
+			</LinearLayout>
+			<!-- Second (1) -->
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -264,31 +278,38 @@
         <!-- Third (4) Draggable Blocks Area -->
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="30"
                 android:weightSum="4"
-                android:gravity="fill"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:id="@+id/notRotatedButtonLayout"
+                android:paddingTop="10dp"
+				android:paddingLeft="10dp"
                 android:visibility="visible">
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:weightSum="4">
-                    <ImageButton
+                    android:weightSum="4"
+					android:gravity="center">
+                    <algetiles.AlgeTilesTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/tile_1"
+						android:text="1"
+                        whatever:tileType="tile_1"
                         android:id="@+id/tile_1"
-                        android:layout_weight="1" />
-                    <ImageButton
+                        android:layout_weight="1"/>
+					<Space
+						android:layout_width="15dp"
+						android:layout_height="15dp"/>
+                    <algetiles.AlgeTilesTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/x_tile"
+						android:text="x"
+                        whatever:tileType="x_tile"
                         android:id="@+id/x_tile"
                         android:layout_weight="3" />
                 </LinearLayout>
@@ -297,60 +318,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:weightSum="4">
-                    <ImageButton
-                        android:layout_width="wrap_content"
+                    android:weightSum="4"
+                    android:gravity="center">
+					<algetiles.AlgeTilesTextView
+						android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-                        android:layout_weight="4"
-                        android:src="@drawable/x2_tile"
-                        android:id="@+id/x2_tile" />
-                </LinearLayout>
-            </LinearLayout>
-        <!-- Rotated -->
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="30"
-                android:weightSum="4"
-                android:gravity="fill"
-                android:id="@+id/rotatedButtonLayout"
-                android:visibility="gone">
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:weightSum="4">
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-                        android:layout_weight="1"
-                        android:src="@drawable/tile_1"
-                        android:id="@+id/tile_1_rot" />
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-                        android:layout_weight="3"
-                        android:src="@drawable/x_tile_rot"
-                        android:id="@+id/x_tile_rot" />
-                </LinearLayout>
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:weightSum="4">
-                    <ImageButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitXY"
-                        android:layout_weight="4"
-                        android:src="@drawable/x2_tile"
-                        android:id="@+id/x2_tile_rot" />
+						android:text="x2"
+						whatever:tileType="x2_tile"
+                        android:id="@+id/x2_tile"/>
                 </LinearLayout>
             </LinearLayout>
         <!-- Fourth (1) -->
