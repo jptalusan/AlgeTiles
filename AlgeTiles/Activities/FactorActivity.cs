@@ -294,7 +294,6 @@ namespace AlgeTiles
 					if (rotateToggle.Checked)
 					{
 						FindViewById<LinearLayout>(Resource.Id.notRotatedButtonLayout).Visibility = ViewStates.Visible;
-						FindViewById<LinearLayout>(Resource.Id.rotatedButtonLayout).Visibility = ViewStates.Gone;
 					}
 					rotateToggle.Checked = rotateToggle.Checked ? false : false;
 					break;
@@ -303,7 +302,6 @@ namespace AlgeTiles
 					if (rotateToggle.Checked)
 					{
 						FindViewById<LinearLayout>(Resource.Id.notRotatedButtonLayout).Visibility = ViewStates.Visible;
-						FindViewById<LinearLayout>(Resource.Id.rotatedButtonLayout).Visibility = ViewStates.Gone;
 					}
 					rotateToggle.Checked = rotateToggle.Checked ? false : false;
 					break;
@@ -312,12 +310,10 @@ namespace AlgeTiles
 					if (rotateToggle.Checked)
 					{
 						FindViewById<LinearLayout>(Resource.Id.notRotatedButtonLayout).Visibility = ViewStates.Gone;
-						FindViewById<LinearLayout>(Resource.Id.rotatedButtonLayout).Visibility = ViewStates.Visible;
 					}
 					else
 					{
 						FindViewById<LinearLayout>(Resource.Id.notRotatedButtonLayout).Visibility = ViewStates.Visible;
-						FindViewById<LinearLayout>(Resource.Id.rotatedButtonLayout).Visibility = ViewStates.Gone;
 					}
 					removeToggle.Checked = removeToggle.Checked ? false : false;
 					dragToggle.Checked = dragToggle.Checked ? false : false;
@@ -489,7 +485,22 @@ namespace AlgeTiles
 			{
 				GridValue[] gvArr = { upperLeftGV, upperRightGV, lowerLeftGV, lowerRightGV };
 
-				if (AlgorithmUtilities.isSecondAnswerCorrect(expandedVars, gvArr, numberOfVariables))
+				int totalRects = 0;
+				foreach (List<RectTile> rList in rectTileListList)
+				{
+					totalRects += rList.Count;
+				}
+				Log.Debug(TAG, "total Rects: " + totalRects);
+
+				int totalTiles = 0;
+				foreach (GridValue gV in gvArr)
+				{
+					totalTiles += gV.getCount();
+				}
+				Log.Debug(TAG, "total tiles: " + totalTiles);
+
+				if (AlgorithmUtilities.isSecondAnswerCorrect(expandedVars, gvArr, numberOfVariables) &&
+					(totalRects == totalTiles))
 				{
 					Toast.MakeText(Application.Context, "2:correct", ToastLength.Short).Show();
 					if (!muteToggle.Checked)
@@ -1161,17 +1172,12 @@ namespace AlgeTiles
 			switch (imageViewTouch.Id)
 			{
 				case Resource.Id.tile_1:
-				case Resource.Id.tile_1_rot:
 					data = ClipData.NewPlainText(BUTTON_TYPE, Constants.ONE_TILE);
 					break;
 				case Resource.Id.x_tile:
 					data = ClipData.NewPlainText(BUTTON_TYPE, Constants.X_TILE);
 					break;
-				case Resource.Id.x_tile_rot:
-					data = ClipData.NewPlainText(BUTTON_TYPE, Constants.X_TILE_ROT);
-					break;
 				case Resource.Id.x2_tile:
-				case Resource.Id.x2_tile_rot:
 					data = ClipData.NewPlainText(BUTTON_TYPE, Constants.X2_TILE);
 					break;
 			}

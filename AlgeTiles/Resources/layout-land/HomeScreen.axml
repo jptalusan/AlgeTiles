@@ -5,61 +5,61 @@
     android:layout_height="match_parent"
     android:weightSum="2"
     android:gravity="center">
-    <LinearLayout
+	<LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center">
-        <LinearLayout
+		<LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center">
-            <Button
+			<Button
                 android:text="@string/Factor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/factor_button" />
-            <Button
+			<Button
+				android:text="@string/oneVar"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/one_variable_button"
+				android:visibility="gone" />			
+			<Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="invisible" />
-        </LinearLayout>
-        <Button
-            android:text="@string/oneVar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/one_variable_button"
-            android:visibility="gone" />
-    </LinearLayout>
-    <LinearLayout
+		</LinearLayout>
+	</LinearLayout>
+	<LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center">
-        <LinearLayout
+		<LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center">
-            <Button
+			<Button
                 android:text="@string/Multiply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/multiply_button" />
-            <Button
+			<Button
+				android:text="@string/twoVar"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/two_variable_button"
+				android:visibility="gone" />
+			<Button
                 android:text="@string/Tutorial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tutorial_button" />
-        </LinearLayout>
-        <Button
-            android:text="@string/twoVar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/two_variable_button"
-            android:visibility="gone" />
-    </LinearLayout>
+		</LinearLayout>
+	</LinearLayout>
 </LinearLayout>

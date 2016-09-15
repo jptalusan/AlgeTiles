@@ -132,5 +132,10 @@ namespace AlgeTiles
 		{
 			return (String.Format("x2:{0}, y2:{1}, xy:{2}, x:{3}, y:{4}, one:{5}", x2Val, y2Val, xyVal, xVal, yVal, oneVal));
 		}
+
+		public int getCount()
+		{
+			return x2Val + y2Val + xyVal + xVal + yVal + oneVal;
+		}
 	}
 }

@@ -75,7 +75,7 @@ namespace AlgeTiles
 
 			multiplyActivityButton.Visibility = ViewStates.Gone;
 			factorActivityButton.Visibility = ViewStates.Gone;
-			tutorialButton.Visibility = ViewStates.Gone;
+			tutorialButton.Visibility = ViewStates.Invisible;
 
 			oneVarBtn.Visibility = ViewStates.Visible;
 			if (Constants.FACTOR == button.Text) //Since Factor only uses 1 variable

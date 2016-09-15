@@ -46,7 +46,7 @@ namespace AlgeTiles.Activities
 			iv = (ImageView)view.FindViewById(Resource.Id.imageview_card);
 			var t = Task.Run(async () =>
 			{
-				iv.SetImageBitmap(await LocalImageService.LoadDrawableAsync(Resources, IDIMG, widthInDp / 2, heightInDp / 2));
+				iv.SetImageBitmap(await LocalImageService.LoadDrawableAsync(Resources, IDIMG, widthInDp, heightInDp));
 			});
 			t.Wait();
 			//Button clicks?

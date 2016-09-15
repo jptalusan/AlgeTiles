@@ -292,7 +292,6 @@ namespace AlgeTiles
 					if (a.rotateToggle.Checked)
 					{
 						a.FindViewById<LinearLayout>(Resource.Id.notRotatedButtonLayout).Visibility = ViewStates.Visible;
-						a.FindViewById<LinearLayout>(Resource.Id.rotatedButtonLayout).Visibility = ViewStates.Gone;
 					}
 					a.rotateToggle.Checked = a.rotateToggle.Checked ? false : false;
 					break;
@@ -301,7 +300,6 @@ namespace AlgeTiles
 					if (a.rotateToggle.Checked)
 					{
 						a.FindViewById<LinearLayout>(Resource.Id.notRotatedButtonLayout).Visibility = ViewStates.Visible;
-						a.FindViewById<LinearLayout>(Resource.Id.rotatedButtonLayout).Visibility = ViewStates.Gone;
 					}
 					a.rotateToggle.Checked = a.rotateToggle.Checked ? false : false;
 					break;
@@ -310,12 +308,10 @@ namespace AlgeTiles
 					if (a.rotateToggle.Checked)
 					{
 						a.FindViewById<LinearLayout>(Resource.Id.notRotatedButtonLayout).Visibility = ViewStates.Gone;
-						a.FindViewById<LinearLayout>(Resource.Id.rotatedButtonLayout).Visibility = ViewStates.Visible;
 					}
 					else
 					{
 						a.FindViewById<LinearLayout>(Resource.Id.notRotatedButtonLayout).Visibility = ViewStates.Visible;
-						a.FindViewById<LinearLayout>(Resource.Id.rotatedButtonLayout).Visibility = ViewStates.Gone;
 					}
 					a.removeToggle.Checked = a.removeToggle.Checked ? false : false;
 					a.dragToggle.Checked = a.dragToggle.Checked ? false : false;

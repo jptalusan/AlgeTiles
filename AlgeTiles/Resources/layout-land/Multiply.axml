@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  xmlns:whatever="http://schemas.android.com/apk/res-auto"
+    xmlns:whatever="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -145,7 +145,7 @@
                 android:layout_weight="5"
                 android:gravity="fill"
                 android:padding="0dp"
-				android:paddingRight="5dp">
+                android:paddingRight="5dp">
                 <EditText
                     android:hint="......."
                     android:layout_width="wrap_content"
@@ -179,7 +179,7 @@
                     android:layout_height="match_parent"
                     android:text="x + "
                     android:textColor="#000000"
-                    android:id="@+id/xTV"/>
+                    android:id="@+id/xTV" />
                 <EditText
                     android:hint="......."
                     android:layout_width="wrap_content"
@@ -190,10 +190,10 @@
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
-                    android:gravity="center"/>
+                    android:gravity="center" />
             </LinearLayout>
         <!-- First 0.5 (2) -->
-			<LinearLayout
+            <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -201,14 +201,14 @@
                 android:weightSum="2"
                 android:gravity="fill"
                 android:padding="0dp">
-				<!-- Tutorial button -->
-				<Button
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:text="Tutorial"
-					android:id="@+id/tutorial"
-					android:layout_weight="2" />
-				<ToggleButton
+            <!-- Tutorial button -->
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tutorial"
+                    android:id="@+id/tutorial"
+                    android:layout_weight="2" />
+                <ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/drag"
@@ -216,8 +216,8 @@
                     android:textOn="drag"
                     android:textSize="12sp"
                     android:layout_weight="1"
-					android:visibility="gone" />
-				<ToggleButton
+                    android:visibility="gone" />
+                <ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/rotate"
@@ -225,10 +225,10 @@
                     android:textOn="rotate"
                     android:textSize="12sp"
                     android:layout_weight="1"
-					android:visibility="gone" />
-			</LinearLayout>
-			<!-- First 0.5 (2) -->
-			<LinearLayout
+                    android:visibility="gone" />
+            </LinearLayout>
+        <!-- First 0.5 (2) -->
+            <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -236,7 +236,7 @@
                 android:weightSum="2"
                 android:gravity="fill"
                 android:padding="0dp">
-				<ToggleButton
+                <ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/mute"
@@ -244,7 +244,7 @@
                     android:textOn="mute"
                     android:textSize="12sp"
                     android:layout_weight="1" />
-				<ToggleButton
+                <ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/remove"
@@ -252,8 +252,8 @@
                     android:textOn="remove"
                     android:textSize="12sp"
                     android:layout_weight="1" />
-			</LinearLayout>
-			<!-- Second (1) -->
+            </LinearLayout>
+        <!-- Second (1) -->
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -277,56 +277,37 @@
             </LinearLayout>
         <!-- Third (4) Draggable Blocks Area -->
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="30"
-                android:weightSum="4"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:id="@+id/notRotatedButtonLayout"
-                android:paddingTop="10dp"
-				android:paddingLeft="10dp"
-                android:visibility="visible">
-                <LinearLayout
-                    android:orientation="vertical"
+				android:padding="5dp"
+				android:layout_gravity="center"
+                android:gravity="center">
+                <algetiles.AlgeTilesTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:weightSum="4"
-					android:gravity="center">
-                    <algetiles.AlgeTilesTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-						android:text="1"
-                        whatever:tileType="tile_1"
-                        android:id="@+id/tile_1"
-                        android:layout_weight="1"/>
-					<Space
-						android:layout_width="15dp"
-						android:layout_height="15dp"/>
-                    <algetiles.AlgeTilesTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-						android:text="x"
-                        whatever:tileType="x_tile"
-                        android:id="@+id/x_tile"
-                        android:layout_weight="3" />
-                </LinearLayout>
-                <LinearLayout
-                    android:orientation="vertical"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    whatever:tileType="tile_1"
+                    android:id="@+id/tile_1" />
+                <Space
+                    android:layout_width="15dp"
+                    android:layout_height="15dp" />
+                <algetiles.AlgeTilesTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:weightSum="4"
-                    android:gravity="center">
-					<algetiles.AlgeTilesTextView
-						android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-						android:text="x2"
-						whatever:tileType="x2_tile"
-                        android:id="@+id/x2_tile"/>
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:text="x"
+                    whatever:tileType="x_tile"
+                    android:id="@+id/x_tile" />
+				<Space
+                    android:layout_width="15dp"
+                    android:layout_height="15dp" />
+				<algetiles.AlgeTilesTextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="x2"
+					whatever:tileType="x2_tile"
+					android:id="@+id/x2_tile" />
             </LinearLayout>
         <!-- Fourth (1) -->
             <LinearLayout
