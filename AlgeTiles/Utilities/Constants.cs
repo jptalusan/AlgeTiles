@@ -53,6 +53,7 @@ namespace AlgeTiles
 		public const int SUBTRACT = 0;
 		public const int ADD = 1;
 		public const int DELAY = 1500;
+		public const int CANCELOUT_DELAY = 1500;
 
 		public const double SNAP_GRID_INTERVAL = 9.0; //TODO: Move to constants
 

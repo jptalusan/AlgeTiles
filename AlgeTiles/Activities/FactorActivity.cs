@@ -516,8 +516,20 @@ namespace AlgeTiles
 						{
 							var iv = outerGridLayoutList[i].GetChildAt(j) as View;
 							iv.LongClick -= clonedImageView_Touch;
+							iv.Visibility = ViewStates.Gone;
 						}
 					}
+
+					//Removing outer grid after 1st correct
+					upperRightGrid.clearRects(heightInPx, widthInPx);
+					upperLeftGrid.clearRects(heightInPx, widthInPx);
+					lowerRightGrid.clearRects(heightInPx, widthInPx);
+					lowerLeftGrid.clearRects(heightInPx, widthInPx);
+
+					upperRightRectTileList.Clear();
+					upperLeftRectTileList.Clear();
+					lowerRightRectTileList.Clear();
+					lowerLeftRectTileList.Clear();
 
 					//Shade red the other grids
 					for (int i = 0; i < innerGridLayoutList.Count; ++i)

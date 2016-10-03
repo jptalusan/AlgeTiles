@@ -141,7 +141,7 @@ namespace AlgeTiles
 				gvList[i].SetBackgroundResource(Resource.Drawable.shape);
 		}
 
-		public void checkAnswers()
+		public async void checkAnswers()
 		{
 			if (!isFirstAnswerCorrect)
 			{
@@ -169,6 +169,7 @@ namespace AlgeTiles
 						{
 							var iv = innerGridLayoutList[i].GetChildAt(j) as AlgeTilesTextView;
 							iv.LongClick -= listeners.clonedImageView_Touch;
+							iv.Visibility = ViewStates.Gone;
 						}
 					}
 
@@ -318,107 +319,134 @@ namespace AlgeTiles
 						}
 					}
 
+					int xToRemove = posX > negX ? negX : posX;
+					List<AlgeTilesTextView> tobeRemovedX = new List<AlgeTilesTextView>();
+					List<AlgeTilesTextView> negTobeRemovedX = new List<AlgeTilesTextView>();
 					if (posX != 0 && negX != 0)
 					{
 						Log.Debug(TAG, "Cancelling out: " + posX + ", " + negX);
-						int xToRemove = posX > negX ? negX : posX;
 						Log.Debug(TAG, "To remove: " + xToRemove);
-						List<AlgeTilesTextView> tobeRemoved = new List<AlgeTilesTextView>();
 						for (int j = 0; j < posXVG.ChildCount; ++j)
 						{
 							AlgeTilesTextView alIV = posXVG.GetChildAt(j) as AlgeTilesTextView;
 							if (alIV.getTileType().Equals(Constants.X_TILE) ||
 								alIV.getTileType().Equals(Constants.X_TILE_ROT))
 							{
-								tobeRemoved.Add(alIV);
+								tobeRemovedX.Add(alIV);
 							}
 						}
 
-						List<AlgeTilesTextView> negTobeRemoved = new List<AlgeTilesTextView>();
 						for (int j = 0; j < negXVG.ChildCount; ++j)
 						{
 							AlgeTilesTextView negalIV = negXVG.GetChildAt(j) as AlgeTilesTextView;
 							if (negalIV.getTileType().Equals(Constants.X_TILE) ||
 								negalIV.getTileType().Equals(Constants.X_TILE_ROT))
 							{
-								negTobeRemoved.Add(negalIV);
+								negTobeRemovedX.Add(negalIV);
 							}
-						}
-
-						for (int j = 0; j < xToRemove; ++j)
-						{
-							posXVG.RemoveView(tobeRemoved[j]);
-							negXVG.RemoveView(negTobeRemoved[j]);
 						}
 					}
 
+					int yToRemove = posY > negY ? negY : posY;
+					List<AlgeTilesTextView> tobeRemovedY = new List<AlgeTilesTextView>();
+					List<AlgeTilesTextView> negTobeRemovedY = new List<AlgeTilesTextView>();
 					if (posY != 0 && negY != 0)
 					{
 						Log.Debug(TAG, "Cancelling out: " + posY + ", " + negY);
-						int yToRemove = posY > negY ? negY : posY;
 						Log.Debug(TAG, "To remove: " + yToRemove);
-						List<AlgeTilesTextView> tobeRemoved = new List<AlgeTilesTextView>();
 						for (int j = 0; j < posYVG.ChildCount; ++j)
 						{
 							AlgeTilesTextView alIV = posYVG.GetChildAt(j) as AlgeTilesTextView;
 							if (alIV.getTileType().Equals(Constants.Y_TILE) ||
 								alIV.getTileType().Equals(Constants.Y_TILE_ROT))
 							{
-								tobeRemoved.Add(alIV);
+								tobeRemovedY.Add(alIV);
 							}
 						}
 
-						List<AlgeTilesTextView> negTobeRemoved = new List<AlgeTilesTextView>();
 						for (int j = 0; j < negYVG.ChildCount; ++j)
 						{
 							AlgeTilesTextView negalIV = negYVG.GetChildAt(j) as AlgeTilesTextView;
 							if (negalIV.getTileType().Equals(Constants.Y_TILE) ||
 								negalIV.getTileType().Equals(Constants.Y_TILE_ROT))
 							{
-								negTobeRemoved.Add(negalIV);
+								negTobeRemovedY.Add(negalIV);
 							}
-						}
-
-						for (int j = 0; j < yToRemove; ++j)
-						{
-							posYVG.RemoveView(tobeRemoved[j]);
-							negYVG.RemoveView(negTobeRemoved[j]);
 						}
 					}
 
+					int xyToRemove = posXY > negXY ? negXY : posXY;
+					List<AlgeTilesTextView> tobeRemovedXY = new List<AlgeTilesTextView>();
+					List<AlgeTilesTextView> negTobeRemovedXY = new List<AlgeTilesTextView>();
 					if (posXY != 0 && negXY != 0)
 					{
-						Log.Debug(TAG, "Cancelling out: " + posXY + ", " + negXY);
-						int xyToRemove = posXY > negXY ? negXY : posXY;
+						Log.Debug(TAG, "Cancelling out: " + posXY + ", " + negXY);						
 						Log.Debug(TAG, "To remove: " + xyToRemove);
-						List<AlgeTilesTextView> tobeRemoved = new List<AlgeTilesTextView>();
+						
 						for (int j = 0; j < posXYVG.ChildCount; ++j)
 						{
 							AlgeTilesTextView alIV = posXYVG.GetChildAt(j) as AlgeTilesTextView;
 							if (alIV.getTileType().Equals(Constants.XY_TILE) ||
 								alIV.getTileType().Equals(Constants.XY_TILE_ROT))
 							{
-								tobeRemoved.Add(alIV);
+								tobeRemovedXY.Add(alIV);
 							}
 						}
 
-						List<AlgeTilesTextView> negTobeRemoved = new List<AlgeTilesTextView>();
+						
 						for (int j = 0; j < negXYVG.ChildCount; ++j)
 						{
 							AlgeTilesTextView negalIV = negXYVG.GetChildAt(j) as AlgeTilesTextView;
 							if (negalIV.getTileType().Equals(Constants.XY_TILE) ||
 								negalIV.getTileType().Equals(Constants.XY_TILE_ROT))
 							{
-								negTobeRemoved.Add(negalIV);
+								negTobeRemovedXY.Add(negalIV);
 							}
 						}
-
-						for (int j = 0; j < xyToRemove; ++j)
-						{
-							posXYVG.RemoveView(tobeRemoved[j]);
-							negXYVG.RemoveView(negTobeRemoved[j]);
-						}
 					}
+
+					//Added changing color of tiles to be cancelled and 2 second delay before cancelling out
+					for (int j = 0; j < xToRemove; ++j)
+					{
+						tobeRemovedX[j].SetBackgroundResource(Resource.Drawable.cancelling);
+						negTobeRemovedX[j].SetBackgroundResource(Resource.Drawable.cancelling);
+					}
+
+					for (int j = 0; j < yToRemove; ++j)
+					{
+						tobeRemovedY[j].SetBackgroundResource(Resource.Drawable.cancelling);
+						negTobeRemovedY[j].SetBackgroundResource(Resource.Drawable.cancelling);
+					}
+
+
+					for (int j = 0; j < xyToRemove; ++j)
+					{
+						tobeRemovedXY[j].SetBackgroundResource(Resource.Drawable.cancelling);
+						negTobeRemovedXY[j].SetBackgroundResource(Resource.Drawable.cancelling);
+					}
+
+					await Task.Delay(Constants.CANCELOUT_DELAY);
+
+					for (int j = 0; j < xToRemove; ++j)
+					{
+						posXVG.RemoveView(tobeRemovedX[j]);
+						negXVG.RemoveView(negTobeRemovedX[j]);
+					}
+
+					for (int j = 0; j < yToRemove; ++j)
+					{
+						posYVG.RemoveView(tobeRemovedY[j]);
+						negYVG.RemoveView(negTobeRemovedY[j]);
+					}
+
+
+					for (int j = 0; j < xyToRemove; ++j)
+					{
+						posXYVG.RemoveView(tobeRemovedXY[j]);
+						negXYVG.RemoveView(negTobeRemovedXY[j]);
+					}
+
+
 					//End Cancelling out
 					Toast.MakeText(Application.Context, "2:correct", ToastLength.Short).Show();
 					if (!muteToggle.Checked)
