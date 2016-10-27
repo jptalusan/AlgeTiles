@@ -516,20 +516,9 @@ namespace AlgeTiles
 						{
 							var iv = outerGridLayoutList[i].GetChildAt(j) as View;
 							iv.LongClick -= clonedImageView_Touch;
-							iv.Visibility = ViewStates.Gone;
+							//iv.Visibility = ViewStates.Gone;
 						}
 					}
-
-					//Removing outer grid after 1st correct
-					upperRightGrid.clearRects(heightInPx, widthInPx);
-					upperLeftGrid.clearRects(heightInPx, widthInPx);
-					lowerRightGrid.clearRects(heightInPx, widthInPx);
-					lowerLeftGrid.clearRects(heightInPx, widthInPx);
-
-					upperRightRectTileList.Clear();
-					upperLeftRectTileList.Clear();
-					lowerRightRectTileList.Clear();
-					lowerLeftRectTileList.Clear();
 
 					//Shade red the other grids
 					for (int i = 0; i < innerGridLayoutList.Count; ++i)
@@ -572,7 +561,30 @@ namespace AlgeTiles
 							iv.LongClick -= clonedImageView_Touch;
 						}
 					}
+
+					//10-28-2016: Daniel said to remove the innerGridLayout images after second correct
+					for (int i = 0; i < outerGridLayoutList.Count; ++i)
+					{
+						for (int j = 0; j < outerGridLayoutList[i].ChildCount; ++j)
+						{
+							var iv = outerGridLayoutList[i].GetChildAt(j) as AlgeTilesTextView;
+							iv.Visibility = ViewStates.Invisible;
+						}
+					}
+
 					expandedVars = AlgorithmUtilities.expandingVars(vars);
+
+					//Removing outer grid after 2nd correct (10-28-2016)
+					upperRightGrid.clearRects(heightInPx, widthInPx);
+					upperLeftGrid.clearRects(heightInPx, widthInPx);
+					lowerRightGrid.clearRects(heightInPx, widthInPx);
+					lowerLeftGrid.clearRects(heightInPx, widthInPx);
+
+					upperRightRectTileList.Clear();
+					upperLeftRectTileList.Clear();
+					lowerRightRectTileList.Clear();
+					lowerLeftRectTileList.Clear();
+
 					Toast.MakeText(Application.Context, "1:correct", ToastLength.Short).Show();
 					if (!muteToggle.Checked)
 						correct.Start();

@@ -169,7 +169,7 @@ namespace AlgeTiles
 						{
 							var iv = innerGridLayoutList[i].GetChildAt(j) as AlgeTilesTextView;
 							iv.LongClick -= listeners.clonedImageView_Touch;
-							iv.Visibility = ViewStates.Gone;
+							//iv.Visibility = ViewStates.Gone;
 						}
 					}
 
@@ -425,7 +425,8 @@ namespace AlgeTiles
 						negTobeRemovedXY[j].SetBackgroundResource(Resource.Drawable.cancelling);
 					}
 
-					await Task.Delay(Constants.CANCELOUT_DELAY);
+					if (xToRemove + yToRemove + xyToRemove > 0)
+						await Task.Delay(Constants.CANCELOUT_DELAY);
 
 					for (int j = 0; j < xToRemove; ++j)
 					{
@@ -444,10 +445,9 @@ namespace AlgeTiles
 					{
 						posXYVG.RemoveView(tobeRemovedXY[j]);
 						negXYVG.RemoveView(negTobeRemovedXY[j]);
-					}
-
-
+					}		
 					//End Cancelling out
+
 					Toast.MakeText(Application.Context, "2:correct", ToastLength.Short).Show();
 					if (!muteToggle.Checked)
 						correct.Start();
@@ -463,6 +463,18 @@ namespace AlgeTiles
 							iv.LongClick -= listeners.clonedImageView_Touch;
 						}
 					}
+
+					//Removing outer grid after 2nd correct (10-28-2016)
+					upperRightGrid.clearRects(heightInPx, widthInPx);
+					upperLeftGrid.clearRects(heightInPx, widthInPx);
+					lowerRightGrid.clearRects(heightInPx, widthInPx);
+					lowerLeftGrid.clearRects(heightInPx, widthInPx);
+
+					upperRightRectTileList.Clear();
+					upperLeftRectTileList.Clear();
+					lowerRightRectTileList.Clear();
+					lowerLeftRectTileList.Clear();
+
 					isSecondAnswerCorrect = true;
 				}
 				else
