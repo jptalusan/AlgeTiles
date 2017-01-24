@@ -41,8 +41,8 @@ namespace AlgeTiles.Activities
 		{
 			base.OnViewCreated(view, savedInstanceState);
 			var metrics = Resources.DisplayMetrics;
-			var widthInDp = ConvertPixelsToDp(metrics.WidthPixels);
-			var heightInDp = ConvertPixelsToDp(metrics.HeightPixels);
+			var widthInDp = ConvertPixelsToDp(metrics.WidthPixels/2);
+			var heightInDp = ConvertPixelsToDp(metrics.HeightPixels/2);
 			iv = (ImageView)view.FindViewById(Resource.Id.imageview_card);
 			var t = Task.Run(async () =>
 			{

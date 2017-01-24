@@ -72,6 +72,7 @@ namespace AlgeTiles
 					TileUtilities.TileFactor tF = TileUtilities.getTileFactors(tile_1.getTileType());
 					par_1.Height = heightInPx / 7;
 					par_1.Width = heightInPx / 7;
+					//tile_1.setDimensions(par_1.Height, par_1.Width);
 					tile_1.SetBackgroundResource(tF.id);
 					tile_1.Text = tF.text;
 					tile_1.LayoutParameters = par_1;
@@ -81,6 +82,7 @@ namespace AlgeTiles
 					tF = TileUtilities.getTileFactors(x_tile.getTileType());
 					par_x.Height = (int)(heightInPx / tF.heightFactor);
 					par_x.Width = heightInPx / 7;
+					//x_tile.setDimensions(par_x.Height, par_x.Width);
 					x_tile.SetBackgroundResource(tF.id);
 					x_tile.Text = tF.text;
 					x_tile.LayoutParameters = par_x;
@@ -90,6 +92,7 @@ namespace AlgeTiles
 					tF = TileUtilities.getTileFactors(x2_tile.getTileType());
 					par_x2.Height = (int)(heightInPx / tF.heightFactor);
 					par_x2.Width = (int)(heightInPx / tF.widthFactor);
+					//x2_tile.setDimensions(par_x2.Height, par_x2.Width);
 					x2_tile.SetBackgroundResource(tF.id);
 					if (tF.text.Length > 1 && !tF.text.Equals("xy"))
 					{

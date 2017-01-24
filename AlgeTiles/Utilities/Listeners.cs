@@ -189,24 +189,27 @@ namespace AlgeTiles
 								container.AddView(algeTilesIV);
 								TileUtilities.checkWhichParentAndUpdate(v.Id, a.currentButtonType, Constants.ADD, a.gridValueList);
 								a.hasButtonBeenDroppedInCorrectzone = true;
+								//algeTilesIV.setDimensions(par.Height, par.Width);
+
 							}
 						}
 						else
 						{
 							GridLayout.LayoutParams gParms = new GridLayout.LayoutParams();
-							if (v.Id == Resource.Id.middleLeft ||
-							 v.Id == Resource.Id.middleRight)
+							if (v.Id == Resource.Id.middleLeft || v.Id == Resource.Id.middleRight)
 							{
-								gParms.SetGravity(GravityFlags.FillVertical);
-								gParms.Width = (int)(a.heightInPx / heightFactor);
+								gParms.SetGravity(GravityFlags.Center);
 								gParms.Height = (int)(a.heightInPx / widthFactor);
+								gParms.Width = (int)(a.heightInPx / heightFactor);
 							}
 							else
 							{
-								gParms.SetGravity(GravityFlags.FillHorizontal);
+								gParms.SetGravity(GravityFlags.Center);
 								gParms.Height = (int)(a.heightInPx / heightFactor);
 								gParms.Width = (int)(a.heightInPx / widthFactor);
 							}
+							//algeTilesIV.setDimensions(gParms.Height, gParms.Width);
+
 							algeTilesIV.LayoutParameters = gParms;
 							algeTilesIV.LongClick += a.listeners.clonedImageView_Touch;
 							container.AddView(algeTilesIV);
@@ -228,6 +231,7 @@ namespace AlgeTiles
 							}
 							//End of auto re-arrange
 						}
+
 						view.Visibility = ViewStates.Visible;
 						v.SetBackgroundResource(Resource.Drawable.shape);
 					}

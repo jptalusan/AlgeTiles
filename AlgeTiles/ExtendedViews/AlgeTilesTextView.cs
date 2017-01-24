@@ -18,6 +18,8 @@ namespace AlgeTiles
 	public class AlgeTilesTextView : TextView
 	{
 		private string tileType;
+		private int height;
+		private int width;
 		
 		public AlgeTilesTextView(Context context) :
             base(context)
@@ -25,6 +27,7 @@ namespace AlgeTiles
 			this.TextAlignment = TextAlignment.Center;
 			this.Gravity = GravityFlags.Center;
 			this.SetTextColor(Color.Black);
+			//this.SetTextSize(ComplexUnitType.Px, height);
 		}
 		public AlgeTilesTextView(Context context, IAttributeSet attrs) :
             base(context, attrs)
@@ -37,6 +40,7 @@ namespace AlgeTiles
 			this.TextAlignment = TextAlignment.Center;
 			this.Gravity = GravityFlags.Center;
 			this.SetTextColor(Color.Black);
+			//this.SetTextSize(ComplexUnitType.Px, height);
 			a.Recycle();
 		}
 
@@ -54,6 +58,12 @@ namespace AlgeTiles
 		public string getTileType()
 		{
 			return tileType;
+		}
+
+		public void setDimensions(int height, int width)
+		{
+			this.height = height;
+			this.width = width;
 		}
 	}
 }

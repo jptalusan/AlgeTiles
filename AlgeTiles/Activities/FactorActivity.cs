@@ -857,16 +857,15 @@ namespace AlgeTiles
 						else
 						{
 							GridLayout.LayoutParams gParms = new GridLayout.LayoutParams();
-							if (v.Id == Resource.Id.middleLeft ||
-							 v.Id == Resource.Id.middleRight)
+							if (v.Id == Resource.Id.middleLeft || v.Id == Resource.Id.middleRight)
 							{
-								gParms.SetGravity(GravityFlags.FillVertical);
-								gParms.Width = (int)(heightInPx / heightFactor);
+								gParms.SetGravity(GravityFlags.Center);
 								gParms.Height = (int)(heightInPx / widthFactor);
+								gParms.Width = (int)(heightInPx / heightFactor);
 							}
 							else
 							{
-								gParms.SetGravity(GravityFlags.FillHorizontal);
+								gParms.SetGravity(GravityFlags.Center);
 								gParms.Height = (int)(heightInPx / heightFactor);
 								gParms.Width = (int)(heightInPx / widthFactor);
 							}
