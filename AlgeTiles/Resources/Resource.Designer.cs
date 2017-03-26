@@ -78,79 +78,97 @@ namespace AlgeTiles
 			public const int one = 2130837513;
 			
 			// aapt resource value: 0x7f02000a
-			public const int remove = 2130837514;
+			public const int one_selected = 2130837514;
 			
 			// aapt resource value: 0x7f02000b
-			public const int remove_normal = 2130837515;
+			public const int one_selector = 2130837515;
 			
 			// aapt resource value: 0x7f02000c
-			public const int remove_pressed = 2130837516;
+			public const int remove = 2130837516;
 			
 			// aapt resource value: 0x7f02000d
-			public const int rotate = 2130837517;
+			public const int remove_normal = 2130837517;
 			
 			// aapt resource value: 0x7f02000e
-			public const int rotate_normal = 2130837518;
+			public const int remove_pressed = 2130837518;
 			
 			// aapt resource value: 0x7f02000f
-			public const int rotate_pressed = 2130837519;
+			public const int rotate = 2130837519;
 			
 			// aapt resource value: 0x7f020010
-			public const int shape = 2130837520;
+			public const int rotate_normal = 2130837520;
 			
 			// aapt resource value: 0x7f020011
-			public const int shape_droptarget = 2130837521;
+			public const int rotate_pressed = 2130837521;
 			
 			// aapt resource value: 0x7f020012
-			public const int slide1 = 2130837522;
+			public const int shape = 2130837522;
 			
 			// aapt resource value: 0x7f020013
-			public const int slide2 = 2130837523;
+			public const int shape_droptarget = 2130837523;
 			
 			// aapt resource value: 0x7f020014
-			public const int slide3 = 2130837524;
+			public const int slide1 = 2130837524;
 			
 			// aapt resource value: 0x7f020015
-			public const int slide4 = 2130837525;
+			public const int slide2 = 2130837525;
 			
 			// aapt resource value: 0x7f020016
-			public const int slide5 = 2130837526;
+			public const int slide3 = 2130837526;
 			
 			// aapt resource value: 0x7f020017
-			public const int slide6 = 2130837527;
+			public const int slide4 = 2130837527;
 			
 			// aapt resource value: 0x7f020018
-			public const int slide7 = 2130837528;
+			public const int slide5 = 2130837528;
 			
 			// aapt resource value: 0x7f020019
-			public const int slide8 = 2130837529;
+			public const int slide6 = 2130837529;
 			
 			// aapt resource value: 0x7f02001a
-			public const int tvBackground = 2130837530;
+			public const int slide7 = 2130837530;
 			
 			// aapt resource value: 0x7f02001b
-			public const int unavailable = 2130837531;
+			public const int slide8 = 2130837531;
 			
 			// aapt resource value: 0x7f02001c
-			public const int upperLeftGridshape = 2130837532;
+			public const int tvBackground = 2130837532;
 			
 			// aapt resource value: 0x7f02001d
-			public const int upperRightGridshape = 2130837533;
+			public const int unavailable = 2130837533;
 			
 			// aapt resource value: 0x7f02001e
-			public const int x = 2130837534;
+			public const int upperLeftGridshape = 2130837534;
 			
 			// aapt resource value: 0x7f02001f
-			public const int x_selected = 2130837535;
+			public const int upperRightGridshape = 2130837535;
 			
 			// aapt resource value: 0x7f020020
-			public const int x_selector = 2130837536;
+			public const int x = 2130837536;
 			
 			// aapt resource value: 0x7f020021
-			public const int xy = 2130837537;
+			public const int x_selected = 2130837537;
 			
 			// aapt resource value: 0x7f020022
-			public const int y = 2130837538;
+			public const int x_selector = 2130837538;
+			
+			// aapt resource value: 0x7f020023
+			public const int xy = 2130837539;
+			
+			// aapt resource value: 0x7f020024
+			public const int xy_selected = 2130837540;
+			
+			// aapt resource value: 0x7f020025
+			public const int xy_selector = 2130837541;
+			
+			// aapt resource value: 0x7f020026
+			public const int y = 2130837542;
+			
+			// aapt resource value: 0x7f020027
+			public const int y_selected = 2130837543;
+			
+			// aapt resource value: 0x7f020028
+			public const int y_selector = 2130837544;
 			
 			static Drawable()
 			{

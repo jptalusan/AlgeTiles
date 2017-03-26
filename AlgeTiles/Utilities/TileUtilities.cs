@@ -83,7 +83,7 @@ namespace AlgeTiles
 			switch (tileType)
 			{
 				case Constants.ONE_TILE:
-					tF.id = Resource.Drawable.one;
+					tF.id = Resource.Drawable.one_selector;
 					tF.text = "1";
 					tF.heightFactor = Constants.ONE_SIDE;
 					tF.widthFactor = Constants.ONE_SIDE;
@@ -101,19 +101,19 @@ namespace AlgeTiles
 					tF.widthFactor = Constants.X_LONG_SIDE;
 					break;
 				case Constants.Y_TILE:
-					tF.id = Resource.Drawable.y;
+					tF.id = Resource.Drawable.y_selector;
 					tF.text = "y";
 					tF.heightFactor = Constants.Y_LONG_SIDE;
 					tF.widthFactor = Constants.ONE_SIDE;
 					break;
 				case Constants.Y2_TILE:
-					tF.id = Resource.Drawable.y;
+					tF.id = Resource.Drawable.y_selector;
 					tF.text = "y2";
 					tF.heightFactor = Constants.Y_LONG_SIDE;
 					tF.widthFactor = Constants.Y_LONG_SIDE;
 					break;
 				case Constants.XY_TILE:
-					tF.id = Resource.Drawable.xy;
+					tF.id = Resource.Drawable.xy_selector;
 					tF.text = "xy";
 					tF.heightFactor = Constants.Y_LONG_SIDE;
 					tF.widthFactor = Constants.X_LONG_SIDE;

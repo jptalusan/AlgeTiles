@@ -136,6 +136,8 @@ namespace AlgeTiles
 			x_tile.LongClick += tile_LongClick;
 			x2_tile.LongClick += tile_LongClick;
 
+			tile_1.Click += tile_Click;
+
 			upperLeftGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.upperLeft);
 			upperRightGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.upperRight);
 			lowerLeftGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.lowerLeft);
@@ -303,6 +305,28 @@ namespace AlgeTiles
 			rectTileListList.Add(upperLeftRectTileList);
 			rectTileListList.Add(lowerLeftRectTileList);
 			rectTileListList.Add(lowerRightRectTileList);
+		}
+
+		//http://stackoverflow.com/questions/4747311/how-can-i-keep-one-button-as-pressed-after-click-on-it
+		private void tile_Click(object sender, EventArgs e)
+		{
+			var imageViewTouch = (sender) as AlgeTilesTextView;
+			ClipData data = ClipData.NewPlainText(BUTTON_TYPE, ORIGINAL_BUTTON);
+			switch (imageViewTouch.Id)
+			{
+				case Resource.Id.tile_1:
+					data = ClipData.NewPlainText(BUTTON_TYPE, Constants.ONE_TILE);
+					break;
+				case Resource.Id.x_tile:
+					data = ClipData.NewPlainText(BUTTON_TYPE, Constants.X_TILE);
+					break;
+				case Resource.Id.x2_tile:
+					data = ClipData.NewPlainText(BUTTON_TYPE, Constants.X2_TILE);
+					break;
+			}
+
+			dragToggle.Checked = false;
+			removeToggle.Checked = false;
 		}
 
 		private void toggle_click(object sender, EventArgs e)
