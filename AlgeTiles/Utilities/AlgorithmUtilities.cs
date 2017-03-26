@@ -417,5 +417,22 @@ namespace AlgeTiles
 
 			return GCD(q, r);
 		}
+
+		/*Check:
+		 * if it will fit maximum size of grid
+		 * if it is all integers
+		*/
+		public static bool isSuppliedEquationValid()
+		{
+			return false;
+		}
+
+		/* Pick from pre-supplied list of equations
+		 * Use the show equation method in the activies to display this
+		 */
+		public static int[] getEquation(int eqNo)
+		{
+			return null;
+		}
 	}
 }
