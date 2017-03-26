@@ -26,6 +26,7 @@ namespace AlgeTiles
 		private int height = 0;
 		private int width = 0;
 		private List<Rect> rList = new List<Rect>();
+		public int backGroundResource = Resource.Drawable.shape;
 
 		public AlgeTilesRelativeLayout(Context context) :
 			base(context)
@@ -66,6 +67,11 @@ namespace AlgeTiles
 		public void updatesomething(bool b)
 		{
 			update = b;
+		}
+
+		public void resetColor()
+		{
+			SetBackgroundResource(backGroundResource);
 		}
 
 		protected override void OnDraw(Canvas canvas)

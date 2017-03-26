@@ -137,10 +137,10 @@
                 android:layout_weight="5"
                 android:background="@drawable/tvBackground"
                 android:gravity="center" />
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="1sp" />
-            <LinearLayout
+			<Space
+				android:layout_width="15dp"
+				android:layout_height="15dp" />
+			<LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -270,7 +270,8 @@
                     android:layout_height="wrap_content"
                     android:text="Tutorial"
                     android:id="@+id/tutorial"
-                    android:layout_weight="2" />
+                    android:layout_weight="2"
+					android:visibility="invisible"/>
                 <ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -138,6 +138,10 @@
                 android:layout_weight="5"
                 android:background="@drawable/tvBackground"
                 android:gravity="center" />
+            <Space
+				android:id="@+id/spaceAfterEquation"
+                android:layout_width="10dp"
+                android:layout_height="10dp" />
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
@@ -149,7 +153,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="("
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                    android:gravity="bottom" />
                 <EditText
                     android:hint="......."
                     android:layout_width="wrap_content"
@@ -159,13 +164,13 @@
                     android:id="@+id/x_value_1"
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
-                    android:inputType="numberSigned"
-                    android:gravity="center" />
+                    android:inputType="numberSigned"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="x + "
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                    android:gravity="bottom" />
                 <EditText
                     android:hint="......."
                     android:layout_width="wrap_content"
@@ -181,7 +186,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text=") ("
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                    android:gravity="bottom" />
                 <EditText
                     android:hint="......."
                     android:layout_width="wrap_content"
@@ -197,7 +203,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="x + "
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                    android:gravity="bottom" />
                 <EditText
                     android:hint="......."
                     android:layout_width="wrap_content"
@@ -213,8 +220,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text=")"
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                    android:gravity="bottom" />
             </LinearLayout>
+            <Space
+				android:id="@+id/spaceBeforeTutorial"
+                android:layout_width="0dp"
+                android:layout_height="0dp" />
         <!-- First 0.5 (2) -->
             <LinearLayout
                 android:orientation="horizontal"
@@ -230,7 +242,8 @@
                     android:layout_height="wrap_content"
                     android:text="Tutorial"
                     android:id="@+id/tutorial"
-                    android:layout_weight="2" />
+                    android:layout_weight="2"
+                    android:visibility="gone" />
                 <ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -299,39 +312,41 @@
                     android:layout_weight="1" />
             </LinearLayout>
         <!-- Third (4) Draggable Blocks Area -->
-			<LinearLayout
+            <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="30"
-				android:padding="5dp"
-				android:layout_gravity="center"
+                android:padding="5dp"
+                android:layout_gravity="center"
                 android:gravity="center">
-				<algetiles.AlgeTilesTextView
+                <algetiles.AlgeTilesTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1"
                     whatever:tileType="tile_1"
                     android:id="@+id/tile_1" />
-				<Space
-                    android:layout_width="15dp"
-                    android:layout_height="15dp" />
-				<algetiles.AlgeTilesTextView
+                <Space
+					android:id="@+id/space3"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp" />
+                <algetiles.AlgeTilesTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="x"
                     whatever:tileType="x_tile"
                     android:id="@+id/x_tile" />
-				<Space
-                    android:layout_width="15dp"
-                    android:layout_height="15dp" />
-				<algetiles.AlgeTilesTextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="x2"
-					whatever:tileType="x2_tile"
-					android:id="@+id/x2_tile" />
-			</LinearLayout>
+                <Space
+					android:id="@+id/space4"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp" />
+                <algetiles.AlgeTilesTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x2"
+                    whatever:tileType="x2_tile"
+                    android:id="@+id/x2_tile" />
+            </LinearLayout>
         <!-- Fourth (1) -->
             <LinearLayout
                 android:orientation="horizontal"

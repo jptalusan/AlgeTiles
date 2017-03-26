@@ -138,6 +138,9 @@
                 android:layout_weight="5"
                 android:background="@drawable/tvBackground"
                 android:gravity="center" />
+			<Space
+				android:layout_width="15dp"
+				android:layout_height="15dp" />
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
@@ -207,7 +210,8 @@
                     android:layout_height="wrap_content"
                     android:text="Tutorial"
                     android:id="@+id/tutorial"
-                    android:layout_weight="2" />
+                    android:layout_weight="2"
+					android:visibility="invisible"/>
                 <ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -281,8 +285,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="30"
-				android:padding="5dp"
-				android:layout_gravity="center"
+                android:padding="5dp"
+                android:layout_gravity="center"
                 android:gravity="center">
                 <algetiles.AlgeTilesTextView
                     android:layout_width="wrap_content"
@@ -299,15 +303,15 @@
                     android:text="x"
                     whatever:tileType="x_tile"
                     android:id="@+id/x_tile" />
-				<Space
+                <Space
                     android:layout_width="15dp"
                     android:layout_height="15dp" />
-				<algetiles.AlgeTilesTextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="x2"
-					whatever:tileType="x2_tile"
-					android:id="@+id/x2_tile" />
+                <algetiles.AlgeTilesTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x2"
+                    whatever:tileType="x2_tile"
+                    android:id="@+id/x2_tile" />
             </LinearLayout>
         <!-- Fourth (1) -->
             <LinearLayout

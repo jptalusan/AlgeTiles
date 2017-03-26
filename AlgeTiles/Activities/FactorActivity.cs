@@ -111,6 +111,12 @@ namespace AlgeTiles
 
 		public ISharedPreferences prefs;
 
+		private Space space1;
+		private Space space2;
+		private Space space3;
+		private Space space4;
+
+
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
@@ -135,11 +141,21 @@ namespace AlgeTiles
 			lowerLeftGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.lowerLeft);
 			lowerRightGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.lowerRight);
 
+			upperLeftGrid.backGroundResource = Resource.Drawable.upperLeftGridshape;
+			upperRightGrid.backGroundResource = Resource.Drawable.upperRightGridshape;
+			lowerLeftGrid.backGroundResource = Resource.Drawable.lowerLeftGridshape;
+			lowerRightGrid.backGroundResource = Resource.Drawable.lowerRightGridshape;
+
 			upperMiddleGrid = FindViewById<GridLayout>(Resource.Id.upperMiddle);
 			middleLeftGrid = FindViewById<GridLayout>(Resource.Id.middleLeft);
 			middleRightGrid = FindViewById<GridLayout>(Resource.Id.middleRight);
 			lowerMiddleGrid = FindViewById<GridLayout>(Resource.Id.lowerMiddle);
-			
+
+			space1 = FindViewById<Space>(Resource.Id.spaceAfterEquation);
+			space2 = FindViewById<Space>(Resource.Id.spaceBeforeTutorial);
+			space3 = FindViewById<Space>(Resource.Id.space3);
+			space4 = FindViewById<Space>(Resource.Id.space4);
+
 			ViewTreeObserver vto2 = upperLeftGrid.ViewTreeObserver;
 			vto2.GlobalLayout += (sender, e) =>
 			{
@@ -189,6 +205,12 @@ namespace AlgeTiles
 					}
 					x2_tile.LayoutParameters = par_x2;
 					Log.Debug(TAG, x2_tile.getTileType());
+
+					x_value_1.SetHeight(par_x2.Height);
+					space1.LayoutParameters = par_1;
+					space2.LayoutParameters = par_1;
+					space3.LayoutParameters = par_1;
+					space4.LayoutParameters = par_1;
 				}
 			};
 
@@ -389,16 +411,16 @@ namespace AlgeTiles
 			lowerLeftGrid.updatesomething(true);
 
 			upperRightGrid.SetBackgroundResource(Resource.Drawable.shape_droptarget);
-			upperRightGrid.SetBackgroundResource(Resource.Drawable.shape);
+			upperRightGrid.resetColor();
 
 			upperLeftGrid.SetBackgroundResource(Resource.Drawable.shape_droptarget);
-			upperLeftGrid.SetBackgroundResource(Resource.Drawable.shape);
+			upperLeftGrid.resetColor();
 
 			lowerRightGrid.SetBackgroundResource(Resource.Drawable.shape_droptarget);
-			lowerRightGrid.SetBackgroundResource(Resource.Drawable.shape);
+			lowerRightGrid.resetColor();
 
 			lowerLeftGrid.SetBackgroundResource(Resource.Drawable.shape_droptarget);
-			lowerLeftGrid.SetBackgroundResource(Resource.Drawable.shape);
+			lowerLeftGrid.resetColor();
 
 
 			for (int i = 0; i < editTextList.Count; ++i)
@@ -414,13 +436,13 @@ namespace AlgeTiles
 
 			for (int i = 0; i < inGLList.Count; ++i)
 			{
-				inGLList[i].SetBackgroundResource(Resource.Drawable.shape);
+				resetBGColors(inGLList);
 				inGLList[i].Drag -= Layout_Drag;
 			}
 
 			for (int i = 0; i < outGLList.Count; ++i)
 			{
-				outGLList[i].SetBackgroundResource(Resource.Drawable.shape);
+				resetBGColors(outGLList);
 				outGLList[i].Drag -= Layout_Drag;
 			}
 
@@ -457,7 +479,7 @@ namespace AlgeTiles
 
 				for (int i = 0; i < outGLList.Count; ++i)
 				{
-					outGLList[i].SetBackgroundResource(Resource.Drawable.shape);
+					resetBGColors(outGLList);
 					outGLList[i].Drag += Layout_Drag;
 				}
 			}
@@ -465,7 +487,7 @@ namespace AlgeTiles
 			{
 				for (int i = 0; i < inGLList.Count; ++i)
 				{
-					inGLList[i].SetBackgroundResource(Resource.Drawable.shape);
+					resetBGColors(inGLList);
 					inGLList[i].Drag += Layout_Drag;
 				}
 
@@ -523,7 +545,7 @@ namespace AlgeTiles
 					//Shade red the other grids
 					for (int i = 0; i < innerGridLayoutList.Count; ++i)
 					{
-						innerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.shape);
+						resetBGColors(innerGridLayoutList);
 						innerGridLayoutList[i].Drag += Layout_Drag;
 					}
 
@@ -661,8 +683,36 @@ namespace AlgeTiles
 			for (int i = 0; i < gvList.Count; ++i)
 				gvList[i].SetBackgroundResource(Resource.Drawable.notok);
 			await Task.Delay(Constants.DELAY);
-			for (int i = 0; i < gvList.Count; ++i)
-				gvList[i].SetBackgroundResource(Resource.Drawable.shape);
+			resetBGColors(gvList);
+		}
+
+		private void resetBGColors(List<ViewGroup> vL)
+		{
+			foreach (ViewGroup v in vL)
+			{
+				if (v is AlgeTilesRelativeLayout)
+				{
+					AlgeTilesRelativeLayout temp = v as AlgeTilesRelativeLayout;
+					temp.resetColor();
+				}
+				else
+				{
+					v.SetBackgroundResource(Resource.Drawable.shape);
+				}
+			}
+		}
+
+		private void resetBGColors(ViewGroup v)
+		{
+			if (v is AlgeTilesRelativeLayout)
+			{
+				AlgeTilesRelativeLayout temp = v as AlgeTilesRelativeLayout;
+				temp.resetColor();
+			}
+			else
+			{
+				v.SetBackgroundResource(Resource.Drawable.shape);
+			}
 		}
 
 		private void setupNewQuestion()
@@ -739,7 +789,7 @@ namespace AlgeTiles
 				case DragAction.Exited:
 					currentOwner = (ViewGroup)view.Parent;
 					hasButtonBeenDroppedInCorrectzone = false;
-					v.SetBackgroundResource(Resource.Drawable.shape);
+					resetBGColors(v);
 					break;
 				case DragAction.Location:
 					x = e.Event.GetX(); //width
@@ -894,11 +944,11 @@ namespace AlgeTiles
 							//End of auto re-arrange
 						}
 						view.Visibility = ViewStates.Visible;
-						v.SetBackgroundResource(Resource.Drawable.shape);
+						resetBGColors(v);
 					}
 					break;
 				case DragAction.Ended:
-					v.SetBackgroundResource(Resource.Drawable.shape);
+					resetBGColors(v);
 					if (!hasButtonBeenDroppedInCorrectzone &&
 						currentButtonType.Equals(CLONED_BUTTON))
 					{
