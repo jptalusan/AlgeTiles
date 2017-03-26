@@ -89,13 +89,13 @@ namespace AlgeTiles
 					tF.widthFactor = Constants.ONE_SIDE;
 					break;
 				case Constants.X_TILE:
-					tF.id = Resource.Drawable.x;
+					tF.id = Resource.Drawable.x_selector;
 					tF.text = "x";
 					tF.heightFactor = Constants.X_LONG_SIDE;
 					tF.widthFactor = Constants.ONE_SIDE;
 					break;
 				case Constants.X2_TILE:
-					tF.id = Resource.Drawable.x;
+					tF.id = Resource.Drawable.x_selector;
 					tF.text = "x2";
 					tF.heightFactor = Constants.X_LONG_SIDE;
 					tF.widthFactor = Constants.X_LONG_SIDE;

@@ -141,10 +141,16 @@ namespace AlgeTiles
 			public const int x = 2130837534;
 			
 			// aapt resource value: 0x7f02001f
-			public const int xy = 2130837535;
+			public const int x_selected = 2130837535;
 			
 			// aapt resource value: 0x7f020020
-			public const int y = 2130837536;
+			public const int x_selector = 2130837536;
+			
+			// aapt resource value: 0x7f020021
+			public const int xy = 2130837537;
+			
+			// aapt resource value: 0x7f020022
+			public const int y = 2130837538;
 			
 			static Drawable()
 			{
