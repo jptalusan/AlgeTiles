@@ -116,6 +116,14 @@ namespace AlgeTiles
 		public Space space5;
 
 		public TextView x2TV;
+		public TextView y2TV;
+
+		public Boolean oneTile_Clicked;
+		public Boolean xTile_Clicked;
+		public Boolean x2Tile_Clicked;
+		public Boolean xyTile_Clicked;
+		public Boolean yTile_Clicked;
+		public Boolean y2Tile_Clicked;
 
 		protected override void OnCreate(Bundle bundle)
 		{
@@ -125,7 +133,7 @@ namespace AlgeTiles
 
 		protected abstract int getLayoutResourceId();
 
-		public static void resetBGColors(List<ViewGroup> vL)
+		public void resetBGColors(List<ViewGroup> vL)
  		{
  			foreach (ViewGroup v in vL)
  			{
@@ -141,7 +149,7 @@ namespace AlgeTiles
  			}
  		}
 
-		public static void resetBGColors(ViewGroup v)
+		public void resetBGColors(ViewGroup v)
  		{
  			if (v is AlgeTilesRelativeLayout)
  			{
@@ -699,6 +707,5 @@ namespace AlgeTiles
 				}
 			}
 		}
-
 	}
 }

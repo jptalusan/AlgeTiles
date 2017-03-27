@@ -91,7 +91,7 @@ namespace AlgeTiles
 					a.currentOwner = (ViewGroup)view.Parent;
 					a.hasButtonBeenDroppedInCorrectzone = false;
 					//v.SetBackgroundResource(Resource.Drawable.shape);
-					AlgeTilesActivity.resetBGColors(v);
+					a.resetBGColors(v);
 					break;
 				case DragAction.Location:
 					x = e.Event.GetX(); //width
@@ -234,13 +234,13 @@ namespace AlgeTiles
 						}
 
 						view.Visibility = ViewStates.Visible;
-						AlgeTilesActivity.resetBGColors(v);
+						a.resetBGColors(v);
 						//v.SetBackgroundResource(Resource.Drawable.shape);
 					}
 					break;
 				case DragAction.Ended:
 					//v.SetBackgroundResource(Resource.Drawable.shape);
-					AlgeTilesActivity.resetBGColors(v);
+					a.resetBGColors(v);
 					if (!a.hasButtonBeenDroppedInCorrectzone &&
 						a.currentButtonType.Equals(Constants.CLONED_BUTTON))
 					{
@@ -340,6 +340,140 @@ namespace AlgeTiles
 					a.StartActivity(intent);
 					break;
 			}
+		}
+
+		//http://stackoverflow.com/questions/4747311/how-can-i-keep-one-button-as-pressed-after-click-on-it
+		public void tile_Click(object sender, EventArgs e)
+		{
+			var imageViewTouch = (sender) as AlgeTilesTextView;
+			if (imageViewTouch.Selected)
+			{
+				imageViewTouch.Selected = false;
+				a.oneTile_Clicked = false;
+				a.xTile_Clicked = false;
+				a.x2Tile_Clicked = false;
+				a.xyTile_Clicked = false;
+				a.yTile_Clicked = false;
+				a.y2Tile_Clicked = false;
+			}
+			else
+			{
+				imageViewTouch.Selected = true;
+			}
+
+			switch (imageViewTouch.Id)
+			{
+				case Resource.Id.tile_1:
+					a.oneTile_Clicked = imageViewTouch.Selected;
+
+					a.x_tile.Selected = false;
+					a.xTile_Clicked = false;
+
+					a.x2_tile.Selected = false;
+					a.x2Tile_Clicked = false;
+
+					a.xy_tile.Selected = false;
+					a.xyTile_Clicked = false;
+
+					a.y_tile.Selected = false;
+					a.yTile_Clicked = false;
+
+					a.y2_tile.Selected = false;
+					a.y2Tile_Clicked = false;
+					break;
+				case Resource.Id.x_tile:
+					a.xTile_Clicked = imageViewTouch.Selected;
+
+					a.tile_1.Selected = false;
+					a.oneTile_Clicked = false;
+					
+					a.x2_tile.Selected = false;
+					a.x2Tile_Clicked = false;
+
+					a.xy_tile.Selected = false;
+					a.xyTile_Clicked = false;
+
+					a.y_tile.Selected = false;
+					a.yTile_Clicked = false;
+
+					a.y2_tile.Selected = false;
+					a.y2Tile_Clicked = false;
+					break;
+				case Resource.Id.x2_tile:
+					a.x2Tile_Clicked = imageViewTouch.Selected;
+
+					a.tile_1.Selected = false;
+					a.oneTile_Clicked = false;
+					
+					a.x_tile.Selected = false;
+					a.xTile_Clicked = false;
+
+					a.xy_tile.Selected = false;
+					a.xyTile_Clicked = false;
+
+					a.y_tile.Selected = false;
+					a.yTile_Clicked = false;
+
+					a.y2_tile.Selected = false;
+					a.y2Tile_Clicked = false;
+					break;
+				case Resource.Id.xy_tile:
+					a.xyTile_Clicked = imageViewTouch.Selected;
+
+					a.x_tile.Selected = false;
+					a.xTile_Clicked = false;
+
+					a.x2_tile.Selected = false;
+					a.x2Tile_Clicked = false;
+
+					a.tile_1.Selected = false;
+					a.oneTile_Clicked = false;
+
+					a.y_tile.Selected = false;
+					a.yTile_Clicked = false;
+
+					a.y2_tile.Selected = false;
+					a.y2Tile_Clicked = false;
+					break;
+				case Resource.Id.y_tile:
+					a.yTile_Clicked = imageViewTouch.Selected;
+
+					a.tile_1.Selected = false;
+					a.oneTile_Clicked = false;
+
+					a.x2_tile.Selected = false;
+					a.x2Tile_Clicked = false;
+
+					a.xy_tile.Selected = false;
+					a.xyTile_Clicked = false;
+
+					a.x_tile.Selected = false;
+					a.xTile_Clicked = false;
+
+					a.y2_tile.Selected = false;
+					a.y2Tile_Clicked = false;
+					break;
+				case Resource.Id.y2_tile:
+					a.y2Tile_Clicked = imageViewTouch.Selected;
+
+					a.tile_1.Selected = false;
+					a.oneTile_Clicked = false;
+
+					a.x_tile.Selected = false;
+					a.xTile_Clicked = false;
+
+					a.xy_tile.Selected = false;
+					a.xyTile_Clicked = false;
+
+					a.y_tile.Selected = false;
+					a.yTile_Clicked = false;
+
+					a.x2_tile.Selected = false;
+					a.x2Tile_Clicked = false;
+					break;
+			}
+			a.dragToggle.Checked = false;
+			a.removeToggle.Checked = false;
 		}
 	}
 }

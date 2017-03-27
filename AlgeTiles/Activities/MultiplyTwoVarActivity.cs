@@ -48,12 +48,19 @@ namespace AlgeTiles
 			x2_tile = (AlgeTilesTextView)FindViewById(Resource.Id.x2_tile);
 			y2_tile = (AlgeTilesTextView)FindViewById(Resource.Id.y2_tile);
 
-			tile_1.LongClick += listeners.tile_LongClick;
-			x_tile.LongClick += listeners.tile_LongClick;
-			y_tile.LongClick += listeners.tile_LongClick;
-			x2_tile.LongClick += listeners.tile_LongClick;
-			y2_tile.LongClick += listeners.tile_LongClick;
-			xy_tile.LongClick += listeners.tile_LongClick;
+			//tile_1.LongClick += listeners.tile_LongClick;
+			//x_tile.LongClick += listeners.tile_LongClick;
+			//y_tile.LongClick += listeners.tile_LongClick;
+			//x2_tile.LongClick += listeners.tile_LongClick;
+			//y2_tile.LongClick += listeners.tile_LongClick;
+			//xy_tile.LongClick += listeners.tile_LongClick;
+
+			tile_1.Touch += listeners.tile_Click;
+			x_tile.Touch += listeners.tile_Click;
+			y_tile.Touch += listeners.tile_Click;
+			x2_tile.Touch += listeners.tile_Click;
+			y2_tile.Touch += listeners.tile_Click;
+			xy_tile.Touch += listeners.tile_Click;
 
 			upperLeftGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.upperLeft);
 			upperRightGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.upperRight);
@@ -75,6 +82,9 @@ namespace AlgeTiles
 			space3 = FindViewById<Space>(Resource.Id.space3);
 			space4 = FindViewById<Space>(Resource.Id.space4);
 			space5 = FindViewById<Space>(Resource.Id.space5);
+
+			x2TV = FindViewById<TextView>(Resource.Id.x2TV);
+			y2TV = FindViewById<TextView>(Resource.Id.y2TV);
 
 			ViewTreeObserver vto2 = upperLeftGrid.ViewTreeObserver;
 			vto2.GlobalLayout += (sender, e) =>
@@ -172,6 +182,16 @@ namespace AlgeTiles
 					space3.LayoutParameters = par_1;
 					space4.LayoutParameters = par_1;
 					space5.LayoutParameters = par_1;
+
+					var x2TVcs = new SpannableStringBuilder("x2 + ");
+					x2TVcs.SetSpan(new SuperscriptSpan(), 1, 2, SpanTypes.ExclusiveExclusive);
+					x2TVcs.SetSpan(new RelativeSizeSpan(0.75f), 1, 2, SpanTypes.ExclusiveExclusive);
+					x2TV.TextFormatted = x2TVcs;
+
+					var y2TVcs = new SpannableStringBuilder("y2 + ");
+					y2TVcs.SetSpan(new SuperscriptSpan(), 1, 2, SpanTypes.ExclusiveExclusive);
+					y2TVcs.SetSpan(new RelativeSizeSpan(0.75f), 1, 2, SpanTypes.ExclusiveExclusive);
+					y2TV.TextFormatted = y2TVcs;
 				}
 			};
 

@@ -182,7 +182,7 @@
                     android:layout_height="match_parent"
                     android:text="y^2 + "
                     android:textColor="#000000"
-                    android:id="@+id/xTV"
+                    android:id="@+id/y2TV"
                     android:gravity="bottom" />
                 <EditText
                     android:hint="......."
@@ -390,27 +390,27 @@
                         whatever:tileType="y_tile"
                         android:id="@+id/y_tile" />
                 </LinearLayout>
-				<Space
+                <Space
                     android:id="@+id/space3"
                     android:layout_width="0dp"
                     android:layout_height="0dp" />
-				<algetiles.AlgeTilesTextView
+                <algetiles.AlgeTilesTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="xy"
                     whatever:tileType="xy_tile"
                     android:id="@+id/xy_tile" />
-				<Space
+                <Space
                     android:id="@+id/space4"
                     android:layout_width="0dp"
                     android:layout_height="0dp" />
-				<algetiles.AlgeTilesTextView
+                <algetiles.AlgeTilesTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="x2"
                     whatever:tileType="x2_tile"
                     android:id="@+id/x2_tile" />
-				<Space
+                <Space
                     android:id="@+id/space5"
                     android:layout_width="0dp"
                     android:layout_height="0dp" />
