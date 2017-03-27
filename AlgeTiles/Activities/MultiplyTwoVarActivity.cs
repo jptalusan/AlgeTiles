@@ -55,12 +55,12 @@ namespace AlgeTiles
 			//y2_tile.LongClick += listeners.tile_LongClick;
 			//xy_tile.LongClick += listeners.tile_LongClick;
 
-			tile_1.Touch += listeners.tile_Click;
-			x_tile.Touch += listeners.tile_Click;
-			y_tile.Touch += listeners.tile_Click;
-			x2_tile.Touch += listeners.tile_Click;
-			y2_tile.Touch += listeners.tile_Click;
-			xy_tile.Touch += listeners.tile_Click;
+			tile_1.Click += listeners.tile_Click;
+			x_tile.Click += listeners.tile_Click;
+			y_tile.Click += listeners.tile_Click;
+			x2_tile.Click += listeners.tile_Click;
+			y2_tile.Click += listeners.tile_Click;
+			xy_tile.Click += listeners.tile_Click;
 
 			upperLeftGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.upperLeft);
 			upperRightGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.upperRight);

@@ -508,7 +508,6 @@ namespace AlgeTiles
 		private void tile_Click(object sender, EventArgs e)
 		{
 			var imageViewTouch = (sender) as AlgeTilesTextView;
-			ClipData data = ClipData.NewPlainText(BUTTON_TYPE, ORIGINAL_BUTTON);
 			if (imageViewTouch.Selected)
 			{
 				imageViewTouch.Selected = false;
