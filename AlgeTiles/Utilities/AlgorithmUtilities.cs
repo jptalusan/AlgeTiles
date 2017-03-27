@@ -744,9 +744,18 @@ namespace AlgeTiles
 		/* Pick from pre-supplied list of equations
 		 * Use the show equation method in the activies to display this
 		 */
-		public static int[] getEquation(int eqNo)
+		public static List<int> parseEquation(string equationCSV)
 		{
-			return null;
+			List<int> output = new List<int>();
+			string[] vals = equationCSV.Split(',');
+
+			int cnt = 0;
+			foreach(string s in vals)
+			{
+				output.Add(int.Parse(s));
+				cnt++;
+			}
+			return output;
 		}
 	}
 }

@@ -60,5 +60,21 @@ namespace AlgeTiles
 		public const double X_LONG_SIDE = 3.0;
 		public const double ONE_SIDE = 7.0;
 		public const double Y_LONG_SIDE = 2.6;
+
+		//Equations
+		public static List<string> EQUATIONS = new List<string>
+		{
+			EQUATION_001,
+			EQUATION_002,
+			EQUATION_003,
+			EQUATION_004,
+			EQUATION_005
+		};
+
+		public const string EQUATION_001 = "1,-2,1,3";
+		public const string EQUATION_002 = "-2,5,-3,7";
+		public const string EQUATION_003 = "-2,5,-1,1";
+		public const string EQUATION_004 = "1,4,3,-2";
+		public const string EQUATION_005 = "2,3,1,-4";
 	}
 }

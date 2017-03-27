@@ -120,6 +120,8 @@ namespace AlgeTiles
 		private Boolean xTile_Clicked;
 		private Boolean x2Tile_Clicked;
 
+		private Button customQuestion;
+
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
@@ -158,6 +160,9 @@ namespace AlgeTiles
 			space2 = FindViewById<Space>(Resource.Id.spaceBeforeTutorial);
 			space3 = FindViewById<Space>(Resource.Id.space3);
 			space4 = FindViewById<Space>(Resource.Id.space4);
+
+			customQuestion = FindViewById<Button>(Resource.Id.custom);
+			customQuestion.Click += toggle_click;
 
 			ViewTreeObserver vto2 = upperLeftGrid.ViewTreeObserver;
 			vto2.GlobalLayout += (sender, e) =>
@@ -606,6 +611,21 @@ namespace AlgeTiles
 					var intent = new Intent(this, typeof(TutorialActivity));
 					StartActivity(intent);
 					break;
+				case Resource.Id.custom:
+					var dialog = CustomEquationDialogFactor.NewInstance();
+					dialog.Dismissed += (s, events) =>
+					{
+						if (events.index != -1)
+							Console.WriteLine("Done with dialog: " + events.index);
+
+						//Parse events.equation string and then
+						//Replace vars with event.vars and rerun the setupQuestionString(vars) after checking if this is valid, if not, show toast
+						vars = AlgorithmUtilities.parseEquation(Constants.EQUATIONS[events.index]);
+						setupQuestionString(AlgorithmUtilities.expandingVars(vars));
+						refreshScreen(Constants.MULTIPLY, gridValueList, innerGridLayoutList, outerGridLayoutList);
+					};
+					dialog.Show(FragmentManager, "dialog");
+					break;
 			}
 		}
 
@@ -1004,7 +1024,7 @@ namespace AlgeTiles
 			int c = vars[2];
 
 			if (ax2 != 0)
-				output += ax2 + "x^2+";
+				output += ax2 + "x\xB2+";
 			if (bx != 0)
 				output += bx + "x+";
 			if (c != 0)
