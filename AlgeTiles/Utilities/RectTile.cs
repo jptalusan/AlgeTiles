@@ -61,6 +61,7 @@ namespace AlgeTiles
 
 		public bool isPointInsideRect(float x, float y)
 		{
+			//Console.WriteLine("isPointInsideRect: x: " + x + ",y: " + y);
 			if (y > r.Top && y < r.Bottom && x > r.Left && x < r.Right)
 				return true;
 			return false;
@@ -68,6 +69,7 @@ namespace AlgeTiles
 
 		public bool isTileTypeSame(string tileType)
 		{
+			//Console.WriteLine("isTileTypeSame: " + tileType + " /curr: " + _tileType);
 			if (this._tileType.Equals(tileType) || tileType.Equals(this._tileType))
 				return true;
 			return false;

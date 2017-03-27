@@ -116,6 +116,9 @@ namespace AlgeTiles
 		private Space space3;
 		private Space space4;
 
+		private Boolean oneTile_Clicked;
+		private Boolean xTile_Clicked;
+		private Boolean x2Tile_Clicked;
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
@@ -131,12 +134,10 @@ namespace AlgeTiles
 			tile_1 = (AlgeTilesTextView)FindViewById(Resource.Id.tile_1);
 			x_tile = (AlgeTilesTextView)FindViewById(Resource.Id.x_tile);
 			x2_tile = (AlgeTilesTextView)FindViewById(Resource.Id.x2_tile);
-
-			tile_1.LongClick += tile_LongClick;
-			x_tile.LongClick += tile_LongClick;
-			x2_tile.LongClick += tile_LongClick;
-
+		
 			tile_1.Click += tile_Click;
+			x_tile.Click += tile_Click;
+			x2_tile.Click += tile_Click;
 
 			upperLeftGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.upperLeft);
 			upperRightGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.upperRight);
@@ -227,14 +228,16 @@ namespace AlgeTiles
 			innerGridLayoutList.Add(lowerMiddleGrid);
 
 			//For multiply this is the initial grid available
-			upperLeftGrid.Drag += Layout_Drag;
-			upperRightGrid.Drag += Layout_Drag;
-			lowerLeftGrid.Drag += Layout_Drag;
-			lowerRightGrid.Drag += Layout_Drag;
+			upperLeftGrid.Touch += Layout_Touch;
+			upperRightGrid.Touch += Layout_Touch;
+			lowerLeftGrid.Touch += Layout_Touch;
+			lowerRightGrid.Touch += Layout_Touch;
 
 			//Shade red the other grids
 			for (int i = 0; i < innerGridLayoutList.Count; ++i)
+			{
 				innerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.unavailable);
+			}
 
 			removeToggle = (ToggleButton)FindViewById(Resource.Id.remove);
 			dragToggle = (ToggleButton)FindViewById(Resource.Id.drag);
@@ -307,24 +310,244 @@ namespace AlgeTiles
 			rectTileListList.Add(lowerRightRectTileList);
 		}
 
+		private void Layout_Touch(object sender, View.TouchEventArgs e)
+		{
+			var v = (ViewGroup)sender;
+			float x = e.Event.GetX(0);
+			float y = e.Event.GetY(0);
+			bool isDroppedAtCenter = false;
+
+			Console.WriteLine("1: " + oneTile_Clicked + ", x: " + xTile_Clicked + " , x2: " + x2Tile_Clicked);
+			if (oneTile_Clicked)
+			{
+				currentButtonType = Constants.ONE_TILE;
+			}
+			else if (xTile_Clicked)
+			{
+				currentButtonType = Constants.X_TILE;
+			}
+			else if (x2Tile_Clicked)
+			{
+				currentButtonType = Constants.X2_TILE;
+			}
+			else
+			{
+				//Do nothing
+				currentButtonType = "";
+			}
+
+			switch (e.Event.Action)
+			{
+				case MotionEventActions.Down:
+					Console.WriteLine("Inside Coords: " + x + "," + y);
+					Log.Debug(TAG, "Down");
+
+					AlgeTilesTextView algeTilesIV = new AlgeTilesTextView(this);
+					Boolean wasImageDropped = false;
+
+					//Check if x_tile is rotated before fitting or rotate before dropping automatically
+					if ((v.Id == Resource.Id.upperMiddle ||
+						 v.Id == Resource.Id.middleLeft ||
+						 v.Id == Resource.Id.middleRight ||
+						 v.Id == Resource.Id.lowerMiddle) &&
+						currentButtonType.Equals(Constants.X2_TILE))
+					{
+						//Do nothing
+					}
+					else if (isFirstAnswerCorrect &&
+							(v.Id == Resource.Id.upperLeft ||
+							 v.Id == Resource.Id.upperRight ||
+							 v.Id == Resource.Id.lowerLeft ||
+							 v.Id == Resource.Id.lowerRight))
+					{
+						//Do nothing
+					}
+					//Handle drops for second part of problem (expanded form)
+					else if (!isFirstAnswerCorrect &&
+							(v.Id == Resource.Id.upperLeft ||
+							 v.Id == Resource.Id.upperRight ||
+							 v.Id == Resource.Id.lowerLeft ||
+							 v.Id == Resource.Id.lowerRight))
+					{
+						wasImageDropped = true;
+					}
+					//Handle auto rotate for x_tile (middle)
+					//First group x
+					else if (isFirstAnswerCorrect &&
+							(v.Id == Resource.Id.middleLeft ||
+							 v.Id == Resource.Id.middleRight))
+					{
+						if (v.Id == Resource.Id.middleLeft)
+						{
+							algeTilesIV.RotationY = 180;
+						}
+
+						wasImageDropped = true;
+						isDroppedAtCenter = true;
+					}
+					//Second group x
+					else if (isFirstAnswerCorrect &&
+							(v.Id == Resource.Id.upperMiddle ||
+							v.Id == Resource.Id.lowerMiddle))
+					{
+						if (v.Id == Resource.Id.upperMiddle)
+							algeTilesIV.RotationX = 180;
+						wasImageDropped = true;
+						isDroppedAtCenter = true;
+					}
+
+					algeTilesIV.setTileType(currentButtonType);
+
+					if (wasImageDropped)
+					{
+						ViewGroup container = (ViewGroup)v;
+						Log.Debug(TAG, currentButtonType);
+						double heightFactor = 0;
+						double widthFactor = 0;
+						TileUtilities.TileFactor tF = TileUtilities.getTileFactors(currentButtonType);
+						algeTilesIV.SetBackgroundResource(tF.id);
+
+						if (algeTilesIV.Text.Length > 1)
+						{
+							var cs = new SpannableStringBuilder(algeTilesIV.Text);
+							cs.SetSpan(new SuperscriptSpan(), 1, 2, SpanTypes.ExclusiveExclusive);
+							cs.SetSpan(new RelativeSizeSpan(0.75f), 1, 2, SpanTypes.ExclusiveExclusive);
+							algeTilesIV.TextFormatted = cs;
+						}
+						else
+						{
+							algeTilesIV.Text = tF.text;
+						}
+
+						heightFactor = tF.heightFactor;
+						widthFactor = tF.widthFactor;
+
+						if (!isDroppedAtCenter)
+						{
+							Rect r = checkIfUserDropsOnRect(v.Id, currentButtonType, x, y, Constants.ADD);
+							if (null != r)
+							{
+								Log.Debug(TAG, "Dropped successfully.");
+								RelativeLayout.LayoutParams par = new RelativeLayout.LayoutParams(
+									ViewGroup.LayoutParams.WrapContent,
+									ViewGroup.LayoutParams.WrapContent);
+								par.Height = r.Height();
+								par.Width = r.Width();
+								par.TopMargin = r.Top;
+								par.LeftMargin = r.Left;
+								algeTilesIV.LayoutParameters = par;
+								algeTilesIV.LongClick += clonedImageView_Touch;
+								container.AddView(algeTilesIV);
+								checkWhichParentAndUpdate(v.Id, currentButtonType, Constants.ADD);
+								hasButtonBeenDroppedInCorrectzone = true;
+							}
+						}
+						else
+						{
+							Log.Debug(TAG, "Dropped at center.");
+							GridLayout.LayoutParams gParms = new GridLayout.LayoutParams();
+							if (v.Id == Resource.Id.middleLeft || v.Id == Resource.Id.middleRight)
+							{
+								gParms.SetGravity(GravityFlags.Center);
+								gParms.Height = (int)(heightInPx / widthFactor);
+								gParms.Width = (int)(heightInPx / heightFactor);
+							}
+							else
+							{
+								gParms.SetGravity(GravityFlags.Center);
+								gParms.Height = (int)(heightInPx / heightFactor);
+								gParms.Width = (int)(heightInPx / widthFactor);
+							}
+							Log.Debug(TAG, "H: " + gParms.Height + ",W:" + gParms.Width);
+							algeTilesIV.LayoutParameters = gParms;
+							algeTilesIV.LongClick += clonedImageView_Touch;
+							container.AddView(algeTilesIV);
+							checkWhichParentAndUpdate(v.Id, currentButtonType, Constants.ADD);
+
+							//Auto re-arrange of center tiles
+							List<AlgeTilesTextView> centerTileList = new List<AlgeTilesTextView>();
+							Log.Debug(TAG, "Container count: " + container.ChildCount);
+							for (int i = 0; i < container.ChildCount; ++i)
+							{
+								AlgeTilesTextView a = (AlgeTilesTextView)container.GetChildAt(i);
+								centerTileList.Add(a);
+								Log.Debug(TAG, "Center count: " + i + ", " + a.getTileType());
+							}
+							container.RemoveAllViews();
+
+							List<AlgeTilesTextView> sortedList = centerTileList.OrderByDescending(o => o.getTileType()).ToList();
+							for (int i = 0; i < sortedList.Count; ++i)
+							{
+								Log.Debug(TAG, "Tile order:" + sortedList[i].getTileType());
+								container.AddView(sortedList[i]);
+							}
+							//End of auto re-arrange
+						}
+						//view.Visibility = ViewStates.Visible;
+						resetBGColors(v);
+					}
+					break;
+				case MotionEventActions.Up:
+					resetBGColors(v);
+					//if (!hasButtonBeenDroppedInCorrectzone &&
+					//	currentButtonType.Equals(CLONED_BUTTON))
+					//{
+					//	currentOwner.RemoveView(view);
+					//}
+					//else
+					//{
+					//	view.Visibility = ViewStates.Visible;
+					//}
+					break;
+				default:
+					break;
+			}
+		}
+
 		//http://stackoverflow.com/questions/4747311/how-can-i-keep-one-button-as-pressed-after-click-on-it
 		private void tile_Click(object sender, EventArgs e)
 		{
 			var imageViewTouch = (sender) as AlgeTilesTextView;
 			ClipData data = ClipData.NewPlainText(BUTTON_TYPE, ORIGINAL_BUTTON);
+			if (imageViewTouch.Selected)
+			{
+				imageViewTouch.Selected = false;
+				oneTile_Clicked = false;
+				xTile_Clicked = false;
+				x2Tile_Clicked = false;
+			}
+			else
+			{
+				imageViewTouch.Selected = true;
+			}
+
 			switch (imageViewTouch.Id)
 			{
 				case Resource.Id.tile_1:
-					data = ClipData.NewPlainText(BUTTON_TYPE, Constants.ONE_TILE);
+					oneTile_Clicked = imageViewTouch.Selected;
+					x_tile.Selected = false;
+					xTile_Clicked = false;
+
+					x2_tile.Selected = false;
+					x2Tile_Clicked = false;
 					break;
 				case Resource.Id.x_tile:
-					data = ClipData.NewPlainText(BUTTON_TYPE, Constants.X_TILE);
+					xTile_Clicked = imageViewTouch.Selected;
+					tile_1.Selected = false;
+					oneTile_Clicked = false;
+
+					x2_tile.Selected = false;
+					x2Tile_Clicked = false;
 					break;
 				case Resource.Id.x2_tile:
-					data = ClipData.NewPlainText(BUTTON_TYPE, Constants.X2_TILE);
+					x2Tile_Clicked = imageViewTouch.Selected;
+					tile_1.Selected = false;
+					oneTile_Clicked = false;
+
+					x_tile.Selected = false;
+					xTile_Clicked = false;
 					break;
 			}
-
 			dragToggle.Checked = false;
 			removeToggle.Checked = false;
 		}
@@ -342,6 +565,15 @@ namespace AlgeTiles
 						FindViewById<LinearLayout>(Resource.Id.notRotatedButtonLayout).Visibility = ViewStates.Visible;
 					}
 					rotateToggle.Checked = rotateToggle.Checked ? false : false;
+
+					tile_1.Selected = false;
+					oneTile_Clicked = false;
+
+					x_tile.Selected = false;
+					xTile_Clicked = false;
+
+					x2_tile.Selected = false;
+					x2Tile_Clicked = false;
 					break;
 				case Resource.Id.drag:
 					removeToggle.Checked = removeToggle.Checked ? false : false;
@@ -461,13 +693,13 @@ namespace AlgeTiles
 			for (int i = 0; i < inGLList.Count; ++i)
 			{
 				resetBGColors(inGLList);
-				inGLList[i].Drag -= Layout_Drag;
+				inGLList[i].Touch -= Layout_Touch;
 			}
 
 			for (int i = 0; i < outGLList.Count; ++i)
 			{
 				resetBGColors(outGLList);
-				outGLList[i].Drag -= Layout_Drag;
+				outGLList[i].Touch -= Layout_Touch;
 			}
 
 			for (int i = 0; i < gvList.Count; ++i)
@@ -498,13 +730,13 @@ namespace AlgeTiles
 				for (int i = 0; i < inGLList.Count; ++i)
 				{
 					inGLList[i].SetBackgroundResource(Resource.Drawable.unavailable);
-					inGLList[i].Drag -= Layout_Drag;
+					inGLList[i].Touch -= Layout_Touch;
 				}
 
 				for (int i = 0; i < outGLList.Count; ++i)
 				{
 					resetBGColors(outGLList);
-					outGLList[i].Drag += Layout_Drag;
+					outGLList[i].Touch += Layout_Touch;
 				}
 			}
 			else
@@ -512,13 +744,13 @@ namespace AlgeTiles
 				for (int i = 0; i < inGLList.Count; ++i)
 				{
 					resetBGColors(inGLList);
-					inGLList[i].Drag += Layout_Drag;
+					inGLList[i].Touch += Layout_Touch;
 				}
 
 				for (int i = 0; i < outGLList.Count; ++i)
 				{
 					outGLList[i].SetBackgroundResource(Resource.Drawable.unavailable);
-					outGLList[i].Drag -= Layout_Drag;
+					outGLList[i].Touch -= Layout_Touch;
 				}
 			}
 		}
@@ -557,11 +789,12 @@ namespace AlgeTiles
 					for (int i = 0; i < outerGridLayoutList.Count; ++i)
 					{
 						outerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.ok);
-						outerGridLayoutList[i].Drag -= Layout_Drag;
+						outerGridLayoutList[i].Touch -= Layout_Touch;
 						for (int j = 0; j < outerGridLayoutList[i].ChildCount; ++j)
 						{
 							var iv = outerGridLayoutList[i].GetChildAt(j) as View;
 							iv.LongClick -= clonedImageView_Touch;
+							iv.Touch -= Layout_Touch;
 							//iv.Visibility = ViewStates.Gone;
 						}
 					}
@@ -570,7 +803,7 @@ namespace AlgeTiles
 					for (int i = 0; i < innerGridLayoutList.Count; ++i)
 					{
 						resetBGColors(innerGridLayoutList);
-						innerGridLayoutList[i].Drag += Layout_Drag;
+						innerGridLayoutList[i].Touch += Layout_Touch;
 					}
 
 					//TODO:accomodate for 2 variables (right now just for one)
@@ -600,7 +833,7 @@ namespace AlgeTiles
 					for (int i = 0; i < innerGridLayoutList.Count; ++i)
 					{
 						innerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.ok);
-						innerGridLayoutList[i].Drag -= Layout_Drag;
+						innerGridLayoutList[i].Touch -= Layout_Touch;
 						for (int j = 0; j < innerGridLayoutList[i].ChildCount; ++j)
 						{
 							var iv = innerGridLayoutList[i].GetChildAt(j) as View;
@@ -638,7 +871,9 @@ namespace AlgeTiles
 				else
 				{
 					for (int i = 0; i < outerGridLayoutList.Count; ++i)
-						outerGridLayoutList[i].Drag -= Layout_Drag;
+					{
+						outerGridLayoutList[i].Touch -= Layout_Touch;
+					}
 
 					incorrectPrompt(innerGridLayoutList);
 					Toast.MakeText(Application.Context, "1:incorrect", ToastLength.Short).Show();
@@ -788,206 +1023,6 @@ namespace AlgeTiles
 			result.Text = output;
 		}
 
-		private void Layout_Drag(object sender, View.DragEventArgs e)
-		{
-			var v = (ViewGroup)sender;
-			View view = (View)e.Event.LocalState;
-			var button_type = result.Text;
-			var drag_data = e.Event.ClipData;
-			bool isDroppedAtCenter = false;
-			float x = 0.0f;
-			float y = 0.0f;
-
-			switch (e.Event.Action)
-			{
-				case DragAction.Started:
-					hasButtonBeenDroppedInCorrectzone = false;
-					if (null != drag_data)
-					{
-						currentButtonType = drag_data.GetItemAt(0).Text;
-					}
-					break;
-				case DragAction.Entered:
-					v.SetBackgroundResource(Resource.Drawable.shape_droptarget);
-					break;
-				case DragAction.Exited:
-					currentOwner = (ViewGroup)view.Parent;
-					hasButtonBeenDroppedInCorrectzone = false;
-					resetBGColors(v);
-					break;
-				case DragAction.Location:
-					x = e.Event.GetX(); //width
-					y = e.Event.GetY(); //height
-					break;
-				case DragAction.Drop:
-					Log.Debug(TAG, "Drop");
-					if (null != drag_data)
-					{
-						currentButtonType = drag_data.GetItemAt(0).Text;
-					}
-
-					AlgeTilesTextView algeTilesIV = new AlgeTilesTextView(this);
-					Boolean wasImageDropped = false;
-
-					//Check if x_tile is rotated before fitting or rotate before dropping automatically
-					if ((v.Id == Resource.Id.upperMiddle ||
-						 v.Id == Resource.Id.middleLeft ||
-						 v.Id == Resource.Id.middleRight ||
-						 v.Id == Resource.Id.lowerMiddle) &&
-						currentButtonType.Equals(Constants.X2_TILE))
-					{
-						//Do nothing
-					}
-					else if (isFirstAnswerCorrect &&
-							(v.Id == Resource.Id.upperLeft ||
-							 v.Id == Resource.Id.upperRight ||
-							 v.Id == Resource.Id.lowerLeft ||
-							 v.Id == Resource.Id.lowerRight))
-					{
-						//Do nothing
-					}
-					//Handle drops for second part of problem (expanded form)
-					else if (!isFirstAnswerCorrect &&
-							(v.Id == Resource.Id.upperLeft ||
-							 v.Id == Resource.Id.upperRight ||
-							 v.Id == Resource.Id.lowerLeft ||
-							 v.Id == Resource.Id.lowerRight))
-					{
-						wasImageDropped = true;
-					}
-					//Handle auto rotate for x_tile (middle)
-					//First group x
-					else if (isFirstAnswerCorrect &&
-							(v.Id == Resource.Id.middleLeft ||
-							 v.Id == Resource.Id.middleRight))
-					{
-						if (v.Id == Resource.Id.middleLeft)
-						{
-							algeTilesIV.RotationY = 180;
-						}
-
-						wasImageDropped = true;
-						isDroppedAtCenter = true;
-					}
-					//Second group x
-					else if (isFirstAnswerCorrect &&
-							(v.Id == Resource.Id.upperMiddle ||
-							v.Id == Resource.Id.lowerMiddle))
-					{
-						if (v.Id == Resource.Id.upperMiddle)
-							algeTilesIV.RotationX = 180;
-						wasImageDropped = true;
-						isDroppedAtCenter = true;
-					}
-
-					algeTilesIV.setTileType(currentButtonType);
-
-					if (wasImageDropped)
-					{
-						ViewGroup container = (ViewGroup)v;
-						Log.Debug(TAG, currentButtonType);
-						double heightFactor = 0;
-						double widthFactor = 0;
-						TileUtilities.TileFactor tF = TileUtilities.getTileFactors(currentButtonType);
-						algeTilesIV.SetBackgroundResource(tF.id);
-
-						if (algeTilesIV.Text.Length > 1)
-						{
-							var cs = new SpannableStringBuilder(algeTilesIV.Text);
-							cs.SetSpan(new SuperscriptSpan(), 1, 2, SpanTypes.ExclusiveExclusive);
-							cs.SetSpan(new RelativeSizeSpan(0.75f), 1, 2, SpanTypes.ExclusiveExclusive);
-							algeTilesIV.TextFormatted = cs;
-						}
-						else
-						{
-							algeTilesIV.Text = tF.text;
-						}
-
-						heightFactor = tF.heightFactor;
-						widthFactor = tF.widthFactor;
-						x = e.Event.GetX(); //width
-						y = e.Event.GetY(); //height
-
-						if (!isDroppedAtCenter)
-						{
-							Rect r = checkIfUserDropsOnRect(v.Id, currentButtonType, x, y, Constants.ADD);
-							if (null != r)
-							{
-								Log.Debug(TAG, "Dropped successfully.");
-								RelativeLayout.LayoutParams par = new RelativeLayout.LayoutParams(
-									ViewGroup.LayoutParams.WrapContent,
-									ViewGroup.LayoutParams.WrapContent);
-								par.Height = r.Height();
-								par.Width = r.Width();
-								par.TopMargin = r.Top;
-								par.LeftMargin = r.Left;
-								algeTilesIV.LayoutParameters = par;
-								algeTilesIV.LongClick += clonedImageView_Touch;
-								container.AddView(algeTilesIV);
-								checkWhichParentAndUpdate(v.Id, currentButtonType, Constants.ADD);
-								hasButtonBeenDroppedInCorrectzone = true;
-							}
-						}
-						else
-						{
-							GridLayout.LayoutParams gParms = new GridLayout.LayoutParams();
-							if (v.Id == Resource.Id.middleLeft || v.Id == Resource.Id.middleRight)
-							{
-								gParms.SetGravity(GravityFlags.Center);
-								gParms.Height = (int)(heightInPx / widthFactor);
-								gParms.Width = (int)(heightInPx / heightFactor);
-							}
-							else
-							{
-								gParms.SetGravity(GravityFlags.Center);
-								gParms.Height = (int)(heightInPx / heightFactor);
-								gParms.Width = (int)(heightInPx / widthFactor);
-							}
-							algeTilesIV.LayoutParameters = gParms;
-							algeTilesIV.LongClick += clonedImageView_Touch;
-							container.AddView(algeTilesIV);
-							checkWhichParentAndUpdate(v.Id, currentButtonType, Constants.ADD);
-
-							//Auto re-arrange of center tiles
-							List<AlgeTilesTextView> centerTileList = new List<AlgeTilesTextView>();
-							Log.Debug(TAG, "Container count: " + container.ChildCount);
-							for (int i = 0; i < container.ChildCount; ++i)
-							{
-								AlgeTilesTextView a = (AlgeTilesTextView)container.GetChildAt(i);
-								centerTileList.Add(a);
-								Log.Debug(TAG, "Center count: " + i + ", " + a.getTileType());
-							}
-							container.RemoveAllViews();
-
-							List<AlgeTilesTextView> sortedList = centerTileList.OrderByDescending(o => o.getTileType()).ToList();
-							for (int i = 0; i < sortedList.Count; ++i)
-							{
-								Log.Debug(TAG, "Tile order:" + sortedList[i].getTileType());
-								container.AddView(sortedList[i]);
-							}
-							//End of auto re-arrange
-						}
-						view.Visibility = ViewStates.Visible;
-						resetBGColors(v);
-					}
-					break;
-				case DragAction.Ended:
-					resetBGColors(v);
-					if (!hasButtonBeenDroppedInCorrectzone &&
-						currentButtonType.Equals(CLONED_BUTTON))
-					{
-						currentOwner.RemoveView(view);
-					}
-					else
-					{
-						view.Visibility = ViewStates.Visible;
-					}
-					break;
-				default:
-					break;
-			}
-		}
-
 		private Rect checkIfUserDropsOnRect(int vId, string tileType, float x, float y, int command)
 		{
 			Log.Debug(TAG, "checkIfUserDropsOnRect");
@@ -1077,7 +1112,6 @@ namespace AlgeTiles
 
 			return null;
 		}
-
 
 		private void generateInnerLayoutTileArrays()
 		{
