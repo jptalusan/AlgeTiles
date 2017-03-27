@@ -191,8 +191,9 @@ namespace AlgeTiles
 
 			Log.Debug(TAG, "Mult: GvArr: midUpGV, midLowGV, midLeftGV, midRightGV");
 			for (int i = 0; i < gvArr.Length; ++i)
+			{
 				Log.Debug(TAG, "GvArr:" + gvArr[i].ToString());
-
+			}
 
 			if (Constants.ONE_VAR == numberOfVariables)
 			{
@@ -422,8 +423,96 @@ namespace AlgeTiles
 		 * if it will fit maximum size of grid
 		 * if it is all integers
 		*/
-		public static bool isSuppliedEquationValid()
+		public static bool isSuppliedMultiplyEquationValid(int?[] vars, int numberOfVariables)
 		{
+			if (Constants.ONE_VAR == numberOfVariables)
+			{
+				int ax = vars[0].GetValueOrDefault();
+				int b = vars[1].GetValueOrDefault();
+
+				int cx = vars[2].GetValueOrDefault();
+				int d = vars[3].GetValueOrDefault();
+
+				Console.WriteLine("isSuppliedValid: " + ax + "," + b + "," + cx + "," + d);
+
+				bool firstEq = false;
+				bool secondEq = false;
+
+				if (ax > 0 && b > 0)
+				{
+					if ((Math.Abs(ax) * 3 + Math.Abs(b)) > 9)
+					{
+						Console.WriteLine("Here?" + Math.Abs(ax) * 3);
+						firstEq = false;
+					} else
+					{
+						firstEq = true;
+					}
+				}
+				else
+				{
+					if ((Math.Abs(ax) * 3) > 9 ||
+						Math.Abs(b) > 9)
+					{
+						firstEq = false;
+					} else
+					{
+						firstEq = true;
+					}
+				}
+
+				if (cx > 0 && d > 0)
+				{
+					if ((Math.Abs(cx) * 3 + Math.Abs(d)) > 9)
+					{
+						secondEq = false;
+					} else
+					{
+						secondEq = true;
+					}
+				}
+				else
+				{
+					if ((Math.Abs(cx) * 3) > 9 ||
+						Math.Abs(d) > 9)
+					{
+						secondEq = false;
+					} else
+					{
+						secondEq = true;
+					}
+				}
+
+				Console.WriteLine("End: " + firstEq + "," + secondEq);
+				return firstEq && secondEq;
+			}
+			else if(Constants.TWO_VAR == numberOfVariables)
+			{
+				int ax = vars[0].GetValueOrDefault();
+				int by = vars[1].GetValueOrDefault();
+				int c = vars[2].GetValueOrDefault();
+
+				int dx = vars[3].GetValueOrDefault();
+				int ey = vars[4].GetValueOrDefault();
+				int f  = vars[5].GetValueOrDefault();
+
+				if (Math.Abs(ax) > 3 ||
+					Math.Abs(by) > 3 ||
+					Math.Abs(c) > 9 ||
+					Math.Abs(dx) > 3 ||
+					Math.Abs(ey) > 3 ||
+					Math.Abs(f) > 3)
+				{
+					return false;
+				} else if (Math.Abs(ax) * 3 + Math.Abs(by) * 3 + Math.Abs(c) > 9 ||
+					Math.Abs(dx) * 3 + Math.Abs(ey) * 3 + Math.Abs(f) > 9)
+				{
+					return false;
+				}
+					
+				return true;
+			}
+
 			return false;
 		}
 

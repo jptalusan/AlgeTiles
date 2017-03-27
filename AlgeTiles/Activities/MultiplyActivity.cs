@@ -23,6 +23,7 @@ namespace AlgeTiles
 	public class MultiplyActivity : AlgeTilesActivity
 	{
 		private static string TAG = "AlgeTiles:Multiply";
+		public Button customQuestion;
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
@@ -75,6 +76,9 @@ namespace AlgeTiles
 			space5 = FindViewById<Space>(Resource.Id.space5);
 
 			x2TV = FindViewById<TextView>(Resource.Id.x2TV);
+
+			customQuestion = FindViewById<Button>(Resource.Id.custom);
+			customQuestion.Click += CustomQuestion_Click;
 
 			ViewTreeObserver vto = upperLeftGrid.ViewTreeObserver;
 			vto.GlobalLayout += (sender, e) =>
@@ -230,6 +234,33 @@ namespace AlgeTiles
 
 			settingsDialog = new Dialog(this);
 			settingsDialog.Window.RequestFeature(WindowFeatures.NoTitle);
+		}
+
+		private void CustomQuestion_Click(object sender, EventArgs e)
+		{
+			var dialog = CustomEquationDialog.NewInstance();
+			dialog.Dismissed += (s, events) =>
+			{
+				if (events.vars[0].HasValue)
+					Console.WriteLine("Done with dialog: " + events.vars[0] + "," + events.vars[1] + "," + events.vars[2] + "," + events.vars[3]);
+
+				//Replace vars with event.vars and rerun the setupQuestionString(vars) after checking if this is valid, if not, show toast
+				if (AlgorithmUtilities.isSuppliedMultiplyEquationValid(events.vars, Constants.ONE_VAR))
+				{
+					vars.Clear();
+					for(int i = 0; i < events.vars.Length; ++i)
+					{
+						vars.Add(events.vars[i].GetValueOrDefault());
+					}
+					setupQuestionString(vars);
+					refreshScreen(Constants.MULTIPLY, gridValueList, innerGridLayoutList, outerGridLayoutList);
+				}
+				else
+				{
+					Toast.MakeText(this, "Invalid, please enter values again.", ToastLength.Short).Show();
+				}
+			};
+			dialog.Show(FragmentManager, "dialog");
 		}
 
 		private void button_click(object sender, EventArgs e)

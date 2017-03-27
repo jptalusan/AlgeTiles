@@ -124,7 +124,7 @@ namespace AlgeTiles
 		public Boolean xyTile_Clicked;
 		public Boolean yTile_Clicked;
 		public Boolean y2Tile_Clicked;
-
+		
 		protected override void OnCreate(Bundle bundle)
 		{
 			base.OnCreate(bundle);
@@ -622,7 +622,9 @@ namespace AlgeTiles
 		protected void refreshScreen(string ActivityType, List<GridValue> gvList, List<ViewGroup> inGLList, List<ViewGroup> outGLList)
 		{
 			foreach (List<RectTile> rList in rectTileListList)
+			{
 				rList.Clear();
+			}
 
 			for (int i = 0; i < editTextList.Count; ++i)
 			{

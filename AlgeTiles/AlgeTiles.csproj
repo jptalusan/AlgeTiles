@@ -76,6 +76,7 @@
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Activities\HomeScreenActivity.cs" />
     <Compile Include="Activities\FactorActivity.cs" />
+    <Compile Include="Utilities\CustomEquationDialog.cs" />
     <Compile Include="Utilities\Listeners.cs" />
     <Compile Include="Activities\MultiplyTwoVarActivity.cs" />
     <Compile Include="Activities\MultiplyActivity.cs" />
@@ -133,6 +134,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\x_selector.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout-land\CustomQuestion.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
