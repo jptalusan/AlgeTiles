@@ -195,8 +195,8 @@ namespace AlgeTiles
 			// aapt resource value: 0x7f060020
 			public const int factor_button = 2131099680;
 			
-			// aapt resource value: 0x7f060035
-			public const int imageview_card = 2131099701;
+			// aapt resource value: 0x7f060036
+			public const int imageview_card = 2131099702;
 			
 			// aapt resource value: 0x7f06001f
 			public const int linearLayout1 = 2131099679;
@@ -228,8 +228,8 @@ namespace AlgeTiles
 			// aapt resource value: 0x7f06001a
 			public const int new_question_button = 2131099674;
 			
-			// aapt resource value: 0x7f060034
-			public const int next = 2131099700;
+			// aapt resource value: 0x7f060035
+			public const int next = 2131099701;
 			
 			// aapt resource value: 0x7f060016
 			public const int notRotatedButtonLayout = 2131099670;
@@ -246,11 +246,11 @@ namespace AlgeTiles
 			// aapt resource value: 0x7f060021
 			public const int one_variable_button = 2131099681;
 			
-			// aapt resource value: 0x7f060032
-			public const int pager = 2131099698;
-			
 			// aapt resource value: 0x7f060033
-			public const int prev = 2131099699;
+			public const int pager = 2131099699;
+			
+			// aapt resource value: 0x7f060034
+			public const int prev = 2131099700;
 			
 			// aapt resource value: 0x7f060015
 			public const int refresh_button = 2131099669;
@@ -270,6 +270,9 @@ namespace AlgeTiles
 			// aapt resource value: 0x7f06001e
 			public const int space4 = 2131099678;
 			
+			// aapt resource value: 0x7f060031
+			public const int space5 = 2131099697;
+			
 			// aapt resource value: 0x7f06001b
 			public const int spaceAfterEquation = 2131099675;
 			
@@ -279,8 +282,8 @@ namespace AlgeTiles
 			// aapt resource value: 0x7f06002a
 			public const int sv = 2131099690;
 			
-			// aapt resource value: 0x7f060031
-			public const int text = 2131099697;
+			// aapt resource value: 0x7f060032
+			public const int text = 2131099698;
 			
 			// aapt resource value: 0x7f060017
 			public const int tile_1 = 2131099671;
@@ -303,8 +306,8 @@ namespace AlgeTiles
 			// aapt resource value: 0x7f060003
 			public const int upperRight = 2131099651;
 			
-			// aapt resource value: 0x7f060036
-			public const int video = 2131099702;
+			// aapt resource value: 0x7f060037
+			public const int video = 2131099703;
 			
 			// aapt resource value: 0x7f060026
 			public const int x2TV = 2131099686;

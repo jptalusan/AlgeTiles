@@ -27,7 +27,7 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
-                android:background="@drawable/shape"
+                android:background="@drawable/upperLeftGridshape"
                 android:id="@+id/upperLeft" />
         <!-- Upper Middle -->
             <GridLayout
@@ -44,7 +44,7 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
-                android:background="@drawable/shape"
+                android:background="@drawable/upperRightGridshape"
                 android:id="@+id/upperRight" />
         </LinearLayout>
     <!-- Second Layer-->
@@ -97,7 +97,7 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
-                android:background="@drawable/shape"
+                android:background="@drawable/lowerLeftGridshape"
                 android:id="@+id/lowerLeft" />
         <!-- Lower Middle -->
             <GridLayout
@@ -113,7 +113,7 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
-                android:background="@drawable/shape"
+                android:background="@drawable/lowerRightGridshape"
                 android:id="@+id/lowerRight" />
         </LinearLayout>
     </LinearLayout>
@@ -137,10 +137,11 @@
                 android:layout_weight="5"
                 android:background="@drawable/tvBackground"
                 android:gravity="center" />
-			<Space
-				android:layout_width="15dp"
-				android:layout_height="15dp" />
-			<LinearLayout
+            <Space
+                android:id="@+id/spaceAfterEquation"
+                android:layout_width="10dp"
+                android:layout_height="10dp" />
+            <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -157,13 +158,14 @@
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
-                    android:gravity="center" />
+                    android:gravity="bottom|center" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="x^2 + "
                     android:textColor="#000000"
-                    android:id="@+id/x2TV" />
+                    android:id="@+id/x2TV"
+                    android:gravity="bottom" />
                 <EditText
                     android:hint="......."
                     android:layout_width="wrap_content"
@@ -174,13 +176,14 @@
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
-                    android:gravity="center" />
+                    android:gravity="bottom|center" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="y^2 + "
                     android:textColor="#000000"
-                    android:id="@+id/xTV" />
+                    android:id="@+id/xTV"
+                    android:gravity="bottom" />
                 <EditText
                     android:hint="......."
                     android:layout_width="wrap_content"
@@ -191,13 +194,14 @@
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
-                    android:gravity="center" />
+                    android:gravity="bottom|center" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="xy + "
                     android:textColor="#000000"
-                    android:id="@+id/xTV" />
+                    android:id="@+id/xTV"
+                    android:gravity="bottom" />
             </LinearLayout>
             <Space
                 android:layout_width="match_parent"
@@ -219,13 +223,14 @@
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
-                    android:gravity="center" />
+                    android:gravity="bottom|center" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="x + "
                     android:textColor="#000000"
-                    android:id="@+id/x2TV" />
+                    android:id="@+id/x2TV"
+                    android:gravity="bottom" />
                 <EditText
                     android:hint="......."
                     android:layout_width="wrap_content"
@@ -236,13 +241,14 @@
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
-                    android:gravity="center" />
+                    android:gravity="bottom|center" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="y + "
                     android:textColor="#000000"
-                    android:id="@+id/xTV" />
+                    android:id="@+id/xTV"
+                    android:gravity="bottom" />
                 <EditText
                     android:hint="......."
                     android:layout_width="wrap_content"
@@ -253,8 +259,12 @@
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned"
-                    android:gravity="center" />
+                    android:gravity="bottom|center" />
             </LinearLayout>
+            <Space
+                android:id="@+id/spaceBeforeTutorial"
+                android:layout_width="0dp"
+                android:layout_height="0dp" />
         <!-- First 0.5 (2) -->
             <LinearLayout
                 android:orientation="horizontal"
@@ -271,7 +281,7 @@
                     android:text="Tutorial"
                     android:id="@+id/tutorial"
                     android:layout_weight="2"
-					android:visibility="invisible"/>
+                    android:visibility="gone" />
                 <ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -380,24 +390,30 @@
                         whatever:tileType="y_tile"
                         android:id="@+id/y_tile" />
                 </LinearLayout>
-                <algetiles.AlgeTilesTextView
+				<Space
+                    android:id="@+id/space3"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp" />
+				<algetiles.AlgeTilesTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="xy"
                     whatever:tileType="xy_tile"
                     android:id="@+id/xy_tile" />
-                <Space
-                    android:layout_width="15dp"
-                    android:layout_height="15dp" />
-                <algetiles.AlgeTilesTextView
+				<Space
+                    android:id="@+id/space4"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp" />
+				<algetiles.AlgeTilesTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="x2"
                     whatever:tileType="x2_tile"
                     android:id="@+id/x2_tile" />
-                <Space
-                    android:layout_width="15dp"
-                    android:layout_height="15dp" />
+				<Space
+                    android:id="@+id/space5"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp" />
                 <algetiles.AlgeTilesTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

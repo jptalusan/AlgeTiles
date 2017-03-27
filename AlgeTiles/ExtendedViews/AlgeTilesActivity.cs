@@ -109,6 +109,14 @@ namespace AlgeTiles
 		internal Context PackageContext { get; set; }
 		public Dialog settingsDialog;
 
+		public Space space1;
+		public Space space2;
+		public Space space3;
+		public Space space4;
+		public Space space5;
+
+		public TextView x2TV;
+
 		protected override void OnCreate(Bundle bundle)
 		{
 			base.OnCreate(bundle);
@@ -116,6 +124,35 @@ namespace AlgeTiles
 		}
 
 		protected abstract int getLayoutResourceId();
+
+		public static void resetBGColors(List<ViewGroup> vL)
+ 		{
+ 			foreach (ViewGroup v in vL)
+ 			{
+ 				if (v is AlgeTilesRelativeLayout)
+ 				{
+ 					AlgeTilesRelativeLayout temp = v as AlgeTilesRelativeLayout;
+ 					temp.resetColor();
+ 				}
+ 				else
+ 				{
+ 					v.SetBackgroundResource(Resource.Drawable.shape);
+ 				}
+ 			}
+ 		}
+
+		public static void resetBGColors(ViewGroup v)
+ 		{
+ 			if (v is AlgeTilesRelativeLayout)
+ 			{
+ 				AlgeTilesRelativeLayout temp = v as AlgeTilesRelativeLayout;
+ 				temp.resetColor();
+ 			}
+ 			else
+ 			{
+ 				v.SetBackgroundResource(Resource.Drawable.shape);
+ 			}
+ 		}
 
 		protected abstract void setupQuestionString(List<int> vars);
 
@@ -127,7 +164,9 @@ namespace AlgeTiles
 				gvList[i].SetBackgroundResource(Resource.Drawable.notok);
 			await Task.Delay(Constants.DELAY);
 			for (int i = 0; i < gvList.Count; ++i)
+			{
 				gvList[i].SetBackgroundResource(Resource.Drawable.shape);
+			}
 		}
 
 		public async void incorrectPrompt(List<ViewGroup> gvList)
@@ -138,7 +177,10 @@ namespace AlgeTiles
 				gvList[i].SetBackgroundResource(Resource.Drawable.notok);
 			await Task.Delay(Constants.DELAY);
 			for (int i = 0; i < gvList.Count; ++i)
-				gvList[i].SetBackgroundResource(Resource.Drawable.shape);
+			{
+				//gvList[i].SetBackgroundResource(Resource.Drawable.shape);
+				resetBGColors(gvList);
+			}
 		}
 
 		public async void checkAnswers()
@@ -159,7 +201,11 @@ namespace AlgeTiles
 
 					//Shade red the other grids
 					for (int i = 0; i < outerGridLayoutList.Count; ++i)
-						outerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.shape);
+					{
+						//outerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.shape);
+						resetBGColors(outerGridLayoutList);
+					}
+						
 
 					for (int i = 0; i < innerGridLayoutList.Count; ++i)
 					{
@@ -585,13 +631,15 @@ namespace AlgeTiles
 
 			for (int i = 0; i < inGLList.Count; ++i)
 			{
-				inGLList[i].SetBackgroundResource(Resource.Drawable.shape);
+				//inGLList[i].SetBackgroundResource(Resource.Drawable.shape);
+				resetBGColors(inGLList);
 				inGLList[i].Drag -= listeners.GridLayout_Drag;
 			}
 
 			for (int i = 0; i < outGLList.Count; ++i)
 			{
-				outGLList[i].SetBackgroundResource(Resource.Drawable.shape);
+				//outGLList[i].SetBackgroundResource(Resource.Drawable.shape);
+				resetBGColors(outGLList);
 				outGLList[i].Drag -= listeners.GridLayout_Drag;
 				AlgeTilesRelativeLayout a = (AlgeTilesRelativeLayout)outGLList[i];
 				a.clearRects(heightInPx, widthInPx);
@@ -630,7 +678,8 @@ namespace AlgeTiles
 
 				for (int i = 0; i < outGLList.Count; ++i)
 				{
-					outGLList[i].SetBackgroundResource(Resource.Drawable.shape);
+					resetBGColors(outGLList);
+					//outGLList[i].SetBackgroundResource(Resource.Drawable.shape);
 					outGLList[i].Drag += listeners.GridLayout_Drag;
 				}
 			}
@@ -638,7 +687,8 @@ namespace AlgeTiles
 			{
 				for (int i = 0; i < inGLList.Count; ++i)
 				{
-					inGLList[i].SetBackgroundResource(Resource.Drawable.shape);
+					resetBGColors(inGLList);
+					//inGLList[i].SetBackgroundResource(Resource.Drawable.shape);
 					inGLList[i].Drag += listeners.GridLayout_Drag;
 				}
 

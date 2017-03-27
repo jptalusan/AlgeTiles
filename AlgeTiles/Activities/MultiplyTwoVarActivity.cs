@@ -60,10 +60,21 @@ namespace AlgeTiles
 			lowerLeftGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.lowerLeft);
 			lowerRightGrid = FindViewById<AlgeTilesRelativeLayout>(Resource.Id.lowerRight);
 
+			upperLeftGrid.backGroundResource = Resource.Drawable.upperLeftGridshape;
+			upperRightGrid.backGroundResource = Resource.Drawable.upperRightGridshape;
+			lowerLeftGrid.backGroundResource = Resource.Drawable.lowerLeftGridshape;
+			lowerRightGrid.backGroundResource = Resource.Drawable.lowerRightGridshape;
+
 			upperMiddleGrid = FindViewById<GridLayout>(Resource.Id.upperMiddle);
 			middleLeftGrid = FindViewById<GridLayout>(Resource.Id.middleLeft);
 			middleRightGrid = FindViewById<GridLayout>(Resource.Id.middleRight);
 			lowerMiddleGrid = FindViewById<GridLayout>(Resource.Id.lowerMiddle);
+
+			space1 = FindViewById<Space>(Resource.Id.spaceAfterEquation);
+			space2 = FindViewById<Space>(Resource.Id.spaceBeforeTutorial);
+			space3 = FindViewById<Space>(Resource.Id.space3);
+			space4 = FindViewById<Space>(Resource.Id.space4);
+			space5 = FindViewById<Space>(Resource.Id.space5);
 
 			ViewTreeObserver vto2 = upperLeftGrid.ViewTreeObserver;
 			vto2.GlobalLayout += (sender, e) =>
@@ -153,6 +164,14 @@ namespace AlgeTiles
 						xy_tile.Text = tF.text;
 					}
 					xy_tile.LayoutParameters = par_xy;
+
+					x2ET.SetHeight(par_x2.Height);
+					xET.SetHeight(par_x2.Height);
+					space1.LayoutParameters = par_1;
+					space2.LayoutParameters = par_1;
+					space3.LayoutParameters = par_1;
+					space4.LayoutParameters = par_1;
+					space5.LayoutParameters = par_1;
 				}
 			};
 

@@ -90,7 +90,8 @@ namespace AlgeTiles
 				case DragAction.Exited:
 					a.currentOwner = (ViewGroup)view.Parent;
 					a.hasButtonBeenDroppedInCorrectzone = false;
-					v.SetBackgroundResource(Resource.Drawable.shape);
+					//v.SetBackgroundResource(Resource.Drawable.shape);
+					AlgeTilesActivity.resetBGColors(v);
 					break;
 				case DragAction.Location:
 					x = e.Event.GetX(); //width
@@ -233,11 +234,13 @@ namespace AlgeTiles
 						}
 
 						view.Visibility = ViewStates.Visible;
-						v.SetBackgroundResource(Resource.Drawable.shape);
+						AlgeTilesActivity.resetBGColors(v);
+						//v.SetBackgroundResource(Resource.Drawable.shape);
 					}
 					break;
 				case DragAction.Ended:
-					v.SetBackgroundResource(Resource.Drawable.shape);
+					//v.SetBackgroundResource(Resource.Drawable.shape);
+					AlgeTilesActivity.resetBGColors(v);
 					if (!a.hasButtonBeenDroppedInCorrectzone &&
 						a.currentButtonType.Equals(Constants.CLONED_BUTTON))
 					{

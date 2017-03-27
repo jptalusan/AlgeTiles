@@ -138,9 +138,6 @@
                 android:layout_weight="5"
                 android:background="@drawable/tvBackground"
                 android:gravity="center" />
-			<Space
-				android:layout_width="15dp"
-				android:layout_height="15dp" />
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
@@ -210,8 +207,7 @@
                     android:layout_height="wrap_content"
                     android:text="Tutorial"
                     android:id="@+id/tutorial"
-                    android:layout_weight="2"
-					android:visibility="invisible"/>
+                    android:layout_weight="2" />
                 <ToggleButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -281,37 +277,56 @@
             </LinearLayout>
         <!-- Third (4) Draggable Blocks Area -->
             <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="30"
-                android:padding="5dp"
+                android:weightSum="4"
                 android:layout_gravity="center"
-                android:gravity="center">
-                <algetiles.AlgeTilesTextView
+                android:gravity="center"
+                android:id="@+id/notRotatedButtonLayout"
+                android:paddingTop="10dp"
+                android:paddingLeft="10dp"
+                android:visibility="visible">
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1"
-                    whatever:tileType="tile_1"
-                    android:id="@+id/tile_1" />
-                <Space
-                    android:layout_width="15dp"
-                    android:layout_height="15dp" />
-                <algetiles.AlgeTilesTextView
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:weightSum="4"
+                    android:gravity="center">
+                    <algetiles.AlgeTilesTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        whatever:tileType="tile_1"
+                        android:id="@+id/tile_1"
+                        android:layout_weight="1" />
+                    <Space
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+                    <algetiles.AlgeTilesTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="x"
+                        whatever:tileType="x_tile"
+                        android:id="@+id/x_tile"
+                        android:layout_weight="3" />
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="x"
-                    whatever:tileType="x_tile"
-                    android:id="@+id/x_tile" />
-                <Space
-                    android:layout_width="15dp"
-                    android:layout_height="15dp" />
-                <algetiles.AlgeTilesTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="x2"
-                    whatever:tileType="x2_tile"
-                    android:id="@+id/x2_tile" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:weightSum="4"
+                    android:gravity="center">
+                    <algetiles.AlgeTilesTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="x2"
+                        whatever:tileType="x2_tile"
+                        android:id="@+id/x2_tile" />
+                </LinearLayout>
             </LinearLayout>
         <!-- Fourth (1) -->
             <LinearLayout
