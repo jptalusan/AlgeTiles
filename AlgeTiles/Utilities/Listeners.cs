@@ -254,6 +254,25 @@ namespace AlgeTiles
 						a.FindViewById<LinearLayout>(Resource.Id.notRotatedButtonLayout).Visibility = ViewStates.Visible;
 					}
 					a.rotateToggle.Checked = a.rotateToggle.Checked ? false : false;
+
+					a.tile_1.Selected = false;
+					a.oneTile_Clicked = false;
+
+					a.x_tile.Selected = false;
+					a.xTile_Clicked = false;
+
+					a.x2_tile.Selected = false;
+					a.x2Tile_Clicked = false;
+
+					a.xy_tile.Selected = false;
+					a.xyTile_Clicked = false;
+
+					a.y_tile.Selected = false;
+					a.yTile_Clicked = false;
+
+					a.y2_tile.Selected = false;
+					a.y2Tile_Clicked = false;
+
 					break;
 				case Resource.Id.drag:
 					a.removeToggle.Checked = a.removeToggle.Checked ? false : false;
