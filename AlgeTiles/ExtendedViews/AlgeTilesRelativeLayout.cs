@@ -64,11 +64,6 @@ namespace AlgeTiles
 			rList.Clear();
 		}
 
-		public void updatesomething(bool b)
-		{
-			update = b;
-		}
-
 		public void resetColor()
 		{
 			SetBackgroundResource(backGroundResource);

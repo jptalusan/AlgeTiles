@@ -660,11 +660,6 @@ namespace AlgeTiles
 			lowerRightGrid.drawRects(lowerRightRectTileList);
 			lowerLeftGrid.drawRects(lowerLeftRectTileList);
 
-			upperRightGrid.updatesomething(true);
-			upperLeftGrid.updatesomething(true);
-			lowerRightGrid.updatesomething(true);
-			lowerLeftGrid.updatesomething(true);
-
 			upperRightGrid.SetBackgroundResource(Resource.Drawable.shape_droptarget);
 			upperRightGrid.resetColor();
 

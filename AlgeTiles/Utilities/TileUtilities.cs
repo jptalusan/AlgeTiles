@@ -544,15 +544,11 @@ namespace AlgeTiles
 						int[] productDimensions = getDimensionsOfProduct(height, midUp[i], midRight[j]);
 						if (firstPass)
 						{
-							//top = subtract height of first tile in midup ( then subtract next tile  ) etc...
 							top -= productDimensions[0];
-							//bottom = height at i = 0, else bottom = previous top
-							bottom = top + productDimensions[0]; //don't add to stack since only getting the latest top/height
+							bottom = top + productDimensions[0];
 							firstPass = false;
 						}
-						//right = width of midleft (then add next tile) etc...
-						right += productDimensions[1]; //width adds up
-													   //left = 0 at start, else width of midleft
+						right += productDimensions[1];
 						left = right - productDimensions[1];
 
 						Rect r = new Rect(left, top, right, bottom);
