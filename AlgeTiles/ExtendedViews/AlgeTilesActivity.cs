@@ -186,7 +186,6 @@ namespace AlgeTiles
 			await Task.Delay(Constants.DELAY);
 			for (int i = 0; i < gvList.Count; ++i)
 			{
-				//gvList[i].SetBackgroundResource(Resource.Drawable.shape);
 				resetBGColors(gvList);
 			}
 		}
@@ -201,29 +200,26 @@ namespace AlgeTiles
 					isFirstAnswerCorrect = true;
 
 					//Change color of draggable areas to signify "Done/Correct"
-					upperLeftGrid.Drag += listeners.GridLayout_Drag;
-					upperRightGrid.Drag += listeners.GridLayout_Drag;
+					upperLeftGrid.Touch += listeners.Layout_Touch;
+					upperRightGrid.Touch += listeners.Layout_Touch;
 
-					lowerLeftGrid.Drag += listeners.GridLayout_Drag;
-					lowerRightGrid.Drag += listeners.GridLayout_Drag;
+					lowerLeftGrid.Touch += listeners.Layout_Touch;
+					lowerRightGrid.Touch += listeners.Layout_Touch;
 
 					//Shade red the other grids
 					for (int i = 0; i < outerGridLayoutList.Count; ++i)
 					{
-						//outerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.shape);
 						resetBGColors(outerGridLayoutList);
 					}
-						
 
 					for (int i = 0; i < innerGridLayoutList.Count; ++i)
 					{
 						innerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.ok);
-						innerGridLayoutList[i].Drag -= listeners.GridLayout_Drag;
+						innerGridLayoutList[i].Touch -= listeners.Layout_Touch;
 						for (int j = 0; j < innerGridLayoutList[i].ChildCount; ++j)
 						{
 							var iv = innerGridLayoutList[i].GetChildAt(j) as AlgeTilesTextView;
 							iv.LongClick -= listeners.clonedImageView_Touch;
-							//iv.Visibility = ViewStates.Gone;
 						}
 					}
 
@@ -260,7 +256,9 @@ namespace AlgeTiles
 				else
 				{
 					for (int i = 0; i < outerGridLayoutList.Count; ++i)
-						outerGridLayoutList[i].Drag -= listeners.GridLayout_Drag;
+					{
+						outerGridLayoutList[i].Touch -= listeners.Layout_Touch;
+					}
 
 					incorrectPrompt(innerGridLayoutList);
 
@@ -510,7 +508,7 @@ namespace AlgeTiles
 					for (int i = 0; i < outerGridLayoutList.Count; ++i)
 					{
 						outerGridLayoutList[i].SetBackgroundResource(Resource.Drawable.ok);
-						outerGridLayoutList[i].Drag -= listeners.GridLayout_Drag;
+						outerGridLayoutList[i].Touch -= listeners.Layout_Touch;
 						for (int j = 0; j < outerGridLayoutList[i].ChildCount; ++j)
 						{
 							var iv = outerGridLayoutList[i].GetChildAt(j) as AlgeTilesTextView;
@@ -639,16 +637,14 @@ namespace AlgeTiles
 
 			for (int i = 0; i < inGLList.Count; ++i)
 			{
-				//inGLList[i].SetBackgroundResource(Resource.Drawable.shape);
 				resetBGColors(inGLList);
-				inGLList[i].Drag -= listeners.GridLayout_Drag;
+				inGLList[i].Touch -= listeners.Layout_Touch;
 			}
 
 			for (int i = 0; i < outGLList.Count; ++i)
 			{
-				//outGLList[i].SetBackgroundResource(Resource.Drawable.shape);
 				resetBGColors(outGLList);
-				outGLList[i].Drag -= listeners.GridLayout_Drag;
+				outGLList[i].Touch -= listeners.Layout_Touch;
 				AlgeTilesRelativeLayout a = (AlgeTilesRelativeLayout)outGLList[i];
 				a.clearRects(heightInPx, widthInPx);
 			}
@@ -681,14 +677,13 @@ namespace AlgeTiles
 				for (int i = 0; i < inGLList.Count; ++i)
 				{
 					inGLList[i].SetBackgroundResource(Resource.Drawable.unavailable);
-					inGLList[i].Drag -= listeners.GridLayout_Drag;
+					inGLList[i].Touch -= listeners.Layout_Touch;
 				}
 
 				for (int i = 0; i < outGLList.Count; ++i)
 				{
 					resetBGColors(outGLList);
-					//outGLList[i].SetBackgroundResource(Resource.Drawable.shape);
-					outGLList[i].Drag += listeners.GridLayout_Drag;
+					outGLList[i].Touch += listeners.Layout_Touch;
 				}
 			}
 			else
@@ -696,14 +691,13 @@ namespace AlgeTiles
 				for (int i = 0; i < inGLList.Count; ++i)
 				{
 					resetBGColors(inGLList);
-					//inGLList[i].SetBackgroundResource(Resource.Drawable.shape);
-					inGLList[i].Drag += listeners.GridLayout_Drag;
+					inGLList[i].Touch += listeners.Layout_Touch;
 				}
 
 				for (int i = 0; i < outGLList.Count; ++i)
 				{
 					outGLList[i].SetBackgroundResource(Resource.Drawable.unavailable);
-					outGLList[i].Drag -= listeners.GridLayout_Drag;
+					outGLList[i].Touch -= listeners.Layout_Touch;
 				}
 			}
 		}

@@ -27,7 +27,7 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
-                android:background="@drawable/upperLeftGridshape"
+                android:background="@drawable/shape"
                 android:id="@+id/upperLeft" />
         <!-- Upper Middle -->
             <GridLayout
@@ -44,7 +44,7 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
-                android:background="@drawable/upperRightGridshape"
+                android:background="@drawable/shape"
                 android:id="@+id/upperRight" />
         </LinearLayout>
     <!-- Second Layer-->
@@ -97,7 +97,7 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
-                android:background="@drawable/lowerLeftGridshape"
+                android:background="@drawable/shape"
                 android:id="@+id/lowerLeft" />
         <!-- Lower Middle -->
             <GridLayout
@@ -113,7 +113,7 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="92"
-                android:background="@drawable/lowerRightGridshape"
+                android:background="@drawable/shape"
                 android:id="@+id/lowerRight" />
         </LinearLayout>
     </LinearLayout>

@@ -63,45 +63,46 @@ namespace AlgeTiles
 			}
 		}
 
-		public void GridLayout_Drag(object sender, Android.Views.View.DragEventArgs e)
+		public void Layout_Touch(object sender, View.TouchEventArgs e)
 		{
 			var v = (ViewGroup)sender;
-			View view = (View)e.Event.LocalState;
-			//can just get currentButtonType from view.getTileType()
-			var drag_data = e.Event.ClipData;
+			float x = e.Event.GetX(0);
+			float y = e.Event.GetY(0);
 			bool isDroppedAtCenter = false;
-			float x = 0.0f;
-			float y = 0.0f;
+
+			if (a.oneTile_Clicked)
+			{
+				a.currentButtonType = Constants.ONE_TILE;
+			}
+			else if (a.xTile_Clicked)
+			{
+				a.currentButtonType = Constants.X_TILE;
+			}
+			else if (a.x2Tile_Clicked)
+			{
+				a.currentButtonType = Constants.X2_TILE;
+			}
+			else if (a.xyTile_Clicked)
+			{
+				a.currentButtonType = Constants.XY_TILE;
+			}
+			else if (a.yTile_Clicked)
+			{
+				a.currentButtonType = Constants.Y_TILE;
+			}
+			else if (a.y2Tile_Clicked)
+			{
+				a.currentButtonType = Constants.Y2_TILE;
+			}
+			else
+			{
+				//Do nothing
+				a.currentButtonType = "";
+			}
 
 			switch (e.Event.Action)
 			{
-				case DragAction.Started:
-					a.hasButtonBeenDroppedInCorrectzone = false;
-					AlgeTilesTextView aTv = (AlgeTilesTextView)view;
-					a.currentButtonType = aTv.getTileType();
-					//if (null != drag_data)
-					//{
-					//	a.currentButtonType = drag_data.GetItemAt(0).Text;
-					//}
-					break;
-				case DragAction.Entered:
-					v.SetBackgroundResource(Resource.Drawable.shape_droptarget);
-					break;
-				case DragAction.Exited:
-					a.currentOwner = (ViewGroup)view.Parent;
-					a.hasButtonBeenDroppedInCorrectzone = false;
-					//v.SetBackgroundResource(Resource.Drawable.shape);
-					a.resetBGColors(v);
-					break;
-				case DragAction.Location:
-					x = e.Event.GetX(); //width
-					y = e.Event.GetY(); //height
-					break;
-				case DragAction.Drop:
-					if (null != drag_data)
-					{
-						a.currentButtonType = drag_data.GetItemAt(0).Text;
-					}
+				case MotionEventActions.Down:
 					Log.Debug(TAG, "Dropped: " + a.currentButtonType);
 
 					AlgeTilesTextView algeTilesIV = new AlgeTilesTextView(a);
@@ -126,7 +127,8 @@ namespace AlgeTiles
 						{
 							wasImageDropped = true;
 						}
-					} else
+					}
+					else
 					{
 						if (a.isFirstAnswerCorrect &&
 							(a.currentButtonType.Equals(Constants.X_TILE) ||
@@ -163,15 +165,14 @@ namespace AlgeTiles
 							cs.SetSpan(new SuperscriptSpan(), 1, 2, SpanTypes.ExclusiveExclusive);
 							cs.SetSpan(new RelativeSizeSpan(0.75f), 1, 2, SpanTypes.ExclusiveExclusive);
 							algeTilesIV.TextFormatted = cs;
-						} else
+						}
+						else
 						{
 							algeTilesIV.Text = tF.text;
 						}
 
 						heightFactor = tF.heightFactor;
 						widthFactor = tF.widthFactor;
-						x = e.Event.GetX();
-						y = e.Event.GetY();
 
 						if (!isDroppedAtCenter)
 						{
@@ -190,8 +191,6 @@ namespace AlgeTiles
 								container.AddView(algeTilesIV);
 								TileUtilities.checkWhichParentAndUpdate(v.Id, a.currentButtonType, Constants.ADD, a.gridValueList);
 								a.hasButtonBeenDroppedInCorrectzone = true;
-								//algeTilesIV.setDimensions(par.Height, par.Width);
-
 							}
 						}
 						else
@@ -209,7 +208,6 @@ namespace AlgeTiles
 								gParms.Height = (int)(a.heightInPx / heightFactor);
 								gParms.Width = (int)(a.heightInPx / widthFactor);
 							}
-							//algeTilesIV.setDimensions(gParms.Height, gParms.Width);
 
 							algeTilesIV.LayoutParameters = gParms;
 							algeTilesIV.LongClick += a.listeners.clonedImageView_Touch;
@@ -232,60 +230,15 @@ namespace AlgeTiles
 							}
 							//End of auto re-arrange
 						}
-
-						view.Visibility = ViewStates.Visible;
 						a.resetBGColors(v);
-						//v.SetBackgroundResource(Resource.Drawable.shape);
 					}
 					break;
-				case DragAction.Ended:
-					//v.SetBackgroundResource(Resource.Drawable.shape);
+				case MotionEventActions.Up:
 					a.resetBGColors(v);
-					if (!a.hasButtonBeenDroppedInCorrectzone &&
-						a.currentButtonType.Equals(Constants.CLONED_BUTTON))
-					{
-						a.currentOwner.RemoveView(view);
-					}
-					else
-					{
-						view.Visibility = ViewStates.Visible;
-					}
 					break;
 				default:
 					break;
 			}
-		}
-
-		public void tile_LongClick(object sender, View.LongClickEventArgs e)
-		{
-			var imageViewTouch = (sender) as AlgeTilesTextView;
-			ClipData data = ClipData.NewPlainText(Constants.BUTTON_TYPE, Constants.ORIGINAL_BUTTON);
-			switch (imageViewTouch.Id)
-			{
-				case Resource.Id.tile_1:
-					data = ClipData.NewPlainText(Constants.BUTTON_TYPE, Constants.ONE_TILE);
-					break;
-				case Resource.Id.x_tile:
-					data = ClipData.NewPlainText(Constants.BUTTON_TYPE, Constants.X_TILE);
-					break;
-				case Resource.Id.y_tile:
-					data = ClipData.NewPlainText(Constants.BUTTON_TYPE, Constants.Y_TILE);
-					break;
-				case Resource.Id.xy_tile:
-					data = ClipData.NewPlainText(Constants.BUTTON_TYPE, Constants.XY_TILE);
-					break;
-				case Resource.Id.y2_tile:
-					data = ClipData.NewPlainText(Constants.BUTTON_TYPE, Constants.Y2_TILE);
-					break;
-				case Resource.Id.x2_tile:
-					data = ClipData.NewPlainText(Constants.BUTTON_TYPE, Constants.X2_TILE);
-					break;
-			}
-			a.dragToggle.Checked = false;
-			a.removeToggle.Checked = false;
-
-			View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(imageViewTouch);
-			imageViewTouch.StartDrag(data, shadowBuilder, imageViewTouch, 0);
 		}
 
 		public void toggle_click(object sender, EventArgs e)

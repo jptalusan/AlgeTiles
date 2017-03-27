@@ -48,13 +48,6 @@ namespace AlgeTiles
 			x2_tile = (AlgeTilesTextView)FindViewById(Resource.Id.x2_tile);
 			y2_tile = (AlgeTilesTextView)FindViewById(Resource.Id.y2_tile);
 
-			//tile_1.LongClick += listeners.tile_LongClick;
-			//x_tile.LongClick += listeners.tile_LongClick;
-			//y_tile.LongClick += listeners.tile_LongClick;
-			//x2_tile.LongClick += listeners.tile_LongClick;
-			//y2_tile.LongClick += listeners.tile_LongClick;
-			//xy_tile.LongClick += listeners.tile_LongClick;
-
 			tile_1.Click += listeners.tile_Click;
 			x_tile.Click += listeners.tile_Click;
 			y_tile.Click += listeners.tile_Click;
@@ -207,12 +200,12 @@ namespace AlgeTiles
 
 			//For multiply this is the initial grid available
 			//Together form one Part of the formula
-			upperMiddleGrid.Drag += listeners.GridLayout_Drag;
-			lowerMiddleGrid.Drag += listeners.GridLayout_Drag;
+			upperMiddleGrid.Touch += listeners.Layout_Touch;
+			lowerMiddleGrid.Touch += listeners.Layout_Touch;
 
 			//Together form one Part of the formula
-			middleLeftGrid.Drag += listeners.GridLayout_Drag;
-			middleRightGrid.Drag += listeners.GridLayout_Drag;
+			middleLeftGrid.Touch += listeners.Layout_Touch;
+			middleRightGrid.Touch += listeners.Layout_Touch;
 
 			//Shade red the other grids
 			for (int i = 0; i < outerGridLayoutList.Count; ++i)
