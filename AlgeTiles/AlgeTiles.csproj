@@ -76,6 +76,7 @@
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Activities\HomeScreenActivity.cs" />
     <Compile Include="Activities\FactorActivity.cs" />
+    <Compile Include="Utilities\CustomEquationDialogTwoVar.cs" />
     <Compile Include="Utilities\CustomEquationDialog.cs" />
     <Compile Include="Utilities\Listeners.cs" />
     <Compile Include="Activities\MultiplyTwoVarActivity.cs" />
@@ -137,6 +138,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout-land\CustomQuestion.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout-land\CustomQuestionTwoVar.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

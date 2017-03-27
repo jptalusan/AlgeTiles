@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:layout_gravity="center_vertical"
+    android:paddingTop="10dp">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="("
+            android:textColor="#000000"
+            android:gravity="bottom" />
+        <EditText
+            android:hint="......."
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:textColor="#000000"
+            android:id="@+id/x_value_1"
+            android:layout_weight="1"
+            android:imeOptions="actionDone"
+            android:inputType="numberSigned"
+            android:gravity="bottom|center" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="x + "
+            android:textColor="#000000"
+            android:id="@+id/x2TV"
+            android:gravity="bottom" />
+        <EditText
+            android:hint="......."
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:textColor="#000000"
+            android:id="@+id/y_value_1"
+            android:layout_weight="1"
+            android:imeOptions="actionDone"
+            android:inputType="numberSigned"
+            android:gravity="bottom|center" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="y + "
+            android:textColor="#000000"
+            android:id="@+id/y2TV"
+            android:gravity="bottom" />
+        <EditText
+            android:hint="......."
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:textColor="#000000"
+            android:id="@+id/one_value_1"
+            android:layout_weight="1"
+            android:imeOptions="actionDone"
+            android:inputType="numberSigned"
+            android:gravity="bottom|center" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=")"
+            android:textColor="#000000"
+            android:id="@+id/xTV"
+            android:gravity="bottom" />
+    </LinearLayout>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="15dp" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="("
+            android:textColor="#000000"
+            android:gravity="bottom" />
+        <EditText
+            android:hint="......."
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:textColor="#000000"
+            android:id="@+id/x_value_2"
+            android:layout_weight="1"
+            android:imeOptions="actionDone"
+            android:inputType="numberSigned"
+            android:gravity="bottom|center" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="x + "
+            android:textColor="#000000"
+            android:id="@+id/x2TV"
+            android:gravity="bottom" />
+        <EditText
+            android:hint="......."
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:textColor="#000000"
+            android:id="@+id/y_value_2"
+            android:layout_weight="1"
+            android:imeOptions="actionDone"
+            android:inputType="numberSigned"
+            android:gravity="bottom|center" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="y + "
+            android:textColor="#000000"
+            android:id="@+id/xTV"
+            android:gravity="bottom" />
+        <EditText
+            android:hint="......."
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:textColor="#000000"
+            android:id="@+id/one_value_2"
+            android:layout_weight="1"
+            android:imeOptions="actionDone"
+            android:inputType="numberSigned"
+            android:gravity="bottom|center" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=")"
+            android:textColor="#000000"
+            android:id="@+id/x2TV"
+            android:gravity="bottom" />
+    </LinearLayout>
+</LinearLayout>

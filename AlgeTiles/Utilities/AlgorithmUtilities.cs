@@ -444,7 +444,8 @@ namespace AlgeTiles
 					{
 						Console.WriteLine("Here?" + Math.Abs(ax) * 3);
 						firstEq = false;
-					} else
+					}
+					else
 					{
 						firstEq = true;
 					}
@@ -455,7 +456,8 @@ namespace AlgeTiles
 						Math.Abs(b) > 9)
 					{
 						firstEq = false;
-					} else
+					}
+					else
 					{
 						firstEq = true;
 					}
@@ -466,7 +468,8 @@ namespace AlgeTiles
 					if ((Math.Abs(cx) * 3 + Math.Abs(d)) > 9)
 					{
 						secondEq = false;
-					} else
+					}
+					else
 					{
 						secondEq = true;
 					}
@@ -477,7 +480,8 @@ namespace AlgeTiles
 						Math.Abs(d) > 9)
 					{
 						secondEq = false;
-					} else
+					}
+					else
 					{
 						secondEq = true;
 					}
@@ -486,7 +490,7 @@ namespace AlgeTiles
 				Console.WriteLine("End: " + firstEq + "," + secondEq);
 				return firstEq && secondEq;
 			}
-			else if(Constants.TWO_VAR == numberOfVariables)
+			else if (Constants.TWO_VAR == numberOfVariables)
 			{
 				int ax = vars[0].GetValueOrDefault();
 				int by = vars[1].GetValueOrDefault();
@@ -494,26 +498,247 @@ namespace AlgeTiles
 
 				int dx = vars[3].GetValueOrDefault();
 				int ey = vars[4].GetValueOrDefault();
-				int f  = vars[5].GetValueOrDefault();
+				int f = vars[5].GetValueOrDefault();
 
-				if (Math.Abs(ax) > 3 ||
-					Math.Abs(by) > 3 ||
-					Math.Abs(c) > 9 ||
-					Math.Abs(dx) > 3 ||
-					Math.Abs(ey) > 3 ||
-					Math.Abs(f) > 3)
+				bool firstEq = false;
+				bool secondEq = false;
+
+				Console.WriteLine("isSuppliedValid: " + ax + "," + by + "," + c + ")(" + dx + "," + ey + "," + f);
+
+				if (c > 0)
 				{
-					return false;
-				} else if (Math.Abs(ax) * 3 + Math.Abs(by) * 3 + Math.Abs(c) > 9 ||
-					Math.Abs(dx) * 3 + Math.Abs(ey) * 3 + Math.Abs(f) > 9)
-				{
-					return false;
+					if (ax > 0)
+					{
+						if (by > 0)
+						{
+							if (ax * 3 + by * 3 + c > 9)
+							{
+								firstEq = false;
+							}
+							else
+							{
+								firstEq = true;
+							}
+						}
+						else if (by < 0)
+						{
+							if (ax * 3 + c > 9 ||
+								by * 3 < -9)
+							{
+								firstEq = false;
+							}
+							else
+							{
+								firstEq = true;
+							}
+						}
+					}
+					else if (ax < 0)
+					{
+						if (by > 0)
+						{
+							if (by * 3 + c > 9 ||
+								ax * 3 < -9)
+							{
+								firstEq = false;
+							}
+							else
+							{
+								firstEq = true;
+							}
+						}
+						else if (by < 0)
+						{
+							if (ax * 3 < -9 ||
+								by * 3 < -9 ||
+								c > 9)
+							{
+								firstEq = false;
+							}
+							else
+							{
+								firstEq = true;
+							}
+						}
+					}
 				}
-					
-				return true;
-			}
+				else if (c < 0)
+				{
+					if (ax > 0)
+					{
+						if (by > 0)
+						{
+							if (ax * 3 + by * 3 > 9 ||
+								c < -9)
+							{
+								firstEq = false;
+							}
+							else
+							{
+								firstEq = true;
+							}
+						}
+						else if (by < 0)
+						{
+							if (by * 3 + c < -9 ||
+								ax * 3 > 9)
+							{
+								firstEq = false;
+							}
+							else
+							{
+								firstEq = true;
+							}
+						}
+					}
+					else if (ax < 0)
+					{
+						if (by > 0)
+						{
+							if (ax * 3 + c < -9 ||
+								by * 3 > 9)
+							{
+								firstEq = false;
+							}
+							else
+							{
+								firstEq = true;
+							}
+						}
+						else if (by < 0)
+						{
+							if (ax * 3 + by * 3 + c > 9)
+							{
+								firstEq = false;
+							}
+							else
+							{
+								firstEq = true;
+							}
+						}
+					}
+				}
 
-			return false;
+				if (f > 0)
+				{
+					if (dx > 0)
+					{
+						if (ey > 0)
+						{
+							if (dx * 3 + ey * 3 + f > 9)
+							{
+								secondEq = false;
+							}
+							else
+							{
+								secondEq = true;
+							}
+						}
+						else if (ey < 0)
+						{
+							if (dx * 3 + f > 9 ||
+								ey * 3 < -9)
+							{
+								secondEq = false;
+							}
+							else
+							{
+								secondEq = true;
+							}
+						}
+					}
+					else if (dx < 0)
+					{
+						if (ey > 0)
+						{
+							if (ey * 3 + f > 9 ||
+								dx * 3 < -9)
+							{
+								secondEq = false;
+							}
+							else
+							{
+								secondEq = true;
+							}
+						}
+						else if (ey < 0)
+						{
+							if (dx * 3 < -9 ||
+								ey * 3 < -9 ||
+								f > 9)
+							{
+								secondEq = false;
+							}
+							else
+							{
+								secondEq = true;
+							}
+						}
+					}
+				}
+				else if (f < 0)
+				{
+					if (dx > 0)
+					{
+						if (ey > 0)
+						{
+							if (dx * 3 + ey * 3 > 9 ||
+								f < -9)
+							{
+								secondEq = false;
+							}
+							else
+							{
+								secondEq = true;
+							}
+						}
+						else if (ey < 0)
+						{
+							if (ey * 3 + f < -9 ||
+								dx * 3 > 9)
+							{
+								secondEq = false;
+							}
+							else
+							{
+								secondEq = true;
+							}
+						}
+					}
+					else if (dx < 0)
+					{
+						if (ey > 0)
+						{
+							if (dx * 3 + f < -9 ||
+								ey * 3 > 9)
+							{
+								secondEq = false;
+							}
+							else
+							{
+								secondEq = true;
+							}
+						}
+						else if (ey < 0)
+						{
+							if (dx * 3 + ey * 3 + f > 9)
+							{
+								secondEq = false;
+							}
+							else
+							{
+								secondEq = true;
+							}
+						}
+					}
+				}
+
+				Console.WriteLine("End: " + firstEq + "," + secondEq);
+				return firstEq && secondEq;
+			} else
+			{
+				return false;
+			}
 		}
 
 		/* Pick from pre-supplied list of equations
