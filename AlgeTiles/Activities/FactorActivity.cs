@@ -621,8 +621,9 @@ namespace AlgeTiles
 						//Parse events.equation string and then
 						//Replace vars with event.vars and rerun the setupQuestionString(vars) after checking if this is valid, if not, show toast
 						vars = AlgorithmUtilities.parseEquation(Constants.EQUATIONS[events.index]);
-						setupQuestionString(AlgorithmUtilities.expandingVars(vars));
-						refreshScreen(Constants.MULTIPLY, gridValueList, innerGridLayoutList, outerGridLayoutList);
+						expandedVars = AlgorithmUtilities.expandingVars(vars);
+						setupQuestionString(expandedVars);
+						refreshScreen(Constants.FACTOR, gridValueList, innerGridLayoutList, outerGridLayoutList);
 					};
 					dialog.Show(FragmentManager, "dialog");
 					break;

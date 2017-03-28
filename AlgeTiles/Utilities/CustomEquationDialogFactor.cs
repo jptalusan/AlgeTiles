@@ -96,6 +96,7 @@ namespace AlgeTiles
 		private List<string> formatEquations(List<string> input)
 		{
 			List<string> output = new List<string>();
+			int cnt = 1;
 			foreach (string s in input)
 			{
 				string[] vals = s.Split(',');
@@ -105,7 +106,8 @@ namespace AlgeTiles
 					temp.Add(int.Parse(val));
 				}
 				List<int> expanded = AlgorithmUtilities.expandingVars(temp);
-				output.Add(expanded[0] + "x\xB2 + " + expanded[1] + "x + " + expanded[2]);
+				output.Add("[" + cnt + "] " + expanded[0] + "x\xB2 + " + expanded[1] + "x + " + expanded[2]);
+				++cnt;
 			}
 			return output;
 		}
