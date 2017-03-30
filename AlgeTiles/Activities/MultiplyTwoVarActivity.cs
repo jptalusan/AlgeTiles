@@ -180,15 +180,15 @@ namespace AlgeTiles
 					space4.LayoutParameters = par_1;
 					space5.LayoutParameters = par_1;
 
-					var x2TVcs = new SpannableStringBuilder("x2 + ");
-					x2TVcs.SetSpan(new SuperscriptSpan(), 1, 2, SpanTypes.ExclusiveExclusive);
-					x2TVcs.SetSpan(new RelativeSizeSpan(0.75f), 1, 2, SpanTypes.ExclusiveExclusive);
-					x2TV.TextFormatted = x2TVcs;
+					//var x2TVcs = new SpannableStringBuilder("x2 + ");
+					//x2TVcs.SetSpan(new SuperscriptSpan(), 1, 2, SpanTypes.ExclusiveExclusive);
+					//x2TVcs.SetSpan(new RelativeSizeSpan(0.75f), 1, 2, SpanTypes.ExclusiveExclusive);
+					//x2TV.TextFormatted = x2TVcs;
 
-					var y2TVcs = new SpannableStringBuilder("y2 + ");
-					y2TVcs.SetSpan(new SuperscriptSpan(), 1, 2, SpanTypes.ExclusiveExclusive);
-					y2TVcs.SetSpan(new RelativeSizeSpan(0.75f), 1, 2, SpanTypes.ExclusiveExclusive);
-					y2TV.TextFormatted = y2TVcs;
+					//var y2TVcs = new SpannableStringBuilder("y2 + ");
+					//y2TVcs.SetSpan(new SuperscriptSpan(), 1, 2, SpanTypes.ExclusiveExclusive);
+					//y2TVcs.SetSpan(new RelativeSizeSpan(0.75f), 1, 2, SpanTypes.ExclusiveExclusive);
+					//y2TV.TextFormatted = y2TVcs;
 				}
 			};
 
