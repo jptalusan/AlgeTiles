@@ -76,6 +76,7 @@ namespace AlgeTiles
 			space5 = FindViewById<Space>(Resource.Id.space5);
 
 			x2TV = FindViewById<TextView>(Resource.Id.x2TV);
+			x2TV.Text = "x\xB2 + ";
 
 			customQuestion = FindViewById<Button>(Resource.Id.custom);
 			customQuestion.Click += CustomQuestion_Click;
@@ -137,11 +138,6 @@ namespace AlgeTiles
 					space3.LayoutParameters = par_1;
 					space4.LayoutParameters = par_1;
 					space5.LayoutParameters = par_1;
-
-					//var x2TVcs = new SpannableStringBuilder("x2 + ");
-					//x2TVcs.SetSpan(new SuperscriptSpan(), 1, 2, SpanTypes.ExclusiveExclusive);
-					//x2TVcs.SetSpan(new RelativeSizeSpan(0.75f), 1, 2, SpanTypes.ExclusiveExclusive);
-					//x2TV.TextFormatted = x2TVcs;
 				}
 			};
 
