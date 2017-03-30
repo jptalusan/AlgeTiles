@@ -46,12 +46,11 @@ namespace AlgeTiles.Activities
 			// Create your application here
 			SetContentView(Resource.Layout.Tutorial);
 
+			string tutorialType= Intent.GetStringExtra("TutoriialType") ?? "General";
+
 			_viewPager = FindViewById<ViewPager>(Resource.Id.pager);
 			_viewPager.OffscreenPageLimit = 0;
-			_viewPager.Adapter = new TutorialFragmentAdapter(SupportFragmentManager);
-			//_viewPager.PageScrollStateChanged += _viewPager_PageScrollStateChanged;
-			//_viewPager.LayoutChange += _viewPager_LayoutChange;
-			//_viewPager.SetPageTransformer(true, new FadeTransformer());
+			_viewPager.Adapter = new TutorialFragmentAdapter(SupportFragmentManager, tutorialType);
 		}
 
 		private void _viewPager_LayoutChange(object sender, View.LayoutChangeEventArgs e)
@@ -67,6 +66,7 @@ namespace AlgeTiles.Activities
 
 	public class TutorialFragmentAdapter : FragmentStatePagerAdapter
 	{
+	
 		private int[] tutorialPages =
 		{
 			Resource.Drawable.slide1,
@@ -83,23 +83,40 @@ namespace AlgeTiles.Activities
 
 		private List<Android.Support.V4.App.Fragment> tutorialPagesFragments { get; set; }
 		
-		public TutorialFragmentAdapter(Android.Support.V4.App.FragmentManager fm) : base(fm)
+		public TutorialFragmentAdapter(Android.Support.V4.App.FragmentManager fm, string tutorialType) : base(fm)
 		{
-			tutorialPagesFragments = new List<Android.Support.V4.App.Fragment>
+			if (Constants.MULTIPLY == tutorialType)
 			{
-				new TextFragment("Welcome to AlgeTiles tutorial. Please swipe to the left to continue. Press back anytime to quit."),
-				new TutorialFragment(tutorialPages[0]),
-				new TutorialFragment(tutorialPages[1]),
-				new TutorialFragment(tutorialPages[2]),
-				new TutorialFragment(tutorialPages[3]),
-				new TutorialFragment(tutorialPages[4]),
-				new TutorialFragment(tutorialPages[5]),
-				new TutorialFragment(tutorialPages[6]),
-				new TutorialFragment(tutorialPages[7]),
-				new VideoFragment(tutorialPages[8]),
-				new VideoFragment(tutorialPages[9]),
-				new TextFragment("END. Please press back to return to main menu.")
-			};
+				tutorialPagesFragments = new List<Android.Support.V4.App.Fragment>
+				{
+					new VideoFragment(tutorialPages[9])
+				};
+			} 
+			else if (Constants.FACTOR == tutorialType)
+			{
+				tutorialPagesFragments = new List<Android.Support.V4.App.Fragment>
+				{
+					new VideoFragment(tutorialPages[8])
+				};
+			}
+			else
+			{
+				tutorialPagesFragments = new List<Android.Support.V4.App.Fragment>
+				{
+					new TextFragment("Welcome to AlgeTiles tutorial. Please swipe to the left to continue. Press back anytime to quit."),
+					new TutorialFragment(tutorialPages[0]),
+					new TutorialFragment(tutorialPages[1]),
+					new TutorialFragment(tutorialPages[2]),
+					new TutorialFragment(tutorialPages[3]),
+					new TutorialFragment(tutorialPages[4]),
+					new TutorialFragment(tutorialPages[5]),
+					new TutorialFragment(tutorialPages[6]),
+					new TutorialFragment(tutorialPages[7]),
+					new VideoFragment(tutorialPages[8]),
+					new VideoFragment(tutorialPages[9]),
+					new TextFragment("END. Please press back to return to main menu.")
+				};
+			}
 		}
 
 		#region implemented abstract members of PagerAdapter
