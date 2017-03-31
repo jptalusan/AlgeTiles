@@ -208,7 +208,7 @@ namespace AlgeTiles
 			gridValueList.Add(midLeftGV);
 			gridValueList.Add(midRightGV);
 
-			setupNewQuestion();
+			setupNewQuestion(numberOfVariables);
 
 			correct = MediaPlayer.Create(this, Resource.Raw.correct);
 			incorrect = MediaPlayer.Create(this, Resource.Raw.wrong);
@@ -271,14 +271,14 @@ namespace AlgeTiles
 				switch (button.Text)
 				{
 					case Constants.NEW_Q:
-					setupNewQuestion();
+					setupNewQuestion(numberOfVariables);
 					refreshScreen(Constants.MULTIPLY, gridValueList, innerGridLayoutList, outerGridLayoutList);
 					break;
 				case Constants.REFR:
 					refreshScreen(Constants.MULTIPLY, gridValueList, innerGridLayoutList, outerGridLayoutList);
 					break;
 				case Constants.CHK:
-					checkAnswers();
+					checkAnswers(this);
 					break;
 				}
 			});
@@ -290,28 +290,7 @@ namespace AlgeTiles
 
 			alertDialog.Show();
 		}
-
-		private void setupNewQuestion()
-		{
-			isFirstAnswerCorrect = false;
-			vars = AlgorithmUtilities.RNG(Constants.MULTIPLY, numberOfVariables);
-
-			//(ax + b)(cx + d)
-			if (Constants.ONE_VAR == numberOfVariables)
-			{
-				for (int i = 0; i < gridValueList.Count; ++i)
-				{
-					gridValueList[i].init();
-				}
-
-				setupQuestionString(vars);
-			}
-
-			foreach (int i in vars)
-			{
-				Log.Debug(TAG, i + "");
-			}
-		}
+		//HERER
 
 		protected override void setupQuestionString(List<int> vars)
 		{

@@ -800,6 +800,15 @@ namespace AlgeTiles
 						correct.Start();
 					isFirstAnswerCorrect = true;
 
+					new AlertDialog.Builder(this)
+						.SetPositiveButton(Constants.PROCEED + Constants.MULTIPLICATION, (sender, args) =>
+						{
+							// User pressed yes
+						})
+						.SetMessage(Constants.CORRECT + " " +  Constants.FACTOR)
+						.SetTitle(Constants.CORRECT)
+						.Show();
+
 					//Loop through inner and prevent deletions by removing: clonedImageView_Touch
 					for (int i = 0; i < outerGridLayoutList.Count; ++i)
 					{
@@ -829,7 +838,7 @@ namespace AlgeTiles
 				}
 				else
 				{
-					Toast.MakeText(Application.Context, "2:incorrect", ToastLength.Short).Show();
+					Toast.MakeText(Application.Context, Constants.WRONG + " " + Constants.FACTOR, ToastLength.Short).Show();
 					incorrectPrompt(outerGridLayoutList);
 				}
 			}
@@ -882,6 +891,15 @@ namespace AlgeTiles
 					Toast.MakeText(Application.Context, "1:correct", ToastLength.Short).Show();
 					if (!muteToggle.Checked)
 						correct.Start();
+
+					new AlertDialog.Builder(this)
+						.SetPositiveButton(Constants.PROCEED + Constants.FACTOR, (sender, args) =>
+						{
+							// User pressed yes
+						})
+						.SetMessage(Constants.CORRECT + Constants.MULTIPLICATION)
+						.SetTitle(Constants.CORRECT)
+						.Show();
 				}
 				else
 				{
@@ -891,7 +909,7 @@ namespace AlgeTiles
 					}
 
 					incorrectPrompt(innerGridLayoutList);
-					Toast.MakeText(Application.Context, "1:incorrect", ToastLength.Short).Show();
+					Toast.MakeText(Application.Context, Constants.WRONG + " " + Constants.MULTIPLICATION, ToastLength.Short).Show();
 				}
 			}
 			else if (!isThirdAnswerCorrect)
@@ -930,10 +948,24 @@ namespace AlgeTiles
 						editTextList[i].SetBackgroundResource(Resource.Drawable.ok);
 						editTextList[i].Enabled = false;
 					}
+
+					new AlertDialog.Builder(this)
+						.SetPositiveButton("New Question", (sender, args) =>
+						{
+							setupNewQuestion();
+							refreshScreen(Constants.FACTOR, gridValueList, innerGridLayoutList, outerGridLayoutList);
+						})
+						.SetNegativeButton("No", (sender, args) =>
+						{
+							
+						})
+						.SetMessage(Constants.CORRECT + Constants.COEFFICIENTS)
+						.SetTitle(Constants.CORRECT)
+						.Show();
 				}
 				else
 				{
-					Toast.MakeText(Application.Context, "3:incorrect", ToastLength.Short).Show();
+					Toast.MakeText(Application.Context, Constants.WRONG + " " + Constants.COEFFICIENTS, ToastLength.Short).Show();
 					incorrectPrompt(editTextList);
 				}
 			}
@@ -1536,5 +1568,7 @@ namespace AlgeTiles
 				}
 			}
 		}
+
+
 	}
 }

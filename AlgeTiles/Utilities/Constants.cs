@@ -61,6 +61,13 @@ namespace AlgeTiles
 		public const double ONE_SIDE = 7.0;
 		public const double Y_LONG_SIDE = 2.6;
 
+		public const string PROCEED = "Proceed to";
+		public const string CORRECT = "Correct";
+		public const string WRONG = "Wrong";
+		public const string MULTIPLICATION= " multiplication";
+		public const string COEFFICIENTS = " coefficients";
+
+
 		//Equations
 		public static List<string> EQUATIONS = new List<string>
 		{

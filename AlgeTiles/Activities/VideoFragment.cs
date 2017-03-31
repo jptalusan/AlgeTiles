@@ -29,36 +29,19 @@ namespace AlgeTiles.Activities
 			this.id = resource;
 		}
 
-		public override void OnCreate(Bundle savedInstanceState)
-		{
-			base.OnCreate(savedInstanceState);
-			Log.Debug(TAG, "OnCreate");
-			// Create your fragment here
-		}
-
 		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		{
 			base.OnCreateView(inflater, container, savedInstanceState);
 			var view = inflater.Inflate(Resource.Layout.button_fragment, container, false);
-			Button button = view.FindViewById<Button>(Resource.Id.button);
-
-			if (id == Resource.Raw.var1)
-			{
-				button.Text = "Factor Tutorial Video";
-			} else
-			{
-				button.Text = "Multiply Tutorial Video";
-			}
-
-			button.Click += buttonClick;
-			return view;
-		}
-
-		private void buttonClick(object sender, EventArgs e)
-		{
 			var intent = new Intent(Activity, typeof(FactorVideo));
 			intent.PutExtra(Constants.VIDEO_ID, id);
 			StartActivity(intent);
+			return view;
+		}
+
+		public override void OnResume()
+		{
+			base.OnResume();
 		}
 
 		public override void OnViewCreated(View view, Bundle savedInstanceState)

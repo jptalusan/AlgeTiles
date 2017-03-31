@@ -4,12 +4,11 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_gravity="center"
-	android:gravity="center">
-    <Button
+    android:gravity="center">
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Factor Tutorial"
-        android:id="@+id/button"
+        android:text="Press back to exit."
         android:gravity="center"
-		android:layout_gravity="center"/>
+        android:layout_gravity="center" />
 </LinearLayout>

@@ -190,7 +190,7 @@ namespace AlgeTiles
 			}
 		}
 
-		public async void checkAnswers()
+		public async void checkAnswers(AlgeTilesActivity multiplyActivity)
 		{
 			if (!isFirstAnswerCorrect)
 			{
@@ -226,7 +226,6 @@ namespace AlgeTiles
 					expandedVars = AlgorithmUtilities.expandingVars(vars);
 					foreach (var i in expandedVars)
 						Log.Debug(TAG, "Expanded in activity: " + i);
-					Toast.MakeText(Application.Context, "1:correct", ToastLength.Short).Show();
 
 					if (Constants.ONE_VAR == numberOfVariables)
 					{
@@ -252,6 +251,15 @@ namespace AlgeTiles
 					upperLeftGrid.drawRects(upperLeftRectTileList);
 					lowerRightGrid.drawRects(lowerRightRectTileList);
 					lowerLeftGrid.drawRects(lowerLeftRectTileList);
+
+					new AlertDialog.Builder(this)
+						.SetPositiveButton(Constants.PROCEED + " " + Constants.FACTOR, (sender, args) =>
+						{
+												// User pressed yes
+											})
+						.SetMessage(Constants.CORRECT + Constants.MULTIPLICATION)
+						.SetTitle(Constants.CORRECT)
+						.Show();
 				}
 				else
 				{
@@ -262,7 +270,7 @@ namespace AlgeTiles
 
 					incorrectPrompt(innerGridLayoutList);
 
-					Toast.MakeText(Application.Context, "1:incorrect", ToastLength.Short).Show();
+					Toast.MakeText(Application.Context, Constants.WRONG + Constants.MULTIPLICATION, ToastLength.Short).Show();
 				}
 			}
 			else if (!isSecondAnswerCorrect)
@@ -432,9 +440,9 @@ namespace AlgeTiles
 					List<AlgeTilesTextView> negTobeRemovedXY = new List<AlgeTilesTextView>();
 					if (posXY != 0 && negXY != 0)
 					{
-						Log.Debug(TAG, "Cancelling out: " + posXY + ", " + negXY);						
+						Log.Debug(TAG, "Cancelling out: " + posXY + ", " + negXY);
 						Log.Debug(TAG, "To remove: " + xyToRemove);
-						
+
 						for (int j = 0; j < posXYVG.ChildCount; ++j)
 						{
 							AlgeTilesTextView alIV = posXYVG.GetChildAt(j) as AlgeTilesTextView;
@@ -445,7 +453,7 @@ namespace AlgeTiles
 							}
 						}
 
-						
+
 						for (int j = 0; j < negXYVG.ChildCount; ++j)
 						{
 							AlgeTilesTextView negalIV = negXYVG.GetChildAt(j) as AlgeTilesTextView;
@@ -497,10 +505,9 @@ namespace AlgeTiles
 					{
 						posXYVG.RemoveView(tobeRemovedXY[j]);
 						negXYVG.RemoveView(negTobeRemovedXY[j]);
-					}		
+					}
 					//End Cancelling out
 
-					Toast.MakeText(Application.Context, "2:correct", ToastLength.Short).Show();
 					if (!muteToggle.Checked)
 						correct.Start();
 
@@ -528,11 +535,28 @@ namespace AlgeTiles
 					lowerLeftRectTileList.Clear();
 
 					isSecondAnswerCorrect = true;
+					new AlertDialog.Builder(this)
+						.SetPositiveButton(Constants.PROCEED + Constants.COEFFICIENTS, (sender, args) =>
+						{
+							// User pressed yes
+						})
+						.SetMessage(Constants.CORRECT + " " + Constants.FACTOR)
+						.SetTitle(Constants.CORRECT)
+						.Show();
+
+					for (int i = 0; i < innerGridLayoutList.Count; ++i)
+					{
+						for (int j = 0; j < innerGridLayoutList[i].ChildCount; ++j)
+						{
+							View v = innerGridLayoutList[i].GetChildAt(j);
+							innerGridLayoutList[i].RemoveAllViews();
+						}
+					}
 				}
 				else
 				{
 
-					Toast.MakeText(Application.Context, "2:incorrect", ToastLength.Short).Show();
+					Toast.MakeText(Application.Context, Constants.WRONG + " " + Constants.FACTOR, ToastLength.Short).Show();
 					incorrectPrompt(outerGridLayoutList);
 				}
 			}
@@ -601,8 +625,7 @@ namespace AlgeTiles
 
 
 				if (isThirdAnswerCorrect)
-				{
-					Toast.MakeText(Application.Context, "3:correct", ToastLength.Short).Show();
+				{					
 					for (int i = 0; i < editTextList.Count; ++i)
 					{
 						editTextList[i].SetBackgroundResource(Resource.Drawable.ok);
@@ -610,12 +633,49 @@ namespace AlgeTiles
 					}
 					if (!muteToggle.Checked)
 						correct.Start();
+
+
+					new AlertDialog.Builder(this)
+						.SetPositiveButton("New Question", (sender, args) =>
+						{
+							setupNewQuestion(numberOfVariables);
+							refreshScreen(Constants.FACTOR, gridValueList, innerGridLayoutList, outerGridLayoutList);
+						})
+						.SetNegativeButton("No", (sender, args) =>
+						{
+
+						})
+						.SetMessage(Constants.CORRECT + Constants.COEFFICIENTS)
+						.SetTitle(Constants.CORRECT)
+						.Show();
 				}
 				else
 				{
-					Toast.MakeText(Application.Context, "3:incorrect", ToastLength.Short).Show();
+					Toast.MakeText(Application.Context, Constants.WRONG + " " + Constants.COEFFICIENTS, ToastLength.Short).Show();
 					incorrectPrompt(editTextList);
 				}
+			}
+		}
+
+		protected void setupNewQuestion(int numberOfVariables)
+		{
+			isFirstAnswerCorrect = false;
+			vars = AlgorithmUtilities.RNG(Constants.MULTIPLY, numberOfVariables);
+
+			//(ax + b)(cx + d)
+			//if (Constants.ONE_VAR == numberOfVariables)
+			//{
+				for (int i = 0; i < gridValueList.Count; ++i)
+				{
+					gridValueList[i].init();
+				}
+
+				setupQuestionString(vars);
+			//}
+
+			foreach (int i in vars)
+			{
+				Log.Debug(TAG, i + "");
 			}
 		}
 

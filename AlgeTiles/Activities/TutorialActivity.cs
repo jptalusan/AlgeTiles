@@ -112,8 +112,8 @@ namespace AlgeTiles.Activities
 					new TutorialFragment(tutorialPages[5]),
 					new TutorialFragment(tutorialPages[6]),
 					new TutorialFragment(tutorialPages[7]),
-					new VideoFragment(tutorialPages[8]),
-					new VideoFragment(tutorialPages[9]),
+					//new VideoFragment(tutorialPages[8]),
+					//new VideoFragment(tutorialPages[9]),
 					new TextFragment("END. Please press back to return to main menu.")
 				};
 			}

@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="("
-            android:textColor="#000000"
+            android:textColor="#c8f7f6"
             android:gravity="bottom" />
         <EditText
             android:hint="......."
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="x + "
-            android:textColor="#000000"
+            android:textColor="#c8f7f6"
             android:id="@+id/x2TV"
             android:gravity="bottom" />
         <EditText
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="y + "
-            android:textColor="#000000"
+            android:textColor="#c8f7f6"
             android:id="@+id/y2TV"
             android:gravity="bottom" />
         <EditText
@@ -68,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text=")"
-            android:textColor="#000000"
+            android:textColor="#c8f7f6"
             android:id="@+id/xTV"
             android:gravity="bottom" />
     </LinearLayout>
@@ -84,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="("
-            android:textColor="#000000"
+            android:textColor="#c8f7f6"
             android:gravity="bottom" />
         <EditText
             android:hint="......."
@@ -101,7 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="x + "
-            android:textColor="#000000"
+            android:textColor="#c8f7f6"
             android:id="@+id/x2TV"
             android:gravity="bottom" />
         <EditText
@@ -119,7 +119,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="y + "
-            android:textColor="#000000"
+            android:textColor="#c8f7f6"
             android:id="@+id/xTV"
             android:gravity="bottom" />
         <EditText
@@ -137,7 +137,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text=")"
-            android:textColor="#000000"
+            android:textColor="#c8f7f6"
             android:id="@+id/x2TV"
             android:gravity="bottom" />
     </LinearLayout>
