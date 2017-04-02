@@ -214,7 +214,8 @@ namespace AlgeTiles
 					x2_tile.LayoutParameters = par_x2;
 					Log.Debug(TAG, x2_tile.getTileType());
 
-					x_value_1.SetHeight(par_x2.Height);
+					x_value_1.SetHeight(par_x2.Height / 2);
+					result.SetHeight(par_x2.Height / 2);
 					space1.LayoutParameters = par_1;
 					space2.LayoutParameters = par_1;
 					space3.LayoutParameters = par_1;

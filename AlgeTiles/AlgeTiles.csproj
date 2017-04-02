@@ -299,12 +299,6 @@
     <AndroidResource Include="Resources\drawable\slide8.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\raw\var1.mp4" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\raw\var2.mp4" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\cancelling.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -355,6 +349,12 @@
     <AndroidResource Include="Resources\drawable\one_selected.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\factor_mod.mp4" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\raw\multiply_mod.mp4" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

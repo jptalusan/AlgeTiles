@@ -441,10 +441,10 @@ namespace AlgeTiles
 			public const int correct = 2130968576;
 			
 			// aapt resource value: 0x7f040001
-			public const int var1 = 2130968577;
+			public const int factor_mod = 2130968577;
 			
 			// aapt resource value: 0x7f040002
-			public const int var2 = 2130968578;
+			public const int multiply_mod = 2130968578;
 			
 			// aapt resource value: 0x7f040003
 			public const int wrong = 2130968579;
@@ -500,6 +500,9 @@ namespace AlgeTiles
 			
 			// aapt resource value: 0x7f050006
 			public const int twoVar = 2131034118;
+			
+			// aapt resource value: 0x7f05000d
+			public const int videoTutorial = 2131034125;
 			
 			static String()
 			{

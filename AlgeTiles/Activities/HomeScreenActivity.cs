@@ -74,15 +74,13 @@ namespace AlgeTiles
 			switch (buttonText)
 			{
 				case Resource.Id.factorTutorialButton:
-					var factorIntent = new Intent(this, typeof(TutorialActivity));
-					factorIntent.PutExtra("TutoriialType", Constants.FACTOR);
-					factorIntent.AddFlags(ActivityFlags.ClearTop);
+					var factorIntent = new Intent(this, typeof(FactorVideo));
+					factorIntent.PutExtra(Constants.VIDEO_ID, Resource.Raw.factor_mod);
 					StartActivity(factorIntent);
 					break;
 				case Resource.Id.multiplyTutorialButton:
-					var multiplyIntent = new Intent(this, typeof(TutorialActivity));
-					multiplyIntent.PutExtra("TutoriialType", Constants.MULTIPLY);
-					multiplyIntent.AddFlags(ActivityFlags.ClearTop);
+					var multiplyIntent = new Intent(this, typeof(FactorVideo));
+					multiplyIntent.PutExtra(Constants.VIDEO_ID, Resource.Raw.multiply_mod);
 					StartActivity(multiplyIntent);
 					break;
 				case Resource.Id.generalTutorialButton:

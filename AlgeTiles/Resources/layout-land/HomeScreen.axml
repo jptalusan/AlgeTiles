@@ -28,7 +28,7 @@
                 android:id="@+id/one_variable_button"
                 android:visibility="gone" />
             <Button
-                android:text="@string/Tutorial"
+                android:text="@string/videoTutorial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/factorTutorialButton" />
@@ -62,7 +62,7 @@
                 android:id="@+id/two_variable_button"
                 android:visibility="gone" />
             <Button
-                android:text="@string/Tutorial"
+                android:text="@string/videoTutorial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/multiplyTutorialButton" />

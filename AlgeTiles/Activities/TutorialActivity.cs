@@ -77,8 +77,8 @@ namespace AlgeTiles.Activities
 			Resource.Drawable.slide6,
 			Resource.Drawable.slide7,
 			Resource.Drawable.slide8,
-			Resource.Raw.var1,
-			Resource.Raw.var2
+			Resource.Raw.factor_mod,
+			Resource.Raw.multiply_mod
 		};
 
 		private List<Android.Support.V4.App.Fragment> tutorialPagesFragments { get; set; }
@@ -112,8 +112,8 @@ namespace AlgeTiles.Activities
 					new TutorialFragment(tutorialPages[5]),
 					new TutorialFragment(tutorialPages[6]),
 					new TutorialFragment(tutorialPages[7]),
-					//new VideoFragment(tutorialPages[8]),
-					//new VideoFragment(tutorialPages[9]),
+					new VideoFragment(tutorialPages[8]),
+					new VideoFragment(tutorialPages[9]),
 					new TextFragment("END. Please press back to return to main menu.")
 				};
 			}
