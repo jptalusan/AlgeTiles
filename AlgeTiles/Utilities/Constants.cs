@@ -55,7 +55,7 @@ namespace AlgeTiles
 		public const int DELAY = 1500;
 		public const int CANCELOUT_DELAY = 1500;
 
-		public const double SNAP_GRID_INTERVAL = 9.0; //TODO: Move to constants
+		public const double SNAP_GRID_INTERVAL = 9.0;
 
 		public const double X_LONG_SIDE = 3.0;
 		public const double ONE_SIDE = 7.0;
