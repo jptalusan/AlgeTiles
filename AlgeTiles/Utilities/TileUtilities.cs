@@ -509,19 +509,7 @@ namespace AlgeTiles
 				{
 					AlgeTilesTextView al = gl.GetChildAt(j) as AlgeTilesTextView;
 					Log.Debug(TAG, al.getTileType());
-
-					switch (al.getTileType())
-					{
-						case Constants.X_TILE:
-							output[i].Add(al.getTileType());
-							break;
-						case Constants.Y_TILE:
-							output[i].Add(al.getTileType());
-							break;
-						case Constants.ONE_TILE:
-							output[i].Add(al.getTileType());
-							break;
-					}
+					output[i].Add(al.getTileType());
 				}
 			}
 
