@@ -29,7 +29,7 @@ namespace AlgeTiles
 		private static string BUTTON_TYPE = "BUTTON_TYPE";
 		private static string CLONED_BUTTON = "CLONE_BUTTON";
 		private static string ORIGINAL_BUTTON = "ORIGINAL_BUTTON";
-		private TextView result;
+		private Grantland.Widget.AutofitTextView result;
 		private Boolean hasButtonBeenDroppedInCorrectzone = false;
 		private string currentButtonType = "";
 		private ViewGroup currentOwner;
@@ -131,7 +131,7 @@ namespace AlgeTiles
 			SetContentView(Resource.Layout.Factor);
 			Log.Debug(TAG, "Enter FACTOR");
 			// Create your application here
-			result = (TextView)FindViewById(Resource.Id.result);
+			result = (Grantland.Widget.AutofitTextView)FindViewById(Resource.Id.result);
 
 			tile_1 = (AlgeTilesTextView)FindViewById(Resource.Id.tile_1);
 			x_tile = (AlgeTilesTextView)FindViewById(Resource.Id.x_tile);
@@ -216,8 +216,8 @@ namespace AlgeTiles
 
 					x_value_1.SetHeight(par_x2.Height / 2);
 					result.SetHeight(par_x2.Height / 2);
-					float resultTextSize = result.TextSize;
-					result.SetTextSize(ComplexUnitType.Sp, resultTextSize / Resources.DisplayMetrics.Density);
+					//float resultTextSize = result.TextSize;
+					//result.SetTextSize(ComplexUnitType.Sp, resultTextSize / Resources.DisplayMetrics.Density);
 					space1.LayoutParameters = par_1;
 					space2.LayoutParameters = par_1;
 					space3.LayoutParameters = par_1;

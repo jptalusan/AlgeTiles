@@ -134,8 +134,8 @@ namespace AlgeTiles
 
 					x2ET.SetHeight(par_x2.Height);
 					result.SetHeight(par_x2.Height / 2);
-					float resultTextSize = result.TextSize;
-					result.SetTextSize(ComplexUnitType.Sp, resultTextSize / Resources.DisplayMetrics.Density);
+					//float resultTextSize = result.TextSize;
+					//result.SetTextSize(ComplexUnitType.Sp, resultTextSize / Resources.DisplayMetrics.Density);
 					space1.LayoutParameters = par_1;
 					space2.LayoutParameters = par_1;
 					space3.LayoutParameters = par_1;

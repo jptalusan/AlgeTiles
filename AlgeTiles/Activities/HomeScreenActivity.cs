@@ -14,7 +14,7 @@ using AlgeTiles.Activities;
 
 namespace AlgeTiles
 {
-	[Activity(Label = "AlgeTiles", MainLauncher = true, Icon = "@drawable/ic_launcher", ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape)]
+	[Activity(Label = "AlgeTiles", MainLauncher = true, Icon = "@drawable/ic_launcher", ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape, Theme = "@style/MyCustomTheme")]
 	public class HomeScreenActivity : Activity
 	{
 		private Button multiplyActivityButton;
@@ -35,7 +35,7 @@ namespace AlgeTiles
 			base.OnCreate(savedInstanceState);
 			Window.AddFlags(WindowManagerFlags.Fullscreen);
 			Window.ClearFlags(WindowManagerFlags.ForceNotFullscreen);
-			ActionBar.Hide();
+			//ActionBar.Hide();
 			SetContentView(Resource.Layout.HomeScreen);
 
 			prefs = PreferenceManager.GetDefaultSharedPreferences(this);
