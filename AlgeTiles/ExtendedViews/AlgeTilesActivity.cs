@@ -253,11 +253,11 @@ namespace AlgeTiles
 					lowerLeftGrid.drawRects(lowerLeftRectTileList);
 
 					new AlertDialog.Builder(this)
-						.SetPositiveButton(Constants.PROCEED + " " + Constants.FACTOR, (sender, args) =>
+						.SetPositiveButton(Constants.PROCEED_TO_MULTIP, (sender, args) =>
 						{
-												// User pressed yes
-											})
-						.SetMessage(Constants.CORRECT + Constants.MULTIPLICATION)
+							// User pressed yes
+						})
+						.SetMessage(Constants.CORRECT_PLACEMENT)
 						.SetTitle(Constants.CORRECT)
 						.Show();
 				}
@@ -540,7 +540,7 @@ namespace AlgeTiles
 						{
 							// User pressed yes
 						})
-						.SetMessage(Constants.CORRECT + " " + Constants.FACTOR)
+						.SetMessage(Constants.CORRECT_MULTIP)
 						.SetTitle(Constants.CORRECT)
 						.Show();
 
@@ -636,12 +636,12 @@ namespace AlgeTiles
 
 
 					new AlertDialog.Builder(this)
-						.SetPositiveButton("New Question", (sender, args) =>
-						{
-							setupNewQuestion(numberOfVariables);
-							refreshScreen(Constants.FACTOR, gridValueList, innerGridLayoutList, outerGridLayoutList);
-						})
-						.SetNegativeButton("No", (sender, args) =>
+						//.SetPositiveButton("New Question", (sender, args) =>
+						//{
+						//	setupNewQuestion(numberOfVariables);
+						//	refreshScreen(Constants.FACTOR, gridValueList, innerGridLayoutList, outerGridLayoutList);
+						//})
+						.SetNegativeButton("OK", (sender, args) =>
 						{
 
 						})

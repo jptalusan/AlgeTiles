@@ -67,6 +67,13 @@ namespace AlgeTiles
 		public const string MULTIPLICATION= " multiplication";
 		public const string COEFFICIENTS = " coefficients";
 
+		public const string CORRECT_PLACEMENT = "Correct Placement of Tiles";
+		public const string PROCEED_TO_FACTOR = "Proceed to Factoring";
+		public const string PROCEED_TO_MULTIP = "Proceed to Multiplication";
+		public const string CORRECT_FACTORS = "Correct Factors";
+		public const string CORRECT_MULTIP = "Correct Multiplication";
+		public const string PROCEED_TO_COEFF = "Proceed to coefficients";
+
 
 		//Equations
 		public static List<string> EQUATIONS = new List<string>

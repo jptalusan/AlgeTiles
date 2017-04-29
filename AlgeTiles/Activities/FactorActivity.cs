@@ -798,17 +798,17 @@ namespace AlgeTiles
 				if (AlgorithmUtilities.isSecondAnswerCorrect(expandedVars, gvArr, numberOfVariables) &&
 					(totalRects == totalTiles))
 				{
-					Toast.MakeText(Application.Context, "2:correct", ToastLength.Short).Show();
+					//Toast.MakeText(Application.Context, "2:correct", ToastLength.Short).Show();
 					if (!muteToggle.Checked)
 						correct.Start();
 					isFirstAnswerCorrect = true;
 
 					new AlertDialog.Builder(this)
-						.SetPositiveButton(Constants.PROCEED + Constants.MULTIPLICATION, (sender, args) =>
+						.SetPositiveButton(Constants.PROCEED_TO_FACTOR, (sender, args) =>
 						{
 							// User pressed yes
 						})
-						.SetMessage(Constants.CORRECT + " " +  Constants.FACTOR)
+						.SetMessage(Constants.CORRECT_PLACEMENT)
 						.SetTitle(Constants.CORRECT)
 						.Show();
 
@@ -891,16 +891,16 @@ namespace AlgeTiles
 					lowerRightRectTileList.Clear();
 					lowerLeftRectTileList.Clear();
 
-					Toast.MakeText(Application.Context, "1:correct", ToastLength.Short).Show();
+					//Toast.MakeText(Application.Context, "1:correct", ToastLength.Short).Show();
 					if (!muteToggle.Checked)
 						correct.Start();
 
 					new AlertDialog.Builder(this)
-						.SetPositiveButton(Constants.PROCEED + Constants.FACTOR, (sender, args) =>
+						.SetPositiveButton(Constants.PROCEED_TO_COEFF, (sender, args) =>
 						{
 							// User pressed yes
 						})
-						.SetMessage(Constants.CORRECT + Constants.MULTIPLICATION)
+						.SetMessage(Constants.CORRECT_FACTORS)
 						.SetTitle(Constants.CORRECT)
 						.Show();
 				}
@@ -943,7 +943,7 @@ namespace AlgeTiles
 				}
 				if (isThirdAnswerCorrect)
 				{
-					Toast.MakeText(Application.Context, "3:correct/end", ToastLength.Short).Show();
+					//Toast.MakeText(Application.Context, "3:correct/end", ToastLength.Short).Show();
 					if (!muteToggle.Checked)
 						correct.Start();
 					for (int i = 0; i < editTextList.Count; ++i)
@@ -953,12 +953,12 @@ namespace AlgeTiles
 					}
 
 					new AlertDialog.Builder(this)
-						.SetPositiveButton("New Question", (sender, args) =>
-						{
-							setupNewQuestion();
-							refreshScreen(Constants.FACTOR, gridValueList, innerGridLayoutList, outerGridLayoutList);
-						})
-						.SetNegativeButton("No", (sender, args) =>
+						//.SetPositiveButton("New Question", (sender, args) =>
+						//{
+						//	setupNewQuestion();
+						//	refreshScreen(Constants.FACTOR, gridValueList, innerGridLayoutList, outerGridLayoutList);
+						//})
+						.SetNegativeButton("OK", (sender, args) =>
 						{
 							
 						})
