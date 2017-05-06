@@ -1060,11 +1060,11 @@ namespace AlgeTiles
 			int c = vars[2];
 
 			if (ax2 != 0)
-				output += ax2 + "x\xB2+";
+				output += ax2 + "x\xB2";
 			if (bx != 0)
-				output += bx + "x+";
+				output += "+" + bx + "x+";
 			if (c != 0)
-				output += c;
+				output += "+" + c;
 
 			output = output.Replace(" ", "");
 			output = output.Replace("+-", "-");

@@ -82,13 +82,27 @@ namespace AlgeTiles
 			EQUATION_002,
 			EQUATION_003,
 			EQUATION_004,
-			EQUATION_005
+			EQUATION_005,
+			EQUATION_006,
+			EQUATION_007,
+			EQUATION_008,
+			EQUATION_009,
+			EQUATION_010,
+			EQUATION_011,
+			EQUATION_012
 		};
 
-		public const string EQUATION_001 = "1,-2,1,3";
-		public const string EQUATION_002 = "-2,5,-3,7";
-		public const string EQUATION_003 = "-2,5,-1,1";
-		public const string EQUATION_004 = "1,4,3,-2";
-		public const string EQUATION_005 = "2,3,1,-4";
+		public const string EQUATION_001 = "1,1,1,-6";
+		public const string EQUATION_002 = "2,-1,1,4";
+		public const string EQUATION_003 = "2,0,1,3";
+		public const string EQUATION_004 = "1,-3,1,3";
+		public const string EQUATION_005 = "1,2,1,2";
+		public const string EQUATION_006 = "2,-1,2,1";
+		public const string EQUATION_007 = "1,0,1,-4";
+		public const string EQUATION_008 = "1,-2,1,3";
+		public const string EQUATION_009 = "-2,5,-3,7";
+		public const string EQUATION_010 = "-2,5,-1,1";
+		public const string EQUATION_011 = "1,4,3,-2";
+		public const string EQUATION_012 = "2,3,1,-4";
 	}
 }

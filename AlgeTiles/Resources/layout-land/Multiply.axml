@@ -218,8 +218,14 @@
                     android:layout_height="wrap_content"
                     android:text="Choose Q"
                     android:id="@+id/custom"
-                    android:layout_weight="2" />
-            <!-- Tutorial button -->
+                    android:layout_weight="1" />
+				<Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/newQ"
+                    android:id="@+id/new_question_button"
+                    android:layout_weight="1" />
+				<!-- Tutorial button -->
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -373,11 +379,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
                 android:gravity="fill">
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/newQ"
-                    android:id="@+id/new_question_button" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

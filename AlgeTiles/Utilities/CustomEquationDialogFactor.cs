@@ -106,9 +106,33 @@ namespace AlgeTiles
 					temp.Add(int.Parse(val));
 				}
 				List<int> expanded = AlgorithmUtilities.expandingVars(temp);
-				output.Add("[" + cnt + "] " + expanded[0] + "x\xB2 + " + expanded[1] + "x + " + expanded[2]);
+				string equation = "[" + cnt + "] " + setupQuestionString(expanded);//expanded[0] + "x\xB2 + " + expanded[1] + "x + " + expanded[2];
+				output.Add(equation);
 				++cnt;
 			}
+			return output;
+		}
+
+		private string setupQuestionString(List<int> vars)
+		{
+			string output = "";
+			//vars = (ax^2 + bx + c)
+			int ax2 = vars[0];
+			int bx = vars[1];
+			int c = vars[2];
+
+			if (ax2 != 0)
+				output += ax2 + "x\xB2";
+
+			if (bx != 0)
+				output += "+" + bx + "x";
+			if (c != 0)
+				output += "+" + c;
+
+			output = output.Replace(" ", "");
+			output = output.Replace("+-", "-");
+			output = output.Replace("+", " + ");
+			output = output.Replace("-", " - ");
 			return output;
 		}
 	}
